@@ -1777,3 +1777,9 @@ a { text-underline-offset: 2px; }
 .sfr-breadcrumb a{color:#6b6864;text-decoration:none;}
 .sfr-breadcrumb a:hover{color:#ff6600;}
 .sfr-breadcrumb li[aria-current="page"]{color:#15161a;font-weight:600;}
+
+/* ===== 5-step "How It Works" grid (Emergency Tyre Change page) ===== */
+@media (min-width:761px){
+  .sfr-how__grid--five{grid-template-columns:repeat(5,1fr);}
+  .sfr-how__grid--five.sfr-how__grid::before{left:10%;right:10%;}
+}
