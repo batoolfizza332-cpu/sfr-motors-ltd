@@ -1544,6 +1544,9 @@ a { text-underline-offset: 2px; }
 .sfr-page-hero{
   --sfr-orange:#ff6600;
   --sfr-orange-deep:#d94f00;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
   background:linear-gradient(135deg,#16171b,#0b0c0e 75%);
   color:#fff;
   text-align:center;
@@ -1552,7 +1555,15 @@ a { text-underline-offset: 2px; }
   border-bottom:3px solid var(--sfr-orange);
 }
 .sfr-page-hero *{box-sizing:border-box;}
-.sfr-page-hero__inner{max-width:720px;margin:0 auto;}
+.sfr-page-hero__bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 40%;opacity:.28;
+}
+.sfr-page-hero__overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(9,10,11,.92) 20%,rgba(9,10,11,.8) 100%);
+}
+.sfr-page-hero__inner{position:relative;z-index:1;max-width:720px;margin:0 auto;}
 .sfr-page-hero__eyebrow{
   display:inline-flex;align-items:center;gap:8px;
   font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
@@ -1689,3 +1700,56 @@ a { text-underline-offset: 2px; }
 .sfr-emergency__btn svg{width:16px;height:16px;}
 .sfr-emergency__btn:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);}
 @media (prefers-reduced-motion:reduce){.sfr-emergency__btn{transition:none;}}
+
+/* ===== About page: intro lead paragraph ===== */
+.sfr-intro{
+  --sfr-ink:#15161a;--sfr-sub:#5c5955;
+  background:#ffffff;
+  padding:clamp(44px,6vw,64px) clamp(20px,5vw,32px) 0;
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  text-align:center;
+}
+.sfr-intro__text{
+  max-width:680px;margin:0 auto;
+  font-size:clamp(16px,2vw,18px);line-height:1.7;
+  color:var(--sfr-ink);
+}
+
+/* ===== About page: 5-card "Why Choose Us" grid ===== */
+@media (min-width:901px){
+  .sfr-why__grid--five{grid-template-columns:repeat(3,1fr);}
+}
+
+/* ===== About page: Where We Operate ===== */
+.sfr-operate{
+  --sfr-ink:#15161a;--sfr-paper:#faf9f7;--sfr-line:#e8e5e1;--sfr-sub:#5c5955;
+  --sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:var(--sfr-paper);
+  padding:clamp(56px,8vw,88px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;color:var(--sfr-ink);
+  text-align:center;
+}
+.sfr-operate *{box-sizing:border-box;}
+.sfr-operate__inner{max-width:640px;margin:0 auto;}
+.sfr-operate__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sfr-orange-deep);margin-bottom:14px;
+}
+.sfr-operate__eyebrow::before,.sfr-operate__eyebrow::after{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+.sfr-operate__title{font-size:clamp(26px,3.6vw,34px);font-weight:900;line-height:1.2;margin:0 0 16px;text-wrap:balance;}
+.sfr-operate__text{font-size:15px;line-height:1.7;color:var(--sfr-sub);margin:0 0 26px;}
+.sfr-operate__pins{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:22px;}
+.sfr-operate__pin{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#fff;border:1px solid var(--sfr-line);border-radius:999px;
+  padding:9px 16px;font-size:13.5px;font-weight:700;
+}
+.sfr-operate__pin svg{width:14px;height:14px;stroke:var(--sfr-orange);}
+.sfr-operate__link{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:14px;font-weight:700;color:var(--sfr-ink);text-decoration:none;
+  border-bottom:1.5px solid var(--sfr-orange);padding-bottom:2px;
+}
+.sfr-operate__link:hover{color:var(--sfr-orange-deep);}
+.sfr-operate__link svg{width:14px;height:14px;}
