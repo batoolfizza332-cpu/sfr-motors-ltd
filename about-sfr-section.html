@@ -121,7 +121,11 @@
 
   @media (max-width:820px){
     .sfr-about__inner{grid-template-columns:1fr;}
-    .sfr-about__media{max-width:360px;margin:0 auto;}
+    /* width:100% (not just max-width) gives this grid item a definite
+       size to stretch to before the aspect-ratio on .sfr-about__frame
+       tries to resolve — without it, stretch + auto margins + aspect-ratio
+       deadlock and the photo collapses to 0x0 on mobile. */
+    .sfr-about__media{width:100%;max-width:360px;margin-inline:auto;}
   }
   @media (prefers-reduced-motion:reduce){
     .sfr-about__frame img,.sfr-about__btn,.sfr-about__btn svg{transition:none;}
