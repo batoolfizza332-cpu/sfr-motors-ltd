@@ -843,9 +843,9 @@
 <section class="sfr-quote" id="quote-form" aria-labelledby="sfr-quote-heading">
   <div class="sfr-quote__inner">
     <div class="sfr-quote__head">
-      <div class="sfr-quote__eyebrow">Request A Quote</div>
-      <h2 class="sfr-quote__title" id="sfr-quote-heading">Get Your Free, No-Obligation Quote</h2>
-      <p class="sfr-quote__text">Tell us what you need and where you are &mdash; we'll get back to you with a price and an arrival time.</p>
+      <div class="sfr-quote__eyebrow">Mobile Tyre Service Request</div>
+      <h2 class="sfr-quote__title" id="sfr-quote-heading">Request Your Free Tyre Service Quote</h2>
+      <p class="sfr-quote__text">Tell us what you need and where you are &mdash; we'll get back to you with a price and an arrival time. Fields marked * are required; the rest just help us prepare.</p>
     </div>
 
     <form class="sfr-quote__form" id="quote-form-el" novalidate>
@@ -856,33 +856,68 @@
         </div>
         <div class="sfr-quote__field">
           <label for="q-phone">Phone number *</label>
-          <input type="tel" id="q-phone" name="phone" autocomplete="tel" required>
+          <input type="tel" id="q-phone" name="phone" autocomplete="tel" inputmode="tel" required>
         </div>
       </div>
 
       <div class="sfr-quote__row">
         <div class="sfr-quote__field">
-          <label for="q-email">Email (optional)</label>
+          <label for="q-email">Email address (optional)</label>
           <input type="email" id="q-email" name="email" autocomplete="email">
         </div>
         <div class="sfr-quote__field">
-          <label for="q-service">Service needed</label>
-          <select id="q-service" name="service">
+          <label for="q-reg">Vehicle registration (optional)</label>
+          <input type="text" id="q-reg" name="vehicleReg" autocomplete="off" placeholder="AB12 CDE" class="sfr-quote__reg">
+        </div>
+      </div>
+
+      <div class="sfr-quote__row">
+        <div class="sfr-quote__field">
+          <label for="q-vehicle">Vehicle make &amp; model (optional)</label>
+          <input type="text" id="q-vehicle" name="vehicle" autocomplete="off" placeholder="e.g. Ford Focus 2019">
+        </div>
+        <div class="sfr-quote__field">
+          <label for="q-tyre-size">Tyre size (optional)</label>
+          <input type="text" id="q-tyre-size" name="tyreSize" autocomplete="off" placeholder="e.g. 205/55 R16">
+        </div>
+      </div>
+
+      <div class="sfr-quote__row">
+        <div class="sfr-quote__field">
+          <label for="q-service">Service required *</label>
+          <select id="q-service" name="service" required>
             <option value="">Select a service&hellip;</option>
             <option value="Mobile Tyre Fitting">Mobile Tyre Fitting</option>
             <option value="Tyre Replacement">Tyre Replacement</option>
             <option value="Puncture Repair">Puncture Repair</option>
+            <option value="Emergency Tyre Change">Emergency Tyre Change</option>
             <option value="Locking Wheel Nut Removal">Locking Wheel Nut Removal</option>
-            <option value="Trade & Fleet Tyres">Trade &amp; Fleet Tyres</option>
-            <option value="Caravan & Trailer Tyres">Caravan &amp; Trailer Tyres</option>
             <option value="Other">Other</option>
           </select>
+        </div>
+        <div class="sfr-quote__field">
+          <label for="q-location">Current location *</label>
+          <input type="text" id="q-location" name="location" autocomplete="off" placeholder="Address, postcode, or nearest landmark" required>
         </div>
       </div>
 
       <div class="sfr-quote__field">
-        <label for="q-message">Tell us what's happened, and your location *</label>
-        <textarea id="q-message" name="message" required></textarea>
+        <span class="sfr-quote__group-label">Preferred date &amp; time (optional &mdash; leave blank for ASAP)</span>
+        <div class="sfr-quote__row sfr-quote__row--tight">
+          <div class="sfr-quote__field">
+            <label for="q-date" class="sfr-quote__sublabel">Date</label>
+            <input type="date" id="q-date" name="preferredDate" autocomplete="off">
+          </div>
+          <div class="sfr-quote__field">
+            <label for="q-time" class="sfr-quote__sublabel">Time</label>
+            <input type="time" id="q-time" name="preferredTime" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="sfr-quote__field">
+        <label for="q-message">Additional information (optional)</label>
+        <textarea id="q-message" name="message" placeholder="Anything else that would help us, e.g. what's happened to the tyre"></textarea>
       </div>
 
       <!-- Honeypot field: hidden from real users via CSS, left blank by them.
@@ -894,7 +929,7 @@
 
       <button class="sfr-quote__submit" type="submit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
-        Send Request
+        Request A Free Quote
       </button>
 
       <p class="sfr-quote__status" id="quote-form-status" role="status" aria-live="polite"></p>

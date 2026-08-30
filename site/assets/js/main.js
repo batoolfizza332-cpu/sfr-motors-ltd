@@ -48,11 +48,12 @@
       return;
     }
 
-    if (!data.name || !data.phone || !data.message) {
-      setStatus("error", "Please fill in your name, phone number and message.");
+    if (!data.name || !data.phone || !data.service || !data.location) {
+      setStatus("error", "Please fill in your name, phone number, service and current location.");
       return;
     }
 
+    var defaultLabel = "Request A Free Quote";
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending…";
     setStatus("", "");
@@ -65,8 +66,14 @@
         name: data.name,
         phone: data.phone,
         email: data.email || "",
-        service: data.service || "",
-        message: data.message,
+        vehicleReg: data.vehicleReg || "",
+        vehicle: data.vehicle || "",
+        tyreSize: data.tyreSize || "",
+        service: data.service,
+        location: data.location,
+        preferredDate: data.preferredDate || "",
+        preferredTime: data.preferredTime || "",
+        message: data.message || "",
         company: data.company || "" // honeypot, checked again server-side
       })
     })
@@ -86,7 +93,7 @@
       })
       .finally(function () {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Send Request";
+        submitBtn.textContent = defaultLabel;
       });
   });
 })();

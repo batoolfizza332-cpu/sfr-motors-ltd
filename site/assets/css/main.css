@@ -241,6 +241,10 @@ a { text-underline-offset: 2px; }
   outline: none; border-color: #ff6600; box-shadow: 0 0 0 3px rgba(255,102,0,.15);
 }
 .sfr-quote__field textarea { resize: vertical; min-height: 100px; }
+.sfr-quote__reg { text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
+.sfr-quote__group-label { font-size: 13px; font-weight: 700; }
+.sfr-quote__row--tight { gap: 12px; margin-top: 6px; }
+.sfr-quote__sublabel { font-size: 12px; font-weight: 600; color: #6b6864; }
 /* honeypot: hidden from sighted users but present for bots/no JS check */
 .sfr-quote__hp {
   position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;

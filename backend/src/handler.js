@@ -8,7 +8,20 @@ const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "https://sfrmotors.co.uk";
 const TO_EMAIL = process.env.TO_EMAIL || "info@sfrmotors.co.uk";
 const FROM_EMAIL = process.env.FROM_EMAIL || TO_EMAIL;
 
-const MAX_LEN = { name: 100, phone: 30, email: 100, service: 60, message: 2000, company: 100 };
+const MAX_LEN = {
+  name: 100,
+  phone: 30,
+  email: 100,
+  vehicleReg: 20,
+  vehicle: 100,
+  tyreSize: 30,
+  service: 60,
+  location: 200,
+  preferredDate: 20,
+  preferredTime: 20,
+  message: 2000,
+  company: 100,
+};
 
 function corsHeaders() {
   return {
@@ -49,7 +62,13 @@ exports.handler = async (event) => {
   const name = clean(payload.name, MAX_LEN.name);
   const phone = clean(payload.phone, MAX_LEN.phone);
   const email = clean(payload.email, MAX_LEN.email);
+  const vehicleReg = clean(payload.vehicleReg, MAX_LEN.vehicleReg);
+  const vehicle = clean(payload.vehicle, MAX_LEN.vehicle);
+  const tyreSize = clean(payload.tyreSize, MAX_LEN.tyreSize);
   const service = clean(payload.service, MAX_LEN.service);
+  const location = clean(payload.location, MAX_LEN.location);
+  const preferredDate = clean(payload.preferredDate, MAX_LEN.preferredDate);
+  const preferredTime = clean(payload.preferredTime, MAX_LEN.preferredTime);
   const message = clean(payload.message, MAX_LEN.message);
   const company = clean(payload.company, MAX_LEN.company); // honeypot
 
@@ -58,23 +77,32 @@ exports.handler = async (event) => {
     return respond(200, { ok: true });
   }
 
-  if (!name || !phone || !message) {
-    return respond(400, { ok: false, error: "Name, phone and message are required." });
+  if (!name || !phone || !service || !location) {
+    return respond(400, { ok: false, error: "Name, phone, service and current location are required." });
   }
   if (email && !isValidEmail(email)) {
     return respond(400, { ok: false, error: "That email address doesn't look right." });
   }
 
+  const preferredWhen = preferredDate || preferredTime
+    ? [preferredDate, preferredTime].filter(Boolean).join(" ")
+    : "ASAP / not specified";
+
   const textBody = [
-    `New quote request from the SFR Motors website`,
+    `New mobile tyre service request from the SFR Motors website`,
     ``,
     `Name: ${name}`,
     `Phone: ${phone}`,
     `Email: ${email || "(not provided)"}`,
-    `Service: ${service || "(not specified)"}`,
+    `Vehicle registration: ${vehicleReg || "(not provided)"}`,
+    `Vehicle make & model: ${vehicle || "(not provided)"}`,
+    `Tyre size: ${tyreSize || "(not provided)"}`,
+    `Service required: ${service}`,
+    `Current location: ${location}`,
+    `Preferred date & time: ${preferredWhen}`,
     ``,
-    `Message:`,
-    message,
+    `Additional information:`,
+    message || "(none)",
   ].join("\n");
 
   try {
@@ -84,7 +112,7 @@ exports.handler = async (event) => {
         Destination: { ToAddresses: [TO_EMAIL] },
         ReplyToAddresses: email ? [email] : undefined,
         Message: {
-          Subject: { Data: `New quote request — ${name}` },
+          Subject: { Data: `New tyre service request — ${name} (${service})` },
           Body: { Text: { Data: textBody } },
         },
       })
