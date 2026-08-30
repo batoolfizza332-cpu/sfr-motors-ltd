@@ -1539,3 +1539,153 @@ a { text-underline-offset: 2px; }
   @media (prefers-reduced-motion:reduce){
     .sfr-footer__call,.sfr-footer__social a,.sfr-footer__links a,.sfr-footer__contact a{transition:none;}
   }
+
+/* ===== Contact page: page header ===== */
+.sfr-page-hero{
+  --sfr-orange:#ff6600;
+  --sfr-orange-deep:#d94f00;
+  background:linear-gradient(135deg,#16171b,#0b0c0e 75%);
+  color:#fff;
+  text-align:center;
+  padding:clamp(56px,9vw,92px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  border-bottom:3px solid var(--sfr-orange);
+}
+.sfr-page-hero *{box-sizing:border-box;}
+.sfr-page-hero__inner{max-width:720px;margin:0 auto;}
+.sfr-page-hero__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sfr-orange);border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;padding:7px 16px;margin-bottom:20px;
+}
+.sfr-page-hero__eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--sfr-orange);box-shadow:0 0 0 3px rgba(255,102,0,.25);}
+.sfr-page-hero__title{
+  font-size:clamp(30px,5vw,46px);font-weight:900;line-height:1.15;
+  letter-spacing:-0.01em;margin:0 0 14px;text-wrap:balance;
+}
+.sfr-page-hero__text{
+  font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#d8d5d1;
+  max-width:520px;margin:0 auto 32px;
+}
+.sfr-page-hero__actions{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;}
+.sfr-page-hero__btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:15px;font-weight:700;text-decoration:none;
+  border-radius:9px;padding:14px 24px;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease;
+}
+.sfr-page-hero__btn svg{width:16px;height:16px;}
+.sfr-page-hero__btn--primary{background:var(--sfr-orange);color:#12100f;box-shadow:0 10px 22px -12px rgba(255,102,0,.6);}
+.sfr-page-hero__btn--white{background:#fff;color:#12100f;}
+.sfr-page-hero__btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);}
+@media (hover:hover){
+  .sfr-page-hero__btn--primary:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);}
+  .sfr-page-hero__btn--white:hover{background:#f1efec;transform:translateY(-2px);}
+  .sfr-page-hero__btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px);}
+}
+@media (max-width:480px){
+  .sfr-page-hero__actions{flex-direction:column;align-items:stretch;}
+  .sfr-page-hero__btn{justify-content:center;width:100%;}
+}
+@media (prefers-reduced-motion:reduce){.sfr-page-hero__btn{transition:none;}}
+
+/* ===== Contact page: contact details grid ===== */
+.sfr-contactinfo{
+  --sfr-ink:#15161a;--sfr-paper:#ffffff;--sfr-line:#e8e5e1;--sfr-sub:#5c5955;
+  --sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:var(--sfr-paper);
+  padding:clamp(56px,8vw,88px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;color:var(--sfr-ink);
+}
+.sfr-contactinfo *{box-sizing:border-box;}
+.sfr-contactinfo__inner{max-width:1080px;margin:0 auto;}
+.sfr-contactinfo__head{text-align:center;max-width:560px;margin:0 auto clamp(32px,5vw,44px);}
+.sfr-contactinfo__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sfr-orange-deep);margin-bottom:14px;
+}
+.sfr-contactinfo__eyebrow::before,.sfr-contactinfo__eyebrow::after{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+.sfr-contactinfo__title{font-size:clamp(26px,3.6vw,34px);font-weight:900;line-height:1.2;margin:0;text-wrap:balance;}
+.sfr-contactinfo__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.sfr-contactinfo__card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  background:#faf9f7;border:1px solid var(--sfr-line);border-radius:14px;
+  padding:24px;text-decoration:none;color:var(--sfr-ink);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.sfr-contactinfo__icon{
+  width:46px;height:46px;border-radius:10px;border:1.5px solid var(--sfr-ink);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s ease,border-color .18s ease;
+}
+.sfr-contactinfo__icon svg{width:22px;height:22px;stroke:var(--sfr-ink);transition:stroke .18s ease;}
+.sfr-contactinfo__label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sfr-sub);}
+.sfr-contactinfo__value{font-size:16px;font-weight:700;line-height:1.4;}
+@media (hover:hover){
+  .sfr-contactinfo__card:hover{transform:translateY(-5px);border-color:var(--sfr-orange);box-shadow:0 16px 32px -18px rgba(21,22,26,.25);}
+  .sfr-contactinfo__card:hover .sfr-contactinfo__icon{background:var(--sfr-orange);border-color:var(--sfr-orange);}
+  .sfr-contactinfo__card:hover .sfr-contactinfo__icon svg{stroke:#fff;}
+}
+.sfr-contactinfo__card:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+@media (max-width:900px){.sfr-contactinfo__grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.sfr-contactinfo__grid{grid-template-columns:1fr;}}
+@media (prefers-reduced-motion:reduce){.sfr-contactinfo__card{transition:none;}}
+
+/* ===== Contact page: map ===== */
+.sfr-map{
+  --sfr-ink:#15161a;--sfr-paper:#faf9f7;--sfr-line:#e8e5e1;--sfr-sub:#5c5955;
+  --sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:var(--sfr-paper);
+  padding:clamp(56px,8vw,88px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;color:var(--sfr-ink);
+}
+.sfr-map *{box-sizing:border-box;}
+.sfr-map__inner{max-width:1000px;margin:0 auto;}
+.sfr-map__head{text-align:center;max-width:560px;margin:0 auto clamp(28px,4vw,36px);}
+.sfr-map__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sfr-orange-deep);margin-bottom:14px;
+}
+.sfr-map__eyebrow::before,.sfr-map__eyebrow::after{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+.sfr-map__title{font-size:clamp(26px,3.6vw,34px);font-weight:900;line-height:1.2;margin:0 0 10px;text-wrap:balance;}
+.sfr-map__text{font-size:14.5px;color:var(--sfr-sub);margin:0;}
+.sfr-map__frame{
+  position:relative;width:100%;aspect-ratio:16/8;
+  border-radius:14px;overflow:hidden;border:1px solid var(--sfr-line);
+  background:#eceae7;
+}
+.sfr-map__frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.sfr-map__directions{
+  display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+  font-size:14px;font-weight:700;color:var(--sfr-ink);text-decoration:none;
+  border-bottom:1.5px solid var(--sfr-orange);padding-bottom:2px;
+}
+.sfr-map__directions:hover{color:var(--sfr-orange-deep);}
+.sfr-map__directions svg{width:14px;height:14px;}
+@media (max-width:640px){.sfr-map__frame{aspect-ratio:4/5;}}
+
+/* ===== Contact page: short 24/7 emergency strip ===== */
+.sfr-emergency{
+  --sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:#0c0d0f;color:#fff;text-align:center;
+  padding:clamp(36px,5vw,52px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  border-top:3px solid var(--sfr-orange);
+}
+.sfr-emergency *{box-sizing:border-box;}
+.sfr-emergency__inner{max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.sfr-emergency__title{font-size:clamp(20px,3vw,26px);font-weight:900;margin:0;letter-spacing:-0.01em;}
+.sfr-emergency__title span{color:var(--sfr-orange);}
+.sfr-emergency__text{font-size:14.5px;color:#cfcfcf;margin:0;}
+.sfr-emergency__btn{
+  display:inline-flex;align-items:center;gap:9px;margin-top:6px;
+  background:var(--sfr-orange);color:#12100f;font-weight:700;font-size:15px;
+  text-decoration:none;border-radius:9px;padding:14px 28px;
+  transition:background .18s ease,transform .18s ease;
+}
+.sfr-emergency__btn svg{width:16px;height:16px;}
+.sfr-emergency__btn:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);}
+@media (prefers-reduced-motion:reduce){.sfr-emergency__btn{transition:none;}}
