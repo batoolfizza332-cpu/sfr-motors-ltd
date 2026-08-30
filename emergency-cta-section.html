@@ -1,0 +1,160 @@
+<style>
+  .sfr-cta{
+    --sfr-ink:#0e0f11;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.22);
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:var(--sfr-ink);
+    border-top:3px solid var(--sfr-orange);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  }
+  .sfr-cta *{box-sizing:border-box;}
+  .sfr-cta__bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 35%;
+    opacity:.34;
+  }
+  .sfr-cta__overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(115deg, rgba(8,8,9,.96) 0%, rgba(8,8,9,.88) 42%, rgba(8,8,9,.74) 100%),
+      linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
+  }
+  .sfr-cta__inner{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:clamp(64px,10vw,104px) clamp(20px,5vw,32px);
+    text-align:center;
+    color:#fff;
+  }
+  .sfr-cta__eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:7px 16px;
+    margin-bottom:22px;
+  }
+  .sfr-cta__eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+  .sfr-cta__title{
+    font-size:clamp(28px,4.6vw,44px);
+    font-weight:900;
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+    text-wrap:balance;
+  }
+  .sfr-cta__title span{color:var(--sfr-orange);}
+  .sfr-cta__text{
+    font-size:clamp(15px,1.6vw,17px);
+    line-height:1.6;
+    color:#d8d5d1;
+    max-width:520px;
+    margin:0 auto clamp(32px,4vw,40px);
+  }
+  .sfr-cta__actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .sfr-cta__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:15.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:15px 28px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-cta__btn svg{width:18px;height:18px;flex:none;}
+  .sfr-cta__btn--primary{
+    background:var(--sfr-orange);
+    color:#12100f;
+    box-shadow:0 10px 24px -10px rgba(255,102,0,.65);
+  }
+  .sfr-cta__btn--ghost{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid rgba(255,255,255,.55);
+  }
+  .sfr-cta__btn:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-cta__btn--primary:hover{
+      background:var(--sfr-orange-deep);
+      transform:translateY(-2px);
+      box-shadow:0 14px 28px -10px rgba(255,102,0,.75);
+    }
+    .sfr-cta__btn--ghost:hover{
+      border-color:#fff;
+      background:rgba(255,255,255,.08);
+      transform:translateY(-2px);
+    }
+  }
+  @media (max-width:480px){
+    .sfr-cta__actions{flex-direction:column;align-items:stretch;}
+    .sfr-cta__btn{justify-content:center;width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-cta__btn{transition:none;}
+  }
+</style>
+
+<section class="sfr-cta" aria-labelledby="sfr-cta-heading">
+  <img
+    class="sfr-cta__bg"
+    src="cta-bg-mobile-fitter.jpg"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+    decoding="async"
+    width="1920"
+    height="873"
+  />
+  <div class="sfr-cta__overlay"></div>
+
+  <div class="sfr-cta__inner">
+    <span class="sfr-cta__eyebrow"><span class="dot"></span>24/7 Emergency Tyre Assistance</span>
+    <h2 class="sfr-cta__title" id="sfr-cta-heading">Stranded With a Tyre Problem? <span>We Come To You.</span></h2>
+    <p class="sfr-cta__text">Professional mobile tyre assistance at your home, workplace or roadside &mdash; available 24/7.</p>
+
+    <div class="sfr-cta__actions">
+      <a class="sfr-cta__btn sfr-cta__btn--primary" href="tel:01312020289">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/>
+        </svg>
+        Call Now
+      </a>
+      <a class="sfr-cta__btn sfr-cta__btn--ghost" href="https://sfrmotors.co.uk/contact-us/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 4.5h14v11H8.5L5 19Z"/>
+          <path d="M8.5 9h7M8.5 12h4.5"/>
+        </svg>
+        Get a Free Quote
+      </a>
+    </div>
+  </div>
+</section>
