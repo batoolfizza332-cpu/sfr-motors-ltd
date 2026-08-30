@@ -1,0 +1,265 @@
+<style>
+  .sfr-faq{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#5c5955;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-faq *{box-sizing:border-box;}
+  .sfr-faq__inner{max-width:800px;margin:0 auto;}
+  .sfr-faq__head{text-align:center;max-width:560px;margin:0 auto clamp(36px,5vw,52px);}
+  .sfr-faq__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-faq__eyebrow::before,.sfr-faq__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-faq__title{
+    font-size:clamp(27px,3.8vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+
+  .sfr-faq__list{display:flex;flex-direction:column;gap:12px;}
+
+  .sfr-faq__item{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:12px;
+    overflow:hidden;
+    transition:border-color .2s ease;
+  }
+  .sfr-faq__item[open]{border-color:var(--sfr-orange);}
+
+  .sfr-faq__summary{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 22px;
+    cursor:pointer;
+    font-size:15.5px;
+    font-weight:700;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .sfr-faq__summary::-webkit-details-marker{display:none;}
+  .sfr-faq__summary:hover{background:#fff8f3;}
+  .sfr-faq__summary:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:-2px;}
+
+  .sfr-faq__q{flex:1;}
+
+  .sfr-faq__icon{
+    flex:none;
+    width:26px;height:26px;
+    border-radius:50%;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .25s ease, background .2s ease, border-color .2s ease;
+  }
+  .sfr-faq__icon svg{width:12px;height:12px;stroke:var(--sfr-ink);stroke-width:2.4;transition:stroke .2s ease;}
+  .sfr-faq__item[open] .sfr-faq__icon{
+    transform:rotate(135deg);
+    background:var(--sfr-orange);
+    border-color:var(--sfr-orange);
+  }
+  .sfr-faq__item[open] .sfr-faq__icon svg{stroke:#fff;}
+
+  .sfr-faq__panel{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .3s ease;
+  }
+  .sfr-faq__item[open] .sfr-faq__panel{grid-template-rows:1fr;}
+  .sfr-faq__panel-inner{overflow:hidden;}
+  .sfr-faq__panel p{
+    margin:0;
+    padding:0 22px 20px;
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--sfr-sub);
+    max-width:62ch;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sfr-faq__panel,.sfr-faq__icon,.sfr-faq__item{transition:none;}
+  }
+</style>
+
+<section class="sfr-faq" aria-labelledby="sfr-faq-heading">
+  <div class="sfr-faq__inner">
+    <div class="sfr-faq__head">
+      <div class="sfr-faq__eyebrow">FAQs</div>
+      <h2 class="sfr-faq__title" id="sfr-faq-heading">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="sfr-faq__list">
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Do you provide mobile tyre fitting at home?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Yes. We come to your home to fit, repair or replace tyres, so you don't need to drive to a garage or wait in a queue.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Are your mobile tyre services available 24/7?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Yes. SFR Motors Ltd offers 24/7 mobile tyre assistance, including emergency callouts outside normal working hours.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Which areas do SFR Motors cover?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>We cover Bathgate and the wider West Lothian area, plus Edinburgh, Livingston, Falkirk, Linlithgow, Armadale, Broxburn and surrounding towns across Central Scotland.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Can you repair a punctured tyre at the roadside?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>In most cases, yes. Our mobile fitters carry out puncture repairs on-site where it's safe to do so. If a tyre is beyond repair, we'll advise a replacement instead.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Do you provide emergency tyre replacement?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Yes. If your tyre can't be repaired, we carry replacement tyres and can fit a new one at your location, day or night.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Can I choose my preferred tyre brand?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Yes &mdash; let us know your preferred brand and size when you get in touch, and we'll do our best to source and fit it for your vehicle.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">Do you offer locking wheel nut removal?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Yes. If a locking wheel nut is lost, seized or damaged, our fitters can remove it on-site using specialist tools.</p>
+        </div></div>
+      </details>
+
+      <details class="sfr-faq__item" name="sfr-faq">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">How can I book a mobile tyre service?</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>Call us on 0131 202 0289, message us on WhatsApp, or use the contact form on our website to request a quote or book a callout.</p>
+        </div></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you provide mobile tyre fitting at home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We come to your home to fit, repair or replace tyres, so you don't need to drive to a garage or wait in a queue."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are your mobile tyre services available 24/7?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. SFR Motors Ltd offers 24/7 mobile tyre assistance, including emergency callouts outside normal working hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which areas do SFR Motors cover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We cover Bathgate and the wider West Lothian area, plus Edinburgh, Livingston, Falkirk, Linlithgow, Armadale, Broxburn and surrounding towns across Central Scotland."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you repair a punctured tyre at the roadside?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most cases, yes. Our mobile fitters carry out puncture repairs on-site where it's safe to do so. If a tyre is beyond repair, we'll advise a replacement instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you provide emergency tyre replacement?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If your tyre can't be repaired, we carry replacement tyres and can fit a new one at your location, day or night."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I choose my preferred tyre brand?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — let us know your preferred brand and size when you get in touch, and we'll do our best to source and fit it for your vehicle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer locking wheel nut removal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If a locking wheel nut is lost, seized or damaged, our fitters can remove it on-site using specialist tools."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I book a mobile tyre service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call us on 0131 202 0289, message us on WhatsApp, or use the contact form on our website to request a quote or book a callout."
+      }
+    }
+  ]
+}
+</script>
