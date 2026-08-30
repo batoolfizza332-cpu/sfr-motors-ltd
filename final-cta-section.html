@@ -1,0 +1,218 @@
+<style>
+  .sfr-final{
+    --sfr-ink:#0e0f11;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.22);
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:var(--sfr-ink);
+    border-top:3px solid var(--sfr-orange);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  }
+  .sfr-final *{box-sizing:border-box;}
+  .sfr-final__bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 45%;
+    opacity:.3;
+  }
+  .sfr-final__overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(6,6,7,.94) 0%, rgba(6,6,7,.9) 55%, rgba(6,6,7,.97) 100%);
+  }
+  .sfr-final__inner{
+    position:relative;
+    z-index:1;
+    max-width:820px;
+    margin:0 auto;
+    padding:clamp(60px,9vw,100px) clamp(20px,5vw,32px);
+    text-align:center;
+    color:#fff;
+  }
+  .sfr-final__eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:7px 16px;
+    margin-bottom:22px;
+  }
+  .sfr-final__eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+  .sfr-final__title{
+    font-size:clamp(27px,4.4vw,42px);
+    font-weight:900;
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+    text-wrap:balance;
+  }
+  .sfr-final__text{
+    font-size:clamp(15px,1.6vw,16.5px);
+    line-height:1.6;
+    color:#d8d5d1;
+    max-width:520px;
+    margin:0 auto clamp(36px,5vw,44px);
+  }
+
+  .sfr-final__contacts{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:clamp(30px,4vw,36px);
+  }
+  .sfr-final__contact{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    border-radius:11px;
+    padding:16px 12px;
+    transition:transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-final__contact svg{width:20px;height:20px;}
+  .sfr-final__contact-label{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    opacity:.85;
+  }
+  .sfr-final__contact-value{
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .sfr-final__contact--call,
+  .sfr-final__contact--whatsapp{
+    background:var(--sfr-orange);
+    color:#12100f;
+  }
+  .sfr-final__contact--whatsapp{background:#ffffff;color:#12100f;}
+  .sfr-final__contact--email{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid var(--sfr-line);
+  }
+  .sfr-final__contact:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-final__contact--call:hover{background:var(--sfr-orange-deep);color:#fff;transform:translateY(-2px);}
+    .sfr-final__contact--whatsapp:hover{background:#f1efec;transform:translateY(-2px);}
+    .sfr-final__contact--email:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px);}
+  }
+
+  .sfr-final__actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .sfr-final__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:15.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:16px 30px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-final__btn svg{width:18px;height:18px;flex:none;}
+  .sfr-final__btn--primary{
+    background:var(--sfr-orange);
+    color:#12100f;
+    box-shadow:0 10px 24px -10px rgba(255,102,0,.65);
+  }
+  .sfr-final__btn--ghost{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid rgba(255,255,255,.55);
+  }
+  .sfr-final__btn:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-final__btn--primary:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(255,102,0,.75);}
+    .sfr-final__btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px);}
+  }
+
+  @media (max-width:640px){
+    .sfr-final__contacts{grid-template-columns:1fr 1fr;}
+    .sfr-final__contact--email{grid-column:1 / -1;flex-direction:row;justify-content:center;padding:13px;}
+    .sfr-final__contact--call,.sfr-final__contact--whatsapp{padding:18px 10px;}
+    .sfr-final__contact-value{font-size:14.5px;}
+  }
+  @media (max-width:420px){
+    .sfr-final__actions{flex-direction:column;align-items:stretch;}
+    .sfr-final__btn{justify-content:center;width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-final__contact,.sfr-final__btn{transition:none;}
+  }
+</style>
+
+<section class="sfr-final" aria-labelledby="sfr-final-heading">
+  <img
+    class="sfr-final__bg"
+    src="final-cta-bg.jpg"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+    decoding="async"
+    width="1920"
+    height="1010"
+  />
+  <div class="sfr-final__overlay"></div>
+
+  <div class="sfr-final__inner">
+    <span class="sfr-final__eyebrow"><span class="dot"></span>Get In Touch</span>
+    <h2 class="sfr-final__title" id="sfr-final-heading">Need a Mobile Tyre Fitter? We&rsquo;re Ready To Help.</h2>
+    <p class="sfr-final__text">Get professional tyre assistance wherever you are. Contact SFR Motors Ltd today for fast and reliable mobile tyre service.</p>
+
+    <div class="sfr-final__contacts">
+      <a class="sfr-final__contact sfr-final__contact--call" href="tel:01312020289" aria-label="Call SFR Motors on 0131 202 0289">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
+        <span class="sfr-final__contact-label">Call Us</span>
+        <span class="sfr-final__contact-value">0131 202 0289</span>
+      </a>
+      <a class="sfr-final__contact sfr-final__contact--whatsapp" href="https://wa.me/447448427154" target="_blank" rel="noopener" aria-label="Message SFR Motors on WhatsApp, 07448 427154">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5A9.5 9.5 0 0 0 3.6 17l-1.1 4 4.1-1.1A9.5 9.5 0 1 0 12 2.5Zm0 1.8a7.7 7.7 0 0 1 6.5 11.9l-.2.3.6 2.2-2.3-.6-.3.2A7.7 7.7 0 1 1 12 4.3Zm-2.9 3.6c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.1 1.8 2.8 4.4 3.8 2.1.9 2.6.7 3 .6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.4-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.6 9.7 10 8.1 9.7 7.6c-.2-.4-.4-.4-.6-.4Z"/></svg>
+        <span class="sfr-final__contact-label">WhatsApp</span>
+        <span class="sfr-final__contact-value">07448 427154</span>
+      </a>
+      <a class="sfr-final__contact sfr-final__contact--email" href="mailto:info@sfrmotors.co.uk" aria-label="Email SFR Motors at info@sfrmotors.co.uk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v13H4Z"/><path d="M4.5 6l7.5 6.5L19.5 6"/></svg>
+        <span class="sfr-final__contact-label">Email</span>
+        <span class="sfr-final__contact-value">info@sfrmotors.co.uk</span>
+      </a>
+    </div>
+
+    <div class="sfr-final__actions">
+      <a class="sfr-final__btn sfr-final__btn--primary" href="tel:01312020289">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
+        Call Now
+      </a>
+      <a class="sfr-final__btn sfr-final__btn--ghost" href="https://sfrmotors.co.uk/contact-us/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v11H8.5L5 19Z"/><path d="M8.5 9h7M8.5 12h4.5"/></svg>
+        Get A Free Quote
+      </a>
+    </div>
+  </div>
+</section>
