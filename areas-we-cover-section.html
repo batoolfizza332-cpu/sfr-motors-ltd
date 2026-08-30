@@ -1,0 +1,194 @@
+<style>
+  .sfr-areas{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-areas *{box-sizing:border-box;}
+  .sfr-areas__inner{max-width:1120px;margin:0 auto;}
+  .sfr-areas__head{text-align:center;max-width:680px;margin:0 auto clamp(14px,2vw,18px);}
+  .sfr-areas__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-areas__eyebrow::before,.sfr-areas__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-areas__title{
+    font-size:clamp(26px,3.6vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sfr-areas__tagline{
+    text-align:center;
+    font-size:15.5px;
+    font-weight:500;
+    color:var(--sfr-sub);
+    margin:0 auto clamp(36px,5vw,52px);
+    max-width:520px;
+  }
+  .sfr-areas__list{
+    list-style:none;
+    margin:0 0 clamp(36px,5vw,48px);
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+  }
+  .sfr-areas__pin{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:10px;
+    padding:13px 14px;
+    color:var(--sfr-ink);
+    text-decoration:none;
+    font-size:14.5px;
+    font-weight:600;
+    transition:border-color .18s ease, background .18s ease, color .18s ease;
+  }
+  .sfr-areas__pin svg{
+    width:17px;height:17px;flex:none;
+    stroke:var(--sfr-orange);
+    transition:stroke .18s ease;
+  }
+  .sfr-areas__pin:hover,
+  .sfr-areas__pin:focus-visible{
+    border-color:var(--sfr-orange);
+    background:#fff5ec;
+  }
+  .sfr-areas__pin:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+  .sfr-areas__cta{text-align:center;}
+  .sfr-areas__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-orange);
+    color:#12100f;
+    font-size:15px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:14px 30px;
+    transition:background .18s ease;
+  }
+  .sfr-areas__btn svg{width:16px;height:16px;}
+  .sfr-areas__btn:hover{background:var(--sfr-orange-deep);}
+  .sfr-areas__btn:focus-visible{outline:2px solid var(--sfr-orange-deep);outline-offset:3px;}
+  @media (max-width:900px){
+    .sfr-areas__list{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-areas__list{grid-template-columns:repeat(2,1fr);}
+    .sfr-areas__pin{font-size:14px;padding:12px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-areas__pin,.sfr-areas__btn{transition:none;}
+  }
+</style>
+
+<section class="sfr-areas" aria-labelledby="sfr-areas-heading">
+  <div class="sfr-areas__inner">
+    <div class="sfr-areas__head">
+      <div class="sfr-areas__eyebrow">Areas We Cover</div>
+      <h2 class="sfr-areas__title" id="sfr-areas-heading">Mobile Tyre Fitting Across West Lothian, Edinburgh &amp; Central Scotland</h2>
+    </div>
+    <p class="sfr-areas__tagline">We bring professional tyre services directly to you.</p>
+
+    <ul class="sfr-areas__list">
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-bathgate/" aria-label="Mobile tyre fitting in Bathgate">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Bathgate
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-livingston/" aria-label="Mobile tyre fitting in Livingston">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Livingston
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-edinburgh/" aria-label="Mobile tyre fitting in Edinburgh">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Edinburgh
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-west-lothian/" aria-label="Mobile tyre fitting across West Lothian">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        West Lothian
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-falkirk/" aria-label="Mobile tyre fitting in Falkirk">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Falkirk
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-linlithgow/" aria-label="Mobile tyre fitting in Linlithgow">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Linlithgow
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-whitburn/" aria-label="Mobile tyre fitting in Whitburn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Whitburn
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-armadale/" aria-label="Mobile tyre fitting in Armadale">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Armadale
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/broxburn/" aria-label="Mobile tyre fitting in Broxburn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Broxburn
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-Blackburn/" aria-label="Mobile tyre fitting in Blackburn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Blackburn
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-boness/" aria-label="Mobile tyre fitting in Bo'ness">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Bo&rsquo;ness
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-west-calder/" aria-label="Mobile tyre fitting in West Calder">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        West Calder
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-in-addiewell/" aria-label="Mobile tyre fitting in Addiewell">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Addiewell
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-kirkliston/" aria-label="Mobile tyre fitting in Kirkliston">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Kirkliston
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-harthill/" aria-label="Mobile tyre fitting in Harthill">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Harthill
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-Shotts/" aria-label="Mobile tyre fitting in Shotts">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Shotts
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-Wishaw/" aria-label="Mobile tyre fitting in Wishaw">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Wishaw
+      </a></li>
+      <li><a class="sfr-areas__pin" href="https://sfrmotors.co.uk/mobile-tyre-fitting-airdrie/" aria-label="Mobile tyre fitting in Airdrie">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+        Airdrie
+      </a></li>
+    </ul>
+
+    <div class="sfr-areas__cta">
+      <a class="sfr-areas__btn" href="https://sfrmotors.co.uk/contact-us/" aria-label="Contact us to find out if we cover your area">
+        Find Your Area
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
