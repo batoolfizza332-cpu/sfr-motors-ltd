@@ -1530,6 +1530,7 @@ a { text-underline-offset: 2px; }
     .sfr-footer__top{grid-template-columns:1fr;}
     .sfr-footer__social a{width:44px;height:44px;} /* touch-friendly minimum */
     .sfr-footer__call{min-height:48px;}
+    .sfr-footer__contact a{display:inline-block;padding:8px 0;margin:-8px 0;} /* bigger tap area, same visual spacing */
   }
   @media (prefers-reduced-motion:reduce){
     .sfr-footer__call,.sfr-footer__social a,.sfr-footer__links a,.sfr-footer__contact a{transition:none;}
