@@ -1783,3 +1783,24 @@ a { text-underline-offset: 2px; }
   .sfr-how__grid--five{grid-template-columns:repeat(5,1fr);}
   .sfr-how__grid--five.sfr-how__grid::before{left:10%;right:10%;}
 }
+
+/* ===== Centred text band: single-paragraph explainer section ===== */
+.sfr-band{
+  --sfr-ink:#15161a;--sfr-sub:#5c5955;--sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:#fff5ec;
+  padding:clamp(48px,7vw,72px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  text-align:center;
+}
+.sfr-band__inner{max-width:720px;margin:0 auto;}
+.sfr-band__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sfr-orange-deep);margin-bottom:14px;
+}
+.sfr-band__eyebrow::before{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+.sfr-band__title{
+  font-size:clamp(25px,3.2vw,32px);font-weight:900;line-height:1.2;
+  letter-spacing:-0.01em;margin:0 0 14px;color:var(--sfr-ink);text-wrap:balance;
+}
+.sfr-band__text{font-size:15px;line-height:1.7;color:var(--sfr-sub);margin:0;}
