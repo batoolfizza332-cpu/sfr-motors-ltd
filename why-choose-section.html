@@ -1,0 +1,149 @@
+<style>
+  .sfr-why{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-why *{box-sizing:border-box;}
+  .sfr-why__inner{max-width:1120px;margin:0 auto;}
+  .sfr-why__head{text-align:center;max-width:640px;margin:0 auto clamp(36px,5vw,56px);}
+  .sfr-why__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-why__eyebrow::before,.sfr-why__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-why__title{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sfr-why__title span{color:var(--sfr-orange);}
+  .sfr-why__grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .sfr-why__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:28px 22px;
+    text-align:left;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    will-change:transform;
+  }
+  .sfr-why__icon{
+    width:48px;height:48px;
+    border-radius:10px;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .sfr-why__icon svg{width:24px;height:24px;stroke:var(--sfr-ink);transition:stroke .25s ease;}
+  .sfr-why__card h3{
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .sfr-why__card p{
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--sfr-sub);
+    margin:0;
+  }
+  @media (hover:hover){
+    .sfr-why__card:hover{
+      transform:translateY(-6px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.28);
+    }
+    .sfr-why__card:hover .sfr-why__icon{
+      background:var(--sfr-orange);
+      border-color:var(--sfr-orange);
+    }
+    .sfr-why__card:hover .sfr-why__icon svg{stroke:#ffffff;}
+  }
+  @media (max-width:900px){
+    .sfr-why__grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-why__grid{grid-template-columns:1fr;}
+    .sfr-why__card{
+      display:flex;align-items:flex-start;gap:16px;text-align:left;padding:20px;
+    }
+    .sfr-why__icon{margin-bottom:0;flex:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-why__card{transition:none;}
+  }
+</style>
+
+<section class="sfr-why">
+  <div class="sfr-why__inner">
+    <div class="sfr-why__head">
+      <div class="sfr-why__eyebrow">Why SFR Motors</div>
+      <h2 class="sfr-why__title">Why Drivers Choose <span>SFR Motors</span></h2>
+    </div>
+
+    <div class="sfr-why__grid">
+      <div class="sfr-why__card">
+        <div class="sfr-why__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/>
+            <circle cx="12" cy="10.5" r="2.4"/>
+          </svg>
+        </div>
+        <h3>We Come To You</h3>
+        <p>Home, workplace or roadside</p>
+      </div>
+
+      <div class="sfr-why__card">
+        <div class="sfr-why__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.5"/>
+            <path d="M12 7.5V12l3 2"/>
+          </svg>
+        </div>
+        <h3>24/7 Emergency Support</h3>
+        <p>Day or night</p>
+      </div>
+
+      <div class="sfr-why__card">
+        <div class="sfr-why__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/>
+          </svg>
+        </div>
+        <h3>Fast Response</h3>
+        <p>Professional mobile tyre assistance</p>
+      </div>
+
+      <div class="sfr-why__card">
+        <div class="sfr-why__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.5 4.5 5.5v6c0 5 3.2 8.2 7.5 10 4.3-1.8 7.5-5 7.5-10v-6L12 2.5Z"/>
+            <path d="m9 12 2 2 4-4.5"/>
+          </svg>
+        </div>
+        <h3>Secure. Fast. Reliable.</h3>
+        <p>Experienced and trusted service</p>
+      </div>
+    </div>
+  </div>
+</section>
