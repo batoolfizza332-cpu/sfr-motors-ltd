@@ -1804,3 +1804,5 @@ a { text-underline-offset: 2px; }
   letter-spacing:-0.01em;margin:0 0 14px;color:var(--sfr-ink);text-wrap:balance;
 }
 .sfr-band__text{font-size:15px;line-height:1.7;color:var(--sfr-sub);margin:0;}
+.sfr-band__text a{color:var(--sfr-orange-deep);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;}
+.sfr-band__text a:hover{color:var(--sfr-orange);}
