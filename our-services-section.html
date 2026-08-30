@@ -1,0 +1,230 @@
+<style>
+  .sfr-services{
+    --sfr-ink:#15161a;
+    --sfr-paper:#ffffff;
+    --sfr-card:#faf9f7;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-services *{box-sizing:border-box;}
+  .sfr-services__inner{max-width:1160px;margin:0 auto;}
+  .sfr-services__head{text-align:center;max-width:640px;margin:0 auto clamp(36px,5vw,56px);}
+  .sfr-services__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-services__eyebrow::before,.sfr-services__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-services__title{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0 0 12px;
+    text-wrap:balance;
+  }
+  .sfr-services__title span{color:var(--sfr-orange);}
+  .sfr-services__intro{
+    font-size:15px;
+    line-height:1.6;
+    color:var(--sfr-sub);
+    margin:0;
+  }
+  .sfr-services__grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .sfr-services__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    text-align:left;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sfr-services__icon{
+    width:50px;height:50px;
+    border-radius:10px;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .sfr-services__icon svg{width:25px;height:25px;stroke:var(--sfr-ink);transition:stroke .25s ease;}
+  .sfr-services__card h3{
+    font-size:18px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .sfr-services__card p{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--sfr-sub);
+    margin:0 0 18px;
+    flex-grow:1;
+  }
+  .sfr-services__link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--sfr-orange-deep);
+    text-decoration:none;
+    width:fit-content;
+  }
+  .sfr-services__link svg{width:14px;height:14px;stroke:currentColor;transition:transform .2s ease;}
+  .sfr-services__link:hover{color:var(--sfr-orange);}
+  .sfr-services__link:hover svg{transform:translateX(3px);}
+  .sfr-services__link:focus-visible,
+  .sfr-services__card:focus-within{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-services__card:hover{
+      transform:translateY(-6px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.28);
+    }
+    .sfr-services__card:hover .sfr-services__icon{
+      background:var(--sfr-orange);
+      border-color:var(--sfr-orange);
+    }
+    .sfr-services__card:hover .sfr-services__icon svg{stroke:#ffffff;}
+  }
+  @media (max-width:900px){
+    .sfr-services__grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-services__grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-services__card{transition:none;}
+    .sfr-services__link svg{transition:none;}
+  }
+</style>
+
+<section class="sfr-services" aria-labelledby="sfr-services-heading">
+  <div class="sfr-services__inner">
+    <div class="sfr-services__head">
+      <div class="sfr-services__eyebrow">What We Offer</div>
+      <h2 class="sfr-services__title" id="sfr-services-heading">Our Mobile Tyre <span>Services</span></h2>
+      <p class="sfr-services__intro">Fully equipped mobile fitting vans covering Bathgate and West Lothian, 24/7 &mdash; we bring the workshop to your home, workplace or the roadside.</p>
+    </div>
+
+    <div class="sfr-services__grid">
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.5"/>
+            <circle cx="12" cy="12" r="2.6"/>
+            <path d="M12 3.5v2.4M12 18.1v2.4M20.5 12h-2.4M5.9 12H3.5M17.5 6.5l-1.7 1.7M8.2 15.8l-1.7 1.7M17.5 17.5l-1.7-1.7M8.2 8.2 6.5 6.5"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Mobile Tyre Fitting</h3>
+        <p itemprop="description">New tyre fitting at your home, workplace or roadside, no garage visit needed. Our vans carry a wide range of sizes and brands to get you moving fast.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/mobile-tyre-fitting-bathgate/" aria-label="Learn more about Mobile Tyre Fitting">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12a8 8 0 0 1 13.5-5.8M20 12a8 8 0 0 1-13.5 5.8"/>
+            <path d="M17.5 3v3.5H14M6.5 21v-3.5H10"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Mobile Tyre Replacement</h3>
+        <p itemprop="description">Worn, damaged or flat tyre swapped on the spot, 24/7. We match the correct tyre for your vehicle and fit it safely wherever you're parked.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/24-7-mobile-tyre-replacement/" aria-label="Learn more about Mobile Tyre Replacement">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 3.5 20.5 9.5 9.5 20.5 3.5 20.5 3.5 14.5Z"/>
+            <path d="m13 8 3 3"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Mobile Puncture Repair</h3>
+        <p itemprop="description">Safe, industry-standard puncture repair carried out on-site in Bathgate and beyond. A quick inspection tells you if your tyre can be repaired or needs replacing.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/mobile-tyre-puncture-repair/" aria-label="Learn more about Mobile Puncture Repair">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="10.5" width="14" height="10" rx="2"/>
+            <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Locking Wheel Nut Removal</h3>
+        <p itemprop="description">Lost your locking wheel nut key? We remove locked wheel nuts on-site using specialist tools, without damaging your alloys.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/mobile-locking-wheel-nut-removal/" aria-label="Learn more about Locking Wheel Nut Removal">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 16V9a1 1 0 0 1 1-1h9v8"/>
+            <path d="M13 11h5l3 3v2h-2"/>
+            <circle cx="7.5" cy="17" r="1.8"/>
+            <circle cx="16.5" cy="17" r="1.8"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Trade &amp; Fleet Tyre Services</h3>
+        <p itemprop="description">Scheduled or emergency tyre cover for vans, fleets and trade accounts, minimising vehicle downtime with fast on-site response across West Lothian.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/trade-fleet-tyre-services/" aria-label="Learn more about Trade and Fleet Tyre Services">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+      <article class="sfr-services__card" itemscope itemtype="https://schema.org/Service">
+        <meta itemprop="areaServed" content="Bathgate, West Lothian" />
+        <div class="sfr-services__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 16.5h6v-6h-6Z"/>
+            <path d="M8.5 12.5h6l4 2.5v1.5h-2"/>
+            <circle cx="5.5" cy="18.5" r="1.6"/>
+            <circle cx="15.5" cy="18.5" r="1.6"/>
+          </svg>
+        </div>
+        <h3 itemprop="name">Caravan &amp; Trailer Tyre Fitting</h3>
+        <p itemprop="description">Specialist mobile fitting for caravan and trailer tyres, checked and changed at your storage site or pitch so you're ready for the road.</p>
+        <a class="sfr-services__link" itemprop="url" href="https://sfrmotors.co.uk/mobile-trailer-and-caravan-tyre-fitting/" aria-label="Learn more about Caravan and Trailer Tyre Fitting">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
