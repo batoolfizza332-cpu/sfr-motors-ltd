@@ -1,0 +1,241 @@
+<style>
+  .sfr-footer{
+    --sfr-ink:#0c0d0f;
+    --sfr-ink-2:#161719;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.12);
+    --sfr-body:#b9b6b2;
+    background:var(--sfr-ink);
+    color:#fff;
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    border-top:3px solid var(--sfr-orange);
+  }
+  .sfr-footer *{box-sizing:border-box;}
+  .sfr-footer a{color:inherit;}
+
+  .sfr-footer__top{
+    max-width:1160px;
+    margin:0 auto;
+    padding:clamp(48px,7vw,72px) clamp(20px,5vw,32px) clamp(36px,5vw,48px);
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr 1.1fr;
+    gap:clamp(28px,4vw,40px);
+  }
+
+  .sfr-footer__brand-name{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-0.01em;
+    margin:0 0 8px;
+  }
+  .sfr-footer__brand-name span{color:var(--sfr-orange);}
+  .sfr-footer__tagline{
+    font-size:13.5px;
+    color:var(--sfr-body);
+    margin:0 0 2px;
+  }
+  .sfr-footer__motto{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    margin:0 0 22px;
+  }
+
+  .sfr-footer__badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:6px 13px;
+    margin-bottom:20px;
+  }
+  .sfr-footer__badge .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+
+  .sfr-footer__call{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-orange);
+    color:#12100f;
+    font-size:14.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:13px 22px;
+    margin-bottom:22px;
+    transition:background .18s ease, transform .18s ease;
+  }
+  .sfr-footer__call svg{width:16px;height:16px;}
+  .sfr-footer__call:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);}
+  .sfr-footer__call:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+
+  .sfr-footer__social{display:flex;gap:10px;}
+  .sfr-footer__social a{
+    width:36px;height:36px;
+    border-radius:9px;
+    border:1px solid var(--sfr-line);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .18s ease, background .18s ease, transform .18s ease;
+  }
+  .sfr-footer__social svg{width:16px;height:16px;fill:#fff;}
+  .sfr-footer__social a:hover{background:var(--sfr-orange);border-color:var(--sfr-orange);transform:translateY(-2px);}
+  .sfr-footer__social a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__heading{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin:0 0 18px;
+    position:relative;
+    padding-bottom:12px;
+  }
+  .sfr-footer__heading::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:0;
+    width:26px;height:2px;
+    background:var(--sfr-orange);
+    border-radius:2px;
+  }
+
+  .sfr-footer__links{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+  .sfr-footer__links a{
+    font-size:14px;
+    color:var(--sfr-body);
+    text-decoration:none;
+    transition:color .15s ease;
+  }
+  .sfr-footer__links a:hover{color:var(--sfr-orange);}
+  .sfr-footer__links a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__address{font-style:normal;margin:0;}
+  .sfr-footer__contact{list-style:none;margin:0;padding:0;display:grid;gap:13px;}
+  .sfr-footer__contact li{display:flex;align-items:flex-start;gap:10px;}
+  .sfr-footer__contact svg{width:16px;height:16px;flex:none;margin-top:2px;stroke:var(--sfr-orange);}
+  .sfr-footer__contact a,
+  .sfr-footer__contact span{
+    font-size:14px;
+    color:var(--sfr-body);
+    text-decoration:none;
+    line-height:1.5;
+  }
+  .sfr-footer__contact a:hover{color:var(--sfr-orange);}
+  .sfr-footer__contact a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__bottom{
+    border-top:1px solid var(--sfr-line);
+  }
+  .sfr-footer__bottom-inner{
+    max-width:1160px;
+    margin:0 auto;
+    padding:18px clamp(20px,5vw,32px);
+    text-align:center;
+    font-size:13px;
+    color:var(--sfr-body);
+  }
+
+  @media (max-width:900px){
+    .sfr-footer__top{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .sfr-footer__top{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-footer__call,.sfr-footer__social a,.sfr-footer__links a,.sfr-footer__contact a{transition:none;}
+  }
+</style>
+
+<footer class="sfr-footer">
+  <div class="sfr-footer__top">
+
+    <div class="sfr-footer__col">
+      <p class="sfr-footer__brand-name">SFR <span>Motors</span> Ltd</p>
+      <p class="sfr-footer__tagline">Mobile Tyre Fitting &amp; Repair</p>
+      <p class="sfr-footer__motto">Secure. Fast. Reliable.</p>
+
+      <span class="sfr-footer__badge"><span class="dot"></span>Open 24/7</span><br/>
+
+      <a class="sfr-footer__call" href="tel:01312020289">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
+        Call Now
+      </a>
+
+      <div class="sfr-footer__social">
+        <a href="#" aria-label="SFR Motors on Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg>
+        </a>
+        <a href="#" aria-label="SFR Motors on Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c2.7 0 3 0 4.1.06 1.1.05 1.8.22 2.4.46.7.27 1.2.62 1.7 1.12.5.5.85 1 1.12 1.7.24.6.41 1.3.46 2.4.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1.1-.22 1.8-.46 2.4a4.6 4.6 0 0 1-1.12 1.7c-.5.5-1 .85-1.7 1.12-.6.24-1.3.41-2.4.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1.1-.05-1.8-.22-2.4-.46a4.6 4.6 0 0 1-1.7-1.12 4.6 4.6 0 0 1-1.12-1.7c-.24-.6-.41-1.3-.46-2.4C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1.1.22-1.8.46-2.4.27-.7.62-1.2 1.12-1.7.5-.5 1-.85 1.7-1.12.6-.24 1.3-.41 2.4-.46C9 2.2 9.3 2.2 12 2.2Zm0 1.8c-2.66 0-2.97 0-4.02.06-.9.04-1.4.2-1.7.32-.44.17-.75.37-1.08.7-.33.33-.53.64-.7 1.08-.13.32-.28.8-.32 1.7C4.12 9.03 4.12 9.34 4.12 12s0 2.97.06 4.02c.04.9.2 1.4.32 1.7.17.44.37.75.7 1.08.33.33.64.53 1.08.7.32.13.8.28 1.7.32 1.05.06 1.36.06 4.02.06s2.97 0 4.02-.06c.9-.04 1.4-.2 1.7-.32.44-.17.75-.37 1.08-.7.33-.33.53-.64.7-1.08.13-.32.28-.8.32-1.7.06-1.05.06-1.36.06-4.02s0-2.97-.06-4.02c-.04-.9-.2-1.4-.32-1.7a2.8 2.8 0 0 0-.7-1.08 2.8 2.8 0 0 0-1.08-.7c-.32-.13-.8-.28-1.7-.32C14.97 4 14.66 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.1-2a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <nav class="sfr-footer__col" aria-label="Quick links">
+      <h3 class="sfr-footer__heading">Quick Links</h3>
+      <ul class="sfr-footer__links">
+        <li><a href="https://sfrmotors.co.uk/">Home</a></li>
+        <li><a href="https://sfrmotors.co.uk/about-us/">About Us</a></li>
+        <li><a href="#sfr-services-heading">Services</a></li>
+        <li><a href="#sfr-areas-heading">Areas We Cover</a></li>
+        <li><a href="#sfr-faq-heading">FAQ</a></li>
+        <li><a href="https://sfrmotors.co.uk/contact-us/">Contact</a></li>
+      </ul>
+    </nav>
+
+    <nav class="sfr-footer__col" aria-label="Our services">
+      <h3 class="sfr-footer__heading">Our Services</h3>
+      <ul class="sfr-footer__links">
+        <li><a href="https://sfrmotors.co.uk/mobile-tyre-fitting-bathgate/">Mobile Tyre Fitting</a></li>
+        <li><a href="https://sfrmotors.co.uk/24-7-mobile-tyre-replacement/">Tyre Replacement</a></li>
+        <li><a href="https://sfrmotors.co.uk/mobile-tyre-puncture-repair/">Puncture Repair</a></li>
+        <li><a href="https://sfrmotors.co.uk/mobile-locking-wheel-nut-removal/">Locking Wheel Nut Removal</a></li>
+        <li><a href="https://sfrmotors.co.uk/trade-fleet-tyre-services/">Trade &amp; Fleet Tyres</a></li>
+        <li><a href="https://sfrmotors.co.uk/mobile-trailer-and-caravan-tyre-fitting/">Caravan &amp; Trailer Tyres</a></li>
+      </ul>
+    </nav>
+
+    <div class="sfr-footer__col">
+      <h3 class="sfr-footer__heading">Contact Us</h3>
+      <address class="sfr-footer__address">
+      <ul class="sfr-footer__contact">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
+          <a href="tel:01312020289">0131 202 0289</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
+          <a href="https://wa.me/447448427154" target="_blank" rel="noopener">07448 427154</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M4 5.5h16v13H4Z"/><path d="M4.5 6l7.5 6.5L19.5 6"/></svg>
+          <a href="mailto:info@sfrmotors.co.uk">info@sfrmotors.co.uk</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
+          <a href="https://www.google.com/maps/search/?api=1&query=SFR+Motors+Ltd+Mobile+Tyre+Fitters+Bathgate" target="_blank" rel="noopener">Bathgate, West Lothian</a>
+        </li>
+      </ul>
+      </address>
+    </div>
+
+  </div>
+
+  <div class="sfr-footer__bottom">
+    <div class="sfr-footer__bottom-inner">
+      &copy; 2026 SFR Motors Ltd. All Rights Reserved.
+    </div>
+  </div>
+</footer>
