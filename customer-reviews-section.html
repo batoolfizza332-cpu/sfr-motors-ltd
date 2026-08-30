@@ -1,0 +1,231 @@
+<style>
+  .sfr-reviews{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-reviews *{box-sizing:border-box;}
+  .sfr-reviews__inner{max-width:1120px;margin:0 auto;}
+  .sfr-reviews__head{text-align:center;max-width:620px;margin:0 auto clamp(28px,4vw,34px);}
+  .sfr-reviews__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-reviews__eyebrow::before,.sfr-reviews__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-reviews__title{
+    font-size:clamp(27px,3.8vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+
+  .sfr-reviews__rating{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin:0 auto clamp(44px,6vw,60px);
+    padding:16px 26px;
+    max-width:fit-content;
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    background:var(--sfr-card);
+  }
+  .sfr-reviews__score{
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    line-height:1;
+  }
+  .sfr-reviews__rating-meta{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+  .sfr-reviews__stars{display:flex;gap:2px;}
+  .sfr-reviews__stars svg{width:16px;height:16px;fill:var(--sfr-orange);}
+  .sfr-reviews__count{
+    display:flex;align-items:center;gap:6px;
+    font-size:13.5px;font-weight:600;color:var(--sfr-sub);
+  }
+  .sfr-reviews__count svg{width:15px;height:15px;flex:none;}
+
+  .sfr-reviews__grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    margin-bottom:clamp(36px,5vw,48px);
+  }
+  .sfr-reviews__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:26px 24px;
+    display:flex;
+    flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sfr-reviews__card-stars{display:flex;gap:2px;margin-bottom:14px;}
+  .sfr-reviews__card-stars svg{width:15px;height:15px;fill:var(--sfr-orange);}
+  .sfr-reviews__quote{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--sfr-ink);
+    margin:0 0 20px;
+    flex-grow:1;
+  }
+  .sfr-reviews__author{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding-top:14px;
+    border-top:1px solid var(--sfr-line);
+    font-size:13.5px;
+  }
+  .sfr-reviews__author-name{font-weight:700;}
+  .sfr-reviews__source{
+    display:flex;align-items:center;gap:5px;
+    color:var(--sfr-sub);font-size:12.5px;font-weight:600;
+  }
+  .sfr-reviews__source svg{width:13px;height:13px;}
+  @media (hover:hover){
+    .sfr-reviews__card:hover{
+      transform:translateY(-5px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.25);
+    }
+  }
+
+  .sfr-reviews__cta{text-align:center;}
+  .sfr-reviews__link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--sfr-ink);
+    text-decoration:none;
+    border:1.5px solid var(--sfr-ink);
+    border-radius:999px;
+    padding:11px 22px;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .sfr-reviews__link svg{width:14px;height:14px;stroke:currentColor;}
+  .sfr-reviews__link:hover{
+    background:var(--sfr-ink);
+    color:#fff;
+  }
+  .sfr-reviews__link:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+
+  @media (max-width:900px){
+    .sfr-reviews__grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .sfr-reviews__grid{grid-template-columns:1fr;}
+    .sfr-reviews__rating{flex-direction:column;gap:8px;text-align:center;}
+    .sfr-reviews__rating-meta{align-items:center;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-reviews__card,.sfr-reviews__link{transition:none;}
+  }
+</style>
+
+<section class="sfr-reviews" aria-labelledby="sfr-reviews-heading">
+  <div class="sfr-reviews__inner">
+    <div class="sfr-reviews__head">
+      <div class="sfr-reviews__eyebrow">Customer Reviews</div>
+      <h2 class="sfr-reviews__title" id="sfr-reviews-heading">Trusted by Drivers Across Scotland</h2>
+    </div>
+
+    <div class="sfr-reviews__rating">
+      <span class="sfr-reviews__score">4.9</span>
+      <div class="sfr-reviews__rating-meta">
+        <span class="sfr-reviews__stars" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+        </span>
+        <span class="sfr-reviews__count">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.4H12v4.5h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4C22.2 19 23.5 16 23.5 12.3Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.1-3.9 1.1-3 0-5.6-2-6.5-4.8h-4.1v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.5 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4V6.5H1.4C.5 8.2 0 10 0 12s.5 3.8 1.4 5.5l4.1-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.5 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.5l4.1 3.1c.9-2.8 3.5-4.8 6.5-4.8Z"/></svg>
+          278 Google Reviews
+        </span>
+      </div>
+    </div>
+
+    <div class="sfr-reviews__grid">
+      <article class="sfr-reviews__card">
+        <div class="sfr-reviews__card-stars" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+        </div>
+        <p class="sfr-reviews__quote">&ldquo;Very pleased with service. Turned up within an hour as I was located in centre of Edinburgh. No fuss with tyre change and he was very pleasant to speak with and explained what had happened to my tyre. All in all would highly recommend this service if required.&rdquo;</p>
+        <div class="sfr-reviews__author">
+          <span class="sfr-reviews__author-name">Mark Cooney</span>
+          <span class="sfr-reviews__source">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.4H12v4.5h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4C22.2 19 23.5 16 23.5 12.3Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.1-3.9 1.1-3 0-5.6-2-6.5-4.8h-4.1v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.5 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4V6.5H1.4C.5 8.2 0 10 0 12s.5 3.8 1.4 5.5l4.1-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.5 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.5l4.1 3.1c.9-2.8 3.5-4.8 6.5-4.8Z"/></svg>
+            Google Review
+          </span>
+        </div>
+      </article>
+
+      <article class="sfr-reviews__card">
+        <div class="sfr-reviews__card-stars" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+        </div>
+        <p class="sfr-reviews__quote">&ldquo;Great service! So much so that the tyre fitter was here at our house within 30 minutes of first contact! Very professional, efficient, and got my wife&rsquo;s car sorted within a matter of minutes. Fair pricing and excellent customer communication. Thoroughly recommend for anyone needing urgent tyre work.&rdquo;</p>
+        <div class="sfr-reviews__author">
+          <span class="sfr-reviews__author-name">Jord Nelson</span>
+          <span class="sfr-reviews__source">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.4H12v4.5h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4C22.2 19 23.5 16 23.5 12.3Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.1-3.9 1.1-3 0-5.6-2-6.5-4.8h-4.1v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.5 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4V6.5H1.4C.5 8.2 0 10 0 12s.5 3.8 1.4 5.5l4.1-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.5 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.5l4.1 3.1c.9-2.8 3.5-4.8 6.5-4.8Z"/></svg>
+            Google Review
+          </span>
+        </div>
+      </article>
+
+      <article class="sfr-reviews__card">
+        <div class="sfr-reviews__card-stars" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+          <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.2L4.6 17.8l1.3-6L1.3 7.7l6.1-.6L10 1.5Z"/></svg>
+        </div>
+        <p class="sfr-reviews__quote">&ldquo;Had a puncture in my tyre and phoned a few people and SFR Motors were the only ones that answered my call. So easy to communicate with and make payment too! He was there within an hour of the call and got my tyre changed very fast, lovely friendly guy can&rsquo;t recommend him enough!&rdquo;</p>
+        <div class="sfr-reviews__author">
+          <span class="sfr-reviews__author-name">Sophie Morrison</span>
+          <span class="sfr-reviews__source">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.4H12v4.5h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4C22.2 19 23.5 16 23.5 12.3Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.1-3.9 1.1-3 0-5.6-2-6.5-4.8h-4.1v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.5 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4V6.5H1.4C.5 8.2 0 10 0 12s.5 3.8 1.4 5.5l4.1-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.5 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.5l4.1 3.1c.9-2.8 3.5-4.8 6.5-4.8Z"/></svg>
+            Google Review
+          </span>
+        </div>
+      </article>
+    </div>
+
+    <div class="sfr-reviews__cta">
+      <a class="sfr-reviews__link" href="https://www.google.com/maps/search/?api=1&query=SFR+Motors+Ltd+Mobile+Tyre+Fitters+Bathgate" target="_blank" rel="noopener">
+        See More Google Reviews
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
