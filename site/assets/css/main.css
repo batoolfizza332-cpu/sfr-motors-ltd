@@ -1753,3 +1753,27 @@ a { text-underline-offset: 2px; }
 }
 .sfr-operate__link:hover{color:var(--sfr-orange-deep);}
 .sfr-operate__link svg{width:14px;height:14px;}
+
+/* ===== 4-step "How It Works" grid (service pages) ===== */
+@media (min-width:761px){
+  .sfr-how__grid--four{grid-template-columns:repeat(4,1fr);}
+  .sfr-how__grid--four.sfr-how__grid::before{left:12.5%;right:12.5%;}
+}
+
+/* ===== Breadcrumb (deep/service pages) ===== */
+.sfr-breadcrumb{
+  background:#faf9f7;
+  border-bottom:1px solid #e8e5e1;
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+}
+.sfr-breadcrumb ol{
+  list-style:none;margin:0;padding:12px clamp(20px,5vw,32px);
+  max-width:1200px;margin-inline:auto;
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  font-size:13px;color:#6b6864;
+}
+.sfr-breadcrumb li{display:flex;align-items:center;gap:6px;}
+.sfr-breadcrumb li:not(:last-child)::after{content:"/";color:#c9c5c0;}
+.sfr-breadcrumb a{color:#6b6864;text-decoration:none;}
+.sfr-breadcrumb a:hover{color:#ff6600;}
+.sfr-breadcrumb li[aria-current="page"]{color:#15161a;font-weight:600;}
