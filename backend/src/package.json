@@ -1,0 +1,10 @@
+{
+  "name": "sfr-motors-quote-form",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lambda handler for the SFR Motors quote/contact form",
+  "main": "handler.js",
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.700.0"
+  }
+}

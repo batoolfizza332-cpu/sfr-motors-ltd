@@ -1,0 +1,1506 @@
+/* ===== Reset & base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #15161a;
+  font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid #ff6600; outline-offset: 2px; }
+
+/* ===== Skip link ===== */
+.sfr-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #ff6600;
+  color: #12100f;
+  font-weight: 700;
+  padding: 12px 18px;
+  z-index: 1000;
+  border-radius: 0 0 8px 0;
+  text-decoration: none;
+}
+.sfr-skip:focus { left: 0; }
+
+/* ===== Top utility bar ===== */
+.sfr-topbar {
+  background: #0c0d0f;
+  color: #cfcfcf;
+  font-size: 13px;
+}
+.sfr-topbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.sfr-topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+.sfr-topbar a:hover { color: #ff6600; }
+.sfr-topbar__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #8fd18f;
+  font-weight: 600;
+}
+.sfr-topbar__open .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #4caf50;
+}
+@media (max-width: 640px) {
+  .sfr-topbar__areas { display: none; }
+}
+
+/* ===== Header / nav ===== */
+.sfr-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #eceae7;
+}
+.sfr-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.sfr-header__brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #15161a; }
+.sfr-header__brand img { width: 42px; height: 42px; border-radius: 8px; }
+.sfr-header__brand-text { line-height: 1.15; }
+.sfr-header__brand-name { display: block; font-weight: 900; font-size: 16px; letter-spacing: -0.01em; }
+.sfr-header__brand-motto { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #ff6600; }
+
+.sfr-nav { display: flex; align-items: center; gap: 28px; }
+.sfr-nav__links { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+.sfr-nav__links a {
+  color: #15161a; text-decoration: none; font-size: 14.5px; font-weight: 600;
+  padding: 6px 0; border-bottom: 2px solid transparent;
+}
+.sfr-nav__links a:hover { color: #ff6600; border-color: #ff6600; }
+
+.sfr-header__call {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #ff6600; color: #12100f; font-weight: 700; font-size: 14px;
+  text-decoration: none; border-radius: 8px; padding: 10px 18px;
+  transition: background .18s ease;
+}
+.sfr-header__call svg { width: 15px; height: 15px; }
+.sfr-header__call:hover { background: #d94f00; color: #fff; }
+
+.sfr-nav__toggle {
+  display: none;
+  background: none; border: 1px solid #e2ded9; border-radius: 8px;
+  width: 42px; height: 42px; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.sfr-nav__toggle svg { width: 20px; height: 20px; }
+
+@media (max-width: 860px) {
+  .sfr-nav__toggle { display: inline-flex; }
+  .sfr-nav__links {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: #fff; border-bottom: 1px solid #eceae7;
+    flex-direction: column; gap: 0;
+    max-height: 0; overflow: hidden;
+    transition: max-height .25s ease;
+  }
+  .sfr-nav[data-open="true"] .sfr-nav__links { max-height: 420px; }
+  .sfr-nav__links a { display: block; padding: 14px 20px; border-bottom: 1px solid #f1efec; }
+  .sfr-header__inner { position: relative; }
+}
+@media (max-width: 480px) {
+  .sfr-header__call span { display: none; }
+  .sfr-header__call { padding: 10px 12px; }
+}
+
+/* ===== Hero ===== */
+.sfr-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0c0d0f;
+  color: #fff;
+}
+.sfr-hero__bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%;
+}
+.sfr-hero__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(6,6,7,.94) 15%, rgba(6,6,7,.72) 55%, rgba(6,6,7,.45) 100%);
+}
+.sfr-hero__inner {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(64px, 11vw, 120px) 20px clamp(56px, 8vw, 96px);
+}
+.sfr-hero__badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; color: #15161a; font-weight: 700; font-size: 13px;
+  border-radius: 999px; padding: 7px 14px; margin-bottom: 22px;
+}
+.sfr-hero__badge svg { width: 14px; height: 14px; fill: #ff6600; }
+.sfr-hero__title {
+  font-size: clamp(30px, 5.4vw, 52px);
+  font-weight: 900; line-height: 1.1; letter-spacing: -0.01em;
+  max-width: 720px; margin: 0 0 16px; text-wrap: balance;
+}
+.sfr-hero__subtitle {
+  font-size: clamp(16px, 2vw, 19px); font-weight: 700; color: #ff6600;
+  margin: 0 0 16px; letter-spacing: -0.01em;
+}
+.sfr-hero__text {
+  font-size: 15.5px; line-height: 1.65; color: #d8d5d1;
+  max-width: 560px; margin: 0 0 32px;
+}
+.sfr-hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.sfr-hero__btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 15px; font-weight: 700; text-decoration: none;
+  border-radius: 9px; padding: 15px 26px;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.sfr-hero__btn svg { width: 16px; height: 16px; }
+.sfr-hero__btn--primary { background: #ff6600; color: #12100f; box-shadow: 0 10px 22px -12px rgba(255,102,0,.6); }
+.sfr-hero__btn--ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.5); }
+@media (hover: hover) {
+  .sfr-hero__btn--primary:hover { background: #d94f00; transform: translateY(-2px); }
+  .sfr-hero__btn--ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); transform: translateY(-2px); }
+}
+.sfr-hero__meta { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13.5px; color: #cfcfcf; }
+.sfr-hero__meta span { display: inline-flex; align-items: center; gap: 7px; }
+.sfr-hero__meta svg { width: 15px; height: 15px; stroke: #ff6600; }
+
+/* ===== Quote / contact form ===== */
+.sfr-quote {
+  background: #faf9f7;
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 32px);
+  font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+  color: #15161a;
+}
+.sfr-quote *{ box-sizing: border-box; }
+.sfr-quote__inner { max-width: 720px; margin: 0 auto; }
+.sfr-quote__head { text-align: center; max-width: 560px; margin: 0 auto 36px; }
+.sfr-quote__eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: #d94f00; margin-bottom: 14px;
+}
+.sfr-quote__eyebrow::before, .sfr-quote__eyebrow::after { content: ""; width: 20px; height: 2px; background: #ff6600; border-radius: 2px; }
+.sfr-quote__title { font-size: clamp(26px, 3.6vw, 34px); font-weight: 900; line-height: 1.2; margin: 0 0 10px; text-wrap: balance; }
+.sfr-quote__text { font-size: 14.5px; color: #5c5955; margin: 0; }
+
+.sfr-quote__form {
+  background: #fff; border: 1px solid #e8e5e1; border-radius: 14px;
+  padding: clamp(24px, 4vw, 34px); display: grid; gap: 16px;
+}
+.sfr-quote__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.sfr-quote__field { display: grid; gap: 6px; }
+.sfr-quote__field label { font-size: 13px; font-weight: 700; }
+.sfr-quote__field input,
+.sfr-quote__field select,
+.sfr-quote__field textarea {
+  font: inherit; font-size: 14.5px;
+  border: 1.5px solid #e2ded9; border-radius: 8px;
+  padding: 11px 13px; background: #fff; color: #15161a;
+  width: 100%;
+}
+.sfr-quote__field input:focus,
+.sfr-quote__field select:focus,
+.sfr-quote__field textarea:focus {
+  outline: none; border-color: #ff6600; box-shadow: 0 0 0 3px rgba(255,102,0,.15);
+}
+.sfr-quote__field textarea { resize: vertical; min-height: 100px; }
+/* honeypot: hidden from sighted users but present for bots/no JS check */
+.sfr-quote__hp {
+  position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
+}
+
+.sfr-quote__submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: #ff6600; color: #12100f; font-weight: 700; font-size: 15px;
+  border: none; border-radius: 9px; padding: 15px 26px; cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+.sfr-quote__submit svg { width: 16px; height: 16px; }
+.sfr-quote__submit:hover { background: #d94f00; }
+.sfr-quote__submit:disabled { opacity: .6; cursor: progress; }
+
+.sfr-quote__status {
+  font-size: 14px; font-weight: 600; border-radius: 8px; padding: 12px 14px; display: none;
+}
+.sfr-quote__status[data-state="success"] { display: block; background: #eafaf0; color: #1c7a3c; }
+.sfr-quote__status[data-state="error"] { display: block; background: #fdecea; color: #b3261e; }
+
+@media (max-width: 560px) {
+  .sfr-quote__row { grid-template-columns: 1fr; }
+}
+/* ===== Why Choose SFR Motors ===== */
+.sfr-why{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-why *{box-sizing:border-box;}
+  .sfr-why__inner{max-width:1120px;margin:0 auto;}
+  .sfr-why__head{text-align:center;max-width:640px;margin:0 auto clamp(36px,5vw,56px);}
+  .sfr-why__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-why__eyebrow::before,.sfr-why__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-why__title{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sfr-why__title span{color:var(--sfr-orange);}
+  .sfr-why__grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .sfr-why__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:28px 22px;
+    text-align:left;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    will-change:transform;
+  }
+  .sfr-why__icon{
+    width:48px;height:48px;
+    border-radius:10px;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .sfr-why__icon svg{width:24px;height:24px;stroke:var(--sfr-ink);transition:stroke .25s ease;}
+  .sfr-why__card h3{
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .sfr-why__card p{
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--sfr-sub);
+    margin:0;
+  }
+  @media (hover:hover){
+    .sfr-why__card:hover{
+      transform:translateY(-6px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.28);
+    }
+    .sfr-why__card:hover .sfr-why__icon{
+      background:var(--sfr-orange);
+      border-color:var(--sfr-orange);
+    }
+    .sfr-why__card:hover .sfr-why__icon svg{stroke:#ffffff;}
+  }
+  @media (max-width:900px){
+    .sfr-why__grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-why__grid{grid-template-columns:1fr;}
+    .sfr-why__card{
+      display:flex;align-items:flex-start;gap:16px;text-align:left;padding:20px;
+    }
+    .sfr-why__icon{margin-bottom:0;flex:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-why__card{transition:none;}
+  }
+
+/* ===== Our Mobile Tyre Services ===== */
+.sfr-services{
+    --sfr-ink:#15161a;
+    --sfr-paper:#ffffff;
+    --sfr-card:#faf9f7;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-services *{box-sizing:border-box;}
+  .sfr-services__inner{max-width:1160px;margin:0 auto;}
+  .sfr-services__head{text-align:center;max-width:640px;margin:0 auto clamp(36px,5vw,56px);}
+  .sfr-services__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-services__eyebrow::before,.sfr-services__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-services__title{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0 0 12px;
+    text-wrap:balance;
+  }
+  .sfr-services__title span{color:var(--sfr-orange);}
+  .sfr-services__intro{
+    font-size:15px;
+    line-height:1.6;
+    color:var(--sfr-sub);
+    margin:0;
+  }
+  .sfr-services__grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .sfr-services__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    text-align:left;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sfr-services__icon{
+    width:50px;height:50px;
+    border-radius:10px;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .sfr-services__icon svg{width:25px;height:25px;stroke:var(--sfr-ink);transition:stroke .25s ease;}
+  .sfr-services__card h3{
+    font-size:18px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .sfr-services__card p{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--sfr-sub);
+    margin:0 0 18px;
+    flex-grow:1;
+  }
+  .sfr-services__link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--sfr-orange-deep);
+    text-decoration:none;
+    width:fit-content;
+  }
+  .sfr-services__link svg{width:14px;height:14px;stroke:currentColor;transition:transform .2s ease;}
+  .sfr-services__link:hover{color:var(--sfr-orange);}
+  .sfr-services__link:hover svg{transform:translateX(3px);}
+  .sfr-services__link:focus-visible,
+  .sfr-services__card:focus-within{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-services__card:hover{
+      transform:translateY(-6px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.28);
+    }
+    .sfr-services__card:hover .sfr-services__icon{
+      background:var(--sfr-orange);
+      border-color:var(--sfr-orange);
+    }
+    .sfr-services__card:hover .sfr-services__icon svg{stroke:#ffffff;}
+  }
+  @media (max-width:900px){
+    .sfr-services__grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-services__grid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-services__card{transition:none;}
+    .sfr-services__link svg{transition:none;}
+  }
+
+/* ===== 24/7 Emergency Tyre Assistance CTA ===== */
+.sfr-cta{
+    --sfr-ink:#0e0f11;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.22);
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:var(--sfr-ink);
+    border-top:3px solid var(--sfr-orange);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  }
+  .sfr-cta *{box-sizing:border-box;}
+  .sfr-cta__bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 35%;
+    opacity:.34;
+  }
+  .sfr-cta__overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(115deg, rgba(8,8,9,.96) 0%, rgba(8,8,9,.88) 42%, rgba(8,8,9,.74) 100%),
+      linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
+  }
+  .sfr-cta__inner{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:clamp(64px,10vw,104px) clamp(20px,5vw,32px);
+    text-align:center;
+    color:#fff;
+  }
+  .sfr-cta__eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:7px 16px;
+    margin-bottom:22px;
+  }
+  .sfr-cta__eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+  .sfr-cta__title{
+    font-size:clamp(28px,4.6vw,44px);
+    font-weight:900;
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+    text-wrap:balance;
+  }
+  .sfr-cta__title span{color:var(--sfr-orange);}
+  .sfr-cta__text{
+    font-size:clamp(15px,1.6vw,17px);
+    line-height:1.6;
+    color:#d8d5d1;
+    max-width:520px;
+    margin:0 auto clamp(32px,4vw,40px);
+  }
+  .sfr-cta__actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .sfr-cta__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:15.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:15px 28px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-cta__btn svg{width:18px;height:18px;flex:none;}
+  .sfr-cta__btn--primary{
+    background:var(--sfr-orange);
+    color:#12100f;
+    box-shadow:0 10px 24px -10px rgba(255,102,0,.65);
+  }
+  .sfr-cta__btn--ghost{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid rgba(255,255,255,.55);
+  }
+  .sfr-cta__btn:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-cta__btn--primary:hover{
+      background:var(--sfr-orange-deep);
+      transform:translateY(-2px);
+      box-shadow:0 14px 28px -10px rgba(255,102,0,.75);
+    }
+    .sfr-cta__btn--ghost:hover{
+      border-color:#fff;
+      background:rgba(255,255,255,.08);
+      transform:translateY(-2px);
+    }
+  }
+  @media (max-width:480px){
+    .sfr-cta__actions{flex-direction:column;align-items:stretch;}
+    .sfr-cta__btn{justify-content:center;width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-cta__btn{transition:none;}
+  }
+
+/* ===== Areas We Cover ===== */
+.sfr-areas{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-areas *{box-sizing:border-box;}
+  .sfr-areas__inner{max-width:1120px;margin:0 auto;}
+  .sfr-areas__head{text-align:center;max-width:680px;margin:0 auto clamp(14px,2vw,18px);}
+  .sfr-areas__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-areas__eyebrow::before,.sfr-areas__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-areas__title{
+    font-size:clamp(26px,3.6vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sfr-areas__tagline{
+    text-align:center;
+    font-size:15.5px;
+    font-weight:500;
+    color:var(--sfr-sub);
+    margin:0 auto clamp(36px,5vw,52px);
+    max-width:520px;
+  }
+  .sfr-areas__list{
+    list-style:none;
+    margin:0 0 clamp(36px,5vw,48px);
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+  }
+  .sfr-areas__pin{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:10px;
+    padding:13px 14px;
+    color:var(--sfr-ink);
+    text-decoration:none;
+    font-size:14.5px;
+    font-weight:600;
+    transition:border-color .18s ease, background .18s ease, color .18s ease;
+  }
+  .sfr-areas__pin svg{
+    width:17px;height:17px;flex:none;
+    stroke:var(--sfr-orange);
+    transition:stroke .18s ease;
+  }
+  .sfr-areas__pin:hover,
+  .sfr-areas__pin:focus-visible{
+    border-color:var(--sfr-orange);
+    background:#fff5ec;
+  }
+  .sfr-areas__pin:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+  .sfr-areas__cta{text-align:center;}
+  .sfr-areas__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-orange);
+    color:#12100f;
+    font-size:15px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:14px 30px;
+    transition:background .18s ease;
+  }
+  .sfr-areas__btn svg{width:16px;height:16px;}
+  .sfr-areas__btn:hover{background:var(--sfr-orange-deep);}
+  .sfr-areas__btn:focus-visible{outline:2px solid var(--sfr-orange-deep);outline-offset:3px;}
+  @media (max-width:900px){
+    .sfr-areas__list{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:560px){
+    .sfr-areas__list{grid-template-columns:repeat(2,1fr);}
+    .sfr-areas__pin{font-size:14px;padding:12px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-areas__pin,.sfr-areas__btn{transition:none;}
+  }
+
+/* ===== How It Works ===== */
+.sfr-how{
+    --sfr-ink:#15161a;
+    --sfr-paper:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-how *{box-sizing:border-box;}
+  .sfr-how__inner{max-width:1040px;margin:0 auto;}
+  .sfr-how__head{text-align:center;max-width:600px;margin:0 auto clamp(44px,6vw,64px);}
+  .sfr-how__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-how__eyebrow::before,.sfr-how__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-how__title{
+    font-size:clamp(27px,3.8vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sfr-how__grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+    margin-bottom:clamp(40px,6vw,60px);
+  }
+  .sfr-how__grid::before{
+    content:"";
+    position:absolute;
+    top:32px;
+    left:16.6667%;
+    right:16.6667%;
+    height:1.5px;
+    background:var(--sfr-line);
+    z-index:0;
+  }
+  .sfr-how__step{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding-top:0;
+  }
+  .sfr-how__badge{
+    width:64px;height:64px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    border:1.5px solid var(--sfr-ink);
+    background:var(--sfr-paper);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    color:var(--sfr-ink);
+    transition:background .22s ease, border-color .22s ease, color .22s ease, transform .22s ease;
+  }
+  .sfr-how__step h3{
+    font-size:18px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .sfr-how__step p{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--sfr-sub);
+    margin:0;
+    max-width:260px;
+    margin-inline:auto;
+  }
+  @media (hover:hover){
+    .sfr-how__step:hover .sfr-how__badge{
+      background:var(--sfr-orange);
+      border-color:var(--sfr-orange);
+      color:#fff;
+      transform:translateY(-3px);
+    }
+  }
+  .sfr-how__cta{text-align:center;}
+  .sfr-how__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--sfr-orange);
+    color:#12100f;
+    font-size:15.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:16px 32px;
+    box-shadow:0 10px 22px -12px rgba(255,102,0,.55);
+    transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .sfr-how__btn svg{width:17px;height:17px;}
+  .sfr-how__btn:hover{
+    background:var(--sfr-orange-deep);
+    transform:translateY(-2px);
+    box-shadow:0 14px 26px -12px rgba(255,102,0,.7);
+  }
+  .sfr-how__btn:focus-visible{outline:2px solid var(--sfr-orange-deep);outline-offset:3px;}
+  @media (max-width:760px){
+    .sfr-how__grid{grid-template-columns:1fr;gap:36px;}
+    .sfr-how__grid::before{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-how__badge,.sfr-how__btn{transition:none;}
+  }
+
+/* ===== Customer Reviews ===== */
+.sfr-reviews{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#6b6864;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-reviews *{box-sizing:border-box;}
+  .sfr-reviews__inner{max-width:1120px;margin:0 auto;}
+  .sfr-reviews__head{text-align:center;max-width:620px;margin:0 auto clamp(28px,4vw,34px);}
+  .sfr-reviews__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-reviews__eyebrow::before,.sfr-reviews__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-reviews__title{
+    font-size:clamp(27px,3.8vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+
+  .sfr-reviews__rating{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin:0 auto clamp(44px,6vw,60px);
+    padding:16px 26px;
+    max-width:fit-content;
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    background:var(--sfr-card);
+  }
+  .sfr-reviews__score{
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    line-height:1;
+  }
+  .sfr-reviews__rating-meta{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+  .sfr-reviews__stars{display:flex;gap:2px;}
+  .sfr-reviews__stars svg{width:16px;height:16px;fill:var(--sfr-orange);}
+  .sfr-reviews__count{
+    display:flex;align-items:center;gap:6px;
+    font-size:13.5px;font-weight:600;color:var(--sfr-sub);
+  }
+  .sfr-reviews__count svg{width:15px;height:15px;flex:none;}
+
+  .sfr-reviews__grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    margin-bottom:clamp(36px,5vw,48px);
+  }
+  .sfr-reviews__card{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:14px;
+    padding:26px 24px;
+    display:flex;
+    flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sfr-reviews__card-stars{display:flex;gap:2px;margin-bottom:14px;}
+  .sfr-reviews__card-stars svg{width:15px;height:15px;fill:var(--sfr-orange);}
+  .sfr-reviews__quote{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--sfr-ink);
+    margin:0 0 20px;
+    flex-grow:1;
+  }
+  .sfr-reviews__author{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding-top:14px;
+    border-top:1px solid var(--sfr-line);
+    font-size:13.5px;
+  }
+  .sfr-reviews__author-name{font-weight:700;}
+  .sfr-reviews__source{
+    display:flex;align-items:center;gap:5px;
+    color:var(--sfr-sub);font-size:12.5px;font-weight:600;
+  }
+  .sfr-reviews__source svg{width:13px;height:13px;}
+  @media (hover:hover){
+    .sfr-reviews__card:hover{
+      transform:translateY(-5px);
+      border-color:var(--sfr-orange);
+      box-shadow:0 16px 32px -18px rgba(21,22,26,.25);
+    }
+  }
+
+  .sfr-reviews__cta{text-align:center;}
+  .sfr-reviews__link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--sfr-ink);
+    text-decoration:none;
+    border:1.5px solid var(--sfr-ink);
+    border-radius:999px;
+    padding:11px 22px;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .sfr-reviews__link svg{width:14px;height:14px;stroke:currentColor;}
+  .sfr-reviews__link:hover{
+    background:var(--sfr-ink);
+    color:#fff;
+  }
+  .sfr-reviews__link:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+
+  @media (max-width:900px){
+    .sfr-reviews__grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .sfr-reviews__grid{grid-template-columns:1fr;}
+    .sfr-reviews__rating{flex-direction:column;gap:8px;text-align:center;}
+    .sfr-reviews__rating-meta{align-items:center;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-reviews__card,.sfr-reviews__link{transition:none;}
+  }
+
+/* ===== About SFR Motors ===== */
+.sfr-about{
+    --sfr-ink:#15161a;
+    --sfr-paper:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#5c5955;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-about *{box-sizing:border-box;}
+  .sfr-about__inner{
+    max-width:1120px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:minmax(0,420px) 1fr;
+    gap:clamp(32px,6vw,72px);
+    align-items:center;
+  }
+
+  .sfr-about__media{
+    position:relative;
+  }
+  .sfr-about__media::before{
+    content:"";
+    position:absolute;
+    top:18px;
+    left:-18px;
+    width:100%;
+    height:100%;
+    border:2px solid var(--sfr-orange);
+    border-radius:14px;
+    z-index:0;
+  }
+  .sfr-about__frame{
+    position:relative;
+    z-index:1;
+    border-radius:14px;
+    overflow:hidden;
+    aspect-ratio:3/4;
+    background:var(--sfr-line);
+  }
+  .sfr-about__frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+  }
+  @media (hover:hover){
+    .sfr-about__media:hover .sfr-about__frame img{transform:scale(1.045);}
+  }
+
+  .sfr-about__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-about__eyebrow::before{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+  .sfr-about__title{
+    font-size:clamp(27px,3.6vw,36px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+    text-wrap:balance;
+  }
+  .sfr-about__text{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--sfr-sub);
+    margin:0 0 26px;
+    max-width:56ch;
+  }
+  .sfr-about__list{
+    list-style:none;
+    margin:0 0 30px;
+    padding:0;
+    display:grid;
+    gap:14px;
+  }
+  .sfr-about__list li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-size:14.5px;
+    line-height:1.5;
+  }
+  .sfr-about__list strong{font-weight:700;}
+  .sfr-about__list span{color:var(--sfr-sub);}
+  .sfr-about__check{
+    flex:none;
+    width:21px;height:21px;
+    margin-top:1px;
+    border-radius:50%;
+    background:var(--sfr-orange);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .sfr-about__check svg{width:12px;height:12px;stroke:#fff;stroke-width:3;}
+
+  .sfr-about__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-ink);
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:15px 28px;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .sfr-about__btn svg{width:16px;height:16px;transition:transform .2s ease;}
+  .sfr-about__btn:hover{background:var(--sfr-orange);transform:translateY(-2px);}
+  .sfr-about__btn:hover svg{transform:translateX(3px);}
+  .sfr-about__btn:focus-visible{outline:2px solid var(--sfr-orange-deep);outline-offset:3px;}
+
+  @media (max-width:820px){
+    .sfr-about__inner{grid-template-columns:1fr;}
+    .sfr-about__media{max-width:360px;margin:0 auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-about__frame img,.sfr-about__btn,.sfr-about__btn svg{transition:none;}
+  }
+
+/* ===== FAQ ===== */
+.sfr-faq{
+    --sfr-ink:#15161a;
+    --sfr-paper:#faf9f7;
+    --sfr-card:#ffffff;
+    --sfr-line:#e8e5e1;
+    --sfr-sub:#5c5955;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    background:var(--sfr-paper);
+    padding:clamp(56px,8vw,96px) clamp(20px,5vw,32px);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    color:var(--sfr-ink);
+  }
+  .sfr-faq *{box-sizing:border-box;}
+  .sfr-faq__inner{max-width:800px;margin:0 auto;}
+  .sfr-faq__head{text-align:center;max-width:560px;margin:0 auto clamp(36px,5vw,52px);}
+  .sfr-faq__eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sfr-orange-deep);margin-bottom:14px;
+  }
+  .sfr-faq__eyebrow::before,.sfr-faq__eyebrow::after{
+    content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;
+  }
+  .sfr-faq__title{
+    font-size:clamp(27px,3.8vw,38px);
+    font-weight:900;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+
+  .sfr-faq__list{display:flex;flex-direction:column;gap:12px;}
+
+  .sfr-faq__item{
+    background:var(--sfr-card);
+    border:1px solid var(--sfr-line);
+    border-radius:12px;
+    overflow:hidden;
+    transition:border-color .2s ease;
+  }
+  .sfr-faq__item[open]{border-color:var(--sfr-orange);}
+
+  .sfr-faq__summary{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 22px;
+    cursor:pointer;
+    font-size:15.5px;
+    font-weight:700;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .sfr-faq__summary::-webkit-details-marker{display:none;}
+  .sfr-faq__summary:hover{background:#fff8f3;}
+  .sfr-faq__summary:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:-2px;}
+
+  .sfr-faq__q{flex:1;}
+
+  .sfr-faq__icon{
+    flex:none;
+    width:26px;height:26px;
+    border-radius:50%;
+    border:1.5px solid var(--sfr-ink);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .25s ease, background .2s ease, border-color .2s ease;
+  }
+  .sfr-faq__icon svg{width:12px;height:12px;stroke:var(--sfr-ink);stroke-width:2.4;transition:stroke .2s ease;}
+  .sfr-faq__item[open] .sfr-faq__icon{
+    transform:rotate(135deg);
+    background:var(--sfr-orange);
+    border-color:var(--sfr-orange);
+  }
+  .sfr-faq__item[open] .sfr-faq__icon svg{stroke:#fff;}
+
+  .sfr-faq__panel{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .3s ease;
+  }
+  .sfr-faq__item[open] .sfr-faq__panel{grid-template-rows:1fr;}
+  .sfr-faq__panel-inner{overflow:hidden;}
+  .sfr-faq__panel p{
+    margin:0;
+    padding:0 22px 20px;
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--sfr-sub);
+    max-width:62ch;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sfr-faq__panel,.sfr-faq__icon,.sfr-faq__item{transition:none;}
+  }
+
+/* ===== Final Contact CTA ===== */
+.sfr-final{
+    --sfr-ink:#0e0f11;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.22);
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:var(--sfr-ink);
+    border-top:3px solid var(--sfr-orange);
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+  }
+  .sfr-final *{box-sizing:border-box;}
+  .sfr-final__bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 45%;
+    opacity:.3;
+  }
+  .sfr-final__overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(6,6,7,.94) 0%, rgba(6,6,7,.9) 55%, rgba(6,6,7,.97) 100%);
+  }
+  .sfr-final__inner{
+    position:relative;
+    z-index:1;
+    max-width:820px;
+    margin:0 auto;
+    padding:clamp(60px,9vw,100px) clamp(20px,5vw,32px);
+    text-align:center;
+    color:#fff;
+  }
+  .sfr-final__eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:7px 16px;
+    margin-bottom:22px;
+  }
+  .sfr-final__eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+  .sfr-final__title{
+    font-size:clamp(27px,4.4vw,42px);
+    font-weight:900;
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+    text-wrap:balance;
+  }
+  .sfr-final__text{
+    font-size:clamp(15px,1.6vw,16.5px);
+    line-height:1.6;
+    color:#d8d5d1;
+    max-width:520px;
+    margin:0 auto clamp(36px,5vw,44px);
+  }
+
+  .sfr-final__contacts{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:clamp(30px,4vw,36px);
+  }
+  .sfr-final__contact{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    border-radius:11px;
+    padding:16px 12px;
+    transition:transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-final__contact svg{width:20px;height:20px;}
+  .sfr-final__contact-label{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    opacity:.85;
+  }
+  .sfr-final__contact-value{
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .sfr-final__contact--call,
+  .sfr-final__contact--whatsapp{
+    background:var(--sfr-orange);
+    color:#12100f;
+  }
+  .sfr-final__contact--whatsapp{background:#ffffff;color:#12100f;}
+  .sfr-final__contact--email{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid var(--sfr-line);
+  }
+  .sfr-final__contact:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-final__contact--call:hover{background:var(--sfr-orange-deep);color:#fff;transform:translateY(-2px);}
+    .sfr-final__contact--whatsapp:hover{background:#f1efec;transform:translateY(-2px);}
+    .sfr-final__contact--email:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px);}
+  }
+
+  .sfr-final__actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .sfr-final__btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:15.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:16px 30px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .sfr-final__btn svg{width:18px;height:18px;flex:none;}
+  .sfr-final__btn--primary{
+    background:var(--sfr-orange);
+    color:#12100f;
+    box-shadow:0 10px 24px -10px rgba(255,102,0,.65);
+  }
+  .sfr-final__btn--ghost{
+    background:transparent;
+    color:#fff;
+    border:1.5px solid rgba(255,255,255,.55);
+  }
+  .sfr-final__btn:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:3px;}
+  @media (hover:hover){
+    .sfr-final__btn--primary:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(255,102,0,.75);}
+    .sfr-final__btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px);}
+  }
+
+  @media (max-width:640px){
+    .sfr-final__contacts{grid-template-columns:1fr 1fr;}
+    .sfr-final__contact--email{grid-column:1 / -1;flex-direction:row;justify-content:center;padding:13px;}
+    .sfr-final__contact--call,.sfr-final__contact--whatsapp{padding:18px 10px;}
+    .sfr-final__contact-value{font-size:14.5px;}
+  }
+  @media (max-width:420px){
+    .sfr-final__actions{flex-direction:column;align-items:stretch;}
+    .sfr-final__btn{justify-content:center;width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-final__contact,.sfr-final__btn{transition:none;}
+  }
+
+/* ===== Footer ===== */
+.sfr-footer{
+    --sfr-ink:#0c0d0f;
+    --sfr-ink-2:#161719;
+    --sfr-orange:#ff6600;
+    --sfr-orange-deep:#d94f00;
+    --sfr-line:rgba(255,255,255,.12);
+    --sfr-body:#b9b6b2;
+    background:var(--sfr-ink);
+    color:#fff;
+    font-family:"Roboto","Segoe UI",Arial,sans-serif;
+    border-top:3px solid var(--sfr-orange);
+  }
+  .sfr-footer *{box-sizing:border-box;}
+  .sfr-footer a{color:inherit;}
+
+  .sfr-footer__top{
+    max-width:1160px;
+    margin:0 auto;
+    padding:clamp(48px,7vw,72px) clamp(20px,5vw,32px) clamp(36px,5vw,48px);
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr 1.1fr;
+    gap:clamp(28px,4vw,40px);
+  }
+
+  .sfr-footer__brand-name{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:-0.01em;
+    margin:0 0 8px;
+  }
+  .sfr-footer__brand-name span{color:var(--sfr-orange);}
+  .sfr-footer__tagline{
+    font-size:13.5px;
+    color:var(--sfr-body);
+    margin:0 0 2px;
+  }
+  .sfr-footer__motto{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--sfr-orange);
+    margin:0 0 22px;
+  }
+
+  .sfr-footer__badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    border:1px solid var(--sfr-line);
+    border-radius:999px;
+    padding:6px 13px;
+    margin-bottom:20px;
+  }
+  .sfr-footer__badge .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--sfr-orange);
+    box-shadow:0 0 0 3px rgba(255,102,0,.25);
+  }
+
+  .sfr-footer__call{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--sfr-orange);
+    color:#12100f;
+    font-size:14.5px;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:9px;
+    padding:13px 22px;
+    margin-bottom:22px;
+    transition:background .18s ease, transform .18s ease;
+  }
+  .sfr-footer__call svg{width:16px;height:16px;}
+  .sfr-footer__call:hover{background:var(--sfr-orange-deep);transform:translateY(-2px);}
+  .sfr-footer__call:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+
+  .sfr-footer__social{display:flex;gap:10px;}
+  .sfr-footer__social a{
+    width:36px;height:36px;
+    border-radius:9px;
+    border:1px solid var(--sfr-line);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .18s ease, background .18s ease, transform .18s ease;
+  }
+  .sfr-footer__social svg{width:16px;height:16px;fill:#fff;}
+  .sfr-footer__social a:hover{background:var(--sfr-orange);border-color:var(--sfr-orange);transform:translateY(-2px);}
+  .sfr-footer__social a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__heading{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin:0 0 18px;
+    position:relative;
+    padding-bottom:12px;
+  }
+  .sfr-footer__heading::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:0;
+    width:26px;height:2px;
+    background:var(--sfr-orange);
+    border-radius:2px;
+  }
+
+  .sfr-footer__links{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+  .sfr-footer__links a{
+    font-size:14px;
+    color:var(--sfr-body);
+    text-decoration:none;
+    transition:color .15s ease;
+  }
+  .sfr-footer__links a:hover{color:var(--sfr-orange);}
+  .sfr-footer__links a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__address{font-style:normal;margin:0;}
+  .sfr-footer__contact{list-style:none;margin:0;padding:0;display:grid;gap:13px;}
+  .sfr-footer__contact li{display:flex;align-items:flex-start;gap:10px;}
+  .sfr-footer__contact svg{width:16px;height:16px;flex:none;margin-top:2px;stroke:var(--sfr-orange);}
+  .sfr-footer__contact a,
+  .sfr-footer__contact span{
+    font-size:14px;
+    color:var(--sfr-body);
+    text-decoration:none;
+    line-height:1.5;
+  }
+  .sfr-footer__contact a:hover{color:var(--sfr-orange);}
+  .sfr-footer__contact a:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+
+  .sfr-footer__bottom{
+    border-top:1px solid var(--sfr-line);
+  }
+  .sfr-footer__bottom-inner{
+    max-width:1160px;
+    margin:0 auto;
+    padding:18px clamp(20px,5vw,32px);
+    text-align:center;
+    font-size:13px;
+    color:var(--sfr-body);
+  }
+
+  @media (max-width:900px){
+    .sfr-footer__top{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .sfr-footer__top{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sfr-footer__call,.sfr-footer__social a,.sfr-footer__links a,.sfr-footer__contact a{transition:none;}
+  }

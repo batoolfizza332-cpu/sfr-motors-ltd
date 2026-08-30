@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SFR Motors Ltd — quote/contact form backend.
+  A single Lambda function behind an API Gateway HTTP API that validates
+  the submission, drops anything that trips the honeypot field, and
+  emails the result via SES. Rate-limited at the API Gateway stage to
+  blunt basic abuse; add AWS WAF in front of the API for stronger
+  bot/IP-based protection if spam becomes a real problem.
+
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Description: The site origin allowed to call this API (CORS).
+    Default: https://sfrmotors.co.uk
+  ToEmail:
+    Type: String
+    Description: Mailbox that receives quote requests. Must be SES-verified (or out of the SES sandbox).
+    Default: info@sfrmotors.co.uk
+  FromEmail:
+    Type: String
+    Description: SES-verified sending address (can be the same as ToEmail while in the SES sandbox).
+    Default: info@sfrmotors.co.uk
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 10
+    MemorySize: 128
+    Architectures: [arm64]
+
+Resources:
+  QuoteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: handler.handler
+      Environment:
+        Variables:
+          ALLOWED_ORIGIN: !Ref AllowedOrigin
+          TO_EMAIL: !Ref ToEmail
+          FROM_EMAIL: !Ref FromEmail
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource: "*"
+      Events:
+        Submit:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref QuoteApi
+            Path: /quote
+            Method: POST
+
+  QuoteApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods: [POST, OPTIONS]
+        AllowHeaders: [Content-Type]
+        MaxAge: 600
+      DefaultRouteSettings:
+        # Basic spam/abuse throttle: ~1 request/sec sustained, small burst.
+        ThrottlingRateLimit: 2
+        ThrottlingBurstLimit: 5
+
+Outputs:
+  QuoteApiUrl:
+    Description: Invoke URL for the quote endpoint — put this in site/assets/js/main.js (QUOTE_API_ENDPOINT)
+    Value: !Sub "https://${QuoteApi}.execute-api.${AWS::Region}.amazonaws.com/quote"

@@ -1,0 +1,158 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  SFR Motors Ltd — static site hosting on S3 + CloudFront.
+  Private bucket (Origin Access Control only, no public S3 access),
+  HTTPS-only via CloudFront, gzip/brotli compression, long-lived
+  caching for hashed/static assets, and a security headers policy
+  (HSTS, no-sniff, referrer policy, permissions policy, frame deny).
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: The site's domain, e.g. sfrmotors.co.uk
+    Default: sfrmotors.co.uk
+  AcmCertificateArn:
+    Type: String
+    Description: >
+      ARN of an ACM certificate for DomainName, issued in us-east-1
+      (CloudFront requires this). Create/validate it in ACM first —
+      DNS validation can't be automated by this template.
+
+Resources:
+  SiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${DomainName}-site"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
+      VersioningConfiguration:
+        Status: Enabled
+
+  SiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SiteBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: { Service: cloudfront.amazonaws.com }
+            Action: s3:GetObject
+            Resource: !Sub "${SiteBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${Distribution}"
+
+  OriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${DomainName}-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  SecurityHeadersPolicy:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub "${DomainName}-security-headers"
+        SecurityHeadersConfig:
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 63072000
+            IncludeSubdomains: true
+            Preload: true
+            Override: true
+          ContentTypeOptions: { Override: true }
+          ReferrerPolicy:
+            ReferrerPolicy: strict-origin-when-cross-origin
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+        CustomHeadersConfig:
+          Items:
+            - Header: Permissions-Policy
+              Value: "geolocation=(), microphone=(), camera=()"
+              Override: true
+
+  CachePolicyStatic:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: !Sub "${DomainName}-static-assets"
+        DefaultTTL: 604800    # 7 days
+        MaxTTL: 31536000      # 1 year (assets/img, assets/css, assets/js are content-hashed on change)
+        MinTTL: 0
+        ParametersInCacheKeyAndForwardedToOrigin:
+          EnableAcceptEncodingGzip: true
+          EnableAcceptEncodingBrotli: true
+          CookiesConfig: { CookieBehavior: none }
+          HeadersConfig: { HeaderBehavior: none }
+          QueryStringsConfig: { QueryStringBehavior: none }
+
+  CachePolicyHtml:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Name: !Sub "${DomainName}-html"
+        DefaultTTL: 300       # 5 min — short, so content edits show up quickly
+        MaxTTL: 3600
+        MinTTL: 0
+        ParametersInCacheKeyAndForwardedToOrigin:
+          EnableAcceptEncodingGzip: true
+          EnableAcceptEncodingBrotli: true
+          CookiesConfig: { CookieBehavior: none }
+          HeadersConfig: { HeaderBehavior: none }
+          QueryStringsConfig: { QueryStringBehavior: none }
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2and3
+        DefaultRootObject: index.html
+        Aliases: [!Ref DomainName]
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmCertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
+        Origins:
+          - Id: s3-origin
+            DomainName: !GetAtt SiteBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt OriginAccessControl.Id
+            S3OriginConfig: { OriginAccessIdentity: "" }
+        DefaultCacheBehavior:
+          TargetOriginId: s3-origin
+          ViewerProtocolPolicy: redirect-to-https
+          Compress: true
+          CachePolicyId: !Ref CachePolicyHtml
+          ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
+          AllowedMethods: [GET, HEAD]
+        CacheBehaviors:
+          - PathPattern: assets/*
+            TargetOriginId: s3-origin
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: true
+            CachePolicyId: !Ref CachePolicyStatic
+            ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
+            AllowedMethods: [GET, HEAD]
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 404
+            ResponsePagePath: /index.html
+
+Outputs:
+  BucketName:
+    Value: !Ref SiteBucket
+  DistributionId:
+    Value: !Ref Distribution
+  DistributionDomainName:
+    Value: !GetAtt Distribution.DomainName
+    Description: Point your DNS (CNAME/ALIAS) at this if not using Route 53 alias records.
