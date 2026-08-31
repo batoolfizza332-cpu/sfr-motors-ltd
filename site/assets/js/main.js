@@ -50,7 +50,10 @@
     // silently pretend success without ever hitting the API.
     if (data.company) {
       form.reset();
-      setStatus("success", "Thanks — we'll be in touch shortly.");
+      setStatus(
+        "success",
+        "Thank you. Your request has been received. SFR Motors will contact you shortly. For urgent assistance, please call us directly."
+      );
       return;
     }
 
@@ -90,7 +93,10 @@
       })
       .then(function () {
         form.reset();
-        setStatus("success", "Thanks — your request has been sent. We'll get back to you shortly.");
+        setStatus(
+          "success",
+          "Thank you. Your request has been received. SFR Motors will contact you shortly. For urgent assistance, please call us directly."
+        );
       })
       .catch(function () {
         setStatus(

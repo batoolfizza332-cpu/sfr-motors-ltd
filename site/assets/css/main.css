@@ -266,6 +266,17 @@ a { text-underline-offset: 2px; }
 .sfr-quote__status[data-state="success"] { display: block; background: #eafaf0; color: #1c7a3c; }
 .sfr-quote__status[data-state="error"] { display: block; background: #fdecea; color: #b3261e; }
 
+.sfr-quote__whatsapp {
+  display: none;
+  align-items: center; justify-content: center; gap: 9px;
+  margin-top: 12px; padding: 13px 20px; border-radius: 9px;
+  background: #15161a; color: #fff; font-weight: 700; font-size: 14.5px;
+  text-decoration: none; transition: background .18s ease, transform .18s ease;
+}
+.sfr-quote__whatsapp svg { width: 17px; height: 17px; }
+.sfr-quote__whatsapp:hover { background: #ff6600; transform: translateY(-1px); }
+.sfr-quote__status[data-state="success"] + .sfr-quote__whatsapp { display: inline-flex; }
+
 @media (max-width: 560px) {
   .sfr-quote__row { grid-template-columns: 1fr; }
 }
