@@ -2,21 +2,30 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: >
   SFR Motors Ltd — static site hosting on S3 + CloudFront.
   Private bucket (Origin Access Control only, no public S3 access),
-  HTTPS-only via CloudFront, gzip/brotli compression, long-lived
-  caching for hashed/static assets, and a security headers policy
-  (HSTS, no-sniff, referrer policy, permissions policy, frame deny).
+  HTTPS-only via CloudFront, www -> apex redirect, gzip/brotli
+  compression, long-lived caching for hashed/static assets, a custom
+  404 page, and a security headers policy (HSTS, no-sniff, referrer
+  policy, permissions policy, frame deny).
 
 Parameters:
   DomainName:
     Type: String
-    Description: The site's domain, e.g. sfrmotors.co.uk
+    Description: The site's canonical (apex) domain, e.g. sfrmotors.co.uk
     Default: sfrmotors.co.uk
+  WwwDomainName:
+    Type: String
+    Description: >
+      The www subdomain, redirected to DomainName. Leave as the default
+      unless the canonical domain itself starts with "www.".
+    Default: www.sfrmotors.co.uk
   AcmCertificateArn:
     Type: String
     Description: >
-      ARN of an ACM certificate for DomainName, issued in us-east-1
-      (CloudFront requires this). Create/validate it in ACM first —
-      DNS validation can't be automated by this template.
+      ARN of an ACM certificate covering BOTH DomainName and
+      WwwDomainName (as Subject Alternative Names on one certificate),
+      issued in us-east-1 (CloudFront requires this region regardless
+      of where the rest of the stack lives). Create/validate it in ACM
+      first — DNS validation can't be automated by this template.
 
 Resources:
   SiteBucket:
@@ -66,6 +75,35 @@ Resources:
         OriginAccessControlOriginType: s3
         SigningBehavior: always
         SigningProtocol: sigv4
+
+  WwwRedirectFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub "${AWS::StackName}-www-redirect"
+      FunctionConfig:
+        Comment: Redirect the www host to the canonical apex domain, preserving path and query string.
+        Runtime: cloudfront-js-2.0
+      AutoPublish: true
+      FunctionCode: !Sub |
+        function handler(event) {
+          var request = event.request;
+          var host = request.headers.host && request.headers.host.value;
+          if (host !== '${WwwDomainName}') {
+            return request;
+          }
+          var qs = '';
+          var keys = Object.keys(request.querystring);
+          for (var i = 0; i < keys.length; i++) {
+            qs += (i === 0 ? '?' : '&') + keys[i] + '=' + request.querystring[keys[i]].value;
+          }
+          return {
+            statusCode: 301,
+            statusDescription: 'Moved Permanently',
+            headers: {
+              location: { value: 'https://${DomainName}' + request.uri + qs }
+            }
+          };
+        }
 
   SecurityHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy
@@ -150,7 +188,7 @@ Resources:
         Enabled: true
         HttpVersion: http2and3
         DefaultRootObject: index.html
-        Aliases: [!Ref DomainName]
+        Aliases: [!Ref DomainName, !Ref WwwDomainName]
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn
           SslSupportMethod: sni-only
@@ -167,6 +205,9 @@ Resources:
           CachePolicyId: !Ref CachePolicyHtml
           ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
           AllowedMethods: [GET, HEAD]
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt WwwRedirectFunction.FunctionARN
         CacheBehaviors:
           - PathPattern: assets/*
             TargetOriginId: s3-origin
@@ -175,19 +216,23 @@ Resources:
             CachePolicyId: !Ref CachePolicyStatic
             ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
             AllowedMethods: [GET, HEAD]
+            FunctionAssociations:
+              - EventType: viewer-request
+                FunctionARN: !GetAtt WwwRedirectFunction.FunctionARN
         CustomErrorResponses:
           # A private OAC bucket without s3:ListBucket returns 403 for a
           # missing object, not 404, so that's the one that actually fires
           # in practice — 404 is covered too in case that ever changes.
-          # Both serve index.html's content but keep the real 404 status,
-          # so broken links show a friendly page without being indexed as
-          # a duplicate of the homepage.
+          # Both serve the custom 404 page's content but keep the real 404
+          # status, so broken links show a friendly page without being
+          # indexed as a duplicate of the homepage (404.html also carries
+          # <meta name="robots" content="noindex, follow">).
           - ErrorCode: 403
             ResponseCode: 404
-            ResponsePagePath: /index.html
+            ResponsePagePath: /404.html
           - ErrorCode: 404
             ResponseCode: 404
-            ResponsePagePath: /index.html
+            ResponsePagePath: /404.html
 
 Outputs:
   BucketName:

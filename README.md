@@ -27,6 +27,7 @@ site/
   caravan-trailer-tyre-fitting.html, tpms-services.html    9 service pages
   mobile-tyre-fitting-{bathgate,edinburgh,livingston,west-lothian,falkirk}.html
                                                             5 location pages
+  404.html                custom not-found page, served (with a real 404 status) for any missing path
   robots.txt
   sitemap.xml
   assets/
@@ -58,6 +59,8 @@ then open http://localhost:5500.
 |---|---|
 | Fast page loading | No JS framework, ~110 lines of vanilla JS total, one shared CSS file, images pre-compressed (see below) |
 | Secure HTTPS | CloudFront distribution in `infra/template.yaml` is HTTPS-only (`redirect-to-https`), TLS 1.2+ |
+| Single canonical URL | `www.sfrmotors.co.uk` 301-redirects to `sfrmotors.co.uk` (CloudFront Function, preserves path + query string) on top of the HTTP→HTTPS redirect above, so every page has exactly one reachable URL; every page also carries a matching `<link rel="canonical">` |
+| Custom 404 page | `site/404.html` (branded, links back to key pages) is served — with the real `404` HTTP status, not `200` — for any missing path, via CloudFront `CustomErrorResponses` |
 | Optimized images (WebP/AVIF) | Every photo has AVIF + WebP + JPEG fallback via `<picture>`; hero has an extra 800w variant for small screens |
 | Lazy loading below the fold | Every below-the-fold `<img>` has `loading="lazy" decoding="async"`; the hero image (only above-the-fold photo) uses `fetchpriority="high"` instead |
 | Minimal JavaScript | One file, no dependencies: nav toggle + form submit handler |
@@ -131,8 +134,10 @@ for previewing the exact bundle that will ship (`npx http-server dist`).
 
 ## Deploying the site (hosting)
 
-Requires an ACM certificate for your domain, issued in **us-east-1**
-(CloudFront requirement) — create and DNS-validate that first.
+Requires a single ACM certificate covering **both** `sfrmotors.co.uk` and
+`www.sfrmotors.co.uk` (as Subject Alternative Names on the same cert),
+issued in **us-east-1** (CloudFront requirement regardless of which region
+the rest of the stack lives in) — create and DNS-validate that first.
 
 ```bash
 cd infra
@@ -142,9 +147,17 @@ aws cloudformation deploy \
   --parameter-overrides DomainName=sfrmotors.co.uk AcmCertificateArn=<your-cert-arn>
 ```
 
-Then point your domain's DNS at the CloudFront distribution (Route 53 alias,
-or a CNAME to the `DistributionDomainName` output if using another DNS
-provider), and push content with:
+(`WwwDomainName` defaults to `www.sfrmotors.co.uk` and only needs
+overriding if the canonical domain itself is unusual.)
+
+Then point **both** `sfrmotors.co.uk` and `www.sfrmotors.co.uk` at the
+CloudFront distribution in DNS (Route 53 alias records for both, or a
+CNAME/ALIAS to the `DistributionDomainName` output for `www` if using
+another DNS provider — most registrars don't allow a CNAME on the apex
+itself, so the apex typically needs an ALIAS/ANAME record or Route 53).
+CloudFront then serves both hostnames from the one distribution and
+redirects `www` → apex at the edge (see the checklist above). Push content
+with:
 
 ```bash
 BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-site.sh
