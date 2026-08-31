@@ -323,7 +323,7 @@ a { text-underline-offset: 2px; }
     margin:0;
     text-wrap:balance;
   }
-  .sfr-why__title span{color:var(--sfr-orange);}
+  .sfr-why__title span{color:var(--sfr-orange-deep);}
   .sfr-why__grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -418,7 +418,7 @@ a { text-underline-offset: 2px; }
     margin:0 0 12px;
     text-wrap:balance;
   }
-  .sfr-services__title span{color:var(--sfr-orange);}
+  .sfr-services__title span{color:var(--sfr-orange-deep);}
   .sfr-services__intro{
     font-size:15px;
     line-height:1.6;
@@ -473,7 +473,7 @@ a { text-underline-offset: 2px; }
     width:fit-content;
   }
   .sfr-services__link svg{width:14px;height:14px;stroke:currentColor;transition:transform .2s ease;}
-  .sfr-services__link:hover{color:var(--sfr-orange);}
+  .sfr-services__link:hover{color:var(--sfr-orange-deep);}
   .sfr-services__link:hover svg{transform:translateX(3px);}
   .sfr-services__link:focus-visible,
   .sfr-services__card:focus-within{outline:2px solid var(--sfr-orange);outline-offset:3px;}
