@@ -167,7 +167,18 @@ async function main() {
   console.log(`\nBuild complete: ${DIST_DIR}`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    // Force a clean exit once the build is done. Without this, a lingering
+    // handle left open by a dependency (terser/clean-css/html-minifier-terser
+    // workers, timers, etc.) can keep the Node process alive after all our
+    // own work is finished — invisible locally (the shell just returns), but
+    // on Vercel the build step never reports done, and the deployment hangs
+    // in "Building" forever with no error. See:
+    // https://vercel.com/kb/guide/fixing-deployments-that-hang-after-the-build-step-succeeds
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
