@@ -4,8 +4,14 @@
     {
       "name": "sfr-site-preview",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "http-server", "site", "-p", "5500", "-c-1"],
-      "port": 5500
+      "runtimeArgs": ["-y", "http-server", "site", "-c-1"],
+      "autoPort": true
+    },
+    {
+      "name": "sfr-dist-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "http-server", "dist", "-c-1"],
+      "autoPort": true
     }
   ]
 }

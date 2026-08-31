@@ -20,6 +20,8 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "scripts/build.js"
+      - "package.json"
 
 permissions:
   id-token: write # required to request the OIDC token
@@ -35,13 +37,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Configure AWS credentials (OIDC, no stored keys)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Sync site and invalidate CloudFront
+      - name: Build, sync and invalidate CloudFront
         working-directory: infra
         env:
           BUCKET: ${{ vars.SITE_BUCKET }}
@@ -49,4 +55,6 @@ jobs:
         # Invoked via bash rather than ./deploy-site.sh so this doesn't
         # depend on the executable bit surviving git (the script was
         # authored on Windows, which doesn't track unix file permissions).
+        # The script builds site/ -> dist/ (minified, cache-fingerprinted)
+        # itself before syncing, so there's no separate build step here.
         run: bash deploy-site.sh

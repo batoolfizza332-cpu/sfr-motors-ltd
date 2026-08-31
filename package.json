@@ -1,0 +1,13 @@
+{
+  "name": "sfr-motors-site-build",
+  "private": true,
+  "description": "Build-only tooling that turns site/ into a minified, cache-fingerprinted dist/ ready for S3 + CloudFront. Nothing here ships to the browser.",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.31.0"
+  }
+}

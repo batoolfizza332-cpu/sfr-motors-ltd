@@ -30,18 +30,21 @@ site/
   robots.txt
   sitemap.xml
   assets/
-    css/main.css         one shared stylesheet, all pages (no build step needed)
+    css/main.css         one shared stylesheet, all pages
     js/main.js            ~110 lines, vanilla JS: mobile nav toggle + quote form submit
+    js/analytics.js       GA4 conversion tracking (no-ops until a real measurement ID is set)
     img/                  AVIF + WebP + JPEG for every photo, pre-generated
 ```
 
 Every page shares the same `assets/css/main.css` and `assets/js/main.js` — no
-per-page bundling, no framework, nothing to build.
+per-page bundling, no framework. `site/` itself needs no build step to edit
+or preview; `npm run build` (see [Production build](#production-build)
+below) only comes in when producing the deployable `dist/` bundle.
 
 ### Try it locally
 
-No build step — it's static HTML/CSS/JS. Serve the folder with any static
-server, e.g.:
+Serve `site/` directly with any static server — no build step needed for
+local development:
 
 ```bash
 npx http-server site -p 5500
@@ -107,6 +110,25 @@ Spam protection in place:
   rate-based rule — not included here to keep the base setup simple, but
   it's a drop-in addition.
 
+## Production build
+
+`site/` is the source; `dist/` (gitignored, generated) is what actually gets
+deployed. `npm run build` (Node 18+) turns one into the other:
+
+- `assets/css/main.css` and `assets/js/*.js` are minified and renamed with a
+  content hash — `main.<hash>.css`, `main.<hash>.js` — so they can be cached
+  by the browser and CloudFront for a full year without ever going stale: a
+  content change produces a new filename, so there's nothing to invalidate.
+- Every `.html` page has its asset references rewritten to match, then is
+  minified (whitespace/comments only — the inline JSON-LD `<script>` blocks
+  are never touched).
+- Images, fonts, `robots.txt` and `sitemap.xml` are copied through unchanged
+  — already optimized, and their filenames are already stable.
+
+`deploy-site.sh` runs the build itself before syncing, so you don't need to
+run it separately — `npm install && npm run build` locally is only useful
+for previewing the exact bundle that will ship (`npx http-server dist`).
+
 ## Deploying the site (hosting)
 
 Requires an ACM certificate for your domain, issued in **us-east-1**
@@ -131,9 +153,10 @@ BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-si
 ## Automatic deployments (CI/CD)
 
 Once the steps above have run at least once, further content edits can
-deploy themselves: push to `main`, GitHub Actions syncs `site/` to S3 and
-invalidates the CloudFront cache automatically (`.github/workflows/deploy.yml`,
-triggered only when something under `site/` changes).
+deploy themselves: push to `main`, GitHub Actions builds `site/` into `dist/`,
+syncs it to S3 and invalidates the CloudFront cache automatically
+(`.github/workflows/deploy.yml`, triggered when `site/`, `scripts/build.js`
+or `package.json` changes).
 
 No AWS access keys are stored in GitHub. The workflow uses OpenID Connect to
 assume a narrowly-scoped IAM role for the few seconds a deploy takes, then
