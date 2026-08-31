@@ -84,7 +84,7 @@ a { text-underline-offset: 2px; }
 .sfr-header__brand img { width: 42px; height: 42px; border-radius: 8px; }
 .sfr-header__brand-text { line-height: 1.15; }
 .sfr-header__brand-name { display: block; font-weight: 900; font-size: 16px; letter-spacing: -0.01em; }
-.sfr-header__brand-motto { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #ff6600; }
+.sfr-header__brand-motto { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #d94f00; }
 
 .sfr-nav { display: flex; align-items: center; gap: 28px; }
 .sfr-nav__links { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
@@ -92,7 +92,7 @@ a { text-underline-offset: 2px; }
   color: #15161a; text-decoration: none; font-size: 14.5px; font-weight: 600;
   padding: 6px 0; border-bottom: 2px solid transparent;
 }
-.sfr-nav__links a:hover { color: #ff6600; border-color: #ff6600; }
+.sfr-nav__links a:hover { color: #d94f00; border-color: #d94f00; }
 
 .sfr-header__call {
   display: inline-flex; align-items: center; gap: 8px;
@@ -238,7 +238,7 @@ a { text-underline-offset: 2px; }
 .sfr-quote__field input:focus,
 .sfr-quote__field select:focus,
 .sfr-quote__field textarea:focus {
-  outline: none; border-color: #ff6600; box-shadow: 0 0 0 3px rgba(255,102,0,.15);
+  outline: none; border-color: #d94f00; box-shadow: 0 0 0 3px rgba(255,102,0,.15);
 }
 .sfr-quote__field textarea { resize: vertical; min-height: 100px; }
 .sfr-quote__reg { text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
@@ -1164,7 +1164,7 @@ a { text-underline-offset: 2px; }
     overflow:hidden;
     transition:border-color .2s ease;
   }
-  .sfr-faq__item[open]{border-color:var(--sfr-orange);}
+  .sfr-faq__item[open]{border-color:var(--sfr-orange-deep);}
 
   .sfr-faq__summary{
     list-style:none;
@@ -1786,7 +1786,7 @@ a { text-underline-offset: 2px; }
 .sfr-breadcrumb li{display:flex;align-items:center;gap:6px;}
 .sfr-breadcrumb li:not(:last-child)::after{content:"/";color:#c9c5c0;}
 .sfr-breadcrumb a{color:#6b6864;text-decoration:none;}
-.sfr-breadcrumb a:hover{color:#ff6600;}
+.sfr-breadcrumb a:hover{color:#d94f00;}
 .sfr-breadcrumb li[aria-current="page"]{color:#15161a;font-weight:600;}
 
 /* ===== 5-step "How It Works" grid (Emergency Tyre Change page) ===== */

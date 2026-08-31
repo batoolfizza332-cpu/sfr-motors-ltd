@@ -6,16 +6,27 @@
   var toggle = document.querySelector(".sfr-nav__toggle");
   var nav = document.querySelector(".sfr-nav");
   if (toggle && nav) {
+    var closeNav = function () {
+      nav.setAttribute("data-open", "false");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+    };
     toggle.addEventListener("click", function () {
       var open = nav.getAttribute("data-open") === "true";
       nav.setAttribute("data-open", String(!open));
       toggle.setAttribute("aria-expanded", String(!open));
+      toggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
     });
     nav.querySelectorAll(".sfr-nav__links a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        nav.setAttribute("data-open", "false");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+      link.addEventListener("click", closeNav);
+    });
+    // Escape closes the open mobile menu and returns focus to the toggle,
+    // so keyboard users are never left with an open menu they can't dismiss.
+    nav.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.getAttribute("data-open") === "true") {
+        closeNav();
+        toggle.focus();
+      }
     });
   }
 
