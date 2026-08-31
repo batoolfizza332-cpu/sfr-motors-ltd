@@ -226,3 +226,8 @@ ${confirmHtmlRows}
 
   return respond(200, { ok: true });
 };
+
+exports.clean = clean;
+exports.isValidEmail = isValidEmail;
+exports.isPlausiblePhone = isPlausiblePhone;
+exports.escapeHtml = escapeHtml;
