@@ -35,8 +35,11 @@ aws s3 cp "$SITE_DIR/sitemap.xml" "s3://$BUCKET/sitemap.xml" \
   --content-type "application/xml; charset=utf-8"
 
 echo "Invalidating CloudFront cache for all pages ..."
+# "/" is invalidated explicitly and separately from "/index.html" — a
+# request for the bare root path is cached under its own key (via
+# DefaultRootObject), so "/*.html" alone would miss it.
 aws cloudfront create-invalidation \
   --distribution-id "$DISTRIBUTION_ID" \
-  --paths "/*.html" "/robots.txt" "/sitemap.xml"
+  --paths "/" "/*.html" "/robots.txt" "/sitemap.xml"
 
 echo "Done."

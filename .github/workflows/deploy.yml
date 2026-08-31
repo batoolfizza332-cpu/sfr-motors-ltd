@@ -1,0 +1,52 @@
+name: Deploy site
+
+# Auto-deploys site/ to S3 + invalidates CloudFront whenever it changes on
+# main. Uses OIDC to assume a narrowly-scoped AWS role for the run only —
+# no long-lived AWS access keys are stored in GitHub at all.
+#
+# One-time setup (see infra/github-oidc.yaml):
+#   1. Deploy infra/template.yaml (the site itself) if you haven't already.
+#   2. Deploy infra/github-oidc.yaml, passing this repo's "owner/repo" and
+#      the bucket/distribution ARNs from step 1's outputs.
+#   3. In this repo: Settings -> Secrets and variables -> Actions -> Variables,
+#      add AWS_DEPLOY_ROLE_ARN (github-oidc.yaml's RoleArn output),
+#      AWS_REGION, SITE_BUCKET (template.yaml's BucketName output), and
+#      DISTRIBUTION_ID (template.yaml's DistributionId output).
+#      None of these are secrets — an ARN, a region and two resource IDs
+#      aren't sensitive on their own — so they're repo Variables, not Secrets.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+
+permissions:
+  id-token: write # required to request the OIDC token
+  contents: read
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false # let an in-flight deploy finish before the next starts
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC, no stored keys)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Sync site and invalidate CloudFront
+        working-directory: infra
+        env:
+          BUCKET: ${{ vars.SITE_BUCKET }}
+          DISTRIBUTION_ID: ${{ vars.DISTRIBUTION_ID }}
+        # Invoked via bash rather than ./deploy-site.sh so this doesn't
+        # depend on the executable bit surviving git (the script was
+        # authored on Windows, which doesn't track unix file permissions).
+        run: bash deploy-site.sh

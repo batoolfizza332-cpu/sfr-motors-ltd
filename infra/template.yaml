@@ -33,6 +33,16 @@ Resources:
           - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
       VersioningConfiguration:
         Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-old-versions
+            Status: Enabled
+            NoncurrentVersionExpiration:
+              NoncurrentDays: 90 # ~3 months of rollback history, then delete — keeps versioning's storage cost bounded
+          - Id: abort-incomplete-uploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 7
 
   SiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -165,15 +175,30 @@ Resources:
             ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
             AllowedMethods: [GET, HEAD]
         CustomErrorResponses:
+          # A private OAC bucket without s3:ListBucket returns 403 for a
+          # missing object, not 404, so that's the one that actually fires
+          # in practice — 404 is covered too in case that ever changes.
+          # Both serve index.html's content but keep the real 404 status,
+          # so broken links show a friendly page without being indexed as
+          # a duplicate of the homepage.
           - ErrorCode: 403
+            ResponseCode: 404
+            ResponsePagePath: /index.html
+          - ErrorCode: 404
             ResponseCode: 404
             ResponsePagePath: /index.html
 
 Outputs:
   BucketName:
     Value: !Ref SiteBucket
+  BucketArn:
+    Value: !GetAtt SiteBucket.Arn
+    Description: Pass this as SiteBucketArn when deploying github-oidc.yaml.
   DistributionId:
     Value: !Ref Distribution
+  DistributionArn:
+    Value: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${Distribution}"
+    Description: Pass this as DistributionArn when deploying github-oidc.yaml.
   DistributionDomainName:
     Value: !GetAtt Distribution.DomainName
     Description: Point your DNS (CNAME/ALIAS) at this if not using Route 53 alias records.
