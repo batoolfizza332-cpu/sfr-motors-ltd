@@ -20,7 +20,9 @@ aws s3 sync "$SITE_DIR/assets" "s3://$BUCKET/assets" \
   --cache-control "public, max-age=604800, immutable"
 
 # HTML and the two crawler files: short cache so edits show up quickly.
-aws s3 cp "$SITE_DIR/index.html" "s3://$BUCKET/index.html" \
+aws s3 sync "$SITE_DIR" "s3://$BUCKET" \
+  --exclude "*" \
+  --include "*.html" \
   --cache-control "public, max-age=300, must-revalidate" \
   --content-type "text/html; charset=utf-8"
 
@@ -32,9 +34,9 @@ aws s3 cp "$SITE_DIR/sitemap.xml" "s3://$BUCKET/sitemap.xml" \
   --cache-control "public, max-age=3600" \
   --content-type "application/xml; charset=utf-8"
 
-echo "Invalidating CloudFront cache for index.html ..."
+echo "Invalidating CloudFront cache for all pages ..."
 aws cloudfront create-invalidation \
   --distribution-id "$DISTRIBUTION_ID" \
-  --paths "/index.html" "/robots.txt" "/sitemap.xml"
+  --paths "/*.html" "/robots.txt" "/sitemap.xml"
 
 echo "Done."

@@ -26,6 +26,12 @@
   var form = document.getElementById("quote-form-el");
   if (!form) return;
 
+  // Timestamp the form's first render. Sent back on submit so the backend
+  // can silently drop submissions that arrive faster than a human could
+  // realistically fill the form in — a lightweight complement to the
+  // honeypot field for catching scripted bot submissions.
+  var formRenderedAt = Date.now();
+
   var statusEl = document.getElementById("quote-form-status");
   var submitBtn = form.querySelector('button[type="submit"]');
 
@@ -74,7 +80,8 @@
         preferredDate: data.preferredDate || "",
         preferredTime: data.preferredTime || "",
         message: data.message || "",
-        company: data.company || "" // honeypot, checked again server-side
+        company: data.company || "", // honeypot, checked again server-side
+        renderedAt: formRenderedAt // timing check, also verified server-side
       })
     })
       .then(function (res) {

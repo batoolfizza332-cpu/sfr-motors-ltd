@@ -75,6 +75,27 @@ Resources:
           FrameOptions:
             FrameOption: DENY
             Override: true
+          ContentSecurityPolicy:
+            # Matches the site's actual resources exactly, so nothing needs
+            # 'unsafe-inline'/'unsafe-eval': the only script is assets/js/main.js,
+            # the only stylesheet besides main.css is Google Fonts, the only
+            # embed is the Google Maps iframe on contact.html, and the quote
+            # form calls the API subdomain below. JSON-LD <script> blocks are
+            # inert and aren't restricted by script-src in any current browser.
+            ContentSecurityPolicy: >-
+              default-src 'self';
+              script-src 'self';
+              style-src 'self' https://fonts.googleapis.com;
+              font-src 'self' https://fonts.gstatic.com;
+              img-src 'self';
+              connect-src 'self' https://api.sfrmotors.co.uk;
+              frame-src https://maps.google.com;
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
+              frame-ancestors 'none';
+              upgrade-insecure-requests
+            Override: true
         CustomHeadersConfig:
           Items:
             - Header: Permissions-Policy

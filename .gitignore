@@ -3,3 +3,5 @@ package-lock.json
 .aws-sam/
 .DS_Store
 Thumbs.db
+.env
+.env.*

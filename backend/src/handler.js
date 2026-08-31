@@ -47,6 +47,13 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+// UK-friendly: digits with optional leading +, spaces, hyphens or brackets,
+// 7-16 digits total. Loose on purpose — real validation is "can we call it".
+function isPlausiblePhone(value) {
+  const digits = value.replace(/[^\d]/g, "");
+  return /^[\d+()\-.\s]+$/.test(value) && digits.length >= 7 && digits.length <= 16;
+}
+
 exports.handler = async (event) => {
   if (event.requestContext?.http?.method === "OPTIONS") {
     return respond(204, {});
@@ -71,14 +78,21 @@ exports.handler = async (event) => {
   const preferredTime = clean(payload.preferredTime, MAX_LEN.preferredTime);
   const message = clean(payload.message, MAX_LEN.message);
   const company = clean(payload.company, MAX_LEN.company); // honeypot
+  const renderedAt = Number(payload.renderedAt);
 
-  // Honeypot tripped: pretend success, never send the email or hint that a check exists.
-  if (company) {
+  // Honeypot tripped, or the form was "filled" faster than a human could
+  // read and type it: pretend success, never send the email or hint that
+  // a check exists.
+  const elapsedMs = Number.isFinite(renderedAt) ? Date.now() - renderedAt : null;
+  if (company || (elapsedMs !== null && elapsedMs < 1500)) {
     return respond(200, { ok: true });
   }
 
   if (!name || !phone || !service || !location) {
     return respond(400, { ok: false, error: "Name, phone, service and current location are required." });
+  }
+  if (!isPlausiblePhone(phone)) {
+    return respond(400, { ok: false, error: "That phone number doesn't look right." });
   }
   if (email && !isValidEmail(email)) {
     return respond(400, { ok: false, error: "That email address doesn't look right." });
