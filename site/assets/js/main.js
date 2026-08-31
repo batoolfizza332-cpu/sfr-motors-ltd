@@ -31,35 +31,70 @@
   }
 
   // ---- Quote / contact form ----
-  // Set this to your deployed API Gateway endpoint (see backend/README.md).
-  var QUOTE_API_ENDPOINT = "https://api.sfrmotors.co.uk/quote";
+  // Enquiries go straight to SFR Motors' WhatsApp as a pre-filled message —
+  // there's no backend to send them to instead. Do not add one back in
+  // without also wiring up a real success/failure state; a WhatsApp deep
+  // link either opens or it doesn't, and the user can see which happened.
+  var WHATSAPP_NUMBER = "447448427154";
 
   var form = document.getElementById("quote-form-el");
   if (!form) return;
 
-  // Timestamp the form's first render. Sent back on submit so the backend
-  // can silently drop submissions that arrive faster than a human could
-  // realistically fill the form in — a lightweight complement to the
-  // honeypot field for catching scripted bot submissions.
+  // Timestamp the form's first render, so a submission arriving faster
+  // than a human could plausibly fill the form in gets silently treated
+  // like the honeypot case below — a lightweight bot check now that
+  // there's no server left to do it.
   var formRenderedAt = Date.now();
+  var MIN_FILL_TIME_MS = 1500;
 
   var statusEl = document.getElementById("quote-form-status");
-  var submitBtn = form.querySelector('button[type="submit"]');
 
   function setStatus(state, message) {
     statusEl.dataset.state = state;
     statusEl.textContent = message;
   }
 
+  function fieldOrFallback(value) {
+    return value && value.trim() ? value.trim() : "Not specified";
+  }
+
+  function formatDate(isoDate) {
+    if (!isoDate) return "Not specified";
+    var parts = isoDate.split("-");
+    if (parts.length !== 3) return isoDate;
+    return parts[2] + "/" + parts[1] + "/" + parts[0];
+  }
+
+  function buildWhatsAppMessage(data) {
+    return [
+      "SFR MOTORS — NEW QUOTE REQUEST",
+      "",
+      "Name: " + fieldOrFallback(data.name),
+      "Phone: " + fieldOrFallback(data.phone),
+      "Service: " + fieldOrFallback(data.service),
+      "Vehicle: " + fieldOrFallback(data.vehicle),
+      "Registration: " + fieldOrFallback(data.vehicleReg),
+      "Tyre Size: " + fieldOrFallback(data.tyreSize),
+      "Number of Tyres: " + fieldOrFallback(data.tyreCount),
+      "Location: " + fieldOrFallback(data.location),
+      "Preferred Date: " + formatDate(data.preferredDate),
+      "Preferred Time: " + fieldOrFallback(data.preferredTime),
+      "",
+      "Additional Information:",
+      fieldOrFallback(data.message)
+    ].join("\n");
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     var data = Object.fromEntries(new FormData(form).entries());
+    var elapsedMs = Date.now() - formRenderedAt;
 
-    // Honeypot: real visitors never fill this hidden field.
-    // Bots typically fill every field, so if it has a value we
-    // silently pretend success without ever hitting the API.
-    if (data.company) {
+    // Honeypot + too-fast-to-be-human: real visitors never trip either of
+    // these, so treat both the same way — pretend it worked without
+    // opening WhatsApp, rather than tipping a bot off that it was caught.
+    if (data.company || elapsedMs < MIN_FILL_TIME_MS) {
       form.reset();
       setStatus(
         "success",
@@ -73,56 +108,23 @@
       return;
     }
 
-    var defaultLabel = "Request A Free Quote";
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending…";
-    setStatus("", "");
-    statusEl.removeAttribute("data-state");
+    var message = buildWhatsAppMessage(data);
+    var whatsappUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
 
-    fetch(QUOTE_API_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: data.name,
-        phone: data.phone,
-        email: data.email || "",
-        vehicleReg: data.vehicleReg || "",
-        vehicle: data.vehicle || "",
-        tyreSize: data.tyreSize || "",
-        service: data.service,
-        location: data.location,
-        preferredDate: data.preferredDate || "",
-        preferredTime: data.preferredTime || "",
-        message: data.message || "",
-        company: data.company || "", // honeypot, checked again server-side
-        renderedAt: formRenderedAt // timing check, also verified server-side
-      })
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Request failed");
-        return res.json();
-      })
-      .then(function () {
-        form.reset();
-        setStatus(
-          "success",
-          "Thank you. Your request has been received. SFR Motors will contact you shortly. For urgent assistance, please call us directly."
-        );
-        // Lets assets/js/analytics.js fire its quote_request /
-        // contact_form_submit conversion events — only reached here, on a
-        // genuine successful submission, never on the honeypot's silent-
-        // success path above, so bot traffic can't inflate the numbers.
-        document.dispatchEvent(new CustomEvent("sfr:quote-submitted"));
-      })
-      .catch(function () {
-        setStatus(
-          "error",
-          "Sorry, something went wrong sending your request. Please call us on 0131 202 0289 instead."
-        );
-      })
-      .finally(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = defaultLabel;
-      });
+    // wa.me handles the mobile-app-vs-WhatsApp-Web split on its own based
+    // on the device opening it — no user-agent sniffing needed here.
+    window.open(whatsappUrl, "_blank", "noopener");
+
+    form.reset();
+    setStatus(
+      "success",
+      "Opening WhatsApp with your enquiry filled in — just check it over and press Send to reach us. Didn't open? Message us directly on WhatsApp below."
+    );
+
+    // Lets assets/js/analytics.js fire its quote_request /
+    // contact_form_submit conversion events — only reached here, on a
+    // genuine attempt to reach us, never on the honeypot/bot-timing
+    // silent-success path above, so bot traffic can't inflate the numbers.
+    document.dispatchEvent(new CustomEvent("sfr:quote-submitted"));
   });
 })();
