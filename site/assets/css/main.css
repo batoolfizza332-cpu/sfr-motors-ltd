@@ -47,14 +47,14 @@ a { text-underline-offset: 2px; }
   justify-content: space-between;
   gap: 16px;
 }
-.sfr-topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+.sfr-topbar a { color: #fff; text-decoration: none; font-weight: 700; }
 .sfr-topbar a:hover { color: #ff6600; }
 .sfr-topbar__open {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   color: #8fd18f;
-  font-weight: 600;
+  font-weight: 700;
 }
 .sfr-topbar__open .dot {
   width: 6px; height: 6px; border-radius: 50%; background: #4caf50;
@@ -89,7 +89,7 @@ a { text-underline-offset: 2px; }
 .sfr-nav { display: flex; align-items: center; gap: 28px; }
 .sfr-nav__links { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
 .sfr-nav__links a {
-  color: #15161a; text-decoration: none; font-size: 14.5px; font-weight: 600;
+  color: #15161a; text-decoration: none; font-size: 14.5px; font-weight: 700;
   padding: 6px 0; border-bottom: 2px solid transparent;
 }
 .sfr-nav__links a:hover { color: #d94f00; border-color: #d94f00; }
@@ -244,7 +244,7 @@ a { text-underline-offset: 2px; }
 .sfr-quote__reg { text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
 .sfr-quote__group-label { font-size: 13px; font-weight: 700; }
 .sfr-quote__row--tight { gap: 12px; margin-top: 6px; }
-.sfr-quote__sublabel { font-size: 12px; font-weight: 600; color: #6b6864; }
+.sfr-quote__sublabel { font-size: 12px; font-weight: 700; color: #6b6864; }
 /* honeypot: hidden from sighted users but present for bots/no JS check */
 .sfr-quote__hp {
   position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
@@ -261,7 +261,7 @@ a { text-underline-offset: 2px; }
 .sfr-quote__submit:disabled { opacity: .6; cursor: progress; }
 
 .sfr-quote__status {
-  font-size: 14px; font-weight: 600; border-radius: 8px; padding: 12px 14px; display: none;
+  font-size: 14px; font-weight: 700; border-radius: 8px; padding: 12px 14px; display: none;
 }
 .sfr-quote__status[data-state="success"] { display: block; background: #eafaf0; color: #1c7a3c; }
 .sfr-quote__status[data-state="error"] { display: block; background: #fdecea; color: #b3261e; }
@@ -336,7 +336,6 @@ a { text-underline-offset: 2px; }
     padding:28px 22px;
     text-align:left;
     transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    will-change:transform;
   }
   .sfr-why__icon{
     width:48px;height:48px;
@@ -684,7 +683,7 @@ a { text-underline-offset: 2px; }
     color:var(--sfr-ink);
     text-decoration:none;
     font-size:14.5px;
-    font-weight:600;
+    font-weight:700;
     transition:border-color .18s ease, background .18s ease, color .18s ease;
   }
   .sfr-areas__pin svg{
@@ -904,7 +903,7 @@ a { text-underline-offset: 2px; }
   .sfr-reviews__stars svg{width:16px;height:16px;fill:var(--sfr-orange);}
   .sfr-reviews__count{
     display:flex;align-items:center;gap:6px;
-    font-size:13.5px;font-weight:600;color:var(--sfr-sub);
+    font-size:13.5px;font-weight:700;color:var(--sfr-sub);
   }
   .sfr-reviews__count svg{width:15px;height:15px;flex:none;}
 
@@ -944,7 +943,7 @@ a { text-underline-offset: 2px; }
   .sfr-reviews__author-name{font-weight:700;}
   .sfr-reviews__source{
     display:flex;align-items:center;gap:5px;
-    color:var(--sfr-sub);font-size:12.5px;font-weight:600;
+    color:var(--sfr-sub);font-size:12.5px;font-weight:700;
   }
   .sfr-reviews__source svg{width:13px;height:13px;}
   @media (hover:hover){
@@ -1787,7 +1786,7 @@ a { text-underline-offset: 2px; }
 .sfr-breadcrumb li:not(:last-child)::after{content:"/";color:#c9c5c0;}
 .sfr-breadcrumb a{color:#6b6864;text-decoration:none;}
 .sfr-breadcrumb a:hover{color:#d94f00;}
-.sfr-breadcrumb li[aria-current="page"]{color:#15161a;font-weight:600;}
+.sfr-breadcrumb li[aria-current="page"]{color:#15161a;font-weight:700;}
 
 /* ===== 5-step "How It Works" grid (Emergency Tyre Change page) ===== */
 @media (min-width:761px){

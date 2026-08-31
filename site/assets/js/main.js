@@ -2,6 +2,18 @@
 (function () {
   "use strict";
 
+  // ---- Non-blocking Google Fonts ----
+  // The stylesheet link is served with media="print" so it never blocks
+  // first paint (browsers only block render on stylesheets matching the
+  // current media). Flipping it to "all" here — a plain property set, not
+  // an inline onload= handler, so the strict script-src CSP is unaffected —
+  // applies it as soon as this deferred script runs, just after the DOM is
+  // parsed. font-display: swap (already in the Google Fonts URL) still
+  // governs the fallback-to-Roboto swap once the font file itself loads.
+  document.querySelectorAll("link[data-sfr-defer-style]").forEach(function (link) {
+    link.media = "all";
+  });
+
   // ---- Mobile nav toggle ----
   var toggle = document.querySelector(".sfr-nav__toggle");
   var nav = document.querySelector(".sfr-nav");
