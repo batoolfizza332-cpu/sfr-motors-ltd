@@ -71,44 +71,32 @@ then open http://localhost:5500.
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
 | Analytics without hurting Core Web Vitals | `gtag.js` is injected via JS with `async`, after the page's own `dataLayer`/`gtag()` are defined synchronously (so no early events are lost) — no render-blocking script tag, no impact on LCP/CLS/INP. See "Analytics & conversion tracking" below |
 
-## Deploying the backend (contact form)
+## Quote/contact form: WhatsApp, not the backend
 
-The quote form posts to a Lambda function behind API Gateway, which emails
-the submission via SES. Requires the AWS SAM CLI.
+The quote form (on `index.html` and `contact.html`) builds a formatted
+enquiry message client-side and opens it as a pre-filled WhatsApp
+conversation (`wa.me/447448427154`) — see the "Quote / contact form"
+section of `site/assets/js/main.js`. Nothing needs deploying for this to
+work; there's no API call involved.
 
-```bash
-cd backend
-sam build
-sam deploy --guided
-```
+Spam protection in place, both still handled client-side since there's no
+server in this flow:
+- Honeypot field (`company`) — invisible to real visitors.
+- Submit-timing check — the form records when it rendered, and a
+  submission arriving under 1.5 seconds later is treated the same way as
+  the honeypot (silently shown a fake success, WhatsApp never opens).
 
-On first run it'll ask for `AllowedOrigin`, `ToEmail`, `FromEmail` — defaults
-are already sfrmotors.co.uk / info@sfrmotors.co.uk. **`FromEmail` must be a
-verified SES identity.** The handler also emails a confirmation back to
-whichever address the customer submitted — since that's an arbitrary address
-you can't pre-verify, **the SES account needs to be moved out of the sandbox**
-(a one-time request in the SES console) or those confirmation emails will
-silently fail to send (the customer's request still reaches the business
-either way — see `backend/src/handler.js` for why that failure is
-non-fatal).
+### `backend/` (currently unused by the live site)
 
-After deploy, copy the `QuoteApiUrl` output into
-`site/assets/js/main.js` → `QUOTE_API_ENDPOINT`, then redeploy the site.
-
-Spam protection in place:
-- Honeypot field (`company`) — invisible to real visitors, checked both in
-  the browser and again in the Lambda, so it can't be bypassed by calling
-  the API directly.
-- Submit-timing check — the form records when it rendered and sends that
-  back on submit; the Lambda silently drops anything that arrives under
-  1.5 seconds later, the same way it handles the honeypot.
-- Server-side validation (required fields, email + phone format, length
-  limits, `<`/`>` stripped so submitted text can't inject markup into
-  either email).
-- API Gateway throttling (2 req/s sustained, burst 5) on the route.
-- For heavier spam/bot traffic, put AWS WAF in front of the API with a
-  rate-based rule — not included here to keep the base setup simple, but
-  it's a drop-in addition.
+A Lambda + API Gateway + SES setup for emailing form submissions still
+exists in `backend/` and `infra/`, but `site/` no longer calls it — the
+form was switched to the WhatsApp flow above because this backend was
+never actually deployed successfully in production. The code is left in
+place in case email-based delivery is wanted again later; if so, it'd need
+`cd backend && sam build && sam deploy --guided` (see `backend/src/handler.js`
+for the SES-sandbox and confirmation-email notes), and `site/assets/js/main.js`
+would need a fetch() call added back pointing at the deployed API — it
+doesn't have one now.
 
 ## Production build
 
@@ -215,7 +203,6 @@ always-on compute anywhere in this stack to pay for at idle.
 
 ## Known placeholders to fill in before going live
 
-- `site/assets/js/main.js` — `QUOTE_API_ENDPOINT` (set after backend deploy)
 - `site/assets/js/analytics.js` — `GA_MEASUREMENT_ID` (see below)
 - `footer-section.html` / the footer in `site/index.html` — Facebook and
   Instagram icons currently link to `#`. Multiple similarly-named accounts
@@ -233,7 +220,7 @@ every page:
 |---|---|
 | `phone_click` | any `tel:` link is clicked (header, hero, footer, "Call Now" buttons — one listener covers all of them) |
 | `whatsapp_click` | any `https://wa.me/...` link is clicked |
-| `quote_request` | the quote/contact form is submitted **and the backend confirms success** — never on the honeypot's silent-success path, so bot traffic can't inflate this number |
+| `quote_request` | the quote/contact form is submitted **and WhatsApp opens with the enquiry pre-filled** — never on the honeypot/bot-timing silent-success path, so bot traffic can't inflate this number |
 | `contact_form_submit` | the same successful submission, specifically when it happened on `contact.html` |
 | `cta_click` | a "Get A Free Quote" / "Request..." link pointing at `#quote-form` is clicked, before submission — separates click-through from actual completed requests |
 | `nav_click` | a main navigation link is clicked |
