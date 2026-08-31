@@ -201,6 +201,17 @@ a { text-underline-offset: 2px; }
 .sfr-hero__meta span { display: inline-flex; align-items: center; gap: 7px; }
 .sfr-hero__meta svg { width: 15px; height: 15px; stroke: #ff6600; }
 
+.sfr-hero__soft-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; color: #cfcfcf; text-decoration: none;
+  margin: -14px 0 22px; border-bottom: 1px solid transparent;
+  transition: color .18s ease, border-color .18s ease;
+}
+.sfr-hero__soft-link svg { width: 13px; height: 13px; }
+@media (hover: hover) {
+  .sfr-hero__soft-link:hover { color: #ff6600; border-color: #ff6600; }
+}
+
 /* ===== Quote / contact form ===== */
 .sfr-quote {
   background: #faf9f7;
