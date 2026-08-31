@@ -1121,6 +1121,31 @@ a { text-underline-offset: 2px; }
     .sfr-about__frame img,.sfr-about__btn,.sfr-about__btn svg{transition:none;}
   }
 
+/* ===== Service pages: "What You Should Know" expert guide block ===== */
+.sfr-guide{
+  --sfr-ink:#15161a;--sfr-paper:#ffffff;--sfr-card:#faf9f7;--sfr-line:#e8e5e1;--sfr-sub:#5c5955;
+  --sfr-orange:#ff6600;--sfr-orange-deep:#d94f00;
+  background:var(--sfr-paper);
+  padding:clamp(56px,8vw,88px) clamp(20px,5vw,32px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;color:var(--sfr-ink);
+}
+.sfr-guide *{box-sizing:border-box;}
+.sfr-guide__inner{max-width:1080px;margin:0 auto;}
+.sfr-guide__head{text-align:center;max-width:620px;margin:0 auto clamp(32px,5vw,44px);}
+.sfr-guide__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sfr-orange-deep);margin-bottom:14px;
+}
+.sfr-guide__eyebrow::before,.sfr-guide__eyebrow::after{content:"";width:20px;height:2px;background:var(--sfr-orange);border-radius:2px;}
+.sfr-guide__title{font-size:clamp(24px,3.4vw,32px);font-weight:900;line-height:1.2;margin:0;letter-spacing:-.01em;}
+.sfr-guide__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 28px;}
+.sfr-guide__item{background:var(--sfr-card);border:1px solid var(--sfr-line);border-radius:12px;padding:22px 24px;}
+.sfr-guide__item h3{font-size:16px;font-weight:700;margin:0 0 8px;color:var(--sfr-ink);}
+.sfr-guide__item p{font-size:14.5px;line-height:1.6;color:var(--sfr-sub);margin:0;}
+.sfr-guide__item p a{color:var(--sfr-orange-deep);font-weight:600;text-decoration:underline;}
+@media (max-width:700px){.sfr-guide__grid{grid-template-columns:1fr;}}
+
 /* ===== FAQ ===== */
 .sfr-faq{
     --sfr-ink:#15161a;
