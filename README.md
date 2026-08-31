@@ -150,6 +150,39 @@ provider), and push content with:
 BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-site.sh
 ```
 
+## Google Search Console setup
+
+The site is already set up to be crawled and indexed cleanly — nothing
+below is a code change, just what to do in Search Console itself once the
+site is live on `https://sfrmotors.co.uk/`:
+
+| Requirement | Status |
+|---|---|
+| Publicly accessible over HTTPS | Yes — CloudFront is HTTPS-only (`redirect-to-https`); see the hosting section above |
+| Single canonical domain | Yes — every page's `<link rel="canonical">` and Open Graph URL point at the bare `https://sfrmotors.co.uk/...` form, and `www` 301-redirects to it (see `infra/template.yaml`) |
+| Googlebot not blocked | Yes — `site/robots.txt` is `User-agent: * / Allow: /` with no `Disallow` lines, and no page sets `noindex` |
+| Valid, accessible sitemap | Yes — `site/robots.txt` points at `https://sfrmotors.co.uk/sitemap.xml`, which lists all 18 real pages with well-formed XML |
+| Important pages indexable | Yes — every real page (`site/*.html`) is `<meta name="robots" content="index, follow">`; only the custom 404 page is `noindex` (correctly — it isn't real content) |
+
+**Verifying ownership — two options:**
+
+1. **Domain property (recommended):** In Search Console, add `sfrmotors.co.uk`
+   as a **Domain** property and verify via the **DNS TXT record** it gives
+   you, added at your domain registrar/DNS provider. This one record
+   verifies the apex, `www`, and both HTTP and HTTPS together — no file or
+   code changes needed, and nothing to redeploy.
+2. **URL-prefix property:** If you add `https://sfrmotors.co.uk/` as a
+   **URL-prefix** property instead, use the **HTML tag** verification
+   method. `site/index.html` already has a clearly-marked, commented-out
+   placeholder for this in the `<head>` — search it for
+   `google-site-verification`, paste in the real code Search Console
+   gives you, uncomment that one line, then rebuild and redeploy. (No
+   invented/placeholder code is ever live — the tag does nothing until
+   you fill it in.)
+
+Once verified, submit `https://sfrmotors.co.uk/sitemap.xml` under
+Sitemaps in Search Console to speed up indexing.
+
 ## Automatic deployments (CI/CD)
 
 Once the steps above have run at least once, further content edits can
