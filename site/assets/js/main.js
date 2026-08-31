@@ -97,6 +97,11 @@
           "success",
           "Thank you. Your request has been received. SFR Motors will contact you shortly. For urgent assistance, please call us directly."
         );
+        // Lets assets/js/analytics.js fire its quote_request /
+        // contact_form_submit conversion events — only reached here, on a
+        // genuine successful submission, never on the honeypot's silent-
+        // success path above, so bot traffic can't inflate the numbers.
+        document.dispatchEvent(new CustomEvent("sfr:quote-submitted"));
       })
       .catch(function () {
         setStatus(

@@ -66,6 +66,7 @@ then open http://localhost:5500.
 | Caching & compression | CloudFront `Compress: true` (gzip/brotli) on both cache behaviors; long `max-age=604800, immutable` on `/assets/*`, short cache on HTML so edits show up quickly — see `infra/deploy-site.sh` |
 | Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + the quote API), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
+| Analytics without hurting Core Web Vitals | `gtag.js` is injected via JS with `async`, after the page's own `dataLayer`/`gtag()` are defined synchronously (so no early events are lost) — no render-blocking script tag, no impact on LCP/CLS/INP. See "Analytics & conversion tracking" below |
 
 ## Deploying the backend (contact form)
 
@@ -192,8 +193,49 @@ always-on compute anywhere in this stack to pay for at idle.
 ## Known placeholders to fill in before going live
 
 - `site/assets/js/main.js` — `QUOTE_API_ENDPOINT` (set after backend deploy)
+- `site/assets/js/analytics.js` — `GA_MEASUREMENT_ID` (see below)
 - `footer-section.html` / the footer in `site/index.html` — Facebook and
   Instagram icons currently link to `#`. Multiple similarly-named accounts
   turned up in a search and none are linked from the live WordPress site,
   so rather than guess, these are left for you to fill in with the
   confirmed official profile URLs.
+
+## Analytics & conversion tracking
+
+`assets/js/analytics.js` loads GA4 (`gtag.js`) asynchronously — it never
+blocks rendering — and tracks these conversion events automatically on
+every page:
+
+| Event | Fires when |
+|---|---|
+| `phone_click` | any `tel:` link is clicked (header, hero, footer, "Call Now" buttons — one listener covers all of them) |
+| `whatsapp_click` | any `https://wa.me/...` link is clicked |
+| `quote_request` | the quote/contact form is submitted **and the backend confirms success** — never on the honeypot's silent-success path, so bot traffic can't inflate this number |
+| `contact_form_submit` | the same successful submission, specifically when it happened on `contact.html` |
+| `cta_click` | a "Get A Free Quote" / "Request..." link pointing at `#quote-form` is clicked, before submission — separates click-through from actual completed requests |
+| `nav_click` | a main navigation link is clicked |
+
+Every event also carries a `page_type` parameter (`core` / `service` /
+`location`), computed from the URL by `analytics.js` itself — so "key
+service page visits" and "location page visits" can be segmented in GA4
+without editing all 18 pages individually to tag them.
+
+**Not tracked, by design:** nothing typed into the form (name, phone,
+email, message) is ever sent as an event parameter — only the fact that
+a submission happened.
+
+**To activate:** put your real GA4 Measurement ID (Google Analytics ->
+Admin -> Data Streams -> your web stream) into `GA_MEASUREMENT_ID` in
+`site/assets/js/analytics.js`. It's not a secret — Measurement IDs are
+public by design, visible in any browser's network tab on every GA4
+site — this is a single named placeholder purely so there's one place to
+set it instead of 18. Until it's set, the file no-ops entirely: no
+script loads, no listeners attach, nothing is sent.
+
+**Before enabling real tracking:** as a UK business, cookie-based
+analytics like GA4 generally needs visitor consent under UK PECR/GDPR
+rules. This setup doesn't include a consent banner or Google Consent
+Mode — deliberately, since that's a compliance decision for you to make
+(a simple accept/reject banner, Consent Mode with default-denied
+analytics, or accepting the risk at low traffic are all common choices
+for a small business site) rather than something to bake in unasked.
