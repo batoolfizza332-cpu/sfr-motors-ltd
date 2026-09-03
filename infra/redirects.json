@@ -1,0 +1,18 @@
+{
+  "_comment": "Single source of truth for the Phase 2 migration plan's 301 redirect map. Every entry: old live WordPress URL -> final URL on the restructured site/ build. All destinations are pages that exist in site/ as of Phase 3 — verified against the file tree, not assumed. Generated into vercel.json and infra/cloudfront-function.js by scripts/gen-redirects.js; edit this file, not the generated ones.",
+  "redirects": [
+    { "source": "/home-tyre-fitting/", "destination": "/mobile-tyre-fitting/", "reason": "Overlapped the core fitting page's keyword — merge target per Phase 2 §2." },
+    { "source": "/on-demand-mobile-tire-fitting/", "destination": "/mobile-tyre-fitting/", "reason": "Likely the live top-ranking page for the core 'mobile tyre fitting' keyword — flagged High risk in Phase 2; verify GSC performance before this goes live." },
+    { "source": "/premium-vehicle-tyre-service/", "destination": "/our-tyre-range/", "reason": "No dedicated premium-tyre page recreated this pass; closest live topical match. Revisit if GSC shows this URL earning real clicks." },
+    { "source": "/sfr-mobile-tyre-fitting-livingston/", "destination": "/mobile-tyre-fitting-livingston/", "reason": "Duplicate of the primary Livingston page — consolidating per Phase 2 §2 Task 3. Confirm this is the weaker of the two via GSC before launch." },
+    { "source": "/mobile-tyre-repair-edinburgh-west-lothian/", "destination": "/mobile-tyre-fitting-edinburgh/", "reason": "Thin 'Top 7' listicle overlapping the Edinburgh hub page." },
+    { "source": "/tyre-puncture-repair-near-me-west-lothian/", "destination": "/mobile-tyre-puncture-repair/", "reason": "Thin 'Top 7' listicle; service intent outranks the location angle." },
+    { "source": "/emergency-tyre-fitter-edinburgh-falkirk/", "destination": "/emergency-tyre-change/", "reason": "Dual-location emergency content consolidated into the dedicated emergency page." },
+    { "source": "/mobile-tyre-fitting-guide/", "destination": "/mobile-tyre-fitting-edinburgh/", "reason": "Informational guide competing with the transactional Edinburgh page." },
+    { "source": "/mobile-tyre-fitting-bathgate-questions/", "destination": "/mobile-tyre-fitting-bathgate/", "reason": "The Bathgate page's own FAQ section already supersedes this content." },
+    { "source": "/best-mobile-tyre-fitters-bathgate/", "destination": "/mobile-tyre-fitting-bathgate/", "reason": "Listicle not recreated this pass — see Phase 2 §3 outdated-content flag before deciding whether to rewrite it properly later." },
+    { "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/", "destination": "/blog/", "reason": "Comparison article not recreated this pass; points at the blog index rather than an unrelated page until it is." },
+    { "source": "/tyres-bathgate-guide/", "destination": "/van-tyre-replacement-services/", "reason": "Closest topical match for this van-tyre buying guide." },
+    { "source": "/category/best-mobile-tyre-fitting-service/", "destination": "/blog/", "reason": "Standard WordPress category archive — thin, redirected to its natural replacement." }
+  ]
+}

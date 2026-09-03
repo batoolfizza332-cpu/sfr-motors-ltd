@@ -1,4 +1,72 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/home-tyre-fitting/",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/on-demand-mobile-tire-fitting/",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/premium-vehicle-tyre-service/",
+      "destination": "/our-tyre-range/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sfr-mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-puncture-repair-near-me-west-lothian/",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-fitter-edinburgh-falkirk/",
+      "destination": "/emergency-tyre-change/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-guide/",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-questions/",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-mobile-tyre-fitters-bathgate/",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyres-bathgate-guide/",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/best-mobile-tyre-fitting-service/",
+      "destination": "/blog/",
+      "statusCode": 301
+    }
+  ]
 }

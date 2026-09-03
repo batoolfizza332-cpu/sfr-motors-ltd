@@ -26,34 +26,42 @@
 
   // ---- Classify the current page (lets service/location visits and ----
   // ---- conversions be segmented in GA4 reports without per-page setup) ----
-  var LOCATION_PAGES = [
-    "mobile-tyre-fitting-bathgate.html",
-    "mobile-tyre-fitting-edinburgh.html",
-    "mobile-tyre-fitting-livingston.html",
-    "mobile-tyre-fitting-west-lothian.html",
-    "mobile-tyre-fitting-falkirk.html"
+  // Keyed by the first path segment of the clean URL (e.g. "/mobile-tyre-fitting-bathgate/"
+  // -> "mobile-tyre-fitting-bathgate"), not filenames — every page lives at
+  // /<slug>/ since the Phase 3 URL restructure.
+  var LOCATION_SLUGS = [
+    "mobile-tyre-fitting-bathgate",
+    "mobile-tyre-fitting-edinburgh",
+    "mobile-tyre-fitting-livingston",
+    "mobile-tyre-fitting-west-lothian",
+    "mobile-tyre-fitting-falkirk",
+    "mobile-tyre-fitting-armadale",
+    "mobile-tyre-fitting-whitburn",
+    "mobile-tyre-fitting-airdrie"
   ];
-  var SERVICE_PAGES = [
-    "mobile-tyre-fitting.html",
-    "mobile-tyre-replacement.html",
-    "mobile-puncture-repair.html",
-    "emergency-tyre-change.html",
-    "mobile-locking-wheel-nut-removal.html",
-    "trade-fleet-tyre-services.html",
-    "van-tyre-replacement.html",
-    "caravan-trailer-tyre-fitting.html",
-    "tpms-services.html"
+  var SERVICE_SLUGS = [
+    "mobile-tyre-fitting",
+    "mobile-tyre-replacement",
+    "mobile-tyre-puncture-repair",
+    "emergency-tyre-change",
+    "mobile-locking-wheel-nut-removal",
+    "trade-fleet-tyre-services",
+    "van-tyre-replacement-services",
+    "caravan-trailer-tyre-fitting",
+    "tpms-services",
+    "our-tyre-range"
   ];
 
-  function currentPageFile() {
-    var path = window.location.pathname.split("/").pop();
-    return path || "index.html";
+  function currentPageSlug() {
+    var segs = window.location.pathname.split("/").filter(Boolean);
+    return segs.length ? segs[0] : ""; // "" = homepage
   }
 
   function pageType() {
-    var page = currentPageFile();
-    if (LOCATION_PAGES.indexOf(page) !== -1) return "location";
-    if (SERVICE_PAGES.indexOf(page) !== -1) return "service";
+    var slug = currentPageSlug();
+    if (LOCATION_SLUGS.indexOf(slug) !== -1) return "location";
+    if (SERVICE_SLUGS.indexOf(slug) !== -1) return "service";
+    if (slug === "blog") return "blog";
     return "core";
   }
 
@@ -129,7 +137,7 @@
   document.addEventListener("sfr:quote-submitted", function () {
     gtag("event", "quote_request", { page_type: pageType() });
 
-    if (currentPageFile() === "contact.html") {
+    if (currentPageSlug() === "contact-us") {
       gtag("event", "contact_form_submit", { page_type: pageType() });
     }
   });

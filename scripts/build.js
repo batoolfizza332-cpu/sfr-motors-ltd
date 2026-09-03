@@ -80,7 +80,7 @@ async function buildCss(relPath) {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, minified);
   console.log(`  ${relPath} -> ${outRel}  (${fmtBytes(source.length)} -> ${fmtBytes(minified.length)})`);
-  return { from: relPath.replace(/\\/g, "/"), to: outRel.replace(/\\/g, "/") };
+  return { from: "/" + relPath.replace(/\\/g, "/"), to: "/" + outRel.replace(/\\/g, "/") };
 }
 
 async function buildJs(relPath) {
@@ -104,11 +104,15 @@ async function buildJs(relPath) {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, minified);
   console.log(`  ${relPath} -> ${outRel}  (${fmtBytes(source.length)} -> ${fmtBytes(minified.length)})`);
-  return { from: relPath.replace(/\\/g, "/"), to: outRel.replace(/\\/g, "/") };
+  return { from: "/" + relPath.replace(/\\/g, "/"), to: "/" + outRel.replace(/\\/g, "/") };
 }
 
 async function buildHtmlFiles(assetMap) {
-  const htmlFiles = fs.readdirSync(SITE_DIR).filter((f) => f.endsWith(".html"));
+  // Recursive: every page now lives at site/<slug>/index.html (clean,
+  // trailing-slash production URLs) rather than flat site/<slug>.html —
+  // see scripts/migrate-phase3.js for the one-off restructure this build
+  // step now assumes.
+  const htmlFiles = walk(SITE_DIR).filter((f) => f.endsWith(".html"));
   let totalBefore = 0;
   let totalAfter = 0;
   for (const file of htmlFiles) {
@@ -117,14 +121,17 @@ async function buildHtmlFiles(assetMap) {
     totalBefore += html.length;
 
     for (const { from, to } of assetMap) {
-      // Matches href="assets/css/main.css" / src="assets/js/main.js" exactly —
-      // the quoted attribute value, not any incidental substring elsewhere.
+      // Matches href="/assets/css/main.css" / src="/assets/js/main.js"
+      // exactly — the quoted attribute value, not any incidental
+      // substring elsewhere.
       html = html.split(`"${from}"`).join(`"${to}"`);
     }
 
     const minified = await minifyHtml(html, HTML_MINIFY_OPTIONS);
     totalAfter += minified.length;
-    fs.writeFileSync(path.join(DIST_DIR, file), minified);
+    const destPath = path.join(DIST_DIR, file);
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    fs.writeFileSync(destPath, minified);
   }
   console.log(`  ${htmlFiles.length} pages  (${fmtBytes(totalBefore)} -> ${fmtBytes(totalAfter)})`);
 }
