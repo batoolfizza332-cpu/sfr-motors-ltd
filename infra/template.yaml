@@ -150,15 +150,16 @@ Resources:
           "/on-demand-mobile-tire-fitting/": "/mobile-tyre-fitting/",
           "/premium-vehicle-tyre-service/": "/our-tyre-range/",
           "/sfr-mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston/",
-          "/mobile-tyre-repair-edinburgh-west-lothian/": "/mobile-tyre-fitting-edinburgh/",
-          "/tyre-puncture-repair-near-me-west-lothian/": "/mobile-tyre-puncture-repair/",
+          "/best-mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston/",
+          "/best-mobile-tyre-fitter-west-lothian/": "/mobile-tyre-fitting-west-lothian/",
           "/emergency-tyre-fitter-edinburgh-falkirk/": "/emergency-tyre-change/",
-          "/mobile-tyre-fitting-guide/": "/mobile-tyre-fitting-edinburgh/",
           "/mobile-tyre-fitting-bathgate-questions/": "/mobile-tyre-fitting-bathgate/",
-          "/best-mobile-tyre-fitters-bathgate/": "/mobile-tyre-fitting-bathgate/",
-          "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/": "/blog/",
-          "/tyres-bathgate-guide/": "/van-tyre-replacement-services/",
-          "/category/best-mobile-tyre-fitting-service/": "/blog/"
+          "/tyre-replacement-call-out-bathgate/": "/mobile-tyre-fitting-bathgate/",
+          "/24-7-mobile-tyre-replacement-in-edinburgh/": "/mobile-tyre-fitting-edinburgh/",
+          "/category/best-mobile-tyre-fitting-service/": "/blog/",
+          "/locking-wheel-nut-removal-bathgate/": "/mobile-locking-wheel-nut-removal/",
+          "/best-emergency-locking-wheel-nut-removal-in-west-lothian/": "/locking-wheel-nut-removal/",
+          "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/"
         };
         
         function handler(event) {

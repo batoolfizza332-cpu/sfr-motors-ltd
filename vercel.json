@@ -24,13 +24,13 @@
       "statusCode": 301
     },
     {
-      "source": "/mobile-tyre-repair-edinburgh-west-lothian/",
-      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "source": "/best-mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston/",
       "statusCode": 301
     },
     {
-      "source": "/tyre-puncture-repair-near-me-west-lothian/",
-      "destination": "/mobile-tyre-puncture-repair/",
+      "source": "/best-mobile-tyre-fitter-west-lothian/",
+      "destination": "/mobile-tyre-fitting-west-lothian/",
       "statusCode": 301
     },
     {
@@ -39,33 +39,38 @@
       "statusCode": 301
     },
     {
-      "source": "/mobile-tyre-fitting-guide/",
-      "destination": "/mobile-tyre-fitting-edinburgh/",
-      "statusCode": 301
-    },
-    {
       "source": "/mobile-tyre-fitting-bathgate-questions/",
       "destination": "/mobile-tyre-fitting-bathgate/",
       "statusCode": 301
     },
     {
-      "source": "/best-mobile-tyre-fitters-bathgate/",
+      "source": "/tyre-replacement-call-out-bathgate/",
       "destination": "/mobile-tyre-fitting-bathgate/",
       "statusCode": 301
     },
     {
-      "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
-      "destination": "/blog/",
-      "statusCode": 301
-    },
-    {
-      "source": "/tyres-bathgate-guide/",
-      "destination": "/van-tyre-replacement-services/",
+      "source": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
       "statusCode": 301
     },
     {
       "source": "/category/best-mobile-tyre-fitting-service/",
       "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal-bathgate/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/expert-locking-wheel-nut-removal/",
+      "destination": "/locking-wheel-nut-removal/",
       "statusCode": 301
     }
   ]

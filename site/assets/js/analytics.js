@@ -48,7 +48,7 @@
     "trade-fleet-tyre-services",
     "van-tyre-replacement-services",
     "caravan-trailer-tyre-fitting",
-    "tpms-services",
+    "tyre-pressure-monitoring-system",
     "our-tyre-range"
   ];
 

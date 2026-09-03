@@ -14,201 +14,7 @@ const fs = require("fs");
 const path = require("path");
 
 const SITE_DIR = path.join(__dirname, "..", "site");
-const DOMAIN = "https://sfrmotors.co.uk";
-
-function shell({ slug, title, metaDescription, breadcrumbLabel, bodyHtml, robots = "index, follow", extraSchema = "" }) {
-  const url = `${DOMAIN}/${slug}/`;
-  return `<!doctype html>
-<html lang="en-GB">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title}</title>
-<meta name="description" content="${metaDescription}">
-<link rel="canonical" href="${url}">
-<meta name="robots" content="${robots}">
-<meta name="theme-color" content="#0c0d0f">
-
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="SFR Motors Ltd">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${metaDescription}">
-<meta property="og:image" content="https://sfrmotors.co.uk/assets/img/og-image.jpg">
-<meta property="og:url" content="${url}">
-<meta name="twitter:card" content="summary_large_image">
-
-<link rel="icon" href="/assets/img/logo.webp" type="image/webp">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap">
-
-<link rel="stylesheet" href="/assets/css/main.css">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "${DOMAIN}/" },
-    { "@type": "ListItem", "position": 2, "name": "${breadcrumbLabel}", "item": "${url}" }
-  ]
-}
-</script>${extraSchema}
-</head>
-<body>
-
-<a class="sfr-skip" href="#main">Skip to main content</a>
-
-<div class="sfr-topbar">
-  <div class="sfr-topbar__inner">
-    <a href="tel:01312020289">📞 0131 202 0289</a>
-    <span class="sfr-topbar__open"><span class="dot"></span>Open 24/7</span>
-    <span class="sfr-topbar__areas">Bathgate &middot; West Lothian &middot; Edinburgh</span>
-  </div>
-</div>
-
-<header class="sfr-header">
-  <div class="sfr-header__inner">
-    <a class="sfr-header__brand" href="/">
-      <picture>
-        <source srcset="/assets/img/logo.webp" type="image/webp">
-        <img src="/assets/img/logo.jpg" alt="SFR Motors Ltd logo" width="42" height="42">
-      </picture>
-      <span class="sfr-header__brand-text">
-        <span class="sfr-header__brand-name">SFR Motors Ltd</span>
-        <span class="sfr-header__brand-motto">Secure. Fast. Reliable.</span>
-      </span>
-    </a>
-
-    <nav class="sfr-nav" data-open="false" aria-label="Primary">
-      <button class="sfr-nav__toggle" type="button" aria-expanded="false" aria-controls="sfr-nav-links" aria-label="Open menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-      <ul class="sfr-nav__links" id="sfr-nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about-us/">About</a></li>
-        <li><a href="/services/">Services</a></li>
-        <li><a href="/#sfr-areas-heading">Areas We Cover</a></li>
-        <li><a href="/#sfr-reviews-heading">Reviews</a></li>
-        <li><a href="/#sfr-faq-heading">FAQ</a></li>
-        <li><a href="/contact-us/#quote-form">Get A Quote</a></li>
-      </ul>
-    </nav>
-
-    <a class="sfr-header__call" href="tel:01312020289" aria-label="Call SFR Motors now on 0131 202 0289">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
-      <span>Call Now</span>
-    </a>
-  </div>
-</header>
-
-<main id="main">
-
-<nav class="sfr-breadcrumb" aria-label="Breadcrumb">
-  <ol>
-    <li><a href="/">Home</a></li>
-    <li aria-current="page">${breadcrumbLabel}</li>
-  </ol>
-</nav>
-
-${bodyHtml}
-
-</main>
-
-<footer class="sfr-footer">
-  <div class="sfr-footer__top">
-
-    <div class="sfr-footer__col">
-      <p class="sfr-footer__brand-name">SFR <span>Motors</span> Ltd</p>
-      <p class="sfr-footer__tagline">Mobile Tyre Fitting &amp; Repair</p>
-      <p class="sfr-footer__motto">Secure. Fast. Reliable.</p>
-
-      <span class="sfr-footer__badge"><span class="dot"></span>Open 24/7</span><br/>
-
-      <a class="sfr-footer__call" href="tel:01312020289">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
-        Call Now
-      </a>
-
-      <div class="sfr-footer__social">
-        <a href="#" aria-label="SFR Motors on Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg>
-        </a>
-        <a href="#" aria-label="SFR Motors on Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c2.7 0 3 0 4.1.06 1.1.05 1.8.22 2.4.46.7.27 1.2.62 1.7 1.12.5.5.85 1 1.12 1.7.24.6.41 1.3.46 2.4.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1.1-.22 1.8-.46 2.4a4.6 4.6 0 0 1-1.12 1.7c-.5.5-1 .85-1.7 1.12-.6.24-1.3.41-2.4.46-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1.1-.05-1.8-.22-2.4-.46a4.6 4.6 0 0 1-1.7-1.12 4.6 4.6 0 0 1-1.12-1.7c-.24-.6-.41-1.3-.46-2.4C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1.1.22-1.8.46-2.4.27-.7.62-1.2 1.12-1.7.5-.5 1-.85 1.7-1.12.6-.24 1.3-.41 2.4-.46C9 2.2 9.3 2.2 12 2.2Zm0 1.8c-2.66 0-2.97 0-4.02.06-.9.04-1.4.2-1.7.32-.44.17-.75.37-1.08.7-.33.33-.53.64-.7 1.08-.13.32-.28.8-.32 1.7C4.12 9.03 4.12 9.34 4.12 12s0 2.97.06 4.02c.04.9.2 1.4.32 1.7.17.44.37.75.7 1.08.33.33.64.53 1.08.7.32.13.8.28 1.7.32 1.05.06 1.36.06 4.02.06s2.97 0 4.02-.06c.9-.04 1.4-.2 1.7-.32.44-.17.75-.37 1.08-.7.33-.33.53-.64.7-1.08.13-.32.28-.8.32-1.7.06-1.05.06-1.36.06-4.02s0-2.97-.06-4.02c-.04-.9-.2-1.4-.32-1.7a2.8 2.8 0 0 0-.7-1.08 2.8 2.8 0 0 0-1.08-.7c-.32-.13-.8-.28-1.7-.32C14.97 4 14.66 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Zm5.1-2a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <nav class="sfr-footer__col" aria-label="Quick links">
-      <h3 class="sfr-footer__heading">Quick Links</h3>
-      <ul class="sfr-footer__links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about-us/">About Us</a></li>
-        <li><a href="/services/">Services</a></li>
-        <li><a href="/#sfr-areas-heading">Areas We Cover</a></li>
-        <li><a href="/#sfr-faq-heading">FAQ</a></li>
-        <li><a href="/contact-us/">Contact</a></li>
-      </ul>
-    </nav>
-
-    <nav class="sfr-footer__col" aria-label="Our services">
-      <h3 class="sfr-footer__heading">Our Services</h3>
-      <ul class="sfr-footer__links">
-        <li><a href="/mobile-tyre-fitting/">Mobile Tyre Fitting</a></li>
-        <li><a href="/mobile-tyre-replacement/">Tyre Replacement</a></li>
-        <li><a href="/mobile-tyre-puncture-repair/">Puncture Repair</a></li>
-        <li><a href="/mobile-locking-wheel-nut-removal/">Locking Wheel Nut Removal</a></li>
-        <li><a href="/trade-fleet-tyre-services/">Trade &amp; Fleet Tyres</a></li>
-        <li><a href="/caravan-trailer-tyre-fitting/">Caravan &amp; Trailer Tyres</a></li>
-      </ul>
-    </nav>
-
-    <div class="sfr-footer__col">
-      <h3 class="sfr-footer__heading">Contact Us</h3>
-      <address class="sfr-footer__address">
-      <ul class="sfr-footer__contact">
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
-          <a href="tel:01312020289">0131 202 0289</a>
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M4 4.5h4l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L14.5 14l5 2v4a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3 6.1 1.5 1.5 0 0 1 4 4.5Z"/></svg>
-          <a href="https://wa.me/447448427154" target="_blank" rel="noopener">07448 427154</a>
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M4 5.5h16v13H4Z"/><path d="M4.5 6l7.5 6.5L19.5 6"/></svg>
-          <a href="mailto:info@sfrmotors.co.uk">info@sfrmotors.co.uk</a>
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M12 21c-4-3.6-7-7.06-7-10.5A7 7 0 0 1 19 10.5C19 13.94 16 17.4 12 21Z"/><circle cx="12" cy="10.5" r="2.4"/></svg>
-          <a href="https://www.google.com/maps/search/?api=1&query=SFR+Motors+Ltd+Mobile+Tyre+Fitters+Bathgate" target="_blank" rel="noopener">Bathgate, West Lothian</a>
-        </li>
-      </ul>
-      </address>
-    </div>
-
-  </div>
-
-  <div class="sfr-footer__bottom">
-    <div class="sfr-footer__bottom-inner">
-      <div class="sfr-footer__legal">
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/cookie-policy/">Cookie Policy</a>
-        <a href="/terms-and-conditions/">Terms &amp; Conditions</a>
-      </div>
-      &copy; 2026 SFR Motors Ltd. All Rights Reserved.
-    </div>
-  </div>
-</footer>
-
-<script src="/assets/js/main.js" defer></script>
-<script src="/assets/js/analytics.js" defer></script>
-</body>
-</html>
-`;
-}
+const { shell, DOMAIN } = require("./lib/page-shell.js");
 
 function legalSection({ eyebrow, title, updated, bodyHtml }) {
   return `<section class="sfr-legal" aria-labelledby="sfr-legal-h1">
@@ -375,6 +181,33 @@ pages.push({
 
 // ---------------------------------------------------------------- Blog index
 const BLOG_POST_SLUG = "how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety";
+
+// Articles recreated by scripts/gen-articles.js, listed here too so the
+// blog index links to every one of them (not just carries them in the
+// sitemap) — see that script for why each exists and lives at this exact
+// root-level slug rather than under /blog/.
+const OTHER_ARTICLES = [
+  { slug: "mobile-tyre-fitting-guide", title: "Mobile Tyre Fitting Edinburgh: A Complete Guide", excerpt: "What mobile tyre fitting is, how booking works, and when it's the right choice over a garage visit." },
+  { slug: "tyres-bathgate-guide", title: "Choosing The Right Van Tyres: A Bathgate Guide", excerpt: "How to tell when van tyres need replacing, and what to check when choosing new ones." },
+  { slug: "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation", title: "Mobile Tyre Fitting vs Recovery: What's Best For Your Situation?", excerpt: "A flat tyre isn't always a recovery job — how to tell which one you actually need." },
+  { slug: "mobile-tyre-repair-edinburgh-west-lothian", title: "Mobile Tyre Repair In Edinburgh & West Lothian: What To Look For", excerpt: "What makes a mobile tyre repair service reliable — arrival times, repair standards and honest pricing." },
+  { slug: "tyre-puncture-repair-near-me-west-lothian", title: "Finding Reliable Puncture Repair Near You In West Lothian", excerpt: "What to check before booking a 'puncture repair near me' search result." },
+  { slug: "best-mobile-tyre-fitters-bathgate", title: "What Makes A Trustworthy Mobile Tyre Fitter In Bathgate", excerpt: "What to look for when choosing a mobile tyre fitter — response times, pricing, and honesty about the work." },
+  { slug: "tyre-fitting-edinburgh-expert-technical-aspects-you-must-know", title: "Tyre Fitting In Edinburgh: Technical Aspects You Must Know", excerpt: "Load ratings, torque settings, balancing and TPMS resets — the technical side of a proper fitting job." },
+  { slug: "behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use", title: "Behind The Scenes: What Tools Do Mobile Tyre Fitters Really Use?", excerpt: "A look at the equipment a well-equipped mobile tyre fitting van typically carries." },
+  { slug: "better-tyres-better-drive", title: "Better Tyres, Better Drive: Why Tyre Condition Matters", excerpt: "How tyre condition affects safety, fuel efficiency and handling — and when it's time to replace." },
+  { slug: "how-to-change-a-tyre", title: "How To Change A Tyre: A West Lothian Driver's Guide", excerpt: "A step-by-step guide to changing a flat tyre safely, and when to call a mobile fitter instead." },
+  { slug: "locking-wheel-nut-removal", title: "Locking Wheel Nut Removal: Your Options Explained", excerpt: "Lost your locking wheel nut key? Here's how removal actually works, and what to expect." },
+];
+const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
+  (a) => `      <article class="sfr-bloglist__item">
+        <span class="sfr-bloglist__date">Blog post</span>
+        <h2 class="sfr-bloglist__title"><a href="/${a.slug}/">${a.title}</a></h2>
+        <p class="sfr-bloglist__excerpt">${a.excerpt}</p>
+        <a class="sfr-bloglist__link" href="/${a.slug}/">Read more &rarr;</a>
+      </article>`
+).join("\n");
+
 pages.push({
   slug: "blog",
   title: "Blog | SFR Motors Ltd",
@@ -392,8 +225,9 @@ pages.push({
         <p class="sfr-bloglist__excerpt">Why a mobile fitter can be faster and safer than a garage visit for Livingston drivers, especially when the fault is discovered somewhere inconvenient.</p>
         <a class="sfr-bloglist__link" href="/blog/${BLOG_POST_SLUG}/">Read more &rarr;</a>
       </article>
+${BLOG_ARTICLE_ENTRIES}
     </div>
-    <p style="margin-top:28px;font-size:13.5px;color:var(--sfr-sub);">This blog is being rebuilt alongside the rest of the site — more posts are on the way. Looking for something specific? <a href="/contact-us/">get in touch</a>.</p>
+    <p style="margin-top:28px;font-size:13.5px;color:var(--sfr-sub);">Looking for something specific? <a href="/contact-us/">get in touch</a>.</p>
   </div>
 </section>`,
 });

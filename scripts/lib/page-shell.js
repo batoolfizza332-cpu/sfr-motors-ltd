@@ -1,20 +1,29 @@
-<!doctype html>
+// Shared page shell (header/nav/footer chrome) used by every Phase 3
+// content generator script — extracted from gen-content-pages.js so
+// gen-articles.js can reuse it without duplicating ~190 lines of markup.
+"use strict";
+
+const DOMAIN = "https://sfrmotors.co.uk";
+
+function shell({ slug, title, metaDescription, breadcrumbLabel, bodyHtml, robots = "index, follow", extraSchema = "" }) {
+  const url = `${DOMAIN}/${slug}/`;
+  return `<!doctype html>
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blog | SFR Motors Ltd</title>
-<meta name="description" content="Tyre tips, road safety advice and news from SFR Motors Ltd, Bathgate's mobile tyre fitting team.">
-<link rel="canonical" href="https://sfrmotors.co.uk/blog/">
-<meta name="robots" content="index, follow">
+<title>${title}</title>
+<meta name="description" content="${metaDescription}">
+<link rel="canonical" href="${url}">
+<meta name="robots" content="${robots}">
 <meta name="theme-color" content="#0c0d0f">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SFR Motors Ltd">
-<meta property="og:title" content="Blog | SFR Motors Ltd">
-<meta property="og:description" content="Tyre tips, road safety advice and news from SFR Motors Ltd, Bathgate's mobile tyre fitting team.">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${metaDescription}">
 <meta property="og:image" content="https://sfrmotors.co.uk/assets/img/og-image.jpg">
-<meta property="og:url" content="https://sfrmotors.co.uk/blog/">
+<meta property="og:url" content="${url}">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="/assets/img/logo.webp" type="image/webp">
@@ -30,11 +39,11 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sfrmotors.co.uk/" },
-    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://sfrmotors.co.uk/blog/" }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "${DOMAIN}/" },
+    { "@type": "ListItem", "position": 2, "name": "${breadcrumbLabel}", "item": "${url}" }
   ]
 }
-</script>
+</script>${extraSchema}
 </head>
 <body>
 
@@ -88,92 +97,11 @@
 <nav class="sfr-breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="/">Home</a></li>
-    <li aria-current="page">Blog</li>
+    <li aria-current="page">${breadcrumbLabel}</li>
   </ol>
 </nav>
 
-<section class="sfr-legal" aria-labelledby="sfr-legal-h1">
-  <div class="sfr-legal__inner">
-    <div class="sfr-legal__eyebrow">SFR Motors Blog</div>
-    <h1 class="sfr-legal__title" id="sfr-legal-h1">Tyre Tips &amp; Road Safety Advice</h1>
-    <p class="sfr-legal__updated">Practical, no-nonsense advice from the SFR Motors team.</p>
-    <div class="sfr-bloglist">
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety/">How Mobile Tyre Fitting In Livingston Saves Time And Improves Road Safety</a></h2>
-        <p class="sfr-bloglist__excerpt">Why a mobile fitter can be faster and safer than a garage visit for Livingston drivers, especially when the fault is discovered somewhere inconvenient.</p>
-        <a class="sfr-bloglist__link" href="/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/mobile-tyre-fitting-guide/">Mobile Tyre Fitting Edinburgh: A Complete Guide</a></h2>
-        <p class="sfr-bloglist__excerpt">What mobile tyre fitting is, how booking works, and when it's the right choice over a garage visit.</p>
-        <a class="sfr-bloglist__link" href="/mobile-tyre-fitting-guide/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/tyres-bathgate-guide/">Choosing The Right Van Tyres: A Bathgate Guide</a></h2>
-        <p class="sfr-bloglist__excerpt">How to tell when van tyres need replacing, and what to check when choosing new ones.</p>
-        <a class="sfr-bloglist__link" href="/tyres-bathgate-guide/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/">Mobile Tyre Fitting vs Recovery: What's Best For Your Situation?</a></h2>
-        <p class="sfr-bloglist__excerpt">A flat tyre isn't always a recovery job — how to tell which one you actually need.</p>
-        <a class="sfr-bloglist__link" href="/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/mobile-tyre-repair-edinburgh-west-lothian/">Mobile Tyre Repair In Edinburgh & West Lothian: What To Look For</a></h2>
-        <p class="sfr-bloglist__excerpt">What makes a mobile tyre repair service reliable — arrival times, repair standards and honest pricing.</p>
-        <a class="sfr-bloglist__link" href="/mobile-tyre-repair-edinburgh-west-lothian/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/tyre-puncture-repair-near-me-west-lothian/">Finding Reliable Puncture Repair Near You In West Lothian</a></h2>
-        <p class="sfr-bloglist__excerpt">What to check before booking a 'puncture repair near me' search result.</p>
-        <a class="sfr-bloglist__link" href="/tyre-puncture-repair-near-me-west-lothian/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/best-mobile-tyre-fitters-bathgate/">What Makes A Trustworthy Mobile Tyre Fitter In Bathgate</a></h2>
-        <p class="sfr-bloglist__excerpt">What to look for when choosing a mobile tyre fitter — response times, pricing, and honesty about the work.</p>
-        <a class="sfr-bloglist__link" href="/best-mobile-tyre-fitters-bathgate/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/tyre-fitting-edinburgh-expert-technical-aspects-you-must-know/">Tyre Fitting In Edinburgh: Technical Aspects You Must Know</a></h2>
-        <p class="sfr-bloglist__excerpt">Load ratings, torque settings, balancing and TPMS resets — the technical side of a proper fitting job.</p>
-        <a class="sfr-bloglist__link" href="/tyre-fitting-edinburgh-expert-technical-aspects-you-must-know/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/">Behind The Scenes: What Tools Do Mobile Tyre Fitters Really Use?</a></h2>
-        <p class="sfr-bloglist__excerpt">A look at the equipment a well-equipped mobile tyre fitting van typically carries.</p>
-        <a class="sfr-bloglist__link" href="/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/better-tyres-better-drive/">Better Tyres, Better Drive: Why Tyre Condition Matters</a></h2>
-        <p class="sfr-bloglist__excerpt">How tyre condition affects safety, fuel efficiency and handling — and when it's time to replace.</p>
-        <a class="sfr-bloglist__link" href="/better-tyres-better-drive/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/how-to-change-a-tyre/">How To Change A Tyre: A West Lothian Driver's Guide</a></h2>
-        <p class="sfr-bloglist__excerpt">A step-by-step guide to changing a flat tyre safely, and when to call a mobile fitter instead.</p>
-        <a class="sfr-bloglist__link" href="/how-to-change-a-tyre/">Read more &rarr;</a>
-      </article>
-      <article class="sfr-bloglist__item">
-        <span class="sfr-bloglist__date">Blog post</span>
-        <h2 class="sfr-bloglist__title"><a href="/locking-wheel-nut-removal/">Locking Wheel Nut Removal: Your Options Explained</a></h2>
-        <p class="sfr-bloglist__excerpt">Lost your locking wheel nut key? Here's how removal actually works, and what to expect.</p>
-        <a class="sfr-bloglist__link" href="/locking-wheel-nut-removal/">Read more &rarr;</a>
-      </article>
-    </div>
-    <p style="margin-top:28px;font-size:13.5px;color:var(--sfr-sub);">Looking for something specific? <a href="/contact-us/">get in touch</a>.</p>
-  </div>
-</section>
+${bodyHtml}
 
 </main>
 
@@ -269,3 +197,7 @@
 <script src="/assets/js/analytics.js" defer></script>
 </body>
 </html>
+`;
+}
+
+module.exports = { shell, DOMAIN };

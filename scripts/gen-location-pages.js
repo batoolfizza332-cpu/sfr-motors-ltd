@@ -24,7 +24,7 @@ const SERVICE_CARDS = [
   { icon: `<path d="M3.5 16V8.5a1 1 0 0 1 1-1h9v8.5"/><path d="M13.5 12h3.5l3 3.2v1.3h-2"/><path d="M3.5 16h1.7M9.3 16h2.9"/><circle cx="7" cy="17" r="1.8"/><circle cx="16.3" cy="17" r="1.8"/>`, title: "Van Tyre Replacement", href: "/van-tyre-replacement-services/", label: "Van Tyre Replacement", text: (t) => `Correctly rated tyres fitted for vans and light commercials in ${t}.` },
   { icon: `<path d="M3 16V9a1 1 0 0 1 1-1h9v8"/><path d="M13 11h5l3 3v2h-2"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/>`, title: "Trade & Fleet Tyres", href: "/trade-fleet-tyre-services/", label: "Trade and Fleet Tyre Services", text: (t) => `Scheduled or emergency tyre cover for ${t}-based business vehicles.` },
   { icon: `<path d="M2.5 16.5h6v-6h-6Z"/><path d="M8.5 12.5h6l4 2.5v1.5h-2"/><circle cx="5.5" cy="18.5" r="1.6"/><circle cx="15.5" cy="18.5" r="1.6"/>`, title: "Caravan & Trailer Tyres", href: "/caravan-trailer-tyre-fitting/", label: "Caravan and Trailer Tyre Fitting", text: (t) => `Mobile fitting for caravan and trailer tyres, wherever it's stored or parked in ${t}.` },
-  { icon: `<circle cx="12" cy="13" r="7.5"/><path d="M12 13 15 9.5"/><path d="M9 6.3l.9 1.6M15 6.3l-.9 1.6"/>`, title: "TPMS Services", href: "/tpms-services/", label: "TPMS Services", text: () => `Tyre pressure warning light on? We can check and advise during your visit.` },
+  { icon: `<circle cx="12" cy="13" r="7.5"/><path d="M12 13 15 9.5"/><path d="M9 6.3l.9 1.6M15 6.3l-.9 1.6"/>`, title: "TPMS Services", href: "/tyre-pressure-monitoring-system/", label: "TPMS Services", text: () => `Tyre pressure warning light on? We can check and advise during your visit.` },
 ];
 
 const WHY_CARDS = [
@@ -418,6 +418,7 @@ ${faqHtml}
         <li><a href="/mobile-locking-wheel-nut-removal/">Locking Wheel Nut Removal</a></li>
         <li><a href="/trade-fleet-tyre-services/">Trade &amp; Fleet Tyres</a></li>
         <li><a href="/caravan-trailer-tyre-fitting/">Caravan &amp; Trailer Tyres</a></li>
+        <li><a href="/our-tyre-range/">Our Tyre Range</a></li>
       </ul>
     </nav>
 
@@ -549,6 +550,38 @@ const LOCATIONS = [
       { q: "Can you fit tyres at my workplace in Airdrie?", a: "Yes, we attend workplaces, car parks and driveways across Airdrie — just let us know the location when you get in touch." },
       { q: "Do you cover vans and trade vehicles based in Airdrie?", a: "Yes, our trade and fleet tyre service covers Airdrie-based vans and business vehicles — see our trade and fleet tyre services page for details." },
       { q: "Do you offer emergency tyre assistance in Airdrie at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Airdrie." },
+    ],
+  },
+  {
+    // Live URL is the bare "/broxburn/" (confirmed via search — no
+    // "mobile-tyre-fitting-" prefix, unlike the other location pages).
+    // Matched exactly per Task 1's preference, even though it breaks this
+    // site's own naming convention for the other town pages.
+    slug: "broxburn",
+    town: "Broxburn",
+    hero: "puncture-hero-bg",
+    heroHeight: 1010,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Broxburn, West Lothian. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Broxburn, West Lothian. We come to you.",
+    introHeading: "Local Tyre Fitting For Broxburn Drivers",
+    introText:
+      "Broxburn sits in West Lothian, along the A89 corridor between Edinburgh and Bathgate, well within reach of our base for a mobile callout. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Broxburn and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Broxburn, we regularly attend nearby West Lothian towns including Bathgate, Livingston and the wider West Lothian area. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of Broxburn is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Puncture On The Way To Work", text: "A tyre goes down on the commute out of Broxburn. Fitting at the roadside or a nearby car park means the rest of the day doesn't get derailed chasing a garage appointment." },
+    scenario2: { title: "Worn Tyres Found At An MOT", text: "A local garage flags worn tyres during an MOT but can't fit them in on the spot. We can often get a Broxburn address sorted before it becomes a re-test problem." },
+    nearby: [
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+      { name: "Livingston", href: "/mobile-tyre-fitting-livingston/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+      { name: "Edinburgh", href: "/mobile-tyre-fitting-edinburgh/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of Broxburn?", a: "Yes, we regularly attend callouts across Broxburn, along with nearby West Lothian towns such as Bathgate and Livingston." },
+      { q: "How quickly can you reach me in Broxburn?", a: "Broxburn is within our regular West Lothian coverage area, so get in touch with your location and we'll give you a realistic arrival estimate." },
+      { q: "Can you fit tyres at my workplace in Broxburn?", a: "Yes, we attend workplaces, car parks and driveways across Broxburn — just let us know the location when you get in touch." },
+      { q: "What if I break down on the A89 near Broxburn?", a: "We can attend roadside breakdowns near Broxburn, including along the A89 — let us know exactly where you are and we'll confirm arrival time." },
+      { q: "Do you offer emergency tyre assistance in Broxburn at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Broxburn." },
     ],
   },
 ];
