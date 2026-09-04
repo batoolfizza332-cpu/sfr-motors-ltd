@@ -1,0 +1,638 @@
+{
+  "generated_note": "Extracted directly from the WordPress WXR export (channel/item elements with wp:status=publish and wp:post_type in [post, page]). Committed as the durable, independently-checkable source of truth for Phase 4B Batch E reconciliation.",
+  "total": 90,
+  "pages": 37,
+  "posts": 53,
+  "urls": [
+    {
+      "url": "/",
+      "type": "page",
+      "title": "Home",
+      "post_id": "7824",
+      "post_date": "2026-04-09 00:30:34"
+    },
+    {
+      "url": "/11-benefits-of-emergency-mobile-tyre-fitting/",
+      "type": "post",
+      "title": "11 Benefits of Emergency Mobile Tyre Fitting",
+      "post_id": "5951",
+      "post_date": "2025-08-08 09:58:02"
+    },
+    {
+      "url": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+      "type": "page",
+      "title": "24/7 Mobile Tire Replacement Service Edinburgh",
+      "post_id": "6717",
+      "post_date": "2026-01-13 10:41:16"
+    },
+    {
+      "url": "/24-7-mobile-tyre-replacement/",
+      "type": "page",
+      "title": "24/7 Mobile Tyre Replacement",
+      "post_id": "5063",
+      "post_date": "2025-11-20 14:50:26"
+    },
+    {
+      "url": "/5-must-visit-places-in-edinburgh-for-first-time-travelers/",
+      "type": "post",
+      "title": "5 Must-Visit Places in Edinburgh for First-Time Travelers",
+      "post_id": "2373",
+      "post_date": "2025-09-11 06:54:39"
+    },
+    {
+      "url": "/7-warning-signs-your-tyres-need-immediate-professional-attention/",
+      "type": "post",
+      "title": "7 Warning Signs Your Tyres Need Immediate Professional Attention",
+      "post_id": "7978",
+      "post_date": "2026-06-09 21:07:55"
+    },
+    {
+      "url": "/about-us/",
+      "type": "page",
+      "title": "About Us",
+      "post_id": "4830",
+      "post_date": "2025-11-06 16:12:28"
+    },
+    {
+      "url": "/asymmetric-and-directional-tyres-difference/",
+      "type": "post",
+      "title": "Tyre Tread: What’s the Difference Between Asymmetric and Directional Tyres?",
+      "post_id": "2147",
+      "post_date": "2025-09-03 18:10:13"
+    },
+    {
+      "url": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+      "type": "post",
+      "title": "Behind the Scenes: What Tools Do Mobile Tyre Fitters Really Use?",
+      "post_id": "2432",
+      "post_date": "2025-09-11 15:11:11"
+    },
+    {
+      "url": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+      "type": "post",
+      "title": "Best Emergency Locking Wheel Nut Removal in West Lothian",
+      "post_id": "2689",
+      "post_date": "2025-10-03 16:49:15"
+    },
+    {
+      "url": "/best-mobile-tyre-fitter-west-lothian/",
+      "type": "post",
+      "title": "Best Mobile Tyre Fitter – Expert On-Road Service in West Lothian",
+      "post_id": "2763",
+      "post_date": "2025-10-09 17:29:14"
+    },
+    {
+      "url": "/better-tyres-better-drive/",
+      "type": "post",
+      "title": "Better Tyres, Better Drive – The Power of Mobile Tyre Fitting",
+      "post_id": "2663",
+      "post_date": "2025-10-01 17:26:42"
+    },
+    {
+      "url": "/blog/",
+      "type": "page",
+      "title": "Blog",
+      "post_id": "27",
+      "post_date": "2023-05-15 02:00:36"
+    },
+    {
+      "url": "/broxburn/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Broxburn",
+      "post_id": "8163",
+      "post_date": "2026-07-02 20:13:21"
+    },
+    {
+      "url": "/contact-us/",
+      "type": "page",
+      "title": "Contact Us",
+      "post_id": "4867",
+      "post_date": "2025-11-06 16:37:43"
+    },
+    {
+      "url": "/emergency-mobile-tyre-fitting/",
+      "type": "page",
+      "title": "Emergency Mobile Tyre Fitting",
+      "post_id": "7748",
+      "post_date": "2026-04-01 21:53:20"
+    },
+    {
+      "url": "/emergency-tyre-fitter-edinburgh-falkirk/",
+      "type": "post",
+      "title": "How an Emergency Tyre Fitter Can Help You Anywhere in Edinburgh & Falkirk",
+      "post_id": "6726",
+      "post_date": "2026-02-11 13:55:23"
+    },
+    {
+      "url": "/emergency-tyre-replacement/",
+      "type": "post",
+      "title": "Emergency Tyre Replacement vs Garage Tyre Fitting: Pros & Cons",
+      "post_id": "6712",
+      "post_date": "2026-01-09 13:28:23"
+    },
+    {
+      "url": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+      "type": "post",
+      "title": "Emergency Wheel Nut Removal: What to Do If You’ve Lost the Key",
+      "post_id": "2677",
+      "post_date": "2025-10-02 17:58:37"
+    },
+    {
+      "url": "/expert-locking-wheel-nut-removal/",
+      "type": "page",
+      "title": "Expert Locking Wheel Nut Removal",
+      "post_id": "6115",
+      "post_date": "2025-12-12 10:53:07"
+    },
+    {
+      "url": "/how-much-does-mobile-tyre-fitting-cost/",
+      "type": "post",
+      "title": "How Much Does Mobile Tyre Fitting Cost?",
+      "post_id": "8481",
+      "post_date": "2026-07-29 21:10:16"
+    },
+    {
+      "url": "/how-quality-tyres-improve-safety-and-driving-performance/",
+      "type": "post",
+      "title": "How Quality Tyres Improve Safety and Driving Performance",
+      "post_id": "7934",
+      "post_date": "2026-05-21 18:17:44"
+    },
+    {
+      "url": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+      "type": "post",
+      "title": "How to Avoid Common Tyre Problems and Stay Safe on the Road",
+      "post_id": "7994",
+      "post_date": "2026-06-11 21:05:49"
+    },
+    {
+      "url": "/how-to-change-a-tyre/",
+      "type": "post",
+      "title": "How to Change a Tyre: Mobile Tyre Fitting West Lothian Guide",
+      "post_id": "2504",
+      "post_date": "2025-09-16 13:30:21"
+    },
+    {
+      "url": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+      "type": "post",
+      "title": "How to Choose the Best Tyres for My Car – Expert Buying Guide",
+      "post_id": "1456",
+      "post_date": "2025-08-07 12:19:40"
+    },
+    {
+      "url": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+      "type": "post",
+      "title": "How to Extend Tyre Life and Avoid Unexpected Roadside Breakdowns",
+      "post_id": "7968",
+      "post_date": "2026-06-02 17:45:13"
+    },
+    {
+      "url": "/locking-wheel-nut-removal-bathgate/",
+      "type": "page",
+      "title": "Mobile Locking Wheel Nut Removal Service Bathgate",
+      "post_id": "7941",
+      "post_date": "2026-05-23 14:59:13"
+    },
+    {
+      "url": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
+      "type": "post",
+      "title": "Locking Wheel Nut Removal: Industry Practice, Disclaimer Requirements, and Wheel Damage Risk",
+      "post_id": "6764",
+      "post_date": "2026-02-14 11:45:44"
+    },
+    {
+      "url": "/locking-wheel-nut-removal/",
+      "type": "post",
+      "title": "Complete Guide to Locking Wheel Nut Removal in the UK",
+      "post_id": "6655",
+      "post_date": "2025-12-27 12:58:04"
+    },
+    {
+      "url": "/michelin-radial-tire-history-innovation/",
+      "type": "post",
+      "title": "The Invention that Changed Tires Forever: Michelin's Steel-Belted Radial",
+      "post_id": "1154",
+      "post_date": "2025-07-29 12:01:53"
+    },
+    {
+      "url": "/mobile-locking-wheel-nut-removal/",
+      "type": "page",
+      "title": "Mobile Locking Wheel Nut Removal Service",
+      "post_id": "7673",
+      "post_date": "2026-03-30 17:13:16"
+    },
+    {
+      "url": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "type": "page",
+      "title": "Mobile Trailer & Caravan Tyre Fitting",
+      "post_id": "7670",
+      "post_date": "2026-03-30 16:53:24"
+    },
+    {
+      "url": "/mobile-tyre-change/",
+      "type": "page",
+      "title": "Mobile Tyre Change",
+      "post_id": "7764",
+      "post_date": "2026-04-01 22:24:08"
+    },
+    {
+      "url": "/mobile-tyre-fitter-near-me-myths/",
+      "type": "post",
+      "title": "Mobile Tyre Fitter Myths Busted: What Every UK Driver Should Know in 2025",
+      "post_id": "2795",
+      "post_date": "2025-10-17 11:15:28"
+    },
+    {
+      "url": "/mobile-tyre-fitting-3/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting",
+      "post_id": "7167",
+      "post_date": "2026-03-18 15:20:06"
+    },
+    {
+      "url": "/mobile-tyre-fitting-airdrie/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Airdrie",
+      "post_id": "8425",
+      "post_date": "2026-07-28 16:20:24"
+    },
+    {
+      "url": "/mobile-tyre-fitting-bathgate-questions/",
+      "type": "post",
+      "title": "8 Questions to Ask Before Booking a Mobile Tyre Fitting in Bathgate",
+      "post_id": "1515",
+      "post_date": "2025-08-11 07:48:34"
+    },
+    {
+      "url": "/mobile-tyre-fitting-bathgate/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Bathgate",
+      "post_id": "7415",
+      "post_date": "2026-03-22 09:22:36"
+    },
+    {
+      "url": "/mobile-tyre-fitting-boness/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Bo'ness",
+      "post_id": "8227",
+      "post_date": "2026-07-08 20:20:35"
+    },
+    {
+      "url": "/mobile-tyre-fitting-edinburgh/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Edinburgh",
+      "post_id": "7501",
+      "post_date": "2026-03-23 13:52:15"
+    },
+    {
+      "url": "/mobile-tyre-fitting-falkirk/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Falkirk",
+      "post_id": "7599",
+      "post_date": "2026-03-26 19:50:32"
+    },
+    {
+      "url": "/mobile-tyre-fitting-harthill/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Harthill",
+      "post_id": "7793",
+      "post_date": "2026-04-06 23:28:18"
+    },
+    {
+      "url": "/mobile-tyre-fitting-in-addiewell/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Addiewell",
+      "post_id": "6540",
+      "post_date": "2025-12-16 13:27:19"
+    },
+    {
+      "url": "/mobile-tyre-fitting-linlithgow/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Linlithgow",
+      "post_id": "7615",
+      "post_date": "2026-03-26 20:03:21"
+    },
+    {
+      "url": "/mobile-tyre-fitting-livingston-tyre-problems/",
+      "type": "post",
+      "title": "Top 5 Common Tyre Problems Livingston Drivers Face (and How to Fix Them)",
+      "post_id": "2461",
+      "post_date": "2025-09-12 16:05:12"
+    },
+    {
+      "url": "/mobile-tyre-fitting-livingston/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Livingston",
+      "post_id": "7608",
+      "post_date": "2026-03-26 19:56:38"
+    },
+    {
+      "url": "/mobile-tyre-fitting-shotts/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting & Repair Shotts",
+      "post_id": "7953",
+      "post_date": "2026-05-25 15:41:54"
+    },
+    {
+      "url": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "type": "post",
+      "title": "Mobile Tyre Fitting vs Recovery – What’s Best for Your Situation?",
+      "post_id": "1613",
+      "post_date": "2025-08-12 06:31:23"
+    },
+    {
+      "url": "/mobile-tyre-fitting-west-calder/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting West Calder",
+      "post_id": "8264",
+      "post_date": "2026-07-14 20:21:20"
+    },
+    {
+      "url": "/mobile-tyre-fitting-west-lothian/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting West Lothian",
+      "post_id": "7437",
+      "post_date": "2026-03-22 13:22:38"
+    },
+    {
+      "url": "/mobile-tyre-fitting-whitburn/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Whitburn",
+      "post_id": "7493",
+      "post_date": "2026-03-23 13:43:36"
+    },
+    {
+      "url": "/mobile-tyre-fitting-wishaw/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Wishaw",
+      "post_id": "7912",
+      "post_date": "2026-05-13 16:49:03"
+    },
+    {
+      "url": "/mobile-tyre-puncture-repair/",
+      "type": "page",
+      "title": "Mobile Puncture Repair Near You",
+      "post_id": "7890",
+      "post_date": "2026-04-15 18:48:55"
+    },
+    {
+      "url": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "type": "post",
+      "title": "How Mobile Tyre Repair Works in Edinburgh & West Lothian",
+      "post_id": "2572",
+      "post_date": "2025-09-24 14:18:27"
+    },
+    {
+      "url": "/mobile-tyre-repair/",
+      "type": "page",
+      "title": "Mobile Tyre Repair",
+      "post_id": "7759",
+      "post_date": "2026-04-01 22:22:18"
+    },
+    {
+      "url": "/motors-tire-pressure-off-road/",
+      "type": "post",
+      "title": "Tire Pressure: The Ultimate Guide for Dual Sport & Off-Road Riders",
+      "post_id": "1",
+      "post_date": "2025-07-15 23:38:41"
+    },
+    {
+      "url": "/our-tyre-range/",
+      "type": "page",
+      "title": "Our Tyre Range",
+      "post_id": "5032",
+      "post_date": "2025-11-10 09:34:07"
+    },
+    {
+      "url": "/page-not-found/",
+      "type": "page",
+      "title": "SFR Motors Ltd - Mobile Tyre Fitters",
+      "post_id": "8328",
+      "post_date": "2026-07-22 18:43:45"
+    },
+    {
+      "url": "/pirelli-silent-tyres-uk/",
+      "type": "post",
+      "title": "Pirelli silent tyres UK, quiet tyres UK, and mobile tyre fitting Pirelli.",
+      "post_id": "2112",
+      "post_date": "2025-09-02 17:14:33"
+    },
+    {
+      "url": "/premium-or-budget-which-tyres-keep-you-safer/",
+      "type": "post",
+      "title": "Premium or Budget: Which Tyres Keep You Safer?",
+      "post_id": "2164",
+      "post_date": "2025-09-04 17:48:07"
+    },
+    {
+      "url": "/preparing-your-car-tyres-for-winter-driving-in-livingston/",
+      "type": "post",
+      "title": "Preparing Your Car Tyres for Winter Driving in Livingston",
+      "post_id": "9131",
+      "post_date": "2026-09-02 19:04:21"
+    },
+    {
+      "url": "/privacy-policy/",
+      "type": "page",
+      "title": "Privacy Policy",
+      "post_id": "9106",
+      "post_date": "2026-09-02 16:30:29"
+    },
+    {
+      "url": "/professional-mobile-tyre-services-on-drivers-linlithgow/",
+      "type": "post",
+      "title": "Professional Mobile Tyre Services On Drivers Linlithgow",
+      "post_id": "7926",
+      "post_date": "2026-05-19 22:04:22"
+    },
+    {
+      "url": "/puncture-repairs-whats-actually-being-done-to-your-tyre/",
+      "type": "post",
+      "title": "Puncture Repairs: What's Actually Being Done to Your Tyre",
+      "post_id": "6782",
+      "post_date": "2026-02-25 15:41:13"
+    },
+    {
+      "url": "/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/",
+      "type": "post",
+      "title": "Spare Wheel Delete: Why New Cars Don't Have Them, and What the Data Says About Repair Kits",
+      "post_id": "6736",
+      "post_date": "2026-02-12 08:52:31"
+    },
+    {
+      "url": "/the-best-tyres-for-edinburgh-west-lothian-roads/",
+      "type": "post",
+      "title": "The best tyres for Edinburgh & West Lothian Roads.",
+      "post_id": "7919",
+      "post_date": "2026-05-13 19:03:40"
+    },
+    {
+      "url": "/the-best-tyres-for-your-ford-on-edinburghs-roads/",
+      "type": "post",
+      "title": "The Best Tyres for Your Ford on Edinburgh’s Roads",
+      "post_id": "6802",
+      "post_date": "2026-03-05 22:08:15"
+    },
+    {
+      "url": "/trade-fleet-tyre-services/",
+      "type": "page",
+      "title": "Trade & Fleet Tyre Services",
+      "post_id": "6211",
+      "post_date": "2025-12-15 10:43:13"
+    },
+    {
+      "url": "/tyre-blowout-causes-prevention/",
+      "type": "post",
+      "title": "Tyre Blowout Causes & Prevention – What to Do in an Emergency",
+      "post_id": "1781",
+      "post_date": "2025-08-18 12:43:59"
+    },
+    {
+      "url": "/tyre-care-and-flat-tyre-help-in-linlithgow/",
+      "type": "post",
+      "title": "Tyre Care & Flat Tyre Help in Linlithgow",
+      "post_id": "9163",
+      "post_date": "2026-09-03 16:34:44"
+    },
+    {
+      "url": "/tyre-lifespan-mobile-tyre-repair-guide/",
+      "type": "post",
+      "title": "How Long Should Tyres Last? Factors That Affect Tyre Lifespan | Mobile Tyre Repair Guide",
+      "post_id": "2560",
+      "post_date": "2025-09-23 13:07:06"
+    },
+    {
+      "url": "/tyre-lifespan/",
+      "type": "post",
+      "title": "How Long Should Tyres Last? Factors That Affect Tyre Lifespan",
+      "post_id": "1800",
+      "post_date": "2025-08-21 12:16:28"
+    },
+    {
+      "url": "/tyre-pressure-monitoring-system/",
+      "type": "page",
+      "title": "Tyre Pressure Monitoring System",
+      "post_id": "6227",
+      "post_date": "2025-12-15 11:12:54"
+    },
+    {
+      "url": "/tyre-puncture-repair-near-me-west-lothian/",
+      "type": "post",
+      "title": "24-Hour Tyre Puncture Repair Near Me – Trusted Technicians in West Lothian",
+      "post_id": "2695",
+      "post_date": "2025-10-06 14:16:33"
+    },
+    {
+      "url": "/tyre-replacement-call-out-bathgate/",
+      "type": "page",
+      "title": "Tyre Replacement Call Out Service Bathgate",
+      "post_id": "6722",
+      "post_date": "2026-01-21 07:56:30"
+    },
+    {
+      "url": "/tyre-services-west-lothian/",
+      "type": "post",
+      "title": "Mobile Tyre Services West Lothian: 8 Common Reasons for Slow Tyre Leaks",
+      "post_id": "2498",
+      "post_date": "2025-09-15 18:58:13"
+    },
+    {
+      "url": "/tyre-size-calculator/",
+      "type": "post",
+      "title": "Tyre Size Calculator",
+      "post_id": "8416",
+      "post_date": "2026-07-25 14:13:17"
+    },
+    {
+      "url": "/tyres-bathgate-guide/",
+      "type": "post",
+      "title": "SFR Mobile Tyres Bathgate Guide: Choosing the Right Van Tyres",
+      "post_id": "2466",
+      "post_date": "2025-09-13 17:40:26"
+    },
+    {
+      "url": "/tyres-bathgate-technical-breakdown/",
+      "type": "post",
+      "title": "Tyres Bathgate Technical Breakdown: Decoding Sidewall Markings and Manufacturing Dates",
+      "post_id": "2828",
+      "post_date": "2025-10-23 14:31:21"
+    },
+    {
+      "url": "/van-tyre-replacement-services/",
+      "type": "page",
+      "title": "Van tyre replacement services",
+      "post_id": "8372",
+      "post_date": "2026-07-24 18:20:54"
+    },
+    {
+      "url": "/what-is-mobile-tyre-fitting/",
+      "type": "post",
+      "title": "What is Mobile Tyre Fitting?",
+      "post_id": "1372",
+      "post_date": "2025-08-04 09:59:02"
+    },
+    {
+      "url": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+      "type": "post",
+      "title": "What Mobile Fitters Check Before Changing a Tyre on a Hill",
+      "post_id": "6780",
+      "post_date": "2026-02-25 15:28:14"
+    },
+    {
+      "url": "/what-to-expect-from-a-same-day-mobile-car-repair-service/",
+      "type": "post",
+      "title": "What to Expect from a Same-Day Mobile Car Repair Service",
+      "post_id": "2020",
+      "post_date": "2025-08-27 10:36:00"
+    },
+    {
+      "url": "/what-tools-do-mobile-tyre-fitters-use/",
+      "type": "post",
+      "title": "What Tools Do Mobile Tyre Fitters Use?",
+      "post_id": "2071",
+      "post_date": "2025-09-01 12:13:50"
+    },
+    {
+      "url": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+      "type": "post",
+      "title": "Which is The Best Mobile Tyre Fitting Service Provider in the UK?",
+      "post_id": "2774",
+      "post_date": "2025-10-10 17:09:46"
+    },
+    {
+      "url": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "type": "post",
+      "title": "Why Professional Mobile Tyre Services Are Essential for Modern Drivers",
+      "post_id": "7961",
+      "post_date": "2026-06-01 18:36:49"
+    },
+    {
+      "url": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+      "type": "post",
+      "title": "Why Professional Mobile Tyre Services Are Information to All Drivers.",
+      "post_id": "7956",
+      "post_date": "2026-05-25 21:15:58"
+    },
+    {
+      "url": "/why-tyre-safety-is-more-important-than-most-drivers-realize/",
+      "type": "post",
+      "title": "Why Tyre Safety is More Important than Most Drivers Realize",
+      "post_id": "7930",
+      "post_date": "2026-05-20 21:55:52"
+    },
+    {
+      "url": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
+      "type": "post",
+      "title": "Why Tyres Fail: Expert Breakdown of Common Tyre Problems and How Mobile Tyre Fitting in Falkirk Solves Them",
+      "post_id": "2815",
+      "post_date": "2025-10-21 13:58:55"
+    },
+    {
+      "url": "/your-guide-to-safe-tyre-services-in-harthill/",
+      "type": "post",
+      "title": "Your guide to safe tyre services in Harthill.",
+      "post_id": "7922",
+      "post_date": "2026-05-18 19:17:44"
+    }
+  ]
+}

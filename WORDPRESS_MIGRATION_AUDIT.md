@@ -160,7 +160,7 @@ it's the destination page).
 |---|---|---|---|---|---|---|---|
 | 1 | `/` | page | Home | Yes | Keep at exact URL | `/` | Low |
 | 2 | `/24-7-mobile-tyre-replacement-in-edinburgh/` | page | 24/7 Mobile Tire Replacement Service Edinburgh | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-edinburgh/` | Low |
-| 3 | `/24-7-mobile-tyre-replacement/` | page | 24/7 Mobile Tyre Replacement | No | **RETAIN as primary URL (owner decision, §6 Q4 — reverses original "merge" recommendation)** | `/24-7-mobile-tyre-replacement/` | Resolved |
+| 3 | `/24-7-mobile-tyre-replacement/` | page | 24/7 Mobile Tyre Replacement | Yes | **RETAIN as primary URL (owner decision, §6 Q4 — reverses original "merge" recommendation)** | `/24-7-mobile-tyre-replacement/` | Resolved |
 | 4 | `/about-us/` | page | About Us | Yes | Keep at exact URL | `/about-us/` | Low |
 | 5 | `/blog/` | page | Blog | Yes | Keep at exact URL | `/blog/` | Low |
 | 6 | `/broxburn/` | page | Mobile Tyre Fitting Broxburn | Yes | Keep at exact URL | `/broxburn/` | Low |
@@ -169,23 +169,23 @@ it's the destination page).
 | 9 | `/expert-locking-wheel-nut-removal/` | page | Expert Locking Wheel Nut Removal | No | 301 redirect (existing, correct) | `/locking-wheel-nut-removal/` | Low |
 | 10 | `/locking-wheel-nut-removal-bathgate/` | page | Mobile Locking Wheel Nut Removal Service Bathgate | No | 301 redirect (existing, correct) | `/mobile-locking-wheel-nut-removal/` | Low |
 | 11 | `/mobile-locking-wheel-nut-removal/` | page | Mobile Locking Wheel Nut Removal Service | Yes | Keep at exact URL | `/mobile-locking-wheel-nut-removal/` | Low |
-| 12 | `/mobile-trailer-and-caravan-tyre-fitting/` | page | Mobile Trailer & Caravan Tyre Fitting | No | **RETAIN as final URL (owner decision, §6 Q2) — new site's `/caravan-trailer-tyre-fitting/` is renamed to this slug, old slug redirects here** | `/mobile-trailer-and-caravan-tyre-fitting/` | Resolved |
+| 12 | `/mobile-trailer-and-caravan-tyre-fitting/` | page | Mobile Trailer & Caravan Tyre Fitting | Yes | **RETAIN as final URL (owner decision, §6 Q2) — new site's `/caravan-trailer-tyre-fitting/` is renamed to this slug, old slug redirects here** | `/mobile-trailer-and-caravan-tyre-fitting/` | Resolved |
 | 13 | `/mobile-tyre-change/` | page | Mobile Tyre Change | No | Exclude from migration | — | Low |
 | 14 | `/mobile-tyre-fitting-3/` | page | Mobile Tyre Fitting | No | Exclude from migration | — | Low |
 | 15 | `/mobile-tyre-fitting-airdrie/` | page | Mobile Tyre Fitting Airdrie | Yes | Keep at exact URL | `/mobile-tyre-fitting-airdrie/` | Low |
 | 16 | `/mobile-tyre-fitting-bathgate/` | page | Mobile Tyre Fitting Bathgate | Yes | Keep at exact URL | `/mobile-tyre-fitting-bathgate/` | Low |
-| 17 | `/mobile-tyre-fitting-boness/` | page | Mobile Tyre Fitting Bo'ness | No | Recreate at exact URL | `/mobile-tyre-fitting-boness/` | Low |
+| 17 | `/mobile-tyre-fitting-boness/` | page | Mobile Tyre Fitting Bo'ness | Yes | Recreate at exact URL | `/mobile-tyre-fitting-boness/` | Low |
 | 18 | `/mobile-tyre-fitting-edinburgh/` | page | Mobile Tyre Fitting Edinburgh | Yes | Keep at exact URL | `/mobile-tyre-fitting-edinburgh/` | Low |
 | 19 | `/mobile-tyre-fitting-falkirk/` | page | Mobile Tyre Fitting Falkirk | Yes | Keep at exact URL | `/mobile-tyre-fitting-falkirk/` | Low |
-| 20 | `/mobile-tyre-fitting-harthill/` | page | Mobile Tyre Fitting Harthill | No | Recreate at exact URL | `/mobile-tyre-fitting-harthill/` | Low |
-| 21 | `/mobile-tyre-fitting-in-addiewell/` | page | Mobile Tyre Fitting Addiewell | No | Recreate at exact URL | `/mobile-tyre-fitting-in-addiewell/` | Low |
-| 22 | `/mobile-tyre-fitting-linlithgow/` | page | Mobile Tyre Fitting Linlithgow | No | Recreate at exact URL | `/mobile-tyre-fitting-linlithgow/` | Low |
+| 20 | `/mobile-tyre-fitting-harthill/` | page | Mobile Tyre Fitting Harthill | Yes | Recreate at exact URL | `/mobile-tyre-fitting-harthill/` | Low |
+| 21 | `/mobile-tyre-fitting-in-addiewell/` | page | Mobile Tyre Fitting Addiewell | Yes | Recreate at exact URL | `/mobile-tyre-fitting-in-addiewell/` | Low |
+| 22 | `/mobile-tyre-fitting-linlithgow/` | page | Mobile Tyre Fitting Linlithgow | Yes | Recreate at exact URL | `/mobile-tyre-fitting-linlithgow/` | Low |
 | 23 | `/mobile-tyre-fitting-livingston/` | page | Mobile Tyre Fitting Livingston | Yes | Keep at exact URL | `/mobile-tyre-fitting-livingston/` | Low |
-| 24 | `/mobile-tyre-fitting-shotts/` | page | Mobile Tyre Fitting & Repair Shotts | No | **Recreate at exact URL — fresh, correctly-localised content (owner-confirmed, §6 Q3); live-site bug flagged separately, not fixed by this migration** | `/mobile-tyre-fitting-shotts/` | Resolved |
-| 25 | `/mobile-tyre-fitting-west-calder/` | page | Mobile Tyre Fitting West Calder | No | Recreate at exact URL | `/mobile-tyre-fitting-west-calder/` | Low |
+| 24 | `/mobile-tyre-fitting-shotts/` | page | Mobile Tyre Fitting & Repair Shotts | Yes | **Recreate at exact URL — fresh, correctly-localised content (owner-confirmed, §6 Q3); live-site bug flagged separately, not fixed by this migration** | `/mobile-tyre-fitting-shotts/` | Resolved |
+| 25 | `/mobile-tyre-fitting-west-calder/` | page | Mobile Tyre Fitting West Calder | Yes | Recreate at exact URL | `/mobile-tyre-fitting-west-calder/` | Low |
 | 26 | `/mobile-tyre-fitting-west-lothian/` | page | Mobile Tyre Fitting West Lothian | Yes | Keep at exact URL | `/mobile-tyre-fitting-west-lothian/` | Low |
 | 27 | `/mobile-tyre-fitting-whitburn/` | page | Mobile Tyre Fitting Whitburn | Yes | Keep at exact URL | `/mobile-tyre-fitting-whitburn/` | Low |
-| 28 | `/mobile-tyre-fitting-wishaw/` | page | Mobile Tyre Fitting Wishaw | No | **Recreate at exact URL — fresh, correctly-localised content (owner-confirmed, §6 Q3); live-site bug flagged separately, not fixed by this migration** | `/mobile-tyre-fitting-wishaw/` | Resolved |
+| 28 | `/mobile-tyre-fitting-wishaw/` | page | Mobile Tyre Fitting Wishaw | Yes | **Recreate at exact URL — fresh, correctly-localised content (owner-confirmed, §6 Q3); live-site bug flagged separately, not fixed by this migration** | `/mobile-tyre-fitting-wishaw/` | Resolved |
 | 29 | `/mobile-tyre-puncture-repair/` | page | Mobile Puncture Repair Near You | Yes | Keep at exact URL | `/mobile-tyre-puncture-repair/` | Low |
 | 30 | `/mobile-tyre-repair/` | page | Mobile Tyre Repair | No | Exclude from migration | — | Low |
 | 31 | `/our-tyre-range/` | page | Our Tyre Range | Yes | Keep at exact URL | `/our-tyre-range/` | Low |
@@ -195,20 +195,20 @@ it's the destination page).
 | 35 | `/tyre-pressure-monitoring-system/` | page | Tyre Pressure Monitoring System | Yes | Keep at exact URL | `/tyre-pressure-monitoring-system/` | Low |
 | 36 | `/tyre-replacement-call-out-bathgate/` | page | Tyre Replacement Call Out Service Bathgate | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-bathgate/` | Low |
 | 37 | `/van-tyre-replacement-services/` | page | Van tyre replacement services | Yes | Keep at exact URL | `/van-tyre-replacement-services/` | Low |
-| 38 | `/11-benefits-of-emergency-mobile-tyre-fitting/` | post | 11 Benefits of Emergency Mobile Tyre Fitting | No | Recreate at exact URL | `/11-benefits-of-emergency-mobile-tyre-fitting/` | Low |
+| 38 | `/11-benefits-of-emergency-mobile-tyre-fitting/` | post | 11 Benefits of Emergency Mobile Tyre Fitting | Yes | Recreate at exact URL | `/11-benefits-of-emergency-mobile-tyre-fitting/` | Low |
 | 39 | `/5-must-visit-places-in-edinburgh-for-first-time-travelers/` | post | 5 Must-Visit Places in Edinburgh for First-Time Travelers | No | Exclude from migration | — | Low |
-| 40 | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | post | 7 Warning Signs Your Tyres Need Immediate Professional Attention | No | Recreate at exact URL | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | Low |
-| 41 | `/asymmetric-and-directional-tyres-difference/` | post | Tyre Tread: Asymmetric vs Directional Tyres | No | Recreate at exact URL | `/asymmetric-and-directional-tyres-difference/` | Low |
+| 40 | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | post | 7 Warning Signs Your Tyres Need Immediate Professional Attention | Yes | Recreate at exact URL | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | Low |
+| 41 | `/asymmetric-and-directional-tyres-difference/` | post | Tyre Tread: Asymmetric vs Directional Tyres | Yes | Recreate at exact URL | `/asymmetric-and-directional-tyres-difference/` | Low |
 | 42 | `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` | post | Behind the Scenes: What Tools Do Mobile Tyre Fitters Really Use? | Yes → retired | **One-to-one 301 redirect (weaker of a cannibalising pair, §5 Group 3 — Phase 4B Batch B2 correction; originally, incorrectly, recorded as "Keep at exact URL")** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
 | 43 | `/best-emergency-locking-wheel-nut-removal-in-west-lothian/` | post | Best Emergency Locking Wheel Nut Removal in West Lothian | No | 301 redirect (existing, correct) | `/locking-wheel-nut-removal/` | Low |
 | 44 | `/best-mobile-tyre-fitter-west-lothian/` | post | Best Mobile Tyre Fitter – West Lothian | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-west-lothian/` | Low |
 | 45 | `/better-tyres-better-drive/` | post | Better Tyres, Better Drive | Yes | Keep at exact URL | `/better-tyres-better-drive/` | Low |
-| 46 | `/emergency-tyre-fitter-edinburgh-falkirk/` | post | Emergency Tyre Fitter — Edinburgh & Falkirk | No | 301 redirect (existing, correct) | `/emergency-tyre-change/` | Low |
+| 46 | `/emergency-tyre-fitter-edinburgh-falkirk/` | post | Emergency Tyre Fitter — Edinburgh & Falkirk | No | 301 redirect (existing, correct) — **destination corrected during Batch E reconciliation: `infra/redirects.json` points directly to `/24-7-mobile-tyre-replacement/` (single-hop, no chain); this row previously showed the pre-Batch-A-correction destination** | `/24-7-mobile-tyre-replacement/` | Low |
 | 47 | `/emergency-tyre-replacement/` | post | Emergency Tyre Replacement vs Garage Tyre Fitting: Pros & Cons | Yes | Keep at exact URL | `/emergency-tyre-replacement/` | Low |
-| 48 | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | post | Emergency Wheel Nut Removal: Lost the Key | No | Recreate at exact URL | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | Low |
+| 48 | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | post | Emergency Wheel Nut Removal: Lost the Key | Yes | Recreate at exact URL | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | Low |
 | 49 | `/how-much-does-mobile-tyre-fitting-cost/` | post | How Much Does Mobile Tyre Fitting Cost? | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: every old £ figure and town-by-town price table removed entirely — no SFR price published anywhere on the site without owner confirmation. Rewritten as a cost-*factors* guide (tyre size/spec, brand/category, vehicle type, number of tyres, location/travel, scheduled vs urgent, repair vs replacement, locking-wheel-nut complications, any additional confirmed work), directing the reader to contact SFR Motors Ltd for a current quotation. No structured pricing/Offer schema added | `/how-much-does-mobile-tyre-fitting-cost/` | Resolved |
-| 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | How Quality Tyres Improve Safety and Performance | No | Recreate at exact URL | `/how-quality-tyres-improve-safety-and-driving-performance/` | Low |
-| 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | How to Avoid Common Tyre Problems | No | Recreate at exact URL | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | Low |
+| 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | How Quality Tyres Improve Safety and Performance | Yes | Recreate at exact URL | `/how-quality-tyres-improve-safety-and-driving-performance/` | Low |
+| 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | How to Avoid Common Tyre Problems | Yes | Recreate at exact URL | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | Low |
 | 52 | `/how-to-change-a-tyre/` | post | How to Change a Tyre: West Lothian Guide | Yes | Keep at exact URL | `/how-to-change-a-tyre/` | Low |
 | 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Best Tyres for My Car – Buying Guide | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; tread wording corrected in the Batch D1 factual-correction pass).** Original rewrite: strips the "tyre-shop Directory" artifact and informal non-SFR voice; explains size/load/speed codes, seasonal types, the tyre label and named brands only as neutral examples with no performance claims; states only the verified 1.6mm legal minimum (central three-quarters, full circumference) and explains that meeting it isn't a guarantee a tyre is otherwise safe — condition, damage, pressure and manufacturer guidance also matter. No seasonal replacement threshold is stated or attributed to GOV.UK | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | Resolved |
 | 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | How to Extend Tyre Life | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "Students will recognize..." content-brief artifact and third-person non-SFR voice; reframed as everyday maintenance habits (pressure, damage checks, alignment, load, driving style, manufacturer guidance) rather than a lifespan-factors explainer, to stay distinct from `/tyre-lifespan/`; no fixed lifespan or mileage promised | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | Resolved |
@@ -224,30 +224,204 @@ it's the destination page).
 | 64 | `/pirelli-silent-tyres-uk/` | post | Pirelli Silent Tyres UK | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2); hold lifted following verification (see the erratum under §6 Q6 below).** The core PNCS claim (~2&ndash;3dB average in-cabin noise reduction, described by Pirelli as roughly halving perceived loudness) is confirmed against Pirelli's own official page (`pirelli.com/tyres/en-ww/car/tech-and-knowledge/pncs`) and used with explicit attribution to Pirelli, not asserted as independently verified fact. The previously-unverified UK Health Security Agency, ETRMA and enthusiast-forum citations from the exported original are all removed. The article does not claim SFR stocks or fits PNCS-equipped tyres — it states availability and vehicle compatibility are confirmed when the customer calls. No endorsement, partnership or affiliation with Pirelli is implied | `/pirelli-silent-tyres-uk/` | Resolved |
 | 65 | `/premium-or-budget-which-tyres-keep-you-safer/` | post | Premium or Budget Tyres | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: does not claim premium tyres are automatically safer than budget ones; the unsupported "responsible for up to 50% of your car's handling and braking performance" figure is removed and not replaced with another invented figure; states only the verified 1.6mm UK legal minimum tread depth (no seasonal threshold); compares tyres through suitability, size/specification, condition and the official UK tyre label (fuel efficiency, wet grip, noise) | `/premium-or-budget-which-tyres-keep-you-safer/` | Resolved |
 | 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Winter Tyre Prep — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: removes the unverified "283 Google reviews" claim and the step-by-step DIY spare-wheel-changing instructions entirely; no recommendation to change a wheel on a motorway/hard shoulder/slope; AA/RAC/Green Flag mentioned only as breakdown-cover options, explicitly not as endorsements; kept distinct from the Livingston service page and the tyre-problems post (seasonal preparation angle) | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | Resolved |
-| 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Professional Mobile Tyre Services — Linlithgow | No | Recreate at exact URL | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | Low |
+| 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Professional Mobile Tyre Services — Linlithgow | Yes | Recreate at exact URL | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | Low |
 | 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Puncture Repairs: What's Actually Being Done | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: strips the leading content-brief/target-keyword line; the £15-20/£25-35 price figures are removed (no SFR price published without owner confirmation — the article instead explains that cost depends on the type of repair and directs the reader to ask for a quote); does not cite BS AU 159 by name or quote its precise provisions, since these aren't verified against an authoritative accessible source; explains at a high level why the tyre has to come off the wheel for inspection, with no step-by-step DIY repair procedure; states plainly that not every puncture is safely repairable | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | Resolved |
 | 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | **EXCLUDED — not implemented (Phase 4B Batch D3).** The manufacturer-equipment table, RAC call-out projections and Hyundai TPMS quotation are all sourced to "Fleet News 2015" or otherwise stale/unverifiable; none can be safely republished as current fact. See §6c for the full reasoning, including the phone-number finding. **Requires a Google Search Console check before launch** (existing traffic/backlinks) to decide between: recreate with current verified data, add a relevant redirect, or leave/return a 410 | — | **Excluded, pending GSC check** |
-| 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | No | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
+| 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | Yes | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
 | 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Best Tyres for Your Ford on Edinburgh's Roads | Yes | Keep at exact URL | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | Low |
 | 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; emergency wording corrected in the Batch D1 factual-correction pass).** Original rewrite: emergency-response wording now matches only what GOV.UK's Highway Code Annex 6 actually says (try to keep control, grip the steering wheel firmly, allow the vehicle to roll to a stop, stop as soon as it's safe, change the tyre only without risk to yourself or others — otherwise call for breakdown assistance); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
 | 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Tyre Care & Flat Tyre Help — Linlithgow | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: removes the named competitor garages ("Hunters Of Linlithgow," "Regent Motors") and their addresses entirely; removes the unverified specific car parks/landmarks (Water Yett, Regent Centre, Stockbridge Retail Park) and the "within 45 minutes" fixed arrival-time promise; focused on tyre care and what to do safely after a flat rather than a local directory. Kept distinct from `/mobile-tyre-fitting-linlithgow/` (transactional) and `/professional-mobile-tyre-services-on-drivers-linlithgow/` (general/van-focused) per the existing §5 Linlithgow cannibalisation review — links naturally to the location page | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | Resolved |
 | 74 | `/tyre-lifespan-mobile-tyre-repair-guide/` | post | How Long Should Tyres Last? (guide variant) | No | **One-to-one 301 redirect (weaker of the pair) — Phase 4B Batch C implementation; reverses this document's original reading of §6 Q1 (see the erratum under Q1) — the older, shorter, clearer `/tyre-lifespan/` URL was chosen as the actual survivor instead** | `/tyre-lifespan/` | Resolved |
 | 75 | `/tyre-lifespan/` | post | How Long Should Tyres Last? | Yes | **Recreate at exact URL — RETAINED as the primary surviving URL of the cannibalising pair (Phase 4B Batch C); safety-focused guide per §6 Q1's content requirements — no fixed mileage/front-rear-split stated as guaranteed fact, manufacturer guidance, condition/age/damage, the UK legal 1.6mm tread minimum framed as a minimum not a target** | `/tyre-lifespan/` | Resolved |
 | 76 | `/tyre-puncture-repair-near-me-west-lothian/` | post | 24-Hour Puncture Repair Near Me | Yes | Keep at exact URL | `/tyre-puncture-repair-near-me-west-lothian/` | Low |
-| 77 | `/tyre-services-west-lothian/` | post | Mobile Tyre Services West Lothian — Slow Leaks | No | Recreate at exact URL | `/tyre-services-west-lothian/` | Low |
-| 78 | `/tyre-size-calculator/` | post | Tyre Size Calculator (tool) | No | Recreate at exact URL | `/tyre-size-calculator/` | Low |
+| 77 | `/tyre-services-west-lothian/` | post | Mobile Tyre Services West Lothian — Slow Leaks | Yes | Recreate at exact URL | `/tyre-services-west-lothian/` | Low |
+| 78 | `/tyre-size-calculator/` | post | Tyre Size Calculator (tool) | Yes | Recreate at exact URL | `/tyre-size-calculator/` | Low |
 | 79 | `/tyres-bathgate-guide/` | post | SFR Mobile Tyres Bathgate Guide | Yes | Keep at exact URL | `/tyres-bathgate-guide/` | Low |
 | 80 | `/tyres-bathgate-technical-breakdown/` | post | Tyres Bathgate: Decoding Sidewall Markings | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: removes the "62% of drivers"/"41% of failures" figures, the self-serving "70% downtime reduction" SFR claim, and the unverified TyreSafe/Michelin/Continental/AutoExpress/Tyre Industry Federation statistics. Explains sidewall size markings, load/speed ratings and DOT date codes at a high level, without vehicle-specific recommendations and without implying the date code alone proves a tyre safe or unsafe. Retains only the verified UK tread-depth minimum and penalty figures (GOV.UK). Kept distinct from `/mobile-tyre-fitting-bathgate/`, `/best-mobile-tyre-fitters-bathgate/` and `/tyres-bathgate-guide/` | `/tyres-bathgate-technical-breakdown/` | Resolved |
-| 81 | `/what-is-mobile-tyre-fitting/` | post | What is Mobile Tyre Fitting? | No | Recreate at exact URL | `/what-is-mobile-tyre-fitting/` | Low |
+| 81 | `/what-is-mobile-tyre-fitting/` | post | What is Mobile Tyre Fitting? | Yes | Recreate at exact URL | `/what-is-mobile-tyre-fitting/` | Low |
 | 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | What Fitters Check Before Changing a Tyre on a Hill | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the leading content-brief/target-keyword line; gives no instructions to lift or work on a vehicle on a slope — instead explains that a technician assesses whether the location is safe, recommends moving to level ground only when it can be done safely, and otherwise advises professional/recovery assistance | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | Resolved |
 | 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Same-Day Mobile Car Repair | No | **EXCLUDED — not implemented (Phase 4B Batch D3), superseding the original §6 Q7 "hold."** The cited "over 40% of breakdowns" AA statistic remains unverified and must not be reused. Beyond the statistic, the article's entire premise — batteries, brakes, oil changes, alternators, starters, diagnostics — falls outside SFR's verified tyre-only service scope (see §3 rows for the site's actual services), so recreating it would misrepresent what SFR offers even with the statistic fixed. See §6c for the full reasoning. **Requires a Google Search Console check before launch** to decide between leaving it as a normal 404 or returning a 410; explicitly **do not** redirect it to the homepage or to any tyre-service page, since none matches its actual (unrelated) content | — | **Excluded, pending GSC check** |
-| 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | No | **Recreate at exact URL — RETAINED as the consolidated survivor of a cannibalising pair (§5 Group 3 — Phase 4B Batch B2 correction); the shorter `/behind-the-scenes-.../` (row 42) redirects into it** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
+| 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | Yes | **Recreate at exact URL — RETAINED as the consolidated survivor of a cannibalising pair (§5 Group 3 — Phase 4B Batch B2 correction); the shorter `/behind-the-scenes-.../` (row 42) redirects into it** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
 | 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Best Mobile Tyre Fitting Service Provider in the UK | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3), reframed as "What To Look For When Choosing A Mobile Tyre Fitting Service."** Removes the false nationwide-coverage claim, "UK's best/most trusted/most reliable," thousands-of-customers and guaranteed-5-star claims, the wrong company name ("SFR Mobile Tyres Ltd" corrected to SFR Motors Ltd throughout), the fabricated comparison table, and the unconfirmed nitrogen-inflation/22-inch-wheel/run-flat capability claims. Rewritten as a neutral checklist for assessing any provider (coverage clarity, transparent quotation, safe working practices, genuine independently-hosted reviews, contact details, equipment/assessment, honest availability); states only SFR's actual established coverage area (Bathgate, Edinburgh, West Lothian, Falkirk) rather than turning the page into a second "why choose SFR" sales piece | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | Resolved |
 | 86 | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | post | Why Professional Mobile Tyre Services Are Essential | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch C). Consolidated, original rewrite of the cannibalising pair (owner-confirmed, §6 Q9): the exported original's garbled "Tyrerui issues" sentence and its incorrect "SFR (Fleet Support)" expansion are both gone — the site's real motto, Secure. Fast. Reliable., is used throughout — and the article is deliberately differentiated from the core `/mobile-tyre-fitting/` service page (safety/quality reasoning, not the convenience/logistics pitch)** | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
 | 87 | `/why-professional-mobile-tyre-services-are-information-to-all-drivers/` | post | Why Professional Mobile Tyre Services Are Information to All | No | **One-to-one 301 redirect — weaker of the pair (owner-confirmed, §6 Q9) — IMPLEMENTED (Phase 4B Batch C)** | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
-| 88 | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | post | Why Tyre Safety Is More Important Than Drivers Realize | No | Recreate at exact URL | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | Low |
+| 88 | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | post | Why Tyre Safety Is More Important Than Drivers Realize | Yes | Recreate at exact URL | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | Low |
 | 89 | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | post | Why Tyres Fail — Falkirk | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: removes all three unverified customer case studies from the exported original (the Falkirk business owner, the Grangemouth parent, the fleet-maintenance customer) without inventing replacement stories, and removes every unverified percentage, survey, accident figure and downtime/savings claim. Rewritten as a general educational article on common failure causes (pressure, overloading, impact damage, tread/sidewall damage, alignment/suspension wear, age/condition). Kept distinct from the transactional `/mobile-tyre-fitting-falkirk/` page, linked naturally both ways | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | Resolved |
-| 90 | `/your-guide-to-safe-tyre-services-in-harthill/` | post | Guide to Safe Tyre Services in Harthill | No | Recreate at exact URL | `/your-guide-to-safe-tyre-services-in-harthill/` | Low |
+| 90 | `/your-guide-to-safe-tyre-services-in-harthill/` | post | Guide to Safe Tyre Services in Harthill | Yes | Recreate at exact URL | `/your-guide-to-safe-tyre-services-in-harthill/` | Low |
+
+## 3a. Final 90-URL Disposition Matrix (Phase 4B Batch E)
+
+This is the final, one-to-one reconciliation of every published WordPress
+URL against its actual, verified state on the new site as of this batch.
+It supersedes §3 as the authoritative disposition record; §3 is retained
+for its per-row implementation narrative and is still linked from the
+table below. Every one of the 90 published WordPress URLs (37 pages, 53
+posts — re-confirmed by parsing the WXR export fresh for this batch, see
+below) appears in exactly one of five dispositions, with no URL absent,
+duplicated, or appearing in more than one category.
+
+**How this was verified** (not just asserted): the WXR export was
+re-parsed directly from the original XML rather than relying on cached
+summaries, producing `scripts/wp-export-inventory.json` (committed) as
+the durable, independently-checkable source of truth. Every URL in that
+inventory was then cross-checked programmatically against the actual
+built site (`site/*/index.html` existence), the actual redirect map
+(`infra/redirects.json`), and the actual sitemap (`site/sitemap.xml`) —
+not against prose descriptions. The result is `scripts/phase4b-batchE-disposition.json`
+(committed), the machine-readable disposition record that
+`scripts/phase4b-batchE-test.js` verifies on every run.
+
+### Summary totals
+
+| Disposition | Count |
+|---|---|
+| Preserved (already live pre-migration, unchanged) | 28 |
+| Recreated at the same URL | 42 |
+| Redirected by a direct single-hop 301 | 11 |
+| Excluded (documented reason, no GSC check required) | 7 |
+| Pending a pre-launch Google Search Console decision | 2 |
+| **Total** | **90** |
+
+Cross-checks performed and passed: no URL appears in more than one
+disposition; every "Preserved"/"Recreated" URL resolves to a real built
+page with a self-referencing canonical; every "Redirected" URL exists as
+a source in `infra/redirects.json` and its destination is itself a real
+page (not another redirect source — no chains, confirmed by
+`scripts/gen-redirects.js`'s own chain check); no "Excluded" or "Pending
+GSC" URL appears in the sitemap or was accidentally built as a page; the
+built site's `sitemap.xml` (80 URLs) contains all 70 "Preserved" +
+"Recreated" URLs and nothing else that shouldn't be there — the
+remaining 10 sitemap URLs are new-site-only content with no WordPress
+equivalent (e.g. `/services/`, `/cookie-policy/`, `/terms-and-conditions/`,
+the one hand-written blog post, and pages built from search-index
+sampling before the WXR export was available), which is expected and not
+forced to reconcile against the WordPress total, per this batch's
+instruction.
+
+### Reconciliation findings from this batch
+
+Two pre-existing documentation defects in §3 were found and corrected as
+part of this reconciliation (both are corrections to this document's own
+text — no site page, redirect, or generator was changed):
+
+1. **23 rows had a stale "In new site?" value of "No"** even though the
+   corresponding page has existed since Batch A or B1–B4 — those batches
+   built the pages but never updated §3's per-row status columns (a
+   practice only started consistently from Batch C onward). All 23 are
+   corrected to "Yes" in §3. Affected rows: 3, 12, 17, 20, 21, 22, 24, 25,
+   28, 38, 40, 41, 48, 50, 51, 67, 70, 77, 78, 81, 84, 88, 90.
+2. **Row 46's "Final destination" was stale.** It read
+   `/emergency-tyre-change/`, the pre-Batch-A-correction target. The
+   actual, currently-implemented redirect for
+   `/emergency-tyre-fitter-edinburgh-falkirk/` in `infra/redirects.json`
+   points directly to `/24-7-mobile-tyre-replacement/` — single-hop, no
+   chain, verified. §3 row 46 is corrected accordingly.
+
+No other discrepancy was found: no missing valuable URL, no redirect to
+an unrelated page, no redirect to the homepage used merely to avoid a
+404, no redirect chain or loop, no page marked preserved without a real
+page existing, and no page marked redirected without a real redirect
+rule existing.
+
+### The full matrix
+
+"HTTP Behaviour" describes what a request to the *old WordPress URL*
+should return after launch. "Indexability" reflects the URL's own
+`noindex`/`robots`/canonical postmeta as recorded in the WXR export,
+where relevant.
+
+| # | Old WordPress URL | Type | Final Disposition | Final Destination | HTTP Behaviour | Indexability | Reason/Evidence | GSC Required |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `/` | page | Preserved | `/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 2 | `/24-7-mobile-tyre-replacement-in-edinburgh/` | page | Redirected | `/mobile-tyre-fitting-edinburgh/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 2 for full detail | No |
+| 3 | `/24-7-mobile-tyre-replacement/` | page | Recreated | `/24-7-mobile-tyre-replacement/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 3 for full detail | No |
+| 4 | `/about-us/` | page | Preserved | `/about-us/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 5 | `/blog/` | page | Preserved | `/blog/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 6 | `/broxburn/` | page | Preserved | `/broxburn/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 7 | `/contact-us/` | page | Preserved | `/contact-us/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 8 | `/emergency-mobile-tyre-fitting/` | page | Excluded | — | 404 | Noindex, nofollow, canonical->homepage (WXR postmeta) | See §3 row 8 and §6c for full reasoning | No |
+| 9 | `/expert-locking-wheel-nut-removal/` | page | Redirected | `/locking-wheel-nut-removal/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 9 for full detail | No |
+| 10 | `/locking-wheel-nut-removal-bathgate/` | page | Redirected | `/mobile-locking-wheel-nut-removal/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 10 for full detail | No |
+| 11 | `/mobile-locking-wheel-nut-removal/` | page | Preserved | `/mobile-locking-wheel-nut-removal/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 12 | `/mobile-trailer-and-caravan-tyre-fitting/` | page | Recreated | `/mobile-trailer-and-caravan-tyre-fitting/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 12 for full detail | No |
+| 13 | `/mobile-tyre-change/` | page | Excluded | — | 404 | Noindex, nofollow, canonical->homepage (WXR postmeta) | See §3 row 13 and §6c for full reasoning | No |
+| 14 | `/mobile-tyre-fitting-3/` | page | Excluded | — | 404 | Noindex, nofollow, canonical->homepage (WXR postmeta) | See §3 row 14 and §6c for full reasoning | No |
+| 15 | `/mobile-tyre-fitting-airdrie/` | page | Preserved | `/mobile-tyre-fitting-airdrie/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 16 | `/mobile-tyre-fitting-bathgate/` | page | Preserved | `/mobile-tyre-fitting-bathgate/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 17 | `/mobile-tyre-fitting-boness/` | page | Recreated | `/mobile-tyre-fitting-boness/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 17 for full detail | No |
+| 18 | `/mobile-tyre-fitting-edinburgh/` | page | Preserved | `/mobile-tyre-fitting-edinburgh/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 19 | `/mobile-tyre-fitting-falkirk/` | page | Preserved | `/mobile-tyre-fitting-falkirk/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 20 | `/mobile-tyre-fitting-harthill/` | page | Recreated | `/mobile-tyre-fitting-harthill/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 20 for full detail | No |
+| 21 | `/mobile-tyre-fitting-in-addiewell/` | page | Recreated | `/mobile-tyre-fitting-in-addiewell/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 21 for full detail | No |
+| 22 | `/mobile-tyre-fitting-linlithgow/` | page | Recreated | `/mobile-tyre-fitting-linlithgow/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 22 for full detail | No |
+| 23 | `/mobile-tyre-fitting-livingston/` | page | Preserved | `/mobile-tyre-fitting-livingston/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 24 | `/mobile-tyre-fitting-shotts/` | page | Recreated | `/mobile-tyre-fitting-shotts/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 24 for full detail | No |
+| 25 | `/mobile-tyre-fitting-west-calder/` | page | Recreated | `/mobile-tyre-fitting-west-calder/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 25 for full detail | No |
+| 26 | `/mobile-tyre-fitting-west-lothian/` | page | Preserved | `/mobile-tyre-fitting-west-lothian/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 27 | `/mobile-tyre-fitting-whitburn/` | page | Preserved | `/mobile-tyre-fitting-whitburn/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 28 | `/mobile-tyre-fitting-wishaw/` | page | Recreated | `/mobile-tyre-fitting-wishaw/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 28 for full detail | No |
+| 29 | `/mobile-tyre-puncture-repair/` | page | Preserved | `/mobile-tyre-puncture-repair/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 30 | `/mobile-tyre-repair/` | page | Excluded | — | 404 | Noindex, nofollow, canonical->homepage (WXR postmeta) | See §3 row 30 and §6c for full reasoning | No |
+| 31 | `/our-tyre-range/` | page | Preserved | `/our-tyre-range/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 32 | `/page-not-found/` | page | Excluded | — | 404 | Indexable per WXR rank_math flag, but canonicalized elsewhere by Yoast — this is the live site's own 404 page and must not become an indexed content page | See §3 row 32 and §6c for full reasoning | No |
+| 33 | `/privacy-policy/` | page | Preserved | `/privacy-policy/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 34 | `/trade-fleet-tyre-services/` | page | Preserved | `/trade-fleet-tyre-services/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 35 | `/tyre-pressure-monitoring-system/` | page | Preserved | `/tyre-pressure-monitoring-system/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 36 | `/tyre-replacement-call-out-bathgate/` | page | Redirected | `/mobile-tyre-fitting-bathgate/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 36 for full detail | No |
+| 37 | `/van-tyre-replacement-services/` | page | Preserved | `/van-tyre-replacement-services/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 38 | `/11-benefits-of-emergency-mobile-tyre-fitting/` | post | Recreated | `/11-benefits-of-emergency-mobile-tyre-fitting/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 38 for full detail | No |
+| 39 | `/5-must-visit-places-in-edinburgh-for-first-time-travelers/` | post | Excluded | — | 404 | Indexable in WXR (no noindex flag) — excluded as off-topic (outside SFR's tyre-service scope), not for indexability reasons | See §3 row 39 and §6c for full reasoning | No |
+| 40 | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | post | Recreated | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 40 for full detail | No |
+| 41 | `/asymmetric-and-directional-tyres-difference/` | post | Recreated | `/asymmetric-and-directional-tyres-difference/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 41 for full detail | No |
+| 42 | `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` | post | Redirected | `/what-tools-do-mobile-tyre-fitters-use/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 42 for full detail | No |
+| 43 | `/best-emergency-locking-wheel-nut-removal-in-west-lothian/` | post | Redirected | `/locking-wheel-nut-removal/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 43 for full detail | No |
+| 44 | `/best-mobile-tyre-fitter-west-lothian/` | post | Redirected | `/mobile-tyre-fitting-west-lothian/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 44 for full detail | No |
+| 45 | `/better-tyres-better-drive/` | post | Preserved | `/better-tyres-better-drive/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 46 | `/emergency-tyre-fitter-edinburgh-falkirk/` | post | Redirected | `/24-7-mobile-tyre-replacement/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 46 for full detail | No |
+| 47 | `/emergency-tyre-replacement/` | post | Preserved | `/emergency-tyre-replacement/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 48 | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | post | Recreated | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 48 for full detail | No |
+| 49 | `/how-much-does-mobile-tyre-fitting-cost/` | post | Recreated | `/how-much-does-mobile-tyre-fitting-cost/` | 200 | Index | Built during Phase 4B Batch D3 — see §3 row 49 for full detail | No |
+| 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | Recreated | `/how-quality-tyres-improve-safety-and-driving-performance/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 50 for full detail | No |
+| 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | Recreated | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 51 for full detail | No |
+| 52 | `/how-to-change-a-tyre/` | post | Preserved | `/how-to-change-a-tyre/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Recreated | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 53 for full detail | No |
+| 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | Recreated | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 54 for full detail | No |
+| 55 | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | post | Recreated | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | 200 | Index | Built during Phase 4B Batch C — see §3 row 55 for full detail | No |
+| 56 | `/locking-wheel-nut-removal/` | post | Preserved | `/locking-wheel-nut-removal/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 57 | `/michelin-radial-tire-history-innovation/` | post | Recreated | `/michelin-radial-tire-history-innovation/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 57 for full detail | No |
+| 58 | `/mobile-tyre-fitter-near-me-myths/` | post | Recreated | `/mobile-tyre-fitter-near-me-myths/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 58 for full detail | No |
+| 59 | `/mobile-tyre-fitting-bathgate-questions/` | post | Redirected | `/mobile-tyre-fitting-bathgate/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 59 for full detail | No |
+| 60 | `/mobile-tyre-fitting-livingston-tyre-problems/` | post | Recreated | `/mobile-tyre-fitting-livingston-tyre-problems/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 60 for full detail | No |
+| 61 | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | post | Preserved | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 62 | `/mobile-tyre-repair-edinburgh-west-lothian/` | post | Preserved | `/mobile-tyre-repair-edinburgh-west-lothian/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 63 | `/motors-tire-pressure-off-road/` | post | Excluded | — | 404 | Indexable in WXR (no noindex flag) — excluded as off-topic (outside SFR's tyre-service scope), not for indexability reasons | See §3 row 63 and §6c for full reasoning | No |
+| 64 | `/pirelli-silent-tyres-uk/` | post | Recreated | `/pirelli-silent-tyres-uk/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 64 for full detail | No |
+| 65 | `/premium-or-budget-which-tyres-keep-you-safer/` | post | Recreated | `/premium-or-budget-which-tyres-keep-you-safer/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 65 for full detail | No |
+| 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Recreated | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 66 for full detail | No |
+| 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Recreated | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 67 for full detail | No |
+| 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Recreated | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 68 for full detail | No |
+| 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Pending GSC decision | — | 404 (current; pending GSC review) | Was indexable in WXR (no noindex flag) — excluded for content-quality reasons, not indexability | See §3 row 69 and §6c for full reasoning | Yes |
+| 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Recreated | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 70 for full detail | No |
+| 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Preserved | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 72 | `/tyre-blowout-causes-prevention/` | post | Recreated | `/tyre-blowout-causes-prevention/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 72 for full detail | No |
+| 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Recreated | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | 200 | Index | Built during Phase 4B Batch D2 — see §3 row 73 for full detail | No |
+| 74 | `/tyre-lifespan-mobile-tyre-repair-guide/` | post | Redirected | `/tyre-lifespan/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 74 for full detail | No |
+| 75 | `/tyre-lifespan/` | post | Recreated | `/tyre-lifespan/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 75 for full detail | No |
+| 76 | `/tyre-puncture-repair-near-me-west-lothian/` | post | Preserved | `/tyre-puncture-repair-near-me-west-lothian/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 77 | `/tyre-services-west-lothian/` | post | Recreated | `/tyre-services-west-lothian/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 77 for full detail | No |
+| 78 | `/tyre-size-calculator/` | post | Recreated | `/tyre-size-calculator/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 78 for full detail | No |
+| 79 | `/tyres-bathgate-guide/` | post | Preserved | `/tyres-bathgate-guide/` | 200 | Index | Already live pre-migration, unchanged | No |
+| 80 | `/tyres-bathgate-technical-breakdown/` | post | Recreated | `/tyres-bathgate-technical-breakdown/` | 200 | Index | Built during Phase 4B Batch D3 — see §3 row 80 for full detail | No |
+| 81 | `/what-is-mobile-tyre-fitting/` | post | Recreated | `/what-is-mobile-tyre-fitting/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 81 for full detail | No |
+| 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | Recreated | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | 200 | Index | Built during Phase 4B Batch D1 — see §3 row 82 for full detail | No |
+| 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Pending GSC decision | — | 404 (current; pending GSC review) | Was indexable in WXR (no noindex flag) — excluded for content-quality reasons, not indexability | See §3 row 83 and §6c for full reasoning | Yes |
+| 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | Recreated | `/what-tools-do-mobile-tyre-fitters-use/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 84 for full detail | No |
+| 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Recreated | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | 200 | Index | Built during Phase 4B Batch D3 — see §3 row 85 for full detail | No |
+| 86 | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | post | Recreated | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | 200 | Index | Built during Phase 4B Batch C — see §3 row 86 for full detail | No |
+| 87 | `/why-professional-mobile-tyre-services-are-information-to-all-drivers/` | post | Redirected | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | 301 (single-hop, verified no chain) | N/A (redirects) | 301 redirect — see §3 row 87 for full detail | No |
+| 88 | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | post | Recreated | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 88 for full detail | No |
+| 89 | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | post | Recreated | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | 200 | Index | Built during Phase 4B Batch D3 — see §3 row 89 for full detail | No |
+| 90 | `/your-guide-to-safe-tyre-services-in-harthill/` | post | Recreated | `/your-guide-to-safe-tyre-services-in-harthill/` | 200 | Index | Built during Phase 4B (Batch A/B) — see §3 row 90 for full detail | No |
 
 ## 4. Missing-URL List (53)
 
@@ -729,6 +903,80 @@ E and F remain unimplemented.
 Neither exclusion added a page, a redirect, or a sitemap entry — both
 URLs currently 404 on the built site, which the Batch D3 regression suite
 verifies explicitly.
+
+## 6d. Phase 4B Batch E — Exclusion Re-Review
+
+Every excluded or pending-decision URL (9 total: rows 8, 13, 14, 30, 32,
+39, 63, 69, 83) was re-checked for this batch, including its original
+WordPress indexability signal (`noindex`/`robots`/canonical postmeta,
+read directly from the WXR export) — not just the reason previously
+recorded. No new exclusion was added and none already documented was
+reversed; this section adds the indexability evidence and the
+replacement-page/redirect-intent assessment the Batch E instruction
+requires for each.
+
+**Four self-excluded by their own WordPress `noindex`/`nofollow`
+metadata** (rows 8, 13, 14, 30):
+
+| URL | Title | Evidence |
+|---|---|---|
+| `/emergency-mobile-tyre-fitting/` | Emergency Mobile Tyre Fitting | `_yoast_wpseo_meta-robots-noindex: 1`, `nofollow: 1`, canonical → homepage; `rank_math_robots: noindex, nofollow` |
+| `/mobile-tyre-change/` | Mobile Tyre Change | Same noindex/nofollow/canonical-to-homepage pattern |
+| `/mobile-tyre-fitting-3/` | Mobile Tyre Fitting | Same pattern |
+| `/mobile-tyre-repair/` | Mobile Tyre Repair | Same pattern |
+
+All four were already excluded from Google's index by the live WordPress
+site itself, and all four canonicalise to the homepage in the export —
+meaning the live site itself never intended these as distinct indexed
+pages. Each has an obvious relevant replacement already live and
+indexed (`/mobile-tyre-fitting/`, `/mobile-tyre-replacement/`,
+`/mobile-tyre-fitting/`, `/mobile-tyre-puncture-repair/` respectively),
+but a redirect is not warranted: a `noindex` URL with no organic ranking
+to protect gains nothing from a 301, and manufacturing one risks
+implying these were once real, distinct destinations. No GSC check is
+required — `noindex` pages accumulate no meaningful ranking signal to
+verify. Remaining excluded, undocumented status: none — all four are
+fully documented here and in §3a.
+
+**The live site's own 404 page** (row 32):
+
+| URL | Title | Evidence |
+|---|---|---|
+| `/page-not-found/` | SFR Motors Ltd - Mobile Tyre Fitters | `rank_math_robots: index` (technically indexable per that plugin), but `_yoast_wpseo_canonical` points to `/mobile-tyre-fitting-edinburgh/`, not itself — the two SEO plugins disagree, but neither treats this as a real destination page |
+| Reason | The live WordPress site's actual 404 handler. Per this batch's own rule, the old WordPress 404 page must not become a normal indexed page on the new site. |
+| Replacement / redirect | None — the new site has its own working 404 behaviour (verified in `scripts/phase3-test.js`). No redirect is appropriate for a 404 handler URL. |
+| GSC required | No — a site's own 404 page does not accumulate meaningful organic rankings under its own URL. |
+
+**Two off-topic posts, genuinely indexable in the export** (rows 39, 63)
+— these are the only two exclusions where the WordPress export itself
+did **not** flag the content as noindex, so the exclusion rests on topic
+fit, not on the live site's own indexability signal:
+
+| URL | Title | Evidence |
+|---|---|---|
+| `/5-must-visit-places-in-edinburgh-for-first-time-travelers/` | 5 Must-Visit Places in Edinburgh for First-Time Travelers | `rank_math_robots: index` — no noindex flag. Content is Edinburgh tourism, unrelated to tyres or mobile fitting. |
+| `/motors-tire-pressure-off-road/` | Tire Pressure Guide for Dual Sport & Off-Road (motorcycles) | `rank_math_robots: index` — no noindex flag. Content is motorcycle tyre pressure guidance; SFR fits car/van tyres, not motorcycle tyres. |
+
+Neither has a relevant equivalent anywhere on the new site (SFR has no
+tourism content and does not service motorcycles), so per this batch's
+explicit rule, neither is redirected to an unrelated tyre page or to the
+homepage merely to avoid a 404. Both were indexable in the export, which
+is the reason they are listed here rather than folded in with the
+noindex group above — but "indexable" is not the same as "valuable to
+this business," and neither is plausibly driving business-relevant
+organic traffic for a mobile tyre-fitting company. No GSC check is
+required to make that call; if the owner wants firmer confirmation
+before launch, a GSC traffic check for these two specific URLs would be
+a reasonable optional addition, not a blocking one.
+
+**Two pending a Google Search Console decision** (rows 69, 83) — see the
+full reasoning already recorded above in this section. Both were also
+indexable in the export (`rank_math_robots: index`, no noindex flag),
+which is precisely why these two, unlike the four self-excluded pages,
+are marked **pending** rather than simply excluded: an indexable post
+that may hold real backlinks or rankings needs traffic/backlink evidence
+before deciding between recreation, a redirect, or a 410 — the decision
+this batch's rules explicitly withhold until that evidence exists.
 
 ## 7. Totals
 
