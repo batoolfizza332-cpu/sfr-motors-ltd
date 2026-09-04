@@ -210,7 +210,7 @@ it's the destination page).
 | 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | How Quality Tyres Improve Safety and Performance | No | Recreate at exact URL | `/how-quality-tyres-improve-safety-and-driving-performance/` | Low |
 | 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | How to Avoid Common Tyre Problems | No | Recreate at exact URL | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | Low |
 | 52 | `/how-to-change-a-tyre/` | post | How to Change a Tyre: West Lothian Guide | Yes | Keep at exact URL | `/how-to-change-a-tyre/` | Low |
-| 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Best Tyres for My Car – Buying Guide | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "tyre-shop Directory" artifact and informal non-SFR voice; explains size/load/speed codes, seasonal types, the tyre label and named brands only as neutral examples with no performance claims; tread-depth wording corrected to GOV.UK's minimum-vs-good-practice framing (no flat "replace at 3mm" rule) | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | Resolved |
+| 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Best Tyres for My Car – Buying Guide | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; tread wording corrected in the Batch D1 factual-correction pass).** Original rewrite: strips the "tyre-shop Directory" artifact and informal non-SFR voice; explains size/load/speed codes, seasonal types, the tyre label and named brands only as neutral examples with no performance claims; states only the verified 1.6mm legal minimum (central three-quarters, full circumference) and explains that meeting it isn't a guarantee a tyre is otherwise safe — condition, damage, pressure and manufacturer guidance also matter. No seasonal replacement threshold is stated or attributed to GOV.UK | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | Resolved |
 | 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | How to Extend Tyre Life | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "Students will recognize..." content-brief artifact and third-person non-SFR voice; reframed as everyday maintenance habits (pressure, damage checks, alignment, load, driving style, manufacturer guidance) rather than a lifespan-factors explainer, to stay distinct from `/tyre-lifespan/`; no fixed lifespan or mileage promised | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | Resolved |
 | 55 | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | post | Locking Wheel Nut Removal: Industry Practice & Disclaimer | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch C). Rewritten scope went beyond the original §6 Q8 competitor-name removal: the exported original also described a destructive "invasive" removal technique in procedural step-by-step detail, cited unverifiable sources (owner forums, "Hometyre technical notes," an unattributed police-advisory statistic), quoted Hometyre's own disclaimer wording directly, and framed a disclaimer as something the business requires to protect itself. The rewrite removes all of this: no procedural destructive-removal detail, no invented sourcing, no named competitors or specific commercial products (a "Laser Tools 8842" reference was also generic-ised), and no implication that a disclaimer removes legal responsibility — it instead explains that removal risk is real and asks the customer to confirm they understand it before work starts** | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | Resolved |
 | 56 | `/locking-wheel-nut-removal/` | post | Complete Guide to Locking Wheel Nut Removal in the UK | Yes | Keep at exact URL | `/locking-wheel-nut-removal/` | Low |
@@ -229,7 +229,7 @@ it's the destination page).
 | 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | Recreate at exact URL | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | Low |
 | 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | No | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
 | 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Best Tyres for Your Ford on Edinburgh's Roads | Yes | Keep at exact URL | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | Low |
-| 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: emergency-response wording verified against GOV.UK's Highway Code guidance before publishing (ease off the accelerator rather than braking hard, hold the wheel firmly, move to a place of relative safety rather than stopping in a live lane, hazard lights on, never change a wheel yourself on a motorway); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
+| 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; emergency wording corrected in the Batch D1 factual-correction pass).** Original rewrite: emergency-response wording now matches only what GOV.UK's Highway Code Annex 6 actually says (try to keep control, grip the steering wheel firmly, allow the vehicle to roll to a stop, stop as soon as it's safe, change the tyre only without risk to yourself or others — otherwise call for breakdown assistance); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
 | 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Tyre Care & Flat Tyre Help — Linlithgow | No | Recreate at exact URL | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | Low |
 | 74 | `/tyre-lifespan-mobile-tyre-repair-guide/` | post | How Long Should Tyres Last? (guide variant) | No | **One-to-one 301 redirect (weaker of the pair) — Phase 4B Batch C implementation; reverses this document's original reading of §6 Q1 (see the erratum under Q1) — the older, shorter, clearer `/tyre-lifespan/` URL was chosen as the actual survivor instead** | `/tyre-lifespan/` | Resolved |
 | 75 | `/tyre-lifespan/` | post | How Long Should Tyres Last? | Yes | **Recreate at exact URL — RETAINED as the primary surviving URL of the cannibalising pair (Phase 4B Batch C); safety-focused guide per §6 Q1's content requirements — no fixed mileage/front-rear-split stated as guaranteed fact, manufacturer guidance, condition/age/damage, the UK legal 1.6mm tread minimum framed as a minimum not a target** | `/tyre-lifespan/` | Resolved |
@@ -547,27 +547,47 @@ their exact WordPress URLs: `/what-mobile-fitters-check-before-changing-a-tyre-o
 rows 53, 54, 60, 66, 72 and 82 for the row-level implementation notes.
 D2, D3 and the rest of the Batch D plan remain unimplemented.
 
-**External sources checked before writing, and what they were used for:**
+**Erratum (Phase 4B Batch D1 correction):** the paragraph originally here
+stated that GOV.UK's Highway Code recommends a "2mm in summer / 3mm in
+winter" tread-depth replacement threshold, and that its emergency-blowout
+guidance includes "ease off the accelerator rather than braking hard."
+Neither is accurate. Annex 6 states only the 1.6mm legal minimum (central
+three-quarters, full circumference) — it does not set out a seasonal
+replacement threshold at all — and its guidance for a burst tyre is: try
+to keep control, grip the steering wheel firmly, allow the vehicle to
+roll to a stop, and (for a flat tyre) stop as soon as it's safe to do so,
+only changing the tyre if it can be done without risk to yourself or
+others, otherwise calling a breakdown service. Both misattributions were
+introduced during the original D1 pass and have been corrected on the
+two affected pages, in the regression suite, and below.
+
+**External sources checked before writing (and re-verified for this
+correction), and what they were used for:**
 
 - **GOV.UK — The Highway Code, Annex 6 (vehicle maintenance, safety and
-  security)**, and **GOV.UK — The Highway Code, motorway rules on
-  breakdowns (rule 275, "place of relative safety")**: confirmed the
-  1.6mm legal minimum tread depth (central three-quarters, full
-  circumference); confirmed the good-practice replacement guidance is
-  2mm in summer / 3mm in winter — not a flat, year-round 3mm figure as
-  several of the exported WordPress bodies stated — used to correct the
-  tread-depth wording on `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/`;
-  confirmed the emergency-blowout sequence (ease off the accelerator
-  rather than braking hard, hold the wheel firmly, slow gradually, move
-  to a place of relative safety rather than stopping in a live traffic
-  lane, hazard lights on, never change a wheel yourself on a motorway) —
-  used directly in `/tyre-blowout-causes-prevention/`.
+  security)**, `gov.uk/guidance/the-highway-code/annex-6-vehicle-maintenance-safety-and-security`:
+  confirmed the 1.6mm legal minimum tread depth (central three-quarters,
+  full circumference) — used on both `/tyre-lifespan/` (Batch C) and
+  `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` (Batch
+  D1); confirmed the burst-tyre guidance (keep control; grip the
+  steering wheel firmly; allow the vehicle to roll to a stop; if left
+  with a flat tyre, stop as soon as it's safe to do so; only change the
+  tyre if it can be done without putting yourself or others at risk,
+  otherwise call a breakdown service) — used directly in
+  `/tyre-blowout-causes-prevention/`. Annex 6 does **not** state a
+  seasonal (2mm summer / 3mm winter) replacement threshold, and no such
+  threshold is published anywhere on the site — the buying-guide page
+  instead explains that meeting the 1.6mm legal minimum doesn't
+  automatically mean a tyre is otherwise safe, since condition, damage,
+  pressure and manufacturer guidance also matter.
 - No claim on any of the six D1 pages relies on a statistic, review
   count, price, or response-time figure — those categories were removed
   outright per the global requirements rather than sourced, consistent
   with the source-verification rule in the Batch D planning review (if no
   authoritative source supports a claim, remove it rather than replace it
-  with another invented figure).
+  with another invented figure). This same rule governed the correction
+  above: the false seasonal threshold was removed outright, not replaced
+  with a different invented figure.
 
 ## 7. Totals
 

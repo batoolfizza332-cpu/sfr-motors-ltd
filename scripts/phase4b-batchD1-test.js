@@ -134,6 +134,12 @@ const INVENTED_CLAIM_PATTERNS = [
   /thousands of (?:uk\s*)?drivers/i,
 ];
 
+// ---- unsupported "2mm summer / 3mm winter" GOV.UK attribution ----
+// GOV.UK's Highway Code Annex 6 states only the 1.6mm legal minimum; it
+// does not recommend a seasonal replacement threshold. See the Phase 4B
+// Batch D1 correction — this must never reappear, on any page.
+const UNSUPPORTED_SEASONAL_THRESHOLD_PATTERN = /2\s?mm[\s\S]{0,60}summer[\s\S]{0,60}3\s?mm[\s\S]{0,60}winter|3\s?mm[\s\S]{0,60}winter[\s\S]{0,60}2\s?mm[\s\S]{0,60}summer|official guidance suggests[\s\S]{0,60}(?:2|3)\s?mm/i;
+
 // ---- procedural roadside lifting / DIY wheel-changing instructions ----
 const PROCEDURAL_LIFTING_PATTERNS = [
   /jack (?:up|the car|it up)/i,
@@ -252,18 +258,29 @@ async function main() {
   }
 
   // ---- 10. tyre-blowout article: verified emergency guidance, no live-lane stop, links to 24/7 page ----
+  // Guidance verified against GOV.UK's Highway Code Annex 6 (see the
+  // Phase 4B Batch D1 correction): "try to keep control", "grip the
+  // steering wheel firmly", "allow the vehicle to roll to a stop",
+  // "stop as soon as it is safe", "only change the tyre ... without
+  // risk ... otherwise call a breakdown service". Annex 6 does NOT say
+  // "ease off the accelerator rather than braking hard" — that wording
+  // must never reappear.
   console.log("\n== Tyre-blowout article: emergency guidance ==");
   {
     const p = "/tyre-blowout-causes-prevention/";
     const text = stripTags(mainContentHtml(pageData[p].body));
-    if (/hold the steering wheel firmly|keep.{0,20}straight/i.test(text)) ok();
-    else fail(`${p}: expected guidance to hold the wheel firmly and keep a straight course`);
-    if (/ease off the accelerator|do not brake hard|rather than braking hard/i.test(text)) ok();
-    else fail(`${p}: expected guidance not to brake suddenly`);
+    if (/keep control|grip the steering wheel firmly/i.test(text)) ok();
+    else fail(`${p}: expected guidance to keep control and grip the steering wheel firmly`);
+    if (/roll to a stop/i.test(text)) ok();
+    else fail(`${p}: expected guidance to let the vehicle roll to a stop`);
+    if (/stop as soon as it'?s safe|stop as soon as it is safe/i.test(text)) ok();
+    else fail(`${p}: expected guidance to stop as soon as it's safe`);
+    if (/without (?:putting yourself or anyone else at risk|risk)|call (?:for )?breakdown assistance/i.test(text)) ok();
+    else fail(`${p}: expected guidance to change the tyre only without risk, otherwise call for breakdown assistance`);
+    if (!/ease off the accelerator|brake hard|braking hard/i.test(text)) ok();
+    else fail(`${p}: contains the unsupported "ease off the accelerator / brake hard" wording — not in GOV.UK Annex 6`);
     if (!/stop (?:immediately )?in (?:the |a )?(?:live |moving )?(?:traffic )?lane/i.test(text)) ok();
     else fail(`${p}: appears to tell the driver to stop in a live traffic lane`);
-    if (/never attempt to change the wheel yourself|never.{0,20}change the wheel/i.test(text)) ok();
-    else fail(`${p}: expected guidance never to change a wheel on a motorway`);
     if (pageData[p].body.includes('href="/24-7-mobile-tyre-replacement/"')) ok();
     else fail(`${p}: expected a link to /24-7-mobile-tyre-replacement/`);
     if (!pageData[p].body.includes('href="/emergency-tyre-change/"')) ok();
@@ -284,6 +301,11 @@ async function main() {
   }
 
   // ---- 12. buying-guide article: no universal "best" claim, GOV.UK-consistent tread wording ----
+  // GOV.UK's Highway Code Annex 6 states only the 1.6mm legal minimum
+  // (central three-quarters, full circumference) — it does not recommend
+  // a "2mm in summer / 3mm in winter" replacement threshold (see the
+  // Phase 4B Batch D1 correction). That attribution must never reappear,
+  // and it must not be replaced with any other invented threshold.
   console.log("\n== Buying-guide article: no universal best-brand/tier claim, correct tread wording ==");
   {
     const p = "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/";
@@ -292,10 +314,45 @@ async function main() {
     else fail(`${p}: appears to claim one brand/tier is universally best`);
     if (/1\.6\s?mm/i.test(text)) ok();
     else fail(`${p}: expected the UK legal tread-depth figure (1.6mm)`);
-    if (!/replace (?:them |it )?(?:at|when they hit) 3\s?mm\b(?!.{0,15}winter)/i.test(text)) ok();
-    else fail(`${p}: appears to state a flat, year-round "replace at 3mm" rule`);
+    if (!UNSUPPORTED_SEASONAL_THRESHOLD_PATTERN.test(text)) ok();
+    else fail(`${p}: contains the unsupported "2mm summer / 3mm winter" GOV.UK attribution`);
+    if (/doesn'?t automatically mean|not (?:a )?guarantee/i.test(text) && /condition.{0,20}damage.{0,20}pressure|pressure.{0,40}manufacturer/i.test(text)) ok();
+    else fail(`${p}: expected wording that the legal minimum isn't a guarantee of safety — condition, damage, pressure and manufacturer guidance also matter`);
     if (pageData[p].body.includes('href="/our-tyre-range/"') && pageData[p].body.includes('href="/tyre-lifespan/"')) ok();
     else fail(`${p}: expected links to both /our-tyre-range/ and /tyre-lifespan/`);
+  }
+
+  // ---- 12a. site-wide regression guard: the unsupported seasonal threshold
+  // and the "ease off / brake hard" GOV.UK misattribution must never
+  // reappear anywhere on the site, not just on these two pages ----
+  console.log("\n== Site-wide: no unsupported GOV.UK tread-depth or blowout attribution ==");
+  {
+    const allSiteFiles = [];
+    (function walk(dir) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        if (entry.name === "assets") continue;
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) walk(full);
+        else if (entry.name === "index.html") allSiteFiles.push(full);
+      }
+    })(DIST_DIR);
+    let seasonalHits = 0;
+    let blowoutHits = 0;
+    for (const f of allSiteFiles) {
+      const text = stripTags(fs.readFileSync(f, "utf8"));
+      if (UNSUPPORTED_SEASONAL_THRESHOLD_PATTERN.test(text)) {
+        seasonalHits++;
+        console.log(`    unsupported seasonal threshold in: ${path.relative(DIST_DIR, f)}`);
+      }
+      if (/ease off the accelerator|brake hard|braking hard/i.test(text)) {
+        blowoutHits++;
+        console.log(`    unsupported blowout wording in: ${path.relative(DIST_DIR, f)}`);
+      }
+    }
+    if (seasonalHits === 0) ok();
+    else fail(`${seasonalHits} page(s) still attribute a "2mm summer / 3mm winter" threshold to GOV.UK`);
+    if (blowoutHits === 0) ok();
+    else fail(`${blowoutHits} page(s) still contain the unsupported "ease off the accelerator / brake hard" wording`);
   }
 
   // ---- 13. related pages remain differentiated (no duplicate substantive paragraphs) ----
