@@ -122,12 +122,12 @@ into the "content caveat" row as the consolidated survivor, per §5 Group 3:
 |---|---|---|
 | Keep at exact URL | 28 | Already live, unchanged |
 | 301 redirect (existing, correct) | 8 | Already in `infra/redirects.json` |
-| Exclude from migration | 7 | 4 self-excluded by the live site's own noindex+canonical metadata, 1 the live 404 page, 2 off-topic |
-| Recreate at exact URL (straightforward) | 30 | On-topic, no flags |
+| Exclude from migration | 9 | 4 self-excluded by the live site's own noindex+canonical metadata, 1 the live 404 page, 2 off-topic, +2 from Batch D3: `/spare-wheel-delete-.../` (stale/unverifiable data — **moved here from "straightforward," Phase 4B Batch D3**) and `/what-to-expect-from-a-same-day-mobile-car-repair-service/` (out-of-scope content, AA statistic unverified — **moved here from "Hold," Phase 4B Batch D3, superseding §6 Q7's original "hold"**); see §6c for both |
+| Recreate at exact URL (straightforward) | 29 | On-topic, no flags (−1: `/spare-wheel-delete-.../` moved to "Exclude," see above) |
 | Recreate at exact URL (with a content caveat) | 11 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2 (row 82 hill-jacking article — **implemented, Phase 4B Batch D1**; row 68 puncture-repairs article — **implemented, Phase 4B Batch D2**), tyre-lifespan survivor ×1 (`/tyre-lifespan/` — reversed from the guide variant, see the Q1 erratum), Michelin rewrite ×1 (**implemented, Phase 4B Batch D2**), competitor names removed ×1 (locking-wheel-nut industry article — **implemented, Phase 4B Batch C**), why-professional consolidated rewrite ×1 (**implemented, Phase 4B Batch C**), year reference update ×1 (myths article — **implemented, Phase 4B Batch D2**), tools-pair consolidated survivor ×1, Pirelli PNCS rewrite ×1 (**implemented, Phase 4B Batch D2 — moved here from "Hold," see the Q6 erratum**) *(11 caveated rows; see row-by-row detail in §3/§5/§6)* |
 | Retain/keep at own URL, reversing original recommendation | 2 | `/24-7-mobile-tyre-replacement/` (§6 Q4), `/mobile-trailer-and-caravan-tyre-fitting/` (§6 Q2) |
 | One-to-one 301 redirect (weaker of a cannibalising pair) | 3 | `/tyre-lifespan-mobile-tyre-repair-guide/` (**implemented, Phase 4B Batch C — reversed from the original Q1 reading**), `/why-professional-...-information-to-all-drivers/` (**implemented, Phase 4B Batch C**), `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` (§5 Group 3) |
-| Hold — not implemented pending fact verification | 1 | Cited AA statistic (§6 Q7) — Pirelli PNCS claims (§6 Q6) hold lifted, see above |
+| Hold — not implemented pending fact verification | 0 | Pirelli PNCS claims (§6 Q6) hold lifted in Batch D2; the AA-statistic post (§6 Q7) moved to "Exclude" in Batch D3 rather than remaining held indefinitely — see §6c |
 | **Total** | **90** | |
 
 Two confirmed live-site bugs are folded into the "content caveat" row
@@ -206,7 +206,7 @@ it's the destination page).
 | 46 | `/emergency-tyre-fitter-edinburgh-falkirk/` | post | Emergency Tyre Fitter — Edinburgh & Falkirk | No | 301 redirect (existing, correct) | `/emergency-tyre-change/` | Low |
 | 47 | `/emergency-tyre-replacement/` | post | Emergency Tyre Replacement vs Garage Tyre Fitting: Pros & Cons | Yes | Keep at exact URL | `/emergency-tyre-replacement/` | Low |
 | 48 | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | post | Emergency Wheel Nut Removal: Lost the Key | No | Recreate at exact URL | `/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/` | Low |
-| 49 | `/how-much-does-mobile-tyre-fitting-cost/` | post | How Much Does Mobile Tyre Fitting Cost? | No | Recreate at exact URL | `/how-much-does-mobile-tyre-fitting-cost/` | Low |
+| 49 | `/how-much-does-mobile-tyre-fitting-cost/` | post | How Much Does Mobile Tyre Fitting Cost? | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: every old £ figure and town-by-town price table removed entirely — no SFR price published anywhere on the site without owner confirmation. Rewritten as a cost-*factors* guide (tyre size/spec, brand/category, vehicle type, number of tyres, location/travel, scheduled vs urgent, repair vs replacement, locking-wheel-nut complications, any additional confirmed work), directing the reader to contact SFR Motors Ltd for a current quotation. No structured pricing/Offer schema added | `/how-much-does-mobile-tyre-fitting-cost/` | Resolved |
 | 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | How Quality Tyres Improve Safety and Performance | No | Recreate at exact URL | `/how-quality-tyres-improve-safety-and-driving-performance/` | Low |
 | 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | How to Avoid Common Tyre Problems | No | Recreate at exact URL | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | Low |
 | 52 | `/how-to-change-a-tyre/` | post | How to Change a Tyre: West Lothian Guide | Yes | Keep at exact URL | `/how-to-change-a-tyre/` | Low |
@@ -226,7 +226,7 @@ it's the destination page).
 | 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Winter Tyre Prep — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: removes the unverified "283 Google reviews" claim and the step-by-step DIY spare-wheel-changing instructions entirely; no recommendation to change a wheel on a motorway/hard shoulder/slope; AA/RAC/Green Flag mentioned only as breakdown-cover options, explicitly not as endorsements; kept distinct from the Livingston service page and the tyre-problems post (seasonal preparation angle) | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | Resolved |
 | 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Professional Mobile Tyre Services — Linlithgow | No | Recreate at exact URL | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | Low |
 | 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Puncture Repairs: What's Actually Being Done | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: strips the leading content-brief/target-keyword line; the £15-20/£25-35 price figures are removed (no SFR price published without owner confirmation — the article instead explains that cost depends on the type of repair and directs the reader to ask for a quote); does not cite BS AU 159 by name or quote its precise provisions, since these aren't verified against an authoritative accessible source; explains at a high level why the tyre has to come off the wheel for inspection, with no step-by-step DIY repair procedure; states plainly that not every puncture is safely repairable | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | Resolved |
-| 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | Recreate at exact URL | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | Low |
+| 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | **EXCLUDED — not implemented (Phase 4B Batch D3).** The manufacturer-equipment table, RAC call-out projections and Hyundai TPMS quotation are all sourced to "Fleet News 2015" or otherwise stale/unverifiable; none can be safely republished as current fact. See §6c for the full reasoning, including the phone-number finding. **Requires a Google Search Console check before launch** (existing traffic/backlinks) to decide between: recreate with current verified data, add a relevant redirect, or leave/return a 410 | — | **Excluded, pending GSC check** |
 | 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | No | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
 | 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Best Tyres for Your Ford on Edinburgh's Roads | Yes | Keep at exact URL | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | Low |
 | 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; emergency wording corrected in the Batch D1 factual-correction pass).** Original rewrite: emergency-response wording now matches only what GOV.UK's Highway Code Annex 6 actually says (try to keep control, grip the steering wheel firmly, allow the vehicle to roll to a stop, stop as soon as it's safe, change the tyre only without risk to yourself or others — otherwise call for breakdown assistance); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
@@ -237,16 +237,16 @@ it's the destination page).
 | 77 | `/tyre-services-west-lothian/` | post | Mobile Tyre Services West Lothian — Slow Leaks | No | Recreate at exact URL | `/tyre-services-west-lothian/` | Low |
 | 78 | `/tyre-size-calculator/` | post | Tyre Size Calculator (tool) | No | Recreate at exact URL | `/tyre-size-calculator/` | Low |
 | 79 | `/tyres-bathgate-guide/` | post | SFR Mobile Tyres Bathgate Guide | Yes | Keep at exact URL | `/tyres-bathgate-guide/` | Low |
-| 80 | `/tyres-bathgate-technical-breakdown/` | post | Tyres Bathgate: Decoding Sidewall Markings | No | Recreate at exact URL | `/tyres-bathgate-technical-breakdown/` | Low |
+| 80 | `/tyres-bathgate-technical-breakdown/` | post | Tyres Bathgate: Decoding Sidewall Markings | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: removes the "62% of drivers"/"41% of failures" figures, the self-serving "70% downtime reduction" SFR claim, and the unverified TyreSafe/Michelin/Continental/AutoExpress/Tyre Industry Federation statistics. Explains sidewall size markings, load/speed ratings and DOT date codes at a high level, without vehicle-specific recommendations and without implying the date code alone proves a tyre safe or unsafe. Retains only the verified UK tread-depth minimum and penalty figures (GOV.UK). Kept distinct from `/mobile-tyre-fitting-bathgate/`, `/best-mobile-tyre-fitters-bathgate/` and `/tyres-bathgate-guide/` | `/tyres-bathgate-technical-breakdown/` | Resolved |
 | 81 | `/what-is-mobile-tyre-fitting/` | post | What is Mobile Tyre Fitting? | No | Recreate at exact URL | `/what-is-mobile-tyre-fitting/` | Low |
 | 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | What Fitters Check Before Changing a Tyre on a Hill | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the leading content-brief/target-keyword line; gives no instructions to lift or work on a vehicle on a slope — instead explains that a technician assesses whether the location is safe, recommends moving to level ground only when it can be done safely, and otherwise advises professional/recovery assistance | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | Resolved |
-| 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Same-Day Mobile Car Repair | No | **HOLD — do not recreate until the cited "over 40% of breakdowns" AA statistic is verified against a real, current AA source (owner-confirmed, §6 Q7)** | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | **Blocked pending verification** |
+| 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Same-Day Mobile Car Repair | No | **EXCLUDED — not implemented (Phase 4B Batch D3), superseding the original §6 Q7 "hold."** The cited "over 40% of breakdowns" AA statistic remains unverified and must not be reused. Beyond the statistic, the article's entire premise — batteries, brakes, oil changes, alternators, starters, diagnostics — falls outside SFR's verified tyre-only service scope (see §3 rows for the site's actual services), so recreating it would misrepresent what SFR offers even with the statistic fixed. See §6c for the full reasoning. **Requires a Google Search Console check before launch** to decide between leaving it as a normal 404 or returning a 410; explicitly **do not** redirect it to the homepage or to any tyre-service page, since none matches its actual (unrelated) content | — | **Excluded, pending GSC check** |
 | 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | No | **Recreate at exact URL — RETAINED as the consolidated survivor of a cannibalising pair (§5 Group 3 — Phase 4B Batch B2 correction); the shorter `/behind-the-scenes-.../` (row 42) redirects into it** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
-| 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Best Mobile Tyre Fitting Service Provider in the UK | No | Recreate at exact URL | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | Low |
+| 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Best Mobile Tyre Fitting Service Provider in the UK | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3), reframed as "What To Look For When Choosing A Mobile Tyre Fitting Service."** Removes the false nationwide-coverage claim, "UK's best/most trusted/most reliable," thousands-of-customers and guaranteed-5-star claims, the wrong company name ("SFR Mobile Tyres Ltd" corrected to SFR Motors Ltd throughout), the fabricated comparison table, and the unconfirmed nitrogen-inflation/22-inch-wheel/run-flat capability claims. Rewritten as a neutral checklist for assessing any provider (coverage clarity, transparent quotation, safe working practices, genuine independently-hosted reviews, contact details, equipment/assessment, honest availability); states only SFR's actual established coverage area (Bathgate, Edinburgh, West Lothian, Falkirk) rather than turning the page into a second "why choose SFR" sales piece | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | Resolved |
 | 86 | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | post | Why Professional Mobile Tyre Services Are Essential | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch C). Consolidated, original rewrite of the cannibalising pair (owner-confirmed, §6 Q9): the exported original's garbled "Tyrerui issues" sentence and its incorrect "SFR (Fleet Support)" expansion are both gone — the site's real motto, Secure. Fast. Reliable., is used throughout — and the article is deliberately differentiated from the core `/mobile-tyre-fitting/` service page (safety/quality reasoning, not the convenience/logistics pitch)** | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
 | 87 | `/why-professional-mobile-tyre-services-are-information-to-all-drivers/` | post | Why Professional Mobile Tyre Services Are Information to All | No | **One-to-one 301 redirect — weaker of the pair (owner-confirmed, §6 Q9) — IMPLEMENTED (Phase 4B Batch C)** | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
 | 88 | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | post | Why Tyre Safety Is More Important Than Drivers Realize | No | Recreate at exact URL | `/why-tyre-safety-is-more-important-than-most-drivers-realize/` | Low |
-| 89 | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | post | Why Tyres Fail — Falkirk | No | Recreate at exact URL | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | Low |
+| 89 | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | post | Why Tyres Fail — Falkirk | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D3).** Original rewrite: removes all three unverified customer case studies from the exported original (the Falkirk business owner, the Grangemouth parent, the fleet-maintenance customer) without inventing replacement stories, and removes every unverified percentage, survey, accident figure and downtime/savings claim. Rewritten as a general educational article on common failure causes (pressure, overloading, impact damage, tread/sidewall damage, alignment/suspension wear, age/condition). Kept distinct from the transactional `/mobile-tyre-fitting-falkirk/` page, linked naturally both ways | `/why-tyres-fail-mobile-tyre-fitter-falkirk/` | Resolved |
 | 90 | `/your-guide-to-safe-tyre-services-in-harthill/` | post | Guide to Safe Tyre Services in Harthill | No | Recreate at exact URL | `/your-guide-to-safe-tyre-services-in-harthill/` | Low |
 
 ## 4. Missing-URL List (53)
@@ -663,6 +663,72 @@ explains the same underlying concepts (why the tyre comes off the wheel,
 why some damage isn't repairable) in plain terms instead. If BS AU 159's
 exact scope is verified in a future pass, both articles could cite it
 directly.
+
+## 6c. Phase 4B Batch D3 — Implementation Notes, Exclusions and Verified Sources
+
+Four further D3 posts were implemented at their exact WordPress URLs:
+`/tyres-bathgate-technical-breakdown/`, `/why-tyres-fail-mobile-tyre-fitter-falkirk/`,
+`/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/`
+(retitled, same URL), and `/how-much-does-mobile-tyre-fitting-cost/`. Two
+further D-planning candidates were **excluded** rather than implemented —
+see below. See §3 rows 49, 69, 80, 83, 85 and 89 for the row-level notes.
+E and F remain unimplemented.
+
+**Sources used:**
+
+- **GOV.UK — The Highway Code, Annex 6** (re-confirmed, same source used
+  in the Batch D1 correction and Batch D2): the 1.6mm legal minimum tread
+  depth and the £2,500 fine / 3 penalty points per illegal tyre. Used in
+  `/tyres-bathgate-technical-breakdown/` — no other figure from the
+  exported original (the 62%/41%/70% statistics, or the TyreSafe/Michelin/
+  Continental/AutoExpress/Tyre Industry Federation citations) could be
+  verified in this session and none are used.
+- No external source was needed for the Falkirk or "best provider"
+  rewrites — both are general, verifiable-from-first-principles safety/
+  consumer-guidance content once the unverified statistics, fabricated
+  case studies, and false coverage/ranking claims are removed.
+- The cost-factors article deliberately cites no external source and no
+  figure, consistent with the instruction not to invent or publish SFR
+  pricing without owner confirmation.
+
+**Exclusions (not implemented) and exact reasons:**
+
+- **`/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/`**
+  — excluded. Its manufacturer-equipment table and RAC no-spare-wheel
+  call-out projections are sourced to "Fleet News 2015," over a decade
+  stale; its purported Hyundai TPMS-sealant quotation could not be
+  verified against genuine Hyundai owner documentation in this session.
+  Neither can be safely republished as current fact, and no replacement
+  data source was available to verify them against. On the phone-number
+  question flagged in the Batch D planning review: the number in the
+  exported text, decoded from its international-dialling format, is
+  numerically identical to SFR's real WhatsApp number as it appears in
+  `scripts/lib/page-shell.js` (`wa.me/447448427154`) — so the exclusion
+  here is based on the stale/unverifiable data, **not** on the phone
+  number being wrong. **Before launch, this URL should be checked in
+  Google Search Console** for existing traffic or backlinks, to decide
+  between recreating it with current verified data, adding a relevant
+  redirect, or returning a 410.
+- **`/what-to-expect-from-a-same-day-mobile-car-repair-service/`**
+  — excluded, superseding the original §6 Q7 "hold." The cited "over 40%
+  of vehicle breakdowns... happen during commutes or short city drives"
+  AA statistic remains unverified (searched during the Batch D planning
+  review; not found on a current AA source) and must not be reused if
+  this URL is revisited. Independently of the statistic, the article
+  describes battery replacement, brake work, oil changes, alternator/
+  starter repairs and general diagnostics — services outside SFR's
+  verified tyre-only scope (mobile tyre fitting, replacement, puncture
+  repair, locking wheel nut removal, trade/fleet and caravan/trailer
+  tyres — see the site's own footer service list). Recreating it, even
+  with the statistic fixed, would misrepresent what SFR actually offers.
+  **Before launch, this URL should be checked in Google Search Console**
+  for existing traffic or backlinks, to decide between a plain 404 and a
+  410 — it should **not** be redirected to the homepage or to any
+  tyre-service page, since none of them match its actual content.
+
+Neither exclusion added a page, a redirect, or a sitemap entry — both
+URLs currently 404 on the built site, which the Batch D3 regression suite
+verifies explicitly.
 
 ## 7. Totals
 

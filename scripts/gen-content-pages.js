@@ -228,6 +228,10 @@ const OTHER_ARTICLES = [
   { slug: "michelin-radial-tire-history-innovation", title: "Michelin's Radial Tyre: A Brief History", excerpt: "How Michelin's 1946 radial tyre patent changed tyre construction." },
   { slug: "pirelli-silent-tyres-uk", title: "Pirelli PNCS: What The Noise-Reduction Technology Actually Does", excerpt: "What Pirelli's PNCS technology is, and the noise reduction Pirelli reports." },
   { slug: "tyre-care-and-flat-tyre-help-in-linlithgow", title: "Tyre Care And Flat Tyre Help In Linlithgow", excerpt: "Looking after your tyres on Linlithgow's roads, and what to do safely if you get a flat." },
+  { slug: "tyres-bathgate-technical-breakdown", title: "Reading Your Tyre's Sidewall: A Bathgate Guide", excerpt: "How to read a tyre size marking, what load and speed ratings mean, and the checks worth doing." },
+  { slug: "why-tyres-fail-mobile-tyre-fitter-falkirk", title: "Why Tyres Fail: Common Causes Explained", excerpt: "The most common reasons tyres fail, and how to spot the early signs." },
+  { slug: "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk", title: "What To Look For When Choosing A Mobile Tyre Fitting Service", excerpt: "A practical checklist for assessing any mobile tyre fitting provider." },
+  { slug: "how-much-does-mobile-tyre-fitting-cost", title: "What Affects The Cost Of Mobile Tyre Fitting", excerpt: "What actually determines the cost of a mobile tyre fitting callout, explained without invented prices." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

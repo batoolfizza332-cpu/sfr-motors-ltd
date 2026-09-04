@@ -241,7 +241,7 @@ const pages = [
       <p>Some services list huge coverage areas but take much longer to actually reach the edges of them. A fitter based locally to Bathgate, like we are, tends to have more realistic arrival times for local jobs.</p>
 
       <h2>Get a quote</h2>
-      <p>See our <a href="/mobile-tyre-fitting-bathgate/">Bathgate coverage page</a> for what we offer, or get in touch for a price.</p>`,
+      <p>See our <a href="/mobile-tyre-fitting-bathgate/">Bathgate coverage page</a> for what we offer, or get in touch for a price. For the same checklist applied more broadly, see our guide on <a href="/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/">what to look for when choosing a mobile tyre fitting service</a>.</p>`,
   },
   {
     slug: "tyre-fitting-edinburgh-expert-technical-aspects-you-must-know",
@@ -1152,6 +1152,132 @@ const pages = [
 
       <h2>Getting mobile help in Linlithgow</h2>
       <p>See our <a href="/mobile-tyre-fitting-linlithgow/">Linlithgow coverage page</a> for what we offer and how to book, or get in touch with your location and we'll confirm we can reach you and give you an honest estimate of timing.</p>`,
+  },
+  // ---------------------------------------------------------------- Phase 4B Batch D3
+  {
+    slug: "tyres-bathgate-technical-breakdown",
+    title: "Reading Your Tyre's Sidewall: A Bathgate Guide | SFR Motors Ltd",
+    metaDescription: "How to read a tyre size marking, what load and speed ratings mean, and the checks worth doing before you call a fitter.",
+    breadcrumbLabel: "Blog",
+    headline: "Reading Your Tyre's Sidewall: A Bathgate Guide",
+    bodyHtml: `      <p>The numbers and letters moulded into a tyre's sidewall look like a code, but they're worth being able to read at a basic level &mdash; here's what they mean and what to check before calling a fitter.</p>
+
+      <h2>Reading the size marking</h2>
+      <p>A marking like 205/55 R16 91V breaks down into a few parts: the first number is the tyre's width in millimetres, the second is the sidewall height as a percentage of that width, "R" followed by a number gives the radial construction and rim diameter in inches, and the final code is the load and speed rating together. Your vehicle's handbook or the sticker inside the driver's door will confirm the correct specification &mdash; that's the reference to use, not a guess.</p>
+
+      <h2>What load and speed ratings mean</h2>
+      <p>The load index refers to the maximum weight a single tyre is rated to carry, and the speed rating indicates the maximum speed it's designed to sustain. Both matter for safety, which is why a tyre should match &mdash; not fall below &mdash; your vehicle manufacturer's specified rating. We wouldn't recommend a specific rating without seeing your vehicle's own requirements first.</p>
+
+      <h2>Understanding the date code</h2>
+      <p>Tyres also carry a DOT code ending in four digits &mdash; the first two give the week of manufacture, the last two the year. This tells you how old a tyre is, which is useful context, but age alone doesn't tell you whether a specific tyre is safe or unsafe. A well-stored, lightly-used older tyre can be in better condition than a younger one that's seen harder use &mdash; the date code is one piece of information, not a verdict on its own.</p>
+
+      <h2>Checks worth doing yourself</h2>
+      <p>Tread depth, visible cracking or bulging, and correct pressure are all worth checking regularly. By law, tyres need at least 1.6mm of tread across the central three-quarters of the tyre, around its entire circumference &mdash; driving below that risks a fine of up to £2,500 and 3 penalty points per illegal tyre, under the Highway Code's vehicle safety requirements. That's a legal minimum, not a target to wait for.</p>
+
+      <h2>Why the handbook and a professional inspection still matter</h2>
+      <p>Sidewall markings and date codes give you useful background, but they don't replace an actual inspection. Your vehicle handbook has the specification that applies to your car, and a physical check is the only reliable way to know whether a specific tyre needs attention. If you're not sure what you're looking at, we're happy to take a look on-site.</p>
+
+      <h2>Getting it looked at in Bathgate</h2>
+      <p>See our <a href="/mobile-tyre-fitting-bathgate/">Bathgate coverage page</a> to arrange a visit, or our guide on <a href="/best-mobile-tyre-fitters-bathgate/">what to check when picking a mobile tyre fitter in Bathgate</a> if you're comparing options.</p>`,
+  },
+  {
+    slug: "why-tyres-fail-mobile-tyre-fitter-falkirk",
+    title: "Why Tyres Fail: Common Causes Explained | SFR Motors Ltd",
+    metaDescription: "The most common reasons tyres fail — pressure, load, impact damage, alignment and age — and how to spot the early signs.",
+    breadcrumbLabel: "Blog",
+    headline: "Why Tyres Fail: Common Causes Explained",
+    bodyHtml: `      <p>Tyre failure rarely comes from nowhere &mdash; it's usually the result of one or more ordinary, avoidable factors building up over time. Here's what actually causes it, and what to watch for.</p>
+
+      <h2>Incorrect pressure</h2>
+      <p>Under-inflation is one of the most common causes of tyre failure. Running low on air lets a tyre flex more than it's built for, generating heat that weakens its structure over time. Over-inflation causes its own problems, wearing the centre of the tread faster than the edges. A monthly check against your vehicle's recommended pressure catches most of this early.</p>
+
+      <h2>Overloading</h2>
+      <p>Every tyre is rated to carry a maximum load, and consistently exceeding that &mdash; a heavily loaded car or van, for example &mdash; adds strain that shows up as faster wear, overheating and a higher risk of failure. Your vehicle's manual has the load limits that apply to your specific vehicle.</p>
+
+      <h2>Impact damage</h2>
+      <p>Potholes, kerbs and general road debris can damage a tyre's structure in ways that aren't always obvious straight away. A sharp impact can weaken the sidewall or belt even when the tyre still looks fine afterwards, which is why it's worth having a tyre checked after a hard hit rather than assuming it's fine.</p>
+
+      <h2>Tread and sidewall damage</h2>
+      <p>Cuts, bulges and cracking are all warning signs. Sidewall damage in particular isn't repairable &mdash; it needs a replacement rather than a patch, since the sidewall flexes constantly and any weakness there is a genuine safety risk.</p>
+
+      <h2>Alignment and suspension issues</h2>
+      <p>Poor wheel alignment or worn suspension components cause uneven wear, often concentrated on one edge of the tyre. Left unchecked, this shortens a tyre's working life considerably and can affect handling and braking too.</p>
+
+      <h2>Age and general condition</h2>
+      <p>Rubber changes over time regardless of mileage, so an older tyre can be due attention even with plenty of visible tread left. Cracking, perishing or a change in the rubber's texture are worth checking for alongside tread depth.</p>
+
+      <h2>Getting it checked in Falkirk</h2>
+      <p>If you're noticing any of the above, see our <a href="/mobile-tyre-fitting-falkirk/">Falkirk coverage page</a> to arrange an inspection, repair or replacement wherever your vehicle is.</p>`,
+  },
+  {
+    slug: "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk",
+    title: "What To Look For When Choosing A Mobile Tyre Fitting Service | SFR Motors Ltd",
+    metaDescription: "A practical checklist for assessing any mobile tyre fitting provider — coverage, pricing, safety, reviews and more.",
+    breadcrumbLabel: "Blog",
+    headline: "What To Look For When Choosing A Mobile Tyre Fitting Service",
+    bodyHtml: `      <p>Mobile tyre fitting has grown a lot as an industry, and not every provider operates to the same standard. Here's what's genuinely worth checking before you book, whoever you're considering.</p>
+
+      <h2>Clear service-area information</h2>
+      <p>A trustworthy provider will tell you plainly whether they cover your location, rather than listing a vague or unrealistically wide area. SFR Motors Ltd operates across Bathgate, Edinburgh, West Lothian and Falkirk &mdash; if you're outside that area, we'll say so rather than promise a visit we can't realistically deliver.</p>
+
+      <h2>Transparent quotation and tyre specification</h2>
+      <p>You should be able to get a price and a confirmed tyre specification before a fitter sets off, based on your vehicle's registration or the size on your tyre's sidewall &mdash; not be told a different figure once they've arrived.</p>
+
+      <h2>Safe working practices</h2>
+      <p>A proper fitter assesses whether a location is actually safe to work in before starting &mdash; the angle of the ground, the surface, and whether it's safe to be at the roadside at all. A provider who'll work anywhere regardless of the conditions is a red flag, not a selling point.</p>
+
+      <h2>Genuine, independently hosted reviews</h2>
+      <p>Reviews tied to a real, independently hosted business profile (such as Google) are far more meaningful than star ratings you can't trace back to anything, or testimonials only ever shown on the provider's own site.</p>
+
+      <h2>Clear contact details</h2>
+      <p>A real phone number, a real business address, and a straightforward way to get in touch all matter &mdash; it should be easy to reach a provider before you book, not just after something's gone wrong.</p>
+
+      <h2>Suitable equipment and a proper assessment</h2>
+      <p>Fitting, balancing and puncture assessment all need proper equipment, not an improvised setup. A good provider will assess a tyre honestly &mdash; telling you when a repair is possible rather than defaulting to a replacement &mdash; and will be upfront if a job needs specialist tools they carry, or don't.</p>
+
+      <h2>Honest availability information</h2>
+      <p>A provider should give you a realistic sense of timing based on your actual location and how busy they are, rather than a blanket promise that doesn't hold up in practice.</p>
+
+      <h2>Getting in touch</h2>
+      <p>See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what we offer, or get in touch with your location and vehicle details and we'll confirm honestly whether we can help.</p>`,
+  },
+  {
+    slug: "how-much-does-mobile-tyre-fitting-cost",
+    title: "What Affects The Cost Of Mobile Tyre Fitting | SFR Motors Ltd",
+    metaDescription: "What actually determines the cost of a mobile tyre fitting callout — tyre type, vehicle, location and more — explained without invented prices.",
+    breadcrumbLabel: "Blog",
+    headline: "What Affects The Cost Of Mobile Tyre Fitting",
+    bodyHtml: `      <p>"How much will it cost?" is one of the first questions most people ask about mobile tyre fitting, and the honest answer is that it depends on several factors specific to the job. Here's what actually goes into a quote.</p>
+
+      <h2>Tyre size and specification</h2>
+      <p>Larger tyres, less common sizes, and higher load or speed ratings generally cost more than standard car sizes, simply because of what's involved in sourcing and fitting them.</p>
+
+      <h2>Tyre brand or product category</h2>
+      <p>Premium, mid-range and budget tyres sit at different price points, and which category suits you depends on your vehicle, driving and budget &mdash; not a single right answer for everyone.</p>
+
+      <h2>Vehicle type</h2>
+      <p>Cars, vans, 4x4s and light commercials often need different tyre sizes and sometimes different equipment to fit them, which can affect the price.</p>
+
+      <h2>Number of tyres</h2>
+      <p>Whether you need a single tyre replaced or a full set fitted changes the overall cost, though not always in a simple multiple &mdash; ask for a quote covering exactly what you need.</p>
+
+      <h2>Location and travel</h2>
+      <p>Where you are affects how a callout is priced, since it factors in the technician's time and travel to reach you.</p>
+
+      <h2>Scheduled versus urgent attendance</h2>
+      <p>A booked appointment at a convenient time is generally priced differently from an urgent, out-of-hours emergency callout.</p>
+
+      <h2>Puncture assessment versus replacement</h2>
+      <p>A repair and a replacement involve different amounts of work, and which one applies to your tyre depends on an on-site assessment &mdash; we'll always tell you honestly which is needed before starting.</p>
+
+      <h2>Locking wheel nut complications</h2>
+      <p>If a locking wheel nut key is lost, damaged or the nut is seized, that's additional work beyond a standard fitting, which is reflected in the price.</p>
+
+      <h2>Any additional work</h2>
+      <p>Anything beyond the original job &mdash; found during the visit &mdash; would always be confirmed with you before we go ahead, not added afterwards as a surprise.</p>
+
+      <h2>Getting an accurate quote</h2>
+      <p>Because pricing depends on all of the above, the only accurate way to get a figure is to contact SFR Motors Ltd directly with your vehicle, tyre details and location. Call <a href="tel:01312020289">0131 202 0289</a>, message us on <a href="https://wa.me/447448427154" target="_blank" rel="noopener">WhatsApp</a>, or use the <a href="/contact-us/#quote-form">quote form</a> and we'll confirm a price before any work starts.</p>`,
   },
 ];
 
