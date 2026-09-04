@@ -35,7 +35,7 @@
     },
     {
       "source": "/emergency-tyre-fitter-edinburgh-falkirk/",
-      "destination": "/emergency-tyre-change/",
+      "destination": "/24-7-mobile-tyre-replacement/",
       "statusCode": 301
     },
     {
@@ -76,6 +76,11 @@
     {
       "source": "/caravan-trailer-tyre-fitting/",
       "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-change/",
+      "destination": "/24-7-mobile-tyre-replacement/",
       "statusCode": 301
     }
   ]

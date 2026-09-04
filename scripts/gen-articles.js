@@ -133,7 +133,7 @@ const pages = [
       <p>Tell us what's happened when you get in touch. If it sounds like something beyond a tyre issue, we'll say so honestly rather than attending a job we can't actually resolve.</p>
 
       <h2>24/7 either way</h2>
-      <p>For genuine tyre emergencies, our <a href="/emergency-tyre-change/">24/7 emergency tyre change service</a> covers Bathgate, Edinburgh, West Lothian and the surrounding area.</p>`,
+      <p>For genuine tyre emergencies, our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement service</a> covers Bathgate, Edinburgh, West Lothian and the surrounding area.</p>`,
   },
   {
     slug: "mobile-tyre-repair-edinburgh-west-lothian",
@@ -297,7 +297,7 @@ const pages = [
       <p>A space-saver spare usually has a speed and distance limit — check your handbook, and get the original tyre repaired or replaced properly as soon as you reasonably can.</p>
 
       <h2>When to call a mobile fitter instead</h2>
-      <p>No spare, a locked wheel nut with no key, an unsafe location, or simply not wanting to do it yourself — any of these are good reasons to call us instead. See our <a href="/emergency-tyre-change/">emergency tyre change service</a> covering West Lothian 24/7.</p>`,
+      <p>No spare, a locked wheel nut with no key, an unsafe location, or simply not wanting to do it yourself — any of these are good reasons to call us instead. See our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement service</a> covering West Lothian 24/7.</p>`,
   },
   {
     slug: "locking-wheel-nut-removal",
@@ -343,7 +343,7 @@ const pages = [
       <p>Your location, vehicle registration or tyre size, and a description of what's happened all help us assess the job before anyone sets off, and confirm a price up front.</p>
 
       <h2>Emergency cover across our area</h2>
-      <p>Our <a href="/emergency-tyre-change/">emergency tyre change service</a> covers Bathgate, <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh</a>, <a href="/mobile-tyre-fitting-falkirk/">Falkirk</a> and the surrounding area, 24/7.</p>`,
+      <p>Our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement service</a> covers Bathgate, <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh</a>, <a href="/mobile-tyre-fitting-falkirk/">Falkirk</a> and the surrounding area, 24/7.</p>`,
   },
   {
     slug: "the-best-tyres-for-your-ford-on-edinburghs-roads",

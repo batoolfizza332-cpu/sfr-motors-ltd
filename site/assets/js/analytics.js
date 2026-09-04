@@ -43,7 +43,7 @@
     "mobile-tyre-fitting",
     "mobile-tyre-replacement",
     "mobile-tyre-puncture-repair",
-    "emergency-tyre-change",
+    "24-7-mobile-tyre-replacement",
     "mobile-locking-wheel-nut-removal",
     "trade-fleet-tyre-services",
     "van-tyre-replacement-services",

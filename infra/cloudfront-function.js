@@ -21,7 +21,7 @@ var REDIRECTS = {
   "/sfr-mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston/",
   "/best-mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston/",
   "/best-mobile-tyre-fitter-west-lothian/": "/mobile-tyre-fitting-west-lothian/",
-  "/emergency-tyre-fitter-edinburgh-falkirk/": "/emergency-tyre-change/",
+  "/emergency-tyre-fitter-edinburgh-falkirk/": "/24-7-mobile-tyre-replacement/",
   "/mobile-tyre-fitting-bathgate-questions/": "/mobile-tyre-fitting-bathgate/",
   "/tyre-replacement-call-out-bathgate/": "/mobile-tyre-fitting-bathgate/",
   "/24-7-mobile-tyre-replacement-in-edinburgh/": "/mobile-tyre-fitting-edinburgh/",
@@ -29,7 +29,8 @@ var REDIRECTS = {
   "/locking-wheel-nut-removal-bathgate/": "/mobile-locking-wheel-nut-removal/",
   "/best-emergency-locking-wheel-nut-removal-in-west-lothian/": "/locking-wheel-nut-removal/",
   "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/",
-  "/caravan-trailer-tyre-fitting/": "/mobile-trailer-and-caravan-tyre-fitting/"
+  "/caravan-trailer-tyre-fitting/": "/mobile-trailer-and-caravan-tyre-fitting/",
+  "/emergency-tyre-change/": "/24-7-mobile-tyre-replacement/"
 };
 
 function handler(event) {

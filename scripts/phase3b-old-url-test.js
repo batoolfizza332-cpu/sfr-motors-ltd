@@ -88,7 +88,7 @@ const OLD_URLS = [
   { url: "/mobile-tyre-fitting-west-lothian/", expect: "exact" },
   { url: "/mobile-tyre-fitting-falkirk/", expect: "exact" },
   { url: "/best-mobile-tyre-fitter-west-lothian/", expect: "redirect", to: "/mobile-tyre-fitting-west-lothian/" },
-  { url: "/emergency-tyre-fitter-edinburgh-falkirk/", expect: "redirect", to: "/emergency-tyre-change/" },
+  { url: "/emergency-tyre-fitter-edinburgh-falkirk/", expect: "redirect", to: "/24-7-mobile-tyre-replacement/" },
   // ---- Guides / listicles / FAQ content — recreated at exact slug ----
   { url: "/mobile-tyre-fitting-guide/", expect: "exact" },
   { url: "/tyres-bathgate-guide/", expect: "exact" },

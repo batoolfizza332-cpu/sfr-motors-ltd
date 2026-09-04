@@ -6,8 +6,12 @@
 //   Renamed (1): /caravan-trailer-tyre-fitting/ -> /mobile-trailer-and-caravan-tyre-fitting/
 //     (with a 301 redirect from the old new-site-only slug)
 //   New primary page (1): /24-7-mobile-tyre-replacement/ (retained per
-//     WORDPRESS_MIGRATION_AUDIT.md §6 Q4, consolidating content from the
-//     existing /emergency-tyre-change/, which itself is untouched)
+//     WORDPRESS_MIGRATION_AUDIT.md §6 Q4)
+//   Batch A correction: /emergency-tyre-change/ retired and 301-redirected
+//     to /24-7-mobile-tyre-replacement/ after confirming the two pages
+//     substantially overlapped in keyword targeting and search intent
+//     (cannibalisation risk) — its unique content (5-step emergency safety
+//     section, 2 FAQ entries) was merged into the primary page first.
 //
 // This is in addition to — not a replacement for — scripts/phase3-test.js,
 // scripts/phase3b-old-url-test.js and scripts/phase4-test.js, which already
@@ -87,7 +91,7 @@ const NEW_LOCATION_PAGES = [
 const RENAMED_URL = "/mobile-trailer-and-caravan-tyre-fitting/";
 const RETIRED_URL = "/caravan-trailer-tyre-fitting/";
 const NEW_247_URL = "/24-7-mobile-tyre-replacement/";
-const UNTOUCHED_URL = "/emergency-tyre-change/";
+const RETIRED_EMERGENCY_URL = "/emergency-tyre-change/";
 
 async function main() {
   await new Promise((resolve) => server.listen(PORT, resolve));
@@ -138,23 +142,36 @@ async function main() {
   if (!r2.body.includes("caravan-trailer-tyre-fitting/\"")) ok();
   else fail(`${RENAMED_URL}: still contains a self-reference to the old slug`);
 
-  // ---- 5. /24-7-mobile-tyre-replacement/ is the retained primary page, /emergency-tyre-change/ untouched ----
-  console.log("\n== 24/7 replacement page + untouched emergency-tyre-change ==");
-  const etc = await get(UNTOUCHED_URL);
-  if (etc.status === 200) ok();
-  else fail(`${UNTOUCHED_URL}: expected untouched page still to return 200`, `got ${etc.status}`);
-  if (!REDIRECTS.has(UNTOUCHED_URL)) ok();
-  else fail(`${UNTOUCHED_URL}: was redirected — Batch A did not require this per the approved plan`);
+  // ---- 5. /24-7-mobile-tyre-replacement/ is the sole primary page; /emergency-tyre-change/ is retired ----
+  console.log("\n== 24/7 replacement page (primary) + retired emergency-tyre-change ==");
   const new247 = await get(NEW_247_URL);
+  if (new247.status === 200) ok();
+  else fail(`${NEW_247_URL}: expected 200`, `got ${new247.status}`);
   const canon247 = new247.body.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
   if (canon247 === `https://sfrmotors.co.uk${NEW_247_URL}`) ok();
   else fail(`${NEW_247_URL}: canonical mismatch`, canon247);
-  // cross-links exist between the two pages (avoids orphaning, keeps them discoverable from each other)
-  if (etc.body.includes(NEW_247_URL)) ok();
-  else fail(`${UNTOUCHED_URL}: does not link to ${NEW_247_URL}`);
+  // the retired page's unique content (safety steps, FAQs) must have been merged in
+  if (new247.body.includes("Move To Safety") && new247.body.includes("Hazard Lights On") && new247.body.includes("Share Your Location") && new247.body.includes("Wait Safely")) ok();
+  else fail(`${NEW_247_URL}: expected the merged 5-step emergency safety section not found`);
+  const hasLocationFaq = new247.body.includes("What if I don&#39;t know my exact location?") || new247.body.includes("What if I don't know my exact location?");
+  if (new247.body.includes("What counts as a tyre emergency?") && hasLocationFaq) ok();
+  else fail(`${NEW_247_URL}: expected the merged FAQ entries from /emergency-tyre-change/ not found`);
+  // the retired URL must redirect in exactly one hop, straight to the primary page — not indexable, not a chain
+  const retired = await get(RETIRED_EMERGENCY_URL);
+  if (retired.status === 301 && retired.headers.location === NEW_247_URL) ok();
+  else fail(`${RETIRED_EMERGENCY_URL}: expected 301 -> ${NEW_247_URL}`, `got ${retired.status} ${retired.headers.location || ""}`);
+  if (!REDIRECTS.has(NEW_247_URL)) ok();
+  else fail(`${NEW_247_URL}: is itself a redirect source — this would create a chain from ${RETIRED_EMERGENCY_URL}`);
+  // the retired page must no longer exist as a built file (not indexable)
+  if (!fs.existsSync(path.join(DIST_DIR, "emergency-tyre-change", "index.html"))) ok();
+  else fail(`${RETIRED_EMERGENCY_URL}: page file still exists in dist/ — it should have been removed`);
+  // the redirect that used to chain through it now points straight to the primary page
+  const chainCheck = await get("/emergency-tyre-fitter-edinburgh-falkirk/");
+  if (chainCheck.status === 301 && chainCheck.headers.location === NEW_247_URL) ok();
+  else fail(`/emergency-tyre-fitter-edinburgh-falkirk/: expected direct 301 -> ${NEW_247_URL} (no chain through the retired page)`, `got ${chainCheck.status} ${chainCheck.headers.location || ""}`);
 
-  // ---- 6. nowhere on the site still links to the retired slug ----
-  console.log("\n== No remaining internal links to the retired slug ==");
+  // ---- 6. nowhere on the site still links to a retired slug ----
+  console.log("\n== No remaining internal links to a retired slug ==");
   const siteFiles = [];
   (function walk(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -164,16 +181,18 @@ async function main() {
       else if (entry.name === "index.html") siteFiles.push(full);
     }
   })(SITE_DIR);
-  let staleLinks = 0;
-  for (const f of siteFiles) {
-    const html = fs.readFileSync(f, "utf8");
-    if (html.includes(`href="${RETIRED_URL}"`) || html.includes(`"url": "https://sfrmotors.co.uk${RETIRED_URL}"`)) {
-      staleLinks++;
-      console.log(`    stale link in: ${path.relative(SITE_DIR, f)}`);
+  for (const retiredSlug of [RETIRED_URL, RETIRED_EMERGENCY_URL]) {
+    let staleLinks = 0;
+    for (const f of siteFiles) {
+      const html = fs.readFileSync(f, "utf8");
+      if (html.includes(`href="${retiredSlug}"`) || html.includes(`"url": "https://sfrmotors.co.uk${retiredSlug}"`) || html.includes(`"url": "${retiredSlug}"`)) {
+        staleLinks++;
+        console.log(`    stale link to ${retiredSlug} in: ${path.relative(SITE_DIR, f)}`);
+      }
     }
+    if (staleLinks === 0) ok();
+    else fail(`${staleLinks} file(s) still link to the retired slug ${retiredSlug}`);
   }
-  if (staleLinks === 0) ok();
-  else fail(`${staleLinks} file(s) still link to the retired slug`);
 
   // ---- 7. homepage area pins now point to the new dedicated pages, not the West Lothian hub ----
   console.log("\n== Homepage area pins updated ==");
@@ -183,15 +202,17 @@ async function main() {
     else fail(`homepage: expected an area pin linking to ${p}`);
   }
 
-  // ---- 8. sitemap includes all 9 Batch A URLs (7 new locations + renamed + new 24/7 page), and NOT the retired slug ----
+  // ---- 8. sitemap includes all 9 Batch A URLs (7 new locations + renamed + new 24/7 page), and NOT any retired slug ----
   console.log("\n== Sitemap ==");
   const sitemap = fs.readFileSync(path.join(DIST_DIR, "sitemap.xml"), "utf8");
   for (const p of [...NEW_LOCATION_PAGES, RENAMED_URL, NEW_247_URL]) {
     if (sitemap.includes(`https://sfrmotors.co.uk${p}`)) ok();
     else fail(`sitemap.xml: missing ${p}`);
   }
-  if (!sitemap.includes(`https://sfrmotors.co.uk${RETIRED_URL}`)) ok();
-  else fail(`sitemap.xml: still contains the retired ${RETIRED_URL}`);
+  for (const retiredSlug of [RETIRED_URL, RETIRED_EMERGENCY_URL]) {
+    if (!sitemap.includes(`https://sfrmotors.co.uk${retiredSlug}`)) ok();
+    else fail(`sitemap.xml: still contains the retired ${retiredSlug}`);
+  }
 
   server.close();
   console.log(`\n${"=".repeat(50)}`);
