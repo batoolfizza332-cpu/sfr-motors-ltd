@@ -14,9 +14,24 @@
 
 const fs = require("fs");
 const path = require("path");
+const { execFileSync } = require("child_process");
 
-const SITE_DIR = path.join(__dirname, "..", "site");
-const TODAY = "2026-09-03";
+const ROOT = path.join(__dirname, "..");
+const SITE_DIR = path.join(ROOT, "site");
+
+// Real, defensible lastmod: each page's own last-commit date from git
+// history, not a fabricated/hand-set constant that goes stale the moment
+// this script isn't re-run on the day it claims. Falls back to today only
+// for a file with no git history yet (e.g. staged but uncommitted).
+function lastCommitDate(file) {
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%cs", "--", file], { cwd: ROOT, encoding: "utf8" }).trim();
+    if (out) return out;
+  } catch (e) {
+    // fall through
+  }
+  return new Date().toISOString().slice(0, 10);
+}
 
 // priority/changefreq by first path segment — mirrors the original
 // hand-written sitemap's weighting (home highest, services/locations
@@ -68,7 +83,8 @@ function main() {
     const loc = canonicalMatch[1];
     const slug = loc.replace(/^https:\/\/sfrmotors\.co\.uk\//, "").replace(/\/$/, "");
     const { priority, changefreq } = weightFor(slug);
-    entries.push({ loc, priority, changefreq });
+    const lastmod = lastCommitDate(file);
+    entries.push({ loc, priority, changefreq, lastmod });
   }
 
   const xml =
@@ -77,7 +93,7 @@ function main() {
     entries
       .map(
         (e) =>
-          `  <url>\n    <loc>${e.loc}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`
+          `  <url>\n    <loc>${e.loc}</loc>\n    <lastmod>${e.lastmod}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`
       )
       .join("\n") +
     `\n</urlset>\n`;

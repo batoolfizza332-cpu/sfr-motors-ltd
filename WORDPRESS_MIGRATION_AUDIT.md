@@ -978,6 +978,79 @@ that may hold real backlinks or rankings needs traffic/backlink evidence
 before deciding between recreation, a redirect, or a 410 — the decision
 this batch's rules explicitly withhold until that evidence exists.
 
+## 6e. Phase 4B Batch F — Pending GSC Decisions: Data Requirements and Decision Rule
+
+No authenticated Google Search Console access, and no other reliable
+traffic/backlink evidence source, is available in this session. Per the
+Batch F instruction, both pending URLs below remain explicitly marked as
+launch decisions awaiting owner/GSC evidence — neither has been guessed
+at, neither has been redirected to the homepage or to an unrelated page,
+and neither disposition has changed from §6c/§6d.
+
+**Pending URLs (2):**
+- `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/`
+- `/what-to-expect-from-a-same-day-mobile-car-repair-service/`
+
+**Exact GSC data required, per URL, before either decision can be made:**
+
+1. **Clicks and impressions** — Search Console → Performance → Pages,
+   filtered to the exact URL, over the last 16 months (the longest range
+   GSC retains) and separately over the last 3 months, so a stale-but-
+   once-popular URL can be told apart from one that is currently earning
+   traffic.
+2. **Indexed status** — Search Console → Pages (Indexing report): is the
+   URL currently indexed, "Discovered — not indexed," "Crawled — not
+   indexed," or excluded, and if excluded, the exact reason GSC gives.
+3. **Referring pages / backlinks** — Search Console → Links → Top linked
+   pages (filtered to the URL) for internal links, and Top linking sites
+   / external pages for external backlinks. A URL search engines can
+   still be pointed to from other sites is a different case from one
+   with nothing but its own old sitemap entry.
+4. **Recent date range** — all of the above must be pulled for a recent
+   window (last 3 months) as well as the maximum available window (16
+   months), since a URL that stopped earning clicks well before this
+   migration began carries a different risk profile than one that was
+   still active recently.
+
+**Recommended decision rule** (to apply once that evidence exists — not
+applied here):
+
+- **Recreate** the article (with its previously-identified factual
+  defects fixed — see §6c for the specific unverifiable claims to drop)
+  if GSC shows meaningful recent clicks/impressions **and** the topic can
+  be rewritten within SFR's actual verified scope (tyres/mobile fitting)
+  without repeating an unverifiable statistic or an out-of-scope service
+  claim. This applies most plausibly to the spare-wheel-delete URL,
+  whose core topic (why some new cars ship without a spare) is tyre-
+  adjacent; it does not apply to the same-day-car-repair URL, whose
+  content is intrinsically out-of-scope (non-tyre mechanical work) — see
+  below.
+- **301 redirect to a genuinely relevant existing page** only if GSC
+  shows real backlinks or residual traffic **and** a page already on the
+  new site substantially matches the original's topic and intent. Not
+  applicable to the same-day-car-repair URL under any current evidence,
+  since SFR has no non-tyre repair page for it to relevantly point to —
+  redirecting it to a tyre-only page would misrepresent what the
+  destination offers, which this batch's rules explicitly forbid.
+- **404 (current default)** if GSC shows negligible clicks/impressions,
+  no meaningful indexed status, and no material backlinks — i.e. the
+  evidence shows the URL was never a meaningful organic asset. This is
+  the current state for both URLs and remains correct until evidence
+  says otherwise.
+- **410 Gone** instead of a plain 404 only if GSC confirms the URL was
+  previously indexed with real traffic that has now clearly stopped
+  (a permanent-removal signal is more appropriate than a generic 404 for
+  a page search engines actively knew about) — this is a hosting-layer
+  change (an explicit 410 response) that has not been implemented on
+  either supported path in this batch, since it depends on which of
+  these evidence-based outcomes applies.
+
+Both URLs currently return a true 404 (verified by `scripts/phase3-test.js`
+and re-confirmed in Batch F's `scripts/batchF-redirect-verify.js`
+simulation), are absent from `site/sitemap.xml`, and carry no redirect
+entry in `infra/redirects.json` — the correct, safe default until the
+owner reviews the above evidence in Search Console.
+
 ## 7. Totals
 
 | Metric | Count |

@@ -98,12 +98,16 @@ function handler(event) {
 
   // Bare page path with no trailing slash and no file extension -> add
   // the slash (keeps trailing-slash behaviour identical to the Vercel
-  // path's "trailingSlash": true).
+  // path's "trailingSlash": true). If the slash-added form is itself a
+  // redirect source, send straight to its final destination instead —
+  // otherwise a no-slash request for a retired URL would take two hops
+  // (add slash, then redirect) rather than one.
   if (uri !== "/" && uri.slice(-1) !== "/" && uri.indexOf(".") === -1) {
+    var withSlash = uri + "/";
     return {
       statusCode: 301,
       statusDescription: "Moved Permanently",
-      headers: { location: { value: uri + "/" } },
+      headers: { location: { value: REDIRECTS[withSlash] || withSlash } },
     };
   }
 

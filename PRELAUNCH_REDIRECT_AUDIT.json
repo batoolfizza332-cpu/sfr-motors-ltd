@@ -1,0 +1,272 @@
+{
+ "redirects": [
+  {
+   "source": "/home-tyre-fitting/",
+   "destination": "/mobile-tyre-fitting/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/on-demand-mobile-tire-fitting/",
+   "destination": "/mobile-tyre-fitting/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/premium-vehicle-tyre-service/",
+   "destination": "/our-tyre-range/",
+   "hopStatus": 301,
+   "hopLocation": "/our-tyre-range/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/sfr-mobile-tyre-fitting-livingston/",
+   "destination": "/mobile-tyre-fitting-livingston/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-livingston/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/best-mobile-tyre-fitting-livingston/",
+   "destination": "/mobile-tyre-fitting-livingston/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-livingston/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/best-mobile-tyre-fitter-west-lothian/",
+   "destination": "/mobile-tyre-fitting-west-lothian/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-west-lothian/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/emergency-tyre-fitter-edinburgh-falkirk/",
+   "destination": "/24-7-mobile-tyre-replacement/",
+   "hopStatus": 301,
+   "hopLocation": "/24-7-mobile-tyre-replacement/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/mobile-tyre-fitting-bathgate-questions/",
+   "destination": "/mobile-tyre-fitting-bathgate/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-bathgate/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/tyre-replacement-call-out-bathgate/",
+   "destination": "/mobile-tyre-fitting-bathgate/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-bathgate/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+   "destination": "/mobile-tyre-fitting-edinburgh/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-tyre-fitting-edinburgh/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/category/best-mobile-tyre-fitting-service/",
+   "destination": "/blog/",
+   "hopStatus": 301,
+   "hopLocation": "/blog/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/locking-wheel-nut-removal-bathgate/",
+   "destination": "/mobile-locking-wheel-nut-removal/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-locking-wheel-nut-removal/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+   "destination": "/locking-wheel-nut-removal/",
+   "hopStatus": 301,
+   "hopLocation": "/locking-wheel-nut-removal/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/expert-locking-wheel-nut-removal/",
+   "destination": "/locking-wheel-nut-removal/",
+   "hopStatus": 301,
+   "hopLocation": "/locking-wheel-nut-removal/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/caravan-trailer-tyre-fitting/",
+   "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+   "hopStatus": 301,
+   "hopLocation": "/mobile-trailer-and-caravan-tyre-fitting/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/emergency-tyre-change/",
+   "destination": "/24-7-mobile-tyre-replacement/",
+   "hopStatus": 301,
+   "hopLocation": "/24-7-mobile-tyre-replacement/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+   "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+   "hopStatus": 301,
+   "hopLocation": "/what-tools-do-mobile-tyre-fitters-use/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/tyre-lifespan-mobile-tyre-repair-guide/",
+   "destination": "/tyre-lifespan/",
+   "hopStatus": 301,
+   "hopLocation": "/tyre-lifespan/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  },
+  {
+   "source": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+   "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+   "hopStatus": 301,
+   "hopLocation": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+   "destinationStatus": 200,
+   "destinationExistsInBuild": true,
+   "ok": true
+  }
+ ],
+ "driftChecks": [
+  {
+   "check": "vercel.json matches infra/redirects.json",
+   "ok": true
+  },
+  {
+   "check": "infra/cloudfront-function.js REDIRECTS matches infra/redirects.json",
+   "ok": true
+  },
+  {
+   "check": "infra/template.yaml embeds the same redirect map",
+   "ok": true
+  }
+ ],
+ "simulations": [
+  {
+   "path": "/tyre-lifespan-mobile-tyre-repair-guide/",
+   "label": "old WordPress URL -> redirect",
+   "expectedStatus": 301,
+   "actualStatus": 301,
+   "location": "/tyre-lifespan/",
+   "ok": true
+  },
+  {
+   "path": "/tyre-lifespan",
+   "label": "no trailing slash (live page) -> redirect to slash",
+   "expectedStatus": 301,
+   "actualStatus": 301,
+   "location": "/tyre-lifespan/",
+   "ok": true
+  },
+  {
+   "path": "/tyre-lifespan-mobile-tyre-repair-guide",
+   "label": "no trailing slash (retired URL) -> single-hop redirect to final destination",
+   "expectedStatus": 301,
+   "actualStatus": 301,
+   "location": "/tyre-lifespan/",
+   "ok": true
+  },
+  {
+   "path": "/mobile-tyre-fitting-bathgate/",
+   "label": "new clean URL",
+   "expectedStatus": 200,
+   "actualStatus": 200,
+   "location": null,
+   "ok": true
+  },
+  {
+   "path": "/nonexistent-page-xyz/",
+   "label": "unknown URL -> true 404",
+   "expectedStatus": 404,
+   "actualStatus": 404,
+   "location": null,
+   "ok": true
+  },
+  {
+   "path": "/assets/css/main.2d038bc2.css",
+   "label": "static asset (real hashed path)",
+   "expectedStatus": 200,
+   "actualStatus": 200,
+   "location": null,
+   "ok": true
+  },
+  {
+   "path": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+   "label": "old WordPress URL -> redirect",
+   "expectedStatus": 301,
+   "actualStatus": 301,
+   "location": "/what-tools-do-mobile-tyre-fitters-use/",
+   "ok": true
+  },
+  {
+   "path": "/tyre-lifespan-mobile-tyre-repair-guide/index.html",
+   "label": "retired .html variant -> not supported, true 404",
+   "expectedStatus": 404,
+   "actualStatus": 404,
+   "location": null,
+   "ok": true
+  },
+  {
+   "path": "/emergency-tyre-fitter-edinburgh-falkirk/?utm_source=test",
+   "label": "old URL with query string -> redirect, query dropped safely",
+   "expectedStatus": 301,
+   "actualStatus": 301,
+   "location": "/24-7-mobile-tyre-replacement/",
+   "ok": true
+  }
+ ],
+ "summary": {
+  "totalRedirects": 19,
+  "redirectsOk": 19,
+  "driftChecksOk": 3,
+  "driftChecksTotal": 3,
+  "simulationsOk": 9,
+  "simulationsTotal": 9,
+  "failures": 0
+ }
+}
