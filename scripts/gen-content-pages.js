@@ -213,6 +213,9 @@ const OTHER_ARTICLES = [
   { slug: "tyre-services-west-lothian", title: "Common Causes of a Slow Tyre Leak", excerpt: "Why a tyre might be slowly losing air, and why a leak always needs a proper inspection rather than a guess." },
   { slug: "your-guide-to-safe-tyre-services-in-harthill", title: "Your Guide to Safe Tyre Care for Harthill Drivers", excerpt: "Why professional tyre care matters, and how punctures and locking wheel nuts are safely handled." },
   { slug: "tyre-size-calculator", title: "Tyre Size Calculator", excerpt: "Compare two tyre sizes and see the difference in diameter, circumference and estimated speedometer reading." },
+  { slug: "tyre-lifespan", title: "How Long Should Tyres Last?", excerpt: "What actually determines how long a tyre lasts, without relying on a single mileage figure." },
+  { slug: "why-professional-mobile-tyre-services-are-essential-for-modern-drivers", title: "Why Professional Mobile Tyre Services Matter", excerpt: "Why professional tyre fitting and inspection matters for safety, not just convenience." },
+  { slug: "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk", title: "Locking Wheel Nut Removal: Industry Practice And Wheel Damage Risk", excerpt: "What professional locking wheel nut removal actually involves, and what's worth asking before work begins." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

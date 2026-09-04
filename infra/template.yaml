@@ -162,7 +162,9 @@ Resources:
           "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/",
           "/caravan-trailer-tyre-fitting/": "/mobile-trailer-and-caravan-tyre-fitting/",
           "/emergency-tyre-change/": "/24-7-mobile-tyre-replacement/",
-          "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/": "/what-tools-do-mobile-tyre-fitters-use/"
+          "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/": "/what-tools-do-mobile-tyre-fitters-use/",
+          "/tyre-lifespan-mobile-tyre-repair-guide/": "/tyre-lifespan/",
+          "/why-professional-mobile-tyre-services-are-information-to-all-drivers/": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/"
         };
         
         function handler(event) {

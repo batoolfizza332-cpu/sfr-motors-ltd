@@ -34,7 +34,7 @@ const PORT = 8945;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-const REDIRECTS_BEFORE = 17; // unchanged from the Batch B2 correction; Batch B3 adds no redirects
+const REDIRECTS_BEFORE = 19; // 17 as of the Batch B2 correction, +2 from Batch C; Batch B3 itself added no redirects
 
 function contentTypeFor(file) {
   const ext = path.extname(file);

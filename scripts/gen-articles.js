@@ -284,7 +284,7 @@ const pages = [
       <p>Even tread and correct pressure keep the car predictable in corners and in poor weather — uneven wear undermines that even if the tread depth looks fine at a glance.</p>
 
       <h2>When to replace</h2>
-      <p>Tread depth below 1.6mm, visible cracking or bulging, or noticeable vibration are all signs it's time — see our <a href="/mobile-tyre-replacement/">tyre replacement service</a> or <a href="/our-tyre-range/">tyre range</a> for options.</p>
+      <p>Tread depth below 1.6mm, visible cracking or bulging, or noticeable vibration are all signs it's time — see our <a href="/mobile-tyre-replacement/">tyre replacement service</a> or <a href="/our-tyre-range/">tyre range</a> for options. For a fuller look at what determines how long a tyre lasts, see our guide on <a href="/tyre-lifespan/">how long tyres should last</a>.</p>
 
       <h2>Getting it sorted in Edinburgh</h2>
       <p>We fit at your home, workplace or roadside across <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh</a> and the surrounding area — get in touch for a quote.</p>`,
@@ -336,7 +336,7 @@ const pages = [
       <p>Once the locking nut is off, you'll usually want a replacement set (with a fresh key kept somewhere memorable) rather than leaving the wheel without one.</p>
 
       <h2>Getting it done</h2>
-      <p>We offer mobile locking wheel nut removal across Bathgate and West Lothian, 24/7 — see our <a href="/mobile-locking-wheel-nut-removal/">locking wheel nut removal service</a> for details.</p>`,
+      <p>We offer mobile locking wheel nut removal across Bathgate and West Lothian, 24/7 — see our <a href="/mobile-locking-wheel-nut-removal/">locking wheel nut removal service</a> for details. For more on how professional removal actually works and the wheel-damage risk involved, see our <a href="/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/">industry practice guide</a>.</p>`,
   },
   {
     slug: "emergency-tyre-replacement",
@@ -763,6 +763,89 @@ const pages = [
 
       <h2>Getting it looked at in Harthill</h2>
       <p>See our <a href="/mobile-tyre-fitting-harthill/">Harthill coverage page</a> to arrange a visit, or get in touch with your vehicle details for advice.</p>`,
+  },
+  // ---------------------------------------------------------------- Phase 4B Batch C
+  {
+    slug: "tyre-lifespan",
+    title: "How Long Should Tyres Last? A Safety-Focused Guide | SFR Motors Ltd",
+    metaDescription: "What actually determines how long a tyre lasts, and how to tell when it's time to replace — without relying on a single mileage figure.",
+    breadcrumbLabel: "Blog",
+    headline: "How Long Should Tyres Last?",
+    bodyHtml: `      <p>"How long should my tyres last?" doesn't have a single number for an answer — and treating it as though it does can be misleading. Tyre life depends on a combination of factors specific to your vehicle and how it's driven, not a fixed mileage that applies to everyone.</p>
+
+      <h2>Why there's no single figure</h2>
+      <p>Tyre life varies with the vehicle itself, the tyre type fitted, the drivetrain (front, rear or all-wheel drive puts different demands on different tyres), the load it regularly carries, tyre pressure, wheel alignment, the road conditions it covers, any damage it picks up along the way, how well it's maintained, and driving style. Two identical cars can wear through tyres at noticeably different rates depending on these factors alone — which is why a single "expect X miles" figure, even a well-intentioned one, doesn't hold up in practice.</p>
+
+      <h2>What actually shortens tyre life</h2>
+      <p>Under- or over-inflated tyres wear unevenly and faster than correctly inflated ones. Poor wheel alignment causes uneven wear, often concentrated on one side or edge of the tyre. An aggressive driving style — harsh braking, rapid acceleration and hard cornering — increases wear noticeably compared with smooth, steady driving. Carrying heavy loads regularly adds strain. Rough or pothole-damaged road conditions can cause both accelerated wear and physical damage, and any damage a tyre picks up can shorten its safe working life regardless of how much tread is left. Routine maintenance — checking pressure, watching for uneven wear, keeping alignment in check — catches most of this early. None of these affect every vehicle equally, which is exactly why following your own vehicle and tyre manufacturer's guidance matters more than a general rule of thumb.</p>
+
+      <h2>Age matters as well as mileage</h2>
+      <p>Tyre rubber changes over time regardless of how many miles have been driven, so even a tyre with plenty of tread left can be due attention if it's old, has been stored badly, or shows cracking on the sidewall. A visual check for cracking, perishing or bulges is worth doing alongside checking tread depth — age-related deterioration isn't something mileage alone tells you about.</p>
+
+      <h2>The UK legal tread depth requirement</h2>
+      <p>By law, car tyres must have at least 1.6mm of tread depth across the central three-quarters of the tyre, around its entire circumference. This is a legal minimum, not a target — many tyres are less effective in wet conditions well before they reach 1.6mm, and grip in the rain and braking performance both decline as tread wears down. Replacing a tyre before it reaches the legal minimum, rather than waiting until it does, is generally the safer approach.</p>
+
+      <h2>When to replace, not repair</h2>
+      <p>Whether a tyre should be repaired or replaced depends on its condition, the location and size of any damage, its age, and whether it still meets the legal tread requirement — not a fixed rule that applies to every tyre the same way. Cracks, bulges, sidewall damage or uneven wear are all reasons to have a tyre looked at rather than waiting to see how it performs. A physical inspection is the only reliable way to know whether a specific tyre needs replacing; we're not able to make that call from a description alone.</p>
+
+      <h2>Getting an honest assessment</h2>
+      <p>If you're not sure whether your tyres need attention, we'll assess them on-site and explain honestly what's needed rather than assuming the more expensive option. See our <a href="/mobile-tyre-replacement/">tyre replacement service</a> for details, or our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> if the damage turns out to be repairable.</p>`,
+  },
+  {
+    slug: "why-professional-mobile-tyre-services-are-essential-for-modern-drivers",
+    title: "Why Professional Mobile Tyre Services Matter | SFR Motors Ltd",
+    metaDescription: "Why professional tyre fitting and inspection matters for safety, not just convenience — and what to expect from a properly done job.",
+    breadcrumbLabel: "Blog",
+    headline: "Why Professional Mobile Tyre Services Matter",
+    bodyHtml: `      <p>Mobile tyre fitting is often talked about purely in terms of convenience — no garage trip, no waiting room. That's true, but it's not the whole picture. Done properly, professional tyre service is also a safety matter, not just a time-saver.</p>
+
+      <h2>Tyres affect more than most drivers realise</h2>
+      <p>Tyre condition affects braking distance, grip, steering response and fuel efficiency — not just ride comfort. A tyre that's worn, under-inflated, or has sidewall damage can extend stopping distances and reduce grip, particularly in wet weather, well before it looks obviously unsafe.</p>
+
+      <h2>What "properly fitted" actually involves</h2>
+      <p>Fitting a tyre correctly means more than mounting it on the rim — it includes balancing the wheel, tightening to the vehicle manufacturer's specified torque rather than just "tight," and checking for anything else that could affect how the tyre performs once it's back on the road. Skipping any of these doesn't always show up immediately, but it can affect handling, wear and safety over time.</p>
+
+      <h2>Why an honest assessment matters</h2>
+      <p>Not every damaged tyre needs replacing, and not every worn tyre is beyond a repair — but telling the difference requires an actual inspection, not a guess. A proper assessment looks at where the damage is, how deep it goes, and whether it falls within safe repair guidelines, and explains the result honestly rather than defaulting to whichever option costs more.</p>
+
+      <h2>Locking wheel nuts and the same principle</h2>
+      <p>The same reasoning applies to jobs like locking wheel nut removal — using the wrong tool or technique risks damaging the wheel, the stud, or the locking mechanism itself. Specialist tools and experience reduce that risk considerably compared with an improvised attempt. See our <a href="/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/">guide on lost locking wheel nut keys</a> for more.</p>
+
+      <h2>Getting it done properly</h2>
+      <p>SFR Motors Ltd &mdash; Secure. Fast. Reliable. &mdash; carries out mobile tyre fitting, repair and replacement to the same standard you'd expect from a workshop, wherever your vehicle is. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included, or get in touch for a quote.</p>`,
+  },
+  {
+    slug: "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk",
+    title: "Locking Wheel Nut Removal: Industry Practice And Wheel Damage Risk | SFR Motors Ltd",
+    metaDescription: "What professional locking wheel nut removal actually involves, the wheel-damage risk involved, and what's worth asking before work begins.",
+    breadcrumbLabel: "Blog",
+    headline: "Locking Wheel Nut Removal: Industry Practice And Wheel Damage Risk",
+    bodyHtml: `      <p>Losing a locking wheel nut key isn't unusual, and it's rarely as serious a problem as it feels in the moment. Here's a realistic look at how professional removal actually works, the risk involved, and what's worth asking before any work begins.</p>
+
+      <h2>Why keys go missing</h2>
+      <p>It happens for a range of ordinary reasons &mdash; the adaptor gets left with a previous fitter, lost during a service, misplaced somewhere at home, or the nut itself becomes worn or corroded and stops responding to the key that should fit it. None of these are unusual, and mobile tyre operators deal with this regularly.</p>
+
+      <h2>How professional removal works, in general terms</h2>
+      <p>Specialist extraction tools are designed to grip the locking nut itself rather than the surrounding wheel. Different tools suit different situations &mdash; a nut that's simply lost its key is usually more straightforward to deal with than one that's also seized or corroded, which can need a different approach and carries more risk of the nut itself being damaged in the process. We won't go into the specific techniques here, since the right method depends on the individual nut, wheel and vehicle, and that judgement is exactly what a trained technician is for &mdash; not something to attempt yourself.</p>
+
+      <h2>Does removal risk damaging the wheel?</h2>
+      <p>Used correctly, specialist tools are built to work on the nut without contacting the wheel face. The main risk comes from the nut itself being recessed, worn, or an unusual fit &mdash; situations that can call for a more involved approach and carry a higher chance of the nut needing to be destroyed to get it off. This is a genuine part of the job, not a reason to avoid getting it looked at professionally &mdash; driving around with a nut you can't remove is a bigger problem than the small risk involved in dealing with it properly.</p>
+
+      <h2>Why DIY removal isn't a good idea</h2>
+      <p>Generic sockets, force, or improvised tools bought for a one-off job don't have the same fit or control as the tools a fitter uses regularly, and a mismatch between tool and nut is where wheel damage is most likely to happen. If you can't find your key, it's worth calling a professional rather than trying to force it off yourself.</p>
+
+      <h2>What to expect, and what's worth asking</h2>
+      <p>No professional service can guarantee a locking nut will come off without being damaged in every case &mdash; that's simply the nature of the job, not a reason to be wary of the service itself. Before any work starts, it's reasonable to ask what approach the technician plans to use, what the risk is for your specific wheel, and whether you'll need a replacement nut afterwards &mdash; most vehicles will need a standard nut fitted in its place unless you've sourced a replacement locking set in advance. A technician should explain this before starting, and confirm you're happy to go ahead once you understand the risk, not begin without your agreement.</p>
+
+      <h2>Getting it sorted</h2>
+      <p>See our <a href="/mobile-locking-wheel-nut-removal/">mobile locking wheel nut removal service</a> for details, or get in touch with your vehicle details and we'll talk through what's involved.</p>`,
+    faq: [
+      { q: "Can removal be guaranteed not to damage the nut itself?", a: "No — in some cases, particularly where a nut is seized or corroded, it may need to be destroyed to come off safely. The wheel itself is designed to be protected during this process." },
+      { q: "Will I get a locking wheel nut back afterwards?", a: "Not necessarily. Most vehicles will be fitted with a standard nut in its place unless you've sourced a replacement locking set in advance." },
+      { q: "Is it safe to try removing a locking wheel nut myself?", a: "We wouldn't recommend it. A mismatch between a generic tool and your specific nut is where wheel damage is most likely to happen — it's best left to a technician with the right equipment." },
+    ],
+    faqTitle: "Locking Wheel Nut Removal Questions",
+    faqGroup: "sfr-lwn-industry-faq",
   },
 ];
 

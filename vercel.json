@@ -87,6 +87,16 @@
       "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
       "destination": "/what-tools-do-mobile-tyre-fitters-use/",
       "statusCode": 301
+    },
+    {
+      "source": "/tyre-lifespan-mobile-tyre-repair-guide/",
+      "destination": "/tyre-lifespan/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "statusCode": 301
     }
   ]
 }

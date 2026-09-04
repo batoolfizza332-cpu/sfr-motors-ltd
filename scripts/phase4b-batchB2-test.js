@@ -44,7 +44,7 @@ const PORT = 8943;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-const REDIRECTS_BEFORE = 17; // 16 as of Phase 4B Batch A, +1 from this batch's cannibalisation-correction redirect
+const REDIRECTS_BEFORE = 19; // 16 as of Phase 4B Batch A, +1 from this batch's cannibalisation-correction redirect, +2 from Batch C
 
 function contentTypeFor(file) {
   const ext = path.extname(file);

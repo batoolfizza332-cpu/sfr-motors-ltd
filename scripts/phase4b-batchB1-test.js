@@ -31,7 +31,7 @@ const PORT = 8941;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-const REDIRECTS_BEFORE = 17; // 16 as of Phase 4B Batch A, +1 from the Batch B2 cannibalisation correction (behind-the-scenes-... -> what-tools-do-mobile-tyre-fitters-use/); Batch B1 itself added none
+const REDIRECTS_BEFORE = 19; // 16 as of Phase 4B Batch A, +1 from the Batch B2 cannibalisation correction, +2 from Batch C; Batch B1 itself added none
 
 function contentTypeFor(file) {
   const ext = path.extname(file);
