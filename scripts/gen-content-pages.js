@@ -172,7 +172,7 @@ pages.push({
       <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/mobile-trailer-and-caravan-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
 
       <h2>Not sure which tyre you need?</h2>
-      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges.</p>
+      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges. Curious about tread patterns? See our guide on <a href="/asymmetric-and-directional-tyres-difference/">asymmetric vs directional tyres</a>.</p>
 
       <h2>How to get a price</h2>
       <p>Call <a href="tel:01312020289">0131 202 0289</a>, message us on <a href="https://wa.me/447448427154" target="_blank" rel="noopener">WhatsApp</a>, or use the <a href="/contact-us/#quote-form">quote form</a> and we'll get back to you with pricing for your vehicle.</p>`,
@@ -204,6 +204,11 @@ const OTHER_ARTICLES = [
   { slug: "7-warning-signs-your-tyres-need-immediate-professional-attention", title: "7 Warning Signs Your Tyres Need Immediate Professional Attention", excerpt: "Seven tyre warning signs worth acting on, and why only a physical inspection can confirm what's needed." },
   { slug: "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key", title: "Emergency Wheel Nut Removal: What To Do If You've Lost The Key", excerpt: "Why forcing a locking wheel nut off yourself risks damage, and when professional removal is the safer option." },
   { slug: "why-tyre-safety-is-more-important-than-most-drivers-realize", title: "Why Tyre Safety Is More Important Than Most Drivers Realise", excerpt: "Why tyre condition affects braking, grip and control more than most drivers expect." },
+  { slug: "asymmetric-and-directional-tyres-difference", title: "Asymmetric vs Directional Tyres: What's The Difference?", excerpt: "What asymmetric and directional tread patterns actually do, and how to tell which one is fitted to your car." },
+  { slug: "how-quality-tyres-improve-safety-and-driving-performance", title: "How Quality Tyres Improve Safety and Driving Performance", excerpt: "How tyre condition affects braking, handling and fuel efficiency — and why it's worth paying attention to." },
+  { slug: "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road", title: "How To Avoid Common Tyre Problems And Stay Safe On The Road", excerpt: "Practical tyre maintenance habits that help you avoid common problems and stay safe." },
+  { slug: "what-is-mobile-tyre-fitting", title: "What Is Mobile Tyre Fitting?", excerpt: "What mobile tyre fitting actually means, how it differs from a garage visit, and what it typically covers." },
+  { slug: "what-tools-do-mobile-tyre-fitters-use", title: "What Tools Do Mobile Tyre Fitters Use?", excerpt: "A categorised look at what a mobile tyre fitting van actually carries — fitting, safety and diagnostic tools." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

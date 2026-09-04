@@ -130,7 +130,7 @@ const pages = [
       <p>It's a strong fit for punctures, worn tyres found at inconvenient times, and situations where getting to a garage isn't practical. If the vehicle has a fault beyond the tyre itself, a garage or recovery service may still be the better option.</p>
 
       <h2>Mobile tyre fitting in Edinburgh</h2>
-      <p>We cover Edinburgh and the surrounding area 24/7 — see our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> for details, or our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included wherever you're based.</p>`,
+      <p>We cover Edinburgh and the surrounding area 24/7 — see our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> for details, or our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included wherever you're based. New to the idea entirely? See our <a href="/what-is-mobile-tyre-fitting/">plain-English guide to what mobile tyre fitting actually is</a>.</p>`,
   },
   {
     slug: "tyres-bathgate-guide",
@@ -290,7 +290,7 @@ const pages = [
       <p>For resetting or checking the tyre pressure monitoring system after a tyre change, where the vehicle needs it.</p>
 
       <h2>Why this matters</h2>
-      <p>The right equipment, used properly, is the difference between a tyre that's fitted and one that's fitted safely. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included.</p>`,
+      <p>The right equipment, used properly, is the difference between a tyre that's fitted and one that's fitted safely. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included. For the fuller picture — repair kits, safety gear and diagnostic tools — see our <a href="/what-tools-do-mobile-tyre-fitters-use/">wider look at what mobile tyre fitters carry</a>.</p>`,
   },
   {
     slug: "better-tyres-better-drive",
@@ -554,6 +554,128 @@ const pages = [
 
       <h2>If something doesn't look or feel right</h2>
       <p>Not sure whether a mark, a vibration or a pressure drop needs attention? A physical inspection is the only way to know for certain — see our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> if it turns out to be repairable, or our <a href="/mobile-tyre-replacement/">tyre replacement service</a> if a new tyre is what's needed.</p>`,
+  },
+  // ---------------------------------------------------------------- Phase 4B Batch B2
+  {
+    slug: "asymmetric-and-directional-tyres-difference",
+    title: "Asymmetric vs Directional Tyres: What's The Difference? | SFR Motors Ltd",
+    metaDescription: "What asymmetric and directional tread patterns actually do, how they differ, and how to tell which one is fitted to your car.",
+    breadcrumbLabel: "Blog",
+    headline: "Asymmetric vs Directional Tyres: What's The Difference?",
+    bodyHtml: `      <p>Tread patterns aren't just decoration — they're engineered for a specific job. Two of the most common designs, asymmetric and directional, work in different ways. Here's what actually sets them apart.</p>
+
+      <h2>What an asymmetric tyre is</h2>
+      <p>An asymmetric tyre has two different tread patterns across its width — one half designed for dry grip and cornering, the other for dispersing water in wet conditions. The tyre is usually marked "Outside" and "Inside" so it's fitted the correct way round.</p>
+
+      <h2>What a directional tyre is</h2>
+      <p>A directional tyre has a tread pattern designed to rotate in one direction only, usually shaped like an arrow or a V. This channels water away from the contact patch efficiently, which is why directional patterns are common on tyres aimed at wet-weather performance.</p>
+
+      <h2>How to tell which one you have</h2>
+      <p>Both types are marked on the sidewall. An asymmetric tyre will show "Outside"/"Inside"; a directional tyre will usually show a rotation arrow. If you're not sure, check your tyre's sidewall markings or ask us when we're on-site.</p>
+
+      <h2>Why fitting them the right way round matters</h2>
+      <p>Fitting either type backwards, or on the wrong side of the car, reduces the grip and water-dispersal benefits they're designed for. It's a detail worth getting right, which is why correct fitting — not just the tyre itself — is part of the job.</p>
+
+      <h2>Choosing between them</h2>
+      <p>Neither is automatically the better choice — it depends on the vehicle, the tyre range, and what the manufacturer has designed for that specific tyre. See our <a href="/our-tyre-range/">tyre range</a> for what we carry, or get in touch with your tyre size and we'll talk through the options.</p>`,
+  },
+  {
+    slug: "how-quality-tyres-improve-safety-and-driving-performance",
+    title: "How Quality Tyres Improve Safety and Driving Performance | SFR Motors Ltd",
+    metaDescription: "How tyre condition affects braking, handling and fuel efficiency — and why it's worth paying attention to, for Falkirk and West Lothian drivers.",
+    breadcrumbLabel: "Blog",
+    headline: "How Quality Tyres Improve Safety and Driving Performance",
+    bodyHtml: `      <p>Tyres get little attention until something goes wrong, but their condition affects far more of how a car behaves day-to-day than most drivers realise.</p>
+
+      <h2>Braking and cornering</h2>
+      <p>Worn or damaged tyres reduce the amount of grip available, which affects both stopping distance and how predictably a car handles in corners — particularly in wet conditions.</p>
+
+      <h2>Fuel efficiency</h2>
+      <p>Under-inflated or worn tyres increase rolling resistance, meaning the engine works harder to maintain the same speed. Keeping tyres correctly inflated is one of the simplest ways to keep running costs down.</p>
+
+      <h2>Spotting damage before it becomes a problem</h2>
+      <p>Potholes, kerbs and road debris are common causes of tyre damage. Some of it, like a bulge or a cut, is visible; some isn't. A physical inspection is the only way to know for certain whether a tyre is still safe or needs attention.</p>
+
+      <h2>When a repair is possible</h2>
+      <p>Not every issue means a new tyre. A suitable puncture, assessed and repaired properly, can extend a tyre's working life — while damage outside safe repair guidelines means replacement is the right call. See our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> for how that assessment works.</p>
+
+      <h2>Getting it looked at in Falkirk</h2>
+      <p>We cover Falkirk and the surrounding area — see our <a href="/mobile-tyre-fitting-falkirk/">Falkirk coverage page</a> for details, or get in touch for a quote.</p>`,
+  },
+  {
+    slug: "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road",
+    title: "How To Avoid Common Tyre Problems And Stay Safe On The Road | SFR Motors Ltd",
+    metaDescription: "Practical tyre maintenance habits that help you avoid common problems and stay safe — for drivers across Edinburgh and West Lothian.",
+    breadcrumbLabel: "Blog",
+    headline: "How To Avoid Common Tyre Problems And Stay Safe On The Road",
+    bodyHtml: `      <p>Most tyre problems don't appear out of nowhere — they build up gradually, and a few consistent habits go a long way toward avoiding them.</p>
+
+      <h2>Keep an eye on tyre pressure</h2>
+      <p>Both under- and over-inflated tyres wear unevenly and affect handling. Checking pressure regularly, against the figure in your vehicle's handbook or door-sill sticker, is one of the simplest habits that actually helps.</p>
+
+      <h2>Check for early damage</h2>
+      <p>A small cut, puncture or sidewall crack might look minor, but can develop into a bigger problem if left. Regular visual checks help catch this early, before it turns into a roadside issue.</p>
+
+      <h2>Don't ignore worn tread</h2>
+      <p>Reduced tread depth affects grip, particularly in wet weather, and increases stopping distance. If tread looks low, it's worth having it checked rather than waiting to see how it performs.</p>
+
+      <h2>Rotate tyres to even out wear</h2>
+      <p>Front and rear tyres tend to wear differently depending on the vehicle, and evening this out through rotation helps them last more consistently. Ask us about this at your next visit if you're not sure when yours was last done.</p>
+
+      <h2>Watch for locking wheel nut issues</h2>
+      <p>A locking wheel nut that's seized or missing its key can turn a routine tyre job into a bigger one. If yours is giving trouble, our <a href="/mobile-locking-wheel-nut-removal/">locking wheel nut removal service</a> can help without risking damage to the wheel.</p>
+
+      <h2>Get it looked at when something's off</h2>
+      <p>Vibration, pulling to one side, or a tyre that keeps losing pressure are all worth acting on rather than waiting out. See our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh</a> or <a href="/mobile-tyre-fitting-west-lothian/">West Lothian</a> coverage pages, or get in touch.</p>`,
+  },
+  {
+    slug: "what-is-mobile-tyre-fitting",
+    title: "What Is Mobile Tyre Fitting? | SFR Motors Ltd",
+    metaDescription: "What mobile tyre fitting actually means, how it differs from a garage visit, and the kinds of jobs it typically covers.",
+    breadcrumbLabel: "Blog",
+    headline: "What Is Mobile Tyre Fitting?",
+    bodyHtml: `      <p>"Mobile tyre fitting" is a term used a lot, but it's worth being clear about what it actually means — and how it's different from booking in at a garage.</p>
+
+      <h2>The basic idea</h2>
+      <p>Instead of driving to a garage and waiting for a bay, a mobile tyre fitter brings a fully equipped van to wherever your vehicle is — your home, workplace, or the roadside — and carries out the work there. No drop-off, no waiting room.</p>
+
+      <h2>How it differs from a garage visit</h2>
+      <p>A garage needs you to bring the vehicle to a fixed location and wait, or arrange to come back later. Mobile fitting reverses that — the equipment and the fitter come to you, so the vehicle doesn't need to move on a damaged tyre, and your day isn't built around a garage appointment.</p>
+
+      <h2>What it typically covers</h2>
+      <p>Most mobile tyre fitters handle new tyre fitting, punctures, and locking wheel nut issues, and many also carry out basic checks like tyre pressure and wheel balancing while they're there. What's included can vary between providers, so it's worth confirming before booking.</p>
+
+      <h2>Who it suits</h2>
+      <p>It's a strong fit when getting to a garage isn't practical — a flat discovered at home before work, a puncture in a car park, or simply not wanting to lose half a day to a waiting room. If the vehicle has a fault beyond the tyre itself, a garage or recovery service may still be the better option.</p>
+
+      <h2>What to expect from a provider</h2>
+      <p>A proper mobile tyre fitter should confirm a price before starting work, carry out any fitting to the same standard as a garage — including balancing and torquing wheel nuts correctly — and explain honestly whether a tyre needs repairing or replacing rather than assuming the more expensive option.</p>
+
+      <h2>Booking one in Bathgate and West Lothian</h2>
+      <p>For a full walkthrough of how booking and the visit itself actually works, see our <a href="/mobile-tyre-fitting-guide/">complete mobile tyre fitting guide</a> — or see our <a href="/mobile-tyre-fitting-bathgate/">Bathgate coverage page</a> and <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> to get a quote.</p>`,
+  },
+  {
+    slug: "what-tools-do-mobile-tyre-fitters-use",
+    title: "What Tools Do Mobile Tyre Fitters Use? | SFR Motors Ltd",
+    metaDescription: "A categorised look at what a mobile tyre fitting van actually carries — fitting equipment, safety gear, and diagnostic tools.",
+    breadcrumbLabel: "Blog",
+    headline: "What Tools Do Mobile Tyre Fitters Use?",
+    bodyHtml: `      <p>A mobile tyre fitting van carries more than just tyres. Here's a broader look at what's typically on board, grouped by what it's actually for.</p>
+
+      <h2>Core fitting equipment</h2>
+      <p>The essentials — a portable tyre changer, wheel balancer, and torque wrench — do the actual work of removing, fitting and correctly tightening a tyre. See our <a href="/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/">behind-the-scenes look at this core equipment</a> for more detail on how each piece is used.</p>
+
+      <h2>Repair equipment</h2>
+      <p>Not every job needs a full replacement. Plug and patch kits, along with tools to properly assess a puncture, let a fitter carry out a suitable repair on the spot rather than automatically reaching for a new tyre.</p>
+
+      <h2>Safety equipment</h2>
+      <p>Working roadside or in a car park comes with its own risks. Hi-vis clothing, warning cones, and wheel chocks to stop the vehicle moving during the job are standard kit for any fitter working away from a workshop.</p>
+
+      <h2>Diagnostic tools</h2>
+      <p>Many modern vehicles need their tyre pressure monitoring system (TPMS) checked or reset after a tyre change, and some fitters carry basic diagnostic tools to check for related issues, such as alignment problems affecting tyre wear.</p>
+
+      <h2>Why the range matters</h2>
+      <p>A well-equipped van is closer to a portable workshop than a toolbox — the right equipment, used properly, is what makes it possible to do the job safely and to the same standard as a garage, wherever the vehicle is. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included.</p>`,
   },
 ];
 
