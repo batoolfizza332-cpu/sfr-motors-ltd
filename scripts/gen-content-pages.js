@@ -166,7 +166,7 @@ pages.push({
     bodyHtml: `      <p>Whatever you drive and whatever your budget, we carry a wide range of tyre sizes and options on our vans so we can fit the right tyre for your vehicle on the same visit, wherever you're parked in Bathgate or West Lothian.</p>
 
       <h2>Premium, mid-range and budget options</h2>
-      <p>We stock a spread of tyres across premium, mid-range and value price points, so you can choose what suits your vehicle, driving and budget — not just whatever happens to be on the shelf. If you have a specific brand or spec in mind, let us know when you get in touch and we'll confirm availability before we arrive.</p>
+      <p>We stock a spread of tyres across premium, mid-range and value price points, so you can choose what suits your vehicle, driving and budget — not just whatever happens to be on the shelf. If you have a specific brand or spec in mind, let us know when you get in touch and we'll confirm availability before we arrive. Not sure whether premium or budget is the right call? See our guide on <a href="/premium-or-budget-which-tyres-keep-you-safer/">how to compare tyres safely</a>.</p>
 
       <h2>Car, van, caravan and trailer sizes</h2>
       <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/mobile-trailer-and-caravan-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
@@ -222,6 +222,12 @@ const OTHER_ARTICLES = [
   { slug: "tyre-blowout-causes-prevention", title: "Tyre Blowouts: Causes, Prevention And What To Do", excerpt: "What causes a tyre blowout, how to reduce the risk, and the safest way to respond if one happens." },
   { slug: "preparing-your-car-tyres-for-winter-driving-in-livingston", title: "Preparing Your Tyres For Winter Driving In Livingston", excerpt: "A pre-winter tyre checklist for Livingston drivers, and what to do if you're caught out." },
   { slug: "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide", title: "How To Choose The Right Tyres For Your Car", excerpt: "Understanding tyre size, load index, speed rating, seasonal options and the tyre label." },
+  { slug: "premium-or-budget-which-tyres-keep-you-safer", title: "Premium Or Budget Tyres: How To Compare Them Safely", excerpt: "Price alone doesn't tell you which tyre is safer — how to actually compare them." },
+  { slug: "puncture-repairs-whats-actually-being-done-to-your-tyre", title: "Puncture Repairs: What's Actually Involved", excerpt: "Why a proper repair means taking the tyre off the wheel, and why not every puncture can be safely repaired." },
+  { slug: "mobile-tyre-fitter-near-me-myths", title: "Mobile Tyre Fitting Myths, Answered", excerpt: "Common myths about mobile tyre fitting — cost, quality, speed and more — addressed factually." },
+  { slug: "michelin-radial-tire-history-innovation", title: "Michelin's Radial Tyre: A Brief History", excerpt: "How Michelin's 1946 radial tyre patent changed tyre construction." },
+  { slug: "pirelli-silent-tyres-uk", title: "Pirelli PNCS: What The Noise-Reduction Technology Actually Does", excerpt: "What Pirelli's PNCS technology is, and the noise reduction Pirelli reports." },
+  { slug: "tyre-care-and-flat-tyre-help-in-linlithgow", title: "Tyre Care And Flat Tyre Help In Linlithgow", excerpt: "Looking after your tyres on Linlithgow's roads, and what to do safely if you get a flat." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

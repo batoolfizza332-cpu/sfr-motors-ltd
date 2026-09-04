@@ -31,7 +31,9 @@ const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
 const REDIRECTS_BEFORE = 19; // 17 after the Batch B2 correction, +2 from this batch
-const EXPECTED_PAGE_COUNT = 70; // 64 after Batch C, +6 new Batch D1 pages (Batch C itself added 3, from 61 after Batch B4)
+const MIN_EXPECTED_PAGE_COUNT = 64; // this batch's own baseline (61 after Batch B4, +3 new survivor pages) — a floor,
+// not an exact figure, since later batches only add pages; the authoritative current
+// total is maintained in scripts/phase4-test.js, not here (see the Batch D2 cleanup)
 
 function contentTypeFor(file) {
   const ext = path.extname(file);
@@ -357,8 +359,8 @@ async function main() {
     if (!sitemapUrls.includes(retired)) ok();
     else fail(`sitemap.xml: still contains the retired ${retired}`);
   }
-  if (siteFiles.length === EXPECTED_PAGE_COUNT) ok();
-  else fail(`expected exactly ${EXPECTED_PAGE_COUNT} pages after Batch C`, `got ${siteFiles.length}`);
+  if (siteFiles.length >= MIN_EXPECTED_PAGE_COUNT) ok();
+  else fail(`expected at least ${MIN_EXPECTED_PAGE_COUNT} pages (Batch C's own baseline)`, `got ${siteFiles.length}`);
 
   // ---- 16. redirect count is 19 ----
   console.log("\n== Redirect count ==");

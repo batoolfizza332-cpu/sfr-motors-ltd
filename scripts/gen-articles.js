@@ -251,6 +251,8 @@ const pages = [
     headline: "Tyre Fitting In Edinburgh: Technical Aspects You Must Know",
     bodyHtml: `      <p>A tyre fitting job is more than bolting on a new tyre. Here's what should actually happen for it to be done properly.</p>
 
+      <p>If you're curious where modern tyre construction itself comes from, see our brief guide on <a href="/michelin-radial-tire-history-innovation/">Michelin's radial tyre history</a>.</p>
+
       <h2>Load and speed ratings</h2>
       <p>Every tyre carries a load index and speed rating matched to the vehicle. Fitting a tyre below the manufacturer's rating isn't just underperformance — it's a genuine safety issue.</p>
 
@@ -1000,6 +1002,156 @@ const pages = [
 
       <h2>Getting fitted properly</h2>
       <p>Once you've settled on a size and type, correct fitting &mdash; balancing, torque and a check of the valve &mdash; matters as much as the tyre itself. See our <a href="/our-tyre-range/">tyre range</a> for what we carry, or get in touch with your registration or tyre size for a price.</p>`,
+  },
+  // ---------------------------------------------------------------- Phase 4B Batch D2
+  {
+    slug: "premium-or-budget-which-tyres-keep-you-safer",
+    title: "Premium Or Budget Tyres: How To Compare Them Safely | SFR Motors Ltd",
+    metaDescription: "Premium and budget tyres aren't the same, but price alone doesn't tell you which is safer. How to actually compare tyres before you buy.",
+    breadcrumbLabel: "Blog",
+    headline: "Premium Or Budget Tyres: How To Compare Them Safely",
+    bodyHtml: `      <p>"Premium or budget?" is a common question when it's time for new tyres, but price tier alone isn't a reliable way to judge safety. Here's what's actually worth comparing.</p>
+
+      <h2>Price isn't a safety guarantee on its own</h2>
+      <p>A higher price doesn't automatically mean a safer tyre, and a lower price doesn't automatically mean a worse one. Both premium and budget ranges include tyres that meet the same UK legal and safety requirements &mdash; the differences that matter are found in the specifics, not the price bracket alone.</p>
+
+      <h2>Start with suitability, not price</h2>
+      <p>The right tyre is one that matches your vehicle's specification &mdash; size, load index and speed rating &mdash; and suits how you actually drive. A tyre that's wrong for your vehicle or driving pattern isn't made safer by being expensive, and a well-matched budget tyre can outperform a poorly matched premium one for your specific car.</p>
+
+      <h2>Check the tyre label</h2>
+      <p>Every tyre sold in the UK carries a label rating fuel efficiency, wet-weather grip and external noise. This is the most direct, comparable way to judge a specific tyre's performance &mdash; including wet-grip, which is closely tied to braking distance in the rain &mdash; rather than assuming a price tier tells you the same thing. Two tyres at a similar price can carry meaningfully different label ratings, so it's worth checking rather than skipping.</p>
+
+      <h2>Condition matters more than price tier</h2>
+      <p>A well-maintained tyre in good condition, whatever its price point, generally performs better than a neglected one from any tier. By law, tyres need at least 1.6mm of tread across the central three-quarters of the tyre, all the way round &mdash; but that's a legal minimum, not a guarantee a tyre is otherwise safe. Damage, age, pressure and your vehicle and tyre manufacturer's own guidance all matter alongside tread depth.</p>
+
+      <h2>What can genuinely differ between tiers</h2>
+      <p>Premium ranges typically involve more research and development investment, which can show up as more consistent wet-grip performance, quieter running or longer wear life &mdash; but this varies by specific tyre and isn't a rule that applies evenly across every premium or budget product. Rather than assuming, the label ratings above are the fair way to compare two specific tyres against each other.</p>
+
+      <h2>Making the decision</h2>
+      <p>If you drive high annual mileage, mostly motorway miles, or in poor weather regularly, it may be worth prioritising a tyre with strong wet-grip and durability ratings regardless of tier. For lower-mileage, mostly local driving, a well-rated budget or mid-range tyre in good condition is a reasonable choice. See our <a href="/our-tyre-range/">tyre range</a> for what we carry across price points, or get in touch with your vehicle details and we'll talk through suitable options.</p>`,
+  },
+  {
+    slug: "puncture-repairs-whats-actually-being-done-to-your-tyre",
+    title: "Puncture Repairs: What's Actually Involved | SFR Motors Ltd",
+    metaDescription: "Why a proper puncture repair means taking the tyre off the wheel for inspection, and why not every puncture can be safely repaired.",
+    breadcrumbLabel: "Blog",
+    headline: "Puncture Repairs: What's Actually Involved",
+    bodyHtml: `      <p>Not every puncture fix is the same, and it helps to know roughly what's involved before you book one in &mdash; both to understand what you're paying for, and to know when a repair genuinely isn't the safe option.</p>
+
+      <h2>Why the tyre comes off the wheel</h2>
+      <p>A proper repair means removing the tyre from the wheel completely, not just plugging the hole from outside. That's because a puncture can affect more than the visible entry point &mdash; the inner liner and surrounding structure need to be checked too, and none of that is visible while the tyre is still mounted. Anyone offering to fix a puncture without taking the tyre off the wheel is working without seeing the full picture.</p>
+
+      <h2>What a professional assessment actually checks</h2>
+      <p>Once the tyre is off, a proper inspection looks at where the damage is, how large it is, whether the inner liner has been affected, and whether the tyre shows any sign of having been driven on while flat &mdash; something that can cause internal damage that isn't visible from outside. Previous repairs nearby also matter, since a tyre can only safely be repaired so many times.</p>
+
+      <h2>Why not every puncture can be safely repaired</h2>
+      <p>Some punctures aren't repairable, whatever method is used. Damage too close to the sidewall, a hole that's too large, a tyre that's been driven on while flat, multiple punctures close together, or a tyre that's already worn low are all reasons a repair may not be the safe option &mdash; and any damage to the sidewall itself isn't repairable at all. A proper assessment tells you honestly which situation you're in, rather than defaulting to whichever answer is quicker.</p>
+
+      <h2>What it costs</h2>
+      <p>Cost depends on the type of repair needed and the work involved in checking the tyre properly &mdash; get in touch with your tyre size and the damage you can see, and we'll confirm a price before any work starts.</p>
+
+      <h2>Getting it looked at</h2>
+      <p>See our <a href="/mobile-tyre-puncture-repair/">mobile puncture repair service</a> for how a callout works, or get in touch if you're not sure whether your tyre is a repair or a replacement &mdash; we'll assess it on-site and explain honestly what's needed.</p>`,
+  },
+  {
+    slug: "mobile-tyre-fitter-near-me-myths",
+    title: "Mobile Tyre Fitting Myths, Answered | SFR Motors Ltd",
+    metaDescription: "Common myths about mobile tyre fitting — cost, quality, speed and more — addressed factually, without the hype.",
+    breadcrumbLabel: "Blog",
+    headline: "Mobile Tyre Fitting Myths, Answered",
+    bodyHtml: `      <p>Mobile tyre fitting has been around long enough that most of the myths about it are out of date. Here's a straightforward look at the ones we hear most often.</p>
+
+      <h2>Myth: it costs more than a garage</h2>
+      <p>Not necessarily. Once you factor in towing, lost time, or arranging a lift to and from a garage, mobile fitting is often comparable in overall cost &mdash; and you avoid the inconvenience of getting to a fixed location in the first place.</p>
+
+      <h2>Myth: mobile fitters use lower-quality tyres</h2>
+      <p>A reputable mobile fitter carries the same branded tyres you'd find at a garage, across a range of price points. There's no inherent reason a tyre fitted at the roadside is any different from one fitted on a garage forecourt.</p>
+
+      <h2>Myth: it's slower than a garage visit</h2>
+      <p>Modern mobile fitting vans carry the same fitting and balancing equipment as a workshop bay. The time to complete a fitting is broadly similar &mdash; the difference is you're not also spending time travelling to and from a garage.</p>
+
+      <h2>Myth: it's only for emergencies</h2>
+      <p>Emergency callouts are one part of the service, but plenty of customers book mobile fitting for routine replacements, seasonal tyre changes, or scheduled maintenance, simply because it saves the trip to a garage.</p>
+
+      <h2>Myth: a lost locking wheel nut key means a tow</h2>
+      <p>Specialist extraction tools exist for exactly this situation. See our <a href="/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/">guide on lost locking wheel nut keys</a> for how it's actually handled.</p>
+
+      <h2>Myth: DIY repair is just as good</h2>
+      <p>A roadside sealant or plug kit can be a temporary get-you-home measure, but it isn't a substitute for a proper repair &mdash; which needs the tyre off the wheel and inspected. See our guide on <a href="/puncture-repairs-whats-actually-being-done-to-your-tyre/">what a proper puncture repair actually involves</a>.</p>
+
+      <h2>Myth: mobile fitters aren't as qualified</h2>
+      <p>Mobile fitting requires the same competence as garage-based fitting &mdash; balancing, correct torque, and an honest assessment of what a tyre actually needs. The setting doesn't change the skill required.</p>
+
+      <h2>Myth: it doesn't work in bad weather</h2>
+      <p>Mobile fitters carry weatherproof equipment and lighting specifically because UK weather is unpredictable. A booking isn't usually affected by rain or cold, though a technician will always prioritise safety over pushing ahead with a job in genuinely unsafe conditions.</p>
+
+      <h2>Where we cover</h2>
+      <p>SFR Motors Ltd covers Bathgate, Edinburgh, West Lothian and Falkirk. If you're not sure whether your location is included, get in touch and we'll confirm before you book anything in.</p>`,
+  },
+  {
+    slug: "michelin-radial-tire-history-innovation",
+    title: "Michelin's Radial Tyre: A Brief History | SFR Motors Ltd",
+    metaDescription: "How Michelin's 1946 radial tyre patent changed tyre construction — a brief, factual history.",
+    breadcrumbLabel: "Blog",
+    headline: "Michelin's Radial Tyre: A Brief History",
+    bodyHtml: `      <p>Most drivers have never given radial construction a second thought, but it's the reason modern tyres perform the way they do. Here's a brief, factual look at where it came from.</p>
+
+      <h2>The 1946 patent</h2>
+      <p>On 4 June 1946, Michelin registered a patent in Paris for a new tyre construction method: the steel-belted radial. The patent was filed in the name of Pierre-Marcel Bourdon, Michelin's Technical Director at the time. It was a significant departure from the cross-ply tyres that dominated the market, and it took a few more years of development before it reached the public.</p>
+
+      <h2>What made it different</h2>
+      <p>In a cross-ply tyre, the internal plies run diagonally and overlap each other, which means the tread and sidewalls flex together rather than independently. A radial tyre's plies run straight across, at roughly right angles to the direction of travel, with a stabilising steel belt beneath the tread. This lets the sidewalls flex without disturbing the tread's contact with the road &mdash; improving grip, comfort and tyre life compared with the cross-ply designs of the time.</p>
+
+      <h2>Reaching the road</h2>
+      <p>The radial tyre, badged the Michelin X, made its public debut around 1948&ndash;1949, offered as fitment on models from manufacturers including Peugeot, Citro&euml;n and Simca. From there, radial construction gradually became the industry standard, and other manufacturers developed their own radial designs over the following decades. Today, radial construction is the default for almost all car and van tyres sold in the UK.</p>
+
+      <h2>Why it still matters</h2>
+      <p>The basic radial principle from that 1946 patent &mdash; independent flex between tread and sidewall &mdash; is still what's under the tread of the tyres we fit today, nearly eight decades on. It's a reminder that a lot of what keeps modern driving safe and comfortable comes down to engineering most drivers never think about.</p>
+
+      <p>See our <a href="/our-tyre-range/">tyre range</a> for what we currently carry, across a range of brands and price points.</p>`,
+  },
+  {
+    slug: "pirelli-silent-tyres-uk",
+    title: "Pirelli PNCS: What The Noise-Reduction Technology Actually Does | SFR Motors Ltd",
+    metaDescription: "What Pirelli's PNCS technology is, the noise reduction Pirelli reports, and what to check with us before you book.",
+    breadcrumbLabel: "Blog",
+    headline: "Pirelli PNCS: What The Noise-Reduction Technology Actually Does",
+    bodyHtml: `      <p>Some Pirelli tyres carry a technology called PNCS aimed specifically at reducing the noise you hear inside the car. Here's what it actually is, based on Pirelli's own published information.</p>
+
+      <h2>What PNCS is</h2>
+      <p>PNCS &mdash; Pirelli Noise Cancelling System &mdash; is a layer of sound-absorbing foam fitted to the inside of the tyre, against the inner liner. Its purpose is to dampen the resonance that builds up inside the tyre's air cavity as it rolls, which is a major source of the low-frequency "boom" some drivers notice inside the cabin at certain speeds.</p>
+
+      <h2>What Pirelli reports about the reduction</h2>
+      <p>According to Pirelli's own published information, PNCS reduces in-cabin noise by around 2&ndash;3 decibels on average, which Pirelli describes as roughly halving the perceived loudness of that cavity-resonance noise. This is Pirelli's own figure for their own technology &mdash; we're reporting it as their claim, not independently verifying it ourselves.</p>
+
+      <h2>What actually changes the outcome</h2>
+      <p>How much difference this makes in your specific car depends on more than the tyre &mdash; the vehicle's own insulation, wheel size, suspension and the road surface all play a part. A tyre with excellent noise-reduction technology can still sound different from car to car, so it's realistic to expect a noticeable improvement rather than silence.</p>
+
+      <h2>How to tell if a tyre has it</h2>
+      <p>PNCS-equipped tyres carry a specific marking on the sidewall alongside the usual size and specification details. Pirelli has offered PNCS across parts of its range since 2013, though which specific sizes and models include it varies.</p>
+
+      <h2>Checking availability</h2>
+      <p>Whether a PNCS-equipped Pirelli tyre is available and suitable for your specific vehicle and size is something we'd confirm with you when you call &mdash; it isn't something we can promise in advance without knowing your vehicle. See our <a href="/our-tyre-range/">tyre range</a> for the brands and options we generally carry, or get in touch with your vehicle details to ask.</p>`,
+  },
+  {
+    slug: "tyre-care-and-flat-tyre-help-in-linlithgow",
+    title: "Tyre Care And Flat Tyre Help In Linlithgow | SFR Motors Ltd",
+    metaDescription: "Looking after your tyres on Linlithgow's roads, and what to do safely if you get a flat.",
+    breadcrumbLabel: "Blog",
+    headline: "Tyre Care And Flat Tyre Help In Linlithgow",
+    bodyHtml: `      <p>Linlithgow's mix of older town-centre streets and the wider West Lothian roads around it can be tough on tyres. Here's what's worth watching for, and what to do safely if you end up with a flat.</p>
+
+      <h2>Protecting your tyres day to day</h2>
+      <p>Older streets and tighter corners around the town centre make kerb strikes an easy way to damage a sidewall without noticing straight away, so it's worth taking corners a little wider where you can. Potholes on some of the surrounding West Lothian roads are another common cause of sudden damage &mdash; slowing down and steering around them where it's safe to do so reduces the risk.</p>
+
+      <h2>Keeping on top of the basics</h2>
+      <p>Checking tyre pressure monthly, and watching for a car pulling to one side or a steering vibration, catches most developing problems before they become a breakdown. If you notice uneven wear across a tyre, it's usually worth having the alignment checked rather than just replacing the tyre and hoping it doesn't happen again.</p>
+
+      <h2>If you get a flat tyre</h2>
+      <p>Pull over somewhere safe as soon as you reasonably can &mdash; away from moving traffic if possible &mdash; and put your hazard lights on. If you're on a fast road or somewhere that doesn't feel safe to stop, keep going carefully to the next safe place to pull in rather than stopping where you are. We wouldn't recommend attempting a wheel change yourself at the roadside; it's safer, and often just as quick, to call for mobile help and wait somewhere out of the way of traffic.</p>
+
+      <h2>Getting mobile help in Linlithgow</h2>
+      <p>See our <a href="/mobile-tyre-fitting-linlithgow/">Linlithgow coverage page</a> for what we offer and how to book, or get in touch with your location and we'll confirm we can reach you and give you an honest estimate of timing.</p>`,
   },
 ];
 

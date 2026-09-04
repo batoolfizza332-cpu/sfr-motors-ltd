@@ -124,10 +124,10 @@ into the "content caveat" row as the consolidated survivor, per §5 Group 3:
 | 301 redirect (existing, correct) | 8 | Already in `infra/redirects.json` |
 | Exclude from migration | 7 | 4 self-excluded by the live site's own noindex+canonical metadata, 1 the live 404 page, 2 off-topic |
 | Recreate at exact URL (straightforward) | 30 | On-topic, no flags |
-| Recreate at exact URL (with a content caveat) | 10 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2 (row 82 hill-jacking article — **implemented, Phase 4B Batch D1**; row 68 puncture-repairs article — not yet implemented, held in Batch D2 per the Phase 4B planning review), tyre-lifespan survivor ×1 (`/tyre-lifespan/` — reversed from the guide variant, see the Q1 erratum), Michelin rewrite ×1, competitor names removed ×1 (locking-wheel-nut industry article — **implemented, Phase 4B Batch C**), why-professional consolidated rewrite ×1 (**implemented, Phase 4B Batch C**), year reference update ×1, tools-pair consolidated survivor ×1 *(10 caveated rows; see row-by-row detail in §3/§5/§6)* |
+| Recreate at exact URL (with a content caveat) | 11 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2 (row 82 hill-jacking article — **implemented, Phase 4B Batch D1**; row 68 puncture-repairs article — **implemented, Phase 4B Batch D2**), tyre-lifespan survivor ×1 (`/tyre-lifespan/` — reversed from the guide variant, see the Q1 erratum), Michelin rewrite ×1 (**implemented, Phase 4B Batch D2**), competitor names removed ×1 (locking-wheel-nut industry article — **implemented, Phase 4B Batch C**), why-professional consolidated rewrite ×1 (**implemented, Phase 4B Batch C**), year reference update ×1 (myths article — **implemented, Phase 4B Batch D2**), tools-pair consolidated survivor ×1, Pirelli PNCS rewrite ×1 (**implemented, Phase 4B Batch D2 — moved here from "Hold," see the Q6 erratum**) *(11 caveated rows; see row-by-row detail in §3/§5/§6)* |
 | Retain/keep at own URL, reversing original recommendation | 2 | `/24-7-mobile-tyre-replacement/` (§6 Q4), `/mobile-trailer-and-caravan-tyre-fitting/` (§6 Q2) |
 | One-to-one 301 redirect (weaker of a cannibalising pair) | 3 | `/tyre-lifespan-mobile-tyre-repair-guide/` (**implemented, Phase 4B Batch C — reversed from the original Q1 reading**), `/why-professional-...-information-to-all-drivers/` (**implemented, Phase 4B Batch C**), `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` (§5 Group 3) |
-| Hold — not implemented pending fact verification | 2 | Pirelli PNCS claims (§6 Q6), cited AA statistic (§6 Q7) |
+| Hold — not implemented pending fact verification | 1 | Cited AA statistic (§6 Q7) — Pirelli PNCS claims (§6 Q6) hold lifted, see above |
 | **Total** | **90** | |
 
 Two confirmed live-site bugs are folded into the "content caveat" row
@@ -214,23 +214,23 @@ it's the destination page).
 | 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | How to Extend Tyre Life | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "Students will recognize..." content-brief artifact and third-person non-SFR voice; reframed as everyday maintenance habits (pressure, damage checks, alignment, load, driving style, manufacturer guidance) rather than a lifespan-factors explainer, to stay distinct from `/tyre-lifespan/`; no fixed lifespan or mileage promised | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | Resolved |
 | 55 | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | post | Locking Wheel Nut Removal: Industry Practice & Disclaimer | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch C). Rewritten scope went beyond the original §6 Q8 competitor-name removal: the exported original also described a destructive "invasive" removal technique in procedural step-by-step detail, cited unverifiable sources (owner forums, "Hometyre technical notes," an unattributed police-advisory statistic), quoted Hometyre's own disclaimer wording directly, and framed a disclaimer as something the business requires to protect itself. The rewrite removes all of this: no procedural destructive-removal detail, no invented sourcing, no named competitors or specific commercial products (a "Laser Tools 8842" reference was also generic-ised), and no implication that a disclaimer removes legal responsibility — it instead explains that removal risk is real and asks the customer to confirm they understand it before work starts** | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | Resolved |
 | 56 | `/locking-wheel-nut-removal/` | post | Complete Guide to Locking Wheel Nut Removal in the UK | Yes | Keep at exact URL | `/locking-wheel-nut-removal/` | Low |
-| 57 | `/michelin-radial-tire-history-innovation/` | post | The Invention that Changed Tires Forever (Michelin) | No | Recreate at exact URL — **rewrite the historical facts in fresh, original wording, do not migrate existing text verbatim (owner-confirmed, §6 Q5)** | `/michelin-radial-tire-history-innovation/` | Resolved |
-| 58 | `/mobile-tyre-fitter-near-me-myths/` | post | Mobile Tyre Fitter Myths Busted (...in 2025) | No | Recreate at exact URL *(update year reference)* | `/mobile-tyre-fitter-near-me-myths/` | Low |
+| 57 | `/michelin-radial-tire-history-innovation/` | post | The Invention that Changed Tires Forever (Michelin) | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite verified against Michelin's own official history pages (`news.michelin.co.uk`, `business.michelinman.com`): the 4 June 1946 Paris patent, filed by Pierre-Marcel Bourdon (Michelin's Technical Director), and the Michelin X's 1948&ndash;1949 public debut. The exported original's "Paolo Ferrini" byline artifact and its Puiseux/Mignol narrative are not corroborated by Michelin's own account and are not used (owner-confirmed, §6 Q5). No endorsement, partnership or affiliation with Michelin is implied | `/michelin-radial-tire-history-innovation/` | Resolved |
+| 58 | `/mobile-tyre-fitter-near-me-myths/` | post | Mobile Tyre Fitter Myths Busted (...in 2025) | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: the "2025" framing is dropped entirely (not updated to a new year, to avoid the same problem recurring); unverifiable trust/rating claims ("UK's most trusted," "thousands of drivers," guaranteed 5-star service) and any nationwide-coverage claim are removed; service area kept consistent with the rest of the site (Bathgate, Edinburgh, West Lothian, Falkirk); no BS AU 159 citation, since its precise provisions aren't verified for this site | `/mobile-tyre-fitter-near-me-myths/` | Resolved |
 | 59 | `/mobile-tyre-fitting-bathgate-questions/` | post | 8 Questions Before Booking — Bathgate | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-bathgate/` | Low |
 | 60 | `/mobile-tyre-fitting-livingston-tyre-problems/` | post | Top 5 Tyre Problems — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: diagnostic/educational angle only (punctures, uneven wear, low tread, sidewall damage, pressure), no remote repairability diagnosis, no invented local landmarks beyond place names already established elsewhere on the site; `/mobile-tyre-fitting-livingston/` remains the primary transactional Livingston page | `/mobile-tyre-fitting-livingston-tyre-problems/` | Resolved |
 | 61 | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | post | Mobile Tyre Fitting vs Recovery | Yes | Keep at exact URL | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | Low |
 | 62 | `/mobile-tyre-repair-edinburgh-west-lothian/` | post | Mobile Tyre Repair — Edinburgh & West Lothian | Yes | Keep at exact URL | `/mobile-tyre-repair-edinburgh-west-lothian/` | Low |
 | 63 | `/motors-tire-pressure-off-road/` | post | Tire Pressure Guide for Dual Sport & Off-Road (motorcycles) | No | Exclude from migration | — | Low |
-| 64 | `/pirelli-silent-tyres-uk/` | post | Pirelli Silent Tyres UK | No | **HOLD — do not recreate until PNCS/technical claims are verified against Pirelli's current official information (owner-confirmed, §6 Q6)** | `/pirelli-silent-tyres-uk/` | **Blocked pending verification** |
-| 65 | `/premium-or-budget-which-tyres-keep-you-safer/` | post | Premium or Budget Tyres | No | Recreate at exact URL | `/premium-or-budget-which-tyres-keep-you-safer/` | Low |
+| 64 | `/pirelli-silent-tyres-uk/` | post | Pirelli Silent Tyres UK | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2); hold lifted following verification (see the erratum under §6 Q6 below).** The core PNCS claim (~2&ndash;3dB average in-cabin noise reduction, described by Pirelli as roughly halving perceived loudness) is confirmed against Pirelli's own official page (`pirelli.com/tyres/en-ww/car/tech-and-knowledge/pncs`) and used with explicit attribution to Pirelli, not asserted as independently verified fact. The previously-unverified UK Health Security Agency, ETRMA and enthusiast-forum citations from the exported original are all removed. The article does not claim SFR stocks or fits PNCS-equipped tyres — it states availability and vehicle compatibility are confirmed when the customer calls. No endorsement, partnership or affiliation with Pirelli is implied | `/pirelli-silent-tyres-uk/` | Resolved |
+| 65 | `/premium-or-budget-which-tyres-keep-you-safer/` | post | Premium or Budget Tyres | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: does not claim premium tyres are automatically safer than budget ones; the unsupported "responsible for up to 50% of your car's handling and braking performance" figure is removed and not replaced with another invented figure; states only the verified 1.6mm UK legal minimum tread depth (no seasonal threshold); compares tyres through suitability, size/specification, condition and the official UK tyre label (fuel efficiency, wet grip, noise) | `/premium-or-budget-which-tyres-keep-you-safer/` | Resolved |
 | 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Winter Tyre Prep — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: removes the unverified "283 Google reviews" claim and the step-by-step DIY spare-wheel-changing instructions entirely; no recommendation to change a wheel on a motorway/hard shoulder/slope; AA/RAC/Green Flag mentioned only as breakdown-cover options, explicitly not as endorsements; kept distinct from the Livingston service page and the tyre-problems post (seasonal preparation angle) | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | Resolved |
 | 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Professional Mobile Tyre Services — Linlithgow | No | Recreate at exact URL | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | Low |
-| 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Puncture Repairs: What's Actually Being Done | No | Recreate at exact URL *(strip leftover content-brief line)* | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | Low |
+| 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Puncture Repairs: What's Actually Being Done | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: strips the leading content-brief/target-keyword line; the £15-20/£25-35 price figures are removed (no SFR price published without owner confirmation — the article instead explains that cost depends on the type of repair and directs the reader to ask for a quote); does not cite BS AU 159 by name or quote its precise provisions, since these aren't verified against an authoritative accessible source; explains at a high level why the tyre has to come off the wheel for inspection, with no step-by-step DIY repair procedure; states plainly that not every puncture is safely repairable | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | Resolved |
 | 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | Recreate at exact URL | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | Low |
 | 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | No | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
 | 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Best Tyres for Your Ford on Edinburgh's Roads | Yes | Keep at exact URL | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | Low |
 | 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1; emergency wording corrected in the Batch D1 factual-correction pass).** Original rewrite: emergency-response wording now matches only what GOV.UK's Highway Code Annex 6 actually says (try to keep control, grip the steering wheel firmly, allow the vehicle to roll to a stop, stop as soon as it's safe, change the tyre only without risk to yourself or others — otherwise call for breakdown assistance); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
-| 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Tyre Care & Flat Tyre Help — Linlithgow | No | Recreate at exact URL | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | Low |
+| 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Tyre Care & Flat Tyre Help — Linlithgow | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D2).** Original rewrite: removes the named competitor garages ("Hunters Of Linlithgow," "Regent Motors") and their addresses entirely; removes the unverified specific car parks/landmarks (Water Yett, Regent Centre, Stockbridge Retail Park) and the "within 45 minutes" fixed arrival-time promise; focused on tyre care and what to do safely after a flat rather than a local directory. Kept distinct from `/mobile-tyre-fitting-linlithgow/` (transactional) and `/professional-mobile-tyre-services-on-drivers-linlithgow/` (general/van-focused) per the existing §5 Linlithgow cannibalisation review — links naturally to the location page | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | Resolved |
 | 74 | `/tyre-lifespan-mobile-tyre-repair-guide/` | post | How Long Should Tyres Last? (guide variant) | No | **One-to-one 301 redirect (weaker of the pair) — Phase 4B Batch C implementation; reverses this document's original reading of §6 Q1 (see the erratum under Q1) — the older, shorter, clearer `/tyre-lifespan/` URL was chosen as the actual survivor instead** | `/tyre-lifespan/` | Resolved |
 | 75 | `/tyre-lifespan/` | post | How Long Should Tyres Last? | Yes | **Recreate at exact URL — RETAINED as the primary surviving URL of the cannibalising pair (Phase 4B Batch C); safety-focused guide per §6 Q1's content requirements — no fixed mileage/front-rear-split stated as guaranteed fact, manufacturer guidance, condition/age/damage, the UK legal 1.6mm tread minimum framed as a minimum not a target** | `/tyre-lifespan/` | Resolved |
 | 76 | `/tyre-puncture-repair-near-me-west-lothian/` | post | 24-Hour Puncture Repair Near Me | Yes | Keep at exact URL | `/tyre-puncture-repair-near-me-west-lothian/` | Low |
@@ -497,9 +497,25 @@ noise-reduction technology that this session cannot verify.
 **Owner's answer (verbatim):** *"Verify against Pirelli's current info
 first"* (selected from: verify first, rewrite generically dropping brand
 specifics, or migrate as-is).
-**Implementation impact:** This article is **held** — not recreated in
-this pass. It recreates only once the PNCS/technical claims have been
-checked against Pirelli's current official information.
+**Implementation impact (original, Phase 4B planning pass):** This
+article is **held** — not recreated in this pass. It recreates only once
+the PNCS/technical claims have been checked against Pirelli's current
+official information.
+
+**Erratum (Phase 4B Batch D2) — hold lifted:** the PNCS/technical claims
+have now been checked against Pirelli's own official page
+(`pirelli.com/tyres/en-ww/car/tech-and-knowledge/pncs`), satisfying the
+owner's condition above. The core claim — PNCS gives an average 2&ndash;3dB
+reduction in in-cabin noise, which Pirelli describes as roughly halving
+perceived loudness — is confirmed accurate and is used with explicit
+attribution to Pirelli. Everything in the exported original that could
+**not** be checked against an authoritative source (UK Health Security
+Agency and ETRMA statistics, enthusiast-forum citations) is removed
+rather than migrated. The article does not claim SFR stocks or fits
+PNCS-equipped tyres, since that hasn't been separately confirmed with the
+owner — it states that availability and vehicle compatibility are
+confirmed when the customer calls. See §3 row 64 for the implementation
+note.
 
 ### Q7 — Cited AA breakdown statistic
 **Question:** The article states "over 40% of vehicle breakdowns in the
@@ -588,6 +604,65 @@ correction), and what they were used for:**
   with another invented figure). This same rule governed the correction
   above: the false seasonal threshold was removed outright, not replaced
   with a different invented figure.
+
+## 6b. Phase 4B Batch D2 — Implementation Notes and Verified Sources
+
+Six further D2 posts identified in the Batch D planning review — safe to
+implement once verified against authoritative primary sources or, for
+Michelin and Pirelli, once the owner's specific verification conditions
+(§6 Q5, Q6) had been met — were implemented at their exact WordPress
+URLs: `/premium-or-budget-which-tyres-keep-you-safer/`,
+`/puncture-repairs-whats-actually-being-done-to-your-tyre/`,
+`/mobile-tyre-fitter-near-me-myths/`, `/michelin-radial-tire-history-innovation/`,
+`/pirelli-silent-tyres-uk/`, and `/tyre-care-and-flat-tyre-help-in-linlithgow/`.
+See §3 rows 57, 58, 64, 65, 68 and 73 for the row-level implementation
+notes, and the Q6 erratum above for the Pirelli hold being lifted. D3, E
+and F remain unimplemented.
+
+**Primary sources checked before writing, and what they were used for:**
+
+- **Michelin's own official history** (`news.michelin.co.uk/articles/the-triumph-of-the-radial-tyre`,
+  `business.michelinman.com/by-technology/major-tire-innovations`):
+  re-verified for this batch (per the owner's instruction to check again)
+  and confirmed the patent was registered in Paris on 4 June 1946, filed
+  by Pierre-Marcel Bourdon, Michelin's Technical Director; the Michelin X
+  radial made its public debut around 1948&ndash;1949 on Peugeot, Citro&euml;n
+  and Simca models. Used directly in `/michelin-radial-tire-history-innovation/`.
+  The exported original's "Paolo Ferrini" byline and its Puiseux/Mignol
+  narrative are not corroborated by either source and are not used.
+- **Pirelli's own official PNCS page** (`pirelli.com/tyres/en-ww/car/tech-and-knowledge/pncs`):
+  confirmed the ~2&ndash;3dB average in-cabin noise reduction, described by
+  Pirelli as roughly halving perceived loudness, and that PNCS has been
+  available since 2013 and is identifiable by a sidewall marking. Used
+  directly in `/pirelli-silent-tyres-uk/`, with the figure explicitly
+  attributed to Pirelli rather than stated as independently verified. A
+  separate Pirelli press release also cites a "25% road noise reduction"
+  figure — a different metric (external road noise, not in-cabin dB) —
+  which is deliberately **not** used here, to avoid conflating two
+  distinct claims.
+- **GOV.UK — supply/distribute vehicle tyres: labelling rules**
+  (`gov.uk/guidance/eu-tyre-labelling-regulation-compliance-and-guidance`):
+  confirmed that UK tyre labels rate fuel efficiency, wet grip and
+  external noise. Used in `/premium-or-budget-which-tyres-keep-you-safer/`
+  to describe the tyre label as the fair way to compare specific tyres,
+  rather than relying on price tier or brand alone.
+- **GOV.UK — The Highway Code, Annex 6** (re-confirmed, same source used
+  in the Batch D1 correction): the 1.6mm legal minimum tread depth
+  (central three-quarters, full circumference) is the only tread figure
+  used in `/premium-or-budget-which-tyres-keep-you-safer/` — no seasonal
+  replacement threshold is stated, consistent with the Batch D1
+  correction.
+
+**Held or unresolved:** BS AU 159 (the UK tyre-repair standard) is
+referenced by name in the exported WordPress bodies for both the
+puncture-repairs and myths articles, but its precise provisions could not
+be verified against an authoritative, accessible source in this session.
+Rather than quote or cite it inaccurately, neither rewritten article
+names the standard at all — `/puncture-repairs-whats-actually-being-done-to-your-tyre/`
+explains the same underlying concepts (why the tyre comes off the wheel,
+why some damage isn't repairable) in plain terms instead. If BS AU 159's
+exact scope is verified in a future pass, both articles could cite it
+directly.
 
 ## 7. Totals
 
