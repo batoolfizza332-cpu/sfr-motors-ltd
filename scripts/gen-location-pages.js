@@ -23,7 +23,7 @@ const SERVICE_CARDS = [
   { icon: `<circle cx="12" cy="12" r="3.2"/><path d="M19.4 12a7.4 7.4 0 0 0-.13-1.4l2-1.56-2-3.46-2.36.95a7.4 7.4 0 0 0-1.21-.7L15.3 3.2h-4l-.4 2.63a7.4 7.4 0 0 0-1.21.7l-2.36-.95-2 3.46 2 1.56a7.4 7.4 0 0 0 0 2.8l-2 1.56 2 3.46 2.36-.95c.37.28.78.51 1.21.7l.4 2.63h4l.4-2.63a7.4 7.4 0 0 0 1.21-.7l2.36.95 2-3.46-2-1.56c.09-.46.13-.93.13-1.4Z"/>`, title: "Locking Wheel Nut Removal", href: "/mobile-locking-wheel-nut-removal/", label: "Locking Wheel Nut Removal", text: (t) => `Lost or seized locking wheel nuts removed wherever you're parked in ${t}.` },
   { icon: `<path d="M3.5 16V8.5a1 1 0 0 1 1-1h9v8.5"/><path d="M13.5 12h3.5l3 3.2v1.3h-2"/><path d="M3.5 16h1.7M9.3 16h2.9"/><circle cx="7" cy="17" r="1.8"/><circle cx="16.3" cy="17" r="1.8"/>`, title: "Van Tyre Replacement", href: "/van-tyre-replacement-services/", label: "Van Tyre Replacement", text: (t) => `Correctly rated tyres fitted for vans and light commercials in ${t}.` },
   { icon: `<path d="M3 16V9a1 1 0 0 1 1-1h9v8"/><path d="M13 11h5l3 3v2h-2"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/>`, title: "Trade & Fleet Tyres", href: "/trade-fleet-tyre-services/", label: "Trade and Fleet Tyre Services", text: (t) => `Scheduled or emergency tyre cover for ${t}-based business vehicles.` },
-  { icon: `<path d="M2.5 16.5h6v-6h-6Z"/><path d="M8.5 12.5h6l4 2.5v1.5h-2"/><circle cx="5.5" cy="18.5" r="1.6"/><circle cx="15.5" cy="18.5" r="1.6"/>`, title: "Caravan & Trailer Tyres", href: "/caravan-trailer-tyre-fitting/", label: "Caravan and Trailer Tyre Fitting", text: (t) => `Mobile fitting for caravan and trailer tyres, wherever it's stored or parked in ${t}.` },
+  { icon: `<path d="M2.5 16.5h6v-6h-6Z"/><path d="M8.5 12.5h6l4 2.5v1.5h-2"/><circle cx="5.5" cy="18.5" r="1.6"/><circle cx="15.5" cy="18.5" r="1.6"/>`, title: "Caravan & Trailer Tyres", href: "/mobile-trailer-and-caravan-tyre-fitting/", label: "Caravan and Trailer Tyre Fitting", text: (t) => `Mobile fitting for caravan and trailer tyres, wherever it's stored or parked in ${t}.` },
   { icon: `<circle cx="12" cy="13" r="7.5"/><path d="M12 13 15 9.5"/><path d="M9 6.3l.9 1.6M15 6.3l-.9 1.6"/>`, title: "TPMS Services", href: "/tyre-pressure-monitoring-system/", label: "TPMS Services", text: () => `Tyre pressure warning light on? We can check and advise during your visit.` },
 ];
 
@@ -420,7 +420,7 @@ ${faqHtml}
         <li><a href="/mobile-tyre-puncture-repair/">Puncture Repair</a></li>
         <li><a href="/mobile-locking-wheel-nut-removal/">Locking Wheel Nut Removal</a></li>
         <li><a href="/trade-fleet-tyre-services/">Trade &amp; Fleet Tyres</a></li>
-        <li><a href="/caravan-trailer-tyre-fitting/">Caravan &amp; Trailer Tyres</a></li>
+        <li><a href="/mobile-trailer-and-caravan-tyre-fitting/">Caravan &amp; Trailer Tyres</a></li>
         <li><a href="/our-tyre-range/">Our Tyre Range</a></li>
       </ul>
     </nav>
@@ -585,6 +585,216 @@ const LOCATIONS = [
       { q: "Can you fit tyres at my workplace in Broxburn?", a: "Yes, we attend workplaces, car parks and driveways across Broxburn — just let us know the location when you get in touch." },
       { q: "What if I break down on the A89 near Broxburn?", a: "We can attend roadside breakdowns near Broxburn, including along the A89 — let us know exactly where you are and we'll confirm arrival time." },
       { q: "Do you offer emergency tyre assistance in Broxburn at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Broxburn." },
+    ],
+  },
+  // ---- Batch A (Phase 4B): recreated from the WordPress export's confirmed,
+  // genuine location content for these 5 towns (Bo'ness, Harthill, Addiewell,
+  // Linlithgow, West Calder) — written fresh, not scraped, but drawing on the
+  // real local geography (roads, neighbouring towns, well-known public
+  // landmarks) confirmed present in the live export for each. See
+  // WORDPRESS_MIGRATION_AUDIT.md §3/§6 for the audit trail. ----
+  {
+    slug: "mobile-tyre-fitting-boness",
+    town: "Bo'ness",
+    hero: "fleet-hero-bg",
+    heroHeight: 1146,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Bo'ness, Falkirk district. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Bo'ness. We come to you.",
+    introHeading: "Local Tyre Fitting For Bo'ness Drivers",
+    introText:
+      "Bo'ness sits on the Firth of Forth in the Falkirk district, a manageable drive from our Bathgate base along the A904 towards Grangemouth. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Bo'ness and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Bo'ness, we regularly attend the surrounding Falkirk district, including Grangemouth and Linlithgow. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of Bo'ness is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat Near The Waterfront", text: "A tyre gives way while parked up near the Forth waterfront in Bo'ness. We can attend a safe roadside or car park location and get you moving again without a tow." },
+    scenario2: { title: "Worn Tyres Ahead Of The A904 Commute", text: "Tread depth is borderline before a regular commute along the A904 towards Grangemouth. We can check, advise honestly, and fit on the spot if new tyres are needed." },
+    nearby: [
+      { name: "Linlithgow", href: "/mobile-tyre-fitting-linlithgow/" },
+      { name: "Falkirk", href: "/mobile-tyre-fitting-falkirk/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of Bo'ness?", a: "Yes, we attend callouts across Bo'ness and the surrounding Falkirk district — get in touch with your location and we'll confirm." },
+      { q: "How quickly can you reach me in Bo'ness?", a: "Get in touch with your location in Bo'ness and we'll give you a realistic arrival estimate rather than a generic promise." },
+      { q: "Can you fit tyres at my workplace in Bo'ness?", a: "Yes, we attend workplaces, car parks and driveways across Bo'ness — just let us know the location when you get in touch." },
+      { q: "What if I break down on the A904 near Bo'ness?", a: "We can attend roadside breakdowns near Bo'ness, including along the A904 towards Grangemouth — let us know exactly where you are and we'll confirm arrival time." },
+      { q: "Do you offer emergency tyre assistance in Bo'ness at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Bo'ness." },
+    ],
+  },
+  {
+    slug: "mobile-tyre-fitting-harthill",
+    town: "Harthill",
+    hero: "emergency-hero-bg",
+    heroHeight: 1010,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Harthill, North Lanarkshire. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Harthill. We come to you.",
+    introHeading: "Local Tyre Fitting For Harthill Drivers",
+    introText:
+      "Harthill sits right on the M8, on the corridor linking Glasgow and Edinburgh, and close to our Bathgate base. Wherever your vehicle is — at home, at work, or stopped at the roadside near the motorway — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Harthill and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Harthill, we regularly attend nearby towns including Shotts and the wider Bathgate and West Lothian area. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of Harthill is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat Near The M8", text: "A tyre gives way close to the motorway near Harthill. Rather than a tow to a garage, we can attend a safe roadside or nearby car park location and get you moving again." },
+    scenario2: { title: "A Puncture Found On Howburn Road", text: "A slow puncture shows up on a Harthill side road. We can inspect it on-site and either repair or replace it there and then, depending on what's safe." },
+    nearby: [
+      { name: "Shotts", href: "/mobile-tyre-fitting-shotts/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+      { name: "Airdrie", href: "/mobile-tyre-fitting-airdrie/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of Harthill?", a: "Yes, we attend callouts across Harthill and nearby towns such as Shotts and Bathgate — get in touch with your location and we'll confirm." },
+      { q: "How quickly can you reach me in Harthill?", a: "Harthill is on the M8 corridor close to our Bathgate base — get in touch with your location and we'll give you a realistic arrival estimate." },
+      { q: "Can you help with a breakdown near the M8 at Harthill?", a: "Yes, we attend roadside callouts near Harthill, including close to the M8 — let us know exactly where you are so we can confirm arrival time safely." },
+      { q: "Can you fit tyres at my workplace in Harthill?", a: "Yes, we attend workplaces, car parks and driveways across Harthill — just let us know the location when you get in touch." },
+      { q: "Do you offer emergency tyre assistance in Harthill at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Harthill." },
+    ],
+  },
+  {
+    slug: "mobile-tyre-fitting-in-addiewell",
+    town: "Addiewell",
+    hero: "about-hero-bg",
+    heroHeight: 1008,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Addiewell, West Lothian. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Addiewell. We come to you.",
+    introHeading: "Local Tyre Fitting For Addiewell Drivers",
+    introText:
+      "Addiewell sits in West Lothian close to West Calder, a short drive from our Bathgate base and on the route many local drivers take commuting towards Edinburgh. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Addiewell and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Addiewell, we regularly attend nearby West Lothian towns including West Calder, Bathgate and the wider West Lothian area. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of Addiewell is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat Before The Edinburgh Commute", text: "A tyre goes down first thing before the commute out of Addiewell towards Edinburgh. Fitting at the driveway rather than a garage queue means the day doesn't get thrown off completely." },
+    scenario2: { title: "A Slow Leak Picked Up Locally", text: "A tyre keeps losing pressure after picking up debris on a local road. We can inspect it on-site and either repair or replace it there and then, depending on what's safe." },
+    nearby: [
+      { name: "West Calder", href: "/mobile-tyre-fitting-west-calder/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+      { name: "Livingston", href: "/mobile-tyre-fitting-livingston/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of Addiewell?", a: "Yes, we regularly attend callouts across Addiewell, along with nearby West Lothian towns such as West Calder and Bathgate." },
+      { q: "How quickly can you reach me in Addiewell?", a: "Addiewell is within our regular West Lothian coverage area — get in touch with your location and we'll give you a realistic arrival estimate." },
+      { q: "Can you fit tyres at my workplace in Addiewell?", a: "Yes, we attend workplaces, car parks and driveways across Addiewell — just let us know the location when you get in touch." },
+      { q: "Do you cover the drive between Addiewell and Edinburgh?", a: "Yes, we can attend roadside breakdowns on the routes between Addiewell and Edinburgh — let us know exactly where you are and we'll confirm arrival time." },
+      { q: "Do you offer emergency tyre assistance in Addiewell at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Addiewell." },
+    ],
+  },
+  {
+    slug: "mobile-tyre-fitting-linlithgow",
+    town: "Linlithgow",
+    hero: "puncture-hero-bg",
+    heroHeight: 1010,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Linlithgow, West Lothian. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Linlithgow. We come to you.",
+    introHeading: "Local Tyre Fitting For Linlithgow Drivers",
+    introText:
+      "Linlithgow sits between Bo'ness and Bathgate in West Lothian, on the corridor connecting Falkirk to Edinburgh, and well within reach of our base for a mobile callout. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Linlithgow and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Linlithgow, we regularly attend nearby West Lothian towns including Bo'ness, Bathgate and the wider West Lothian area. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of Linlithgow is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Puncture Near The Town Centre", text: "A tyre picks up damage parked near Linlithgow's town centre. We can attend and assess it on-site, repairing it where that's safe or fitting a replacement if not." },
+    scenario2: { title: "Worn Tyres Ahead Of A Longer Drive", text: "Tread depth is borderline before a longer trip out of Linlithgow. We can check, advise honestly on whether a repair or replacement is the right call, and fit on the spot if new tyres are needed." },
+    nearby: [
+      { name: "Bo'ness", href: "/mobile-tyre-fitting-boness/" },
+      { name: "Falkirk", href: "/mobile-tyre-fitting-falkirk/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of Linlithgow?", a: "Yes, we regularly attend callouts across Linlithgow, along with nearby West Lothian towns such as Bo'ness and Bathgate." },
+      { q: "How quickly can you reach me in Linlithgow?", a: "Linlithgow is within our regular West Lothian coverage area — get in touch with your location and we'll give you a realistic arrival estimate." },
+      { q: "Can you fit tyres at my workplace in Linlithgow?", a: "Yes, we attend workplaces, car parks and driveways across Linlithgow — just let us know the location when you get in touch." },
+      { q: "What if I break down between Linlithgow and Bathgate?", a: "We can attend roadside breakdowns on the routes between Linlithgow and Bathgate — let us know exactly where you are and we'll confirm arrival time." },
+      { q: "Do you offer emergency tyre assistance in Linlithgow at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Linlithgow." },
+    ],
+  },
+  {
+    slug: "mobile-tyre-fitting-west-calder",
+    town: "West Calder",
+    hero: "fleet-hero-bg",
+    heroHeight: 1146,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in West Calder, West Lothian. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in West Calder. We come to you.",
+    introHeading: "Local Tyre Fitting For West Calder Drivers",
+    introText:
+      "West Calder sits on the A71 in West Lothian, close to Addiewell and Polbeth, and a manageable drive from our Bathgate base. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in West Calder and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as West Calder, we regularly attend nearby West Lothian towns including Addiewell, Polbeth and Bathgate. Coverage can vary depending on the day and how busy we are, so if you're not sure whether your part of West Calder is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat On The A71", text: "A tyre gives way while driving the A71 near West Calder. We can attend a safe roadside or nearby car park location and get you moving again without a tow." },
+    scenario2: { title: "A Puncture Near West Calder High School", text: "A slow puncture shows up on the school run in West Calder. Mobile fitting at a safe nearby location means the rest of the day doesn't get derailed chasing a garage appointment." },
+    nearby: [
+      { name: "Addiewell", href: "/mobile-tyre-fitting-in-addiewell/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+      { name: "Livingston", href: "/mobile-tyre-fitting-livingston/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+    ],
+    faqs: [
+      { q: "Do you cover all of West Calder?", a: "Yes, we regularly attend callouts across West Calder, along with nearby West Lothian towns such as Addiewell and Bathgate." },
+      { q: "How quickly can you reach me in West Calder?", a: "West Calder is within our regular West Lothian coverage area — get in touch with your location and we'll give you a realistic arrival estimate." },
+      { q: "Can you fit tyres at my workplace in West Calder?", a: "Yes, we attend workplaces, car parks and driveways across West Calder — just let us know the location when you get in touch." },
+      { q: "What if I break down on the A71 near West Calder?", a: "We can attend roadside breakdowns near West Calder, including along the A71 — let us know exactly where you are and we'll confirm arrival time." },
+      { q: "Do you offer emergency tyre assistance in West Calder at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in West Calder." },
+    ],
+  },
+  // ---- Shotts and Wishaw: per WORDPRESS_MIGRATION_AUDIT.md §6 Q3, the live
+  // WordPress pages for these two currently show another town's content
+  // verbatim (Bathgate and Edinburgh respectively) — not migrated here. This
+  // content is deliberately generic where it can't be verified: no invented
+  // landmarks, response times, local offices or customer claims, only the
+  // already-documented business facts (address, phone, 24/7, coverage-area
+  // membership per SFR_Website_Info.txt) and well-known, publicly verifiable
+  // geography (motorway/road corridors, county). ----
+  {
+    slug: "mobile-tyre-fitting-shotts",
+    town: "Shotts",
+    hero: "emergency-hero-bg",
+    heroHeight: 1010,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Shotts, North Lanarkshire. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Shotts. We come to you.",
+    introHeading: "Local Tyre Fitting For Shotts Drivers",
+    introText:
+      "Shotts sits in North Lanarkshire on the corridor between Edinburgh and Glasgow, within reach of our Bathgate base for a mobile callout. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Shotts and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Shotts, we regularly attend nearby towns including Harthill and Wishaw, as part of our wider coverage area. Coverage can vary depending on the day, distance and how busy we are, so if you're not sure whether your part of Shotts is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat Before The Commute", text: "A tyre goes down first thing before a commute out of Shotts. Fitting at the driveway rather than a garage queue means the day doesn't get thrown off completely." },
+    scenario2: { title: "A Puncture Found Locally", text: "A slow puncture shows up on a Shotts road. We can inspect it on-site and either repair or replace it there and then, depending on what's safe." },
+    nearby: [
+      { name: "Harthill", href: "/mobile-tyre-fitting-harthill/" },
+      { name: "Wishaw", href: "/mobile-tyre-fitting-wishaw/" },
+      { name: "Airdrie", href: "/mobile-tyre-fitting-airdrie/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+    ],
+    faqs: [
+      { q: "Do you cover Shotts?", a: "Yes, we attend callouts in Shotts as part of our wider coverage area — get in touch with your location and we'll confirm." },
+      { q: "How quickly can you reach me in Shotts?", a: "Let us know your location in Shotts and we'll give you a realistic arrival estimate rather than a generic promise." },
+      { q: "Can you fit tyres at my workplace in Shotts?", a: "Yes, we attend workplaces, car parks and driveways across Shotts — just let us know the location when you get in touch." },
+      { q: "Do you cover vans and trade vehicles based in Shotts?", a: "Yes, our trade and fleet tyre service covers Shotts-based vans and business vehicles — see our trade and fleet tyre services page for details." },
+      { q: "Do you offer emergency tyre assistance in Shotts at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Shotts." },
+    ],
+  },
+  {
+    slug: "mobile-tyre-fitting-wishaw",
+    town: "Wishaw",
+    hero: "about-hero-bg",
+    heroHeight: 1008,
+    metaDescription: "SFR Motors Ltd provides 24/7 mobile tyre fitting, repair and replacement in Wishaw, North Lanarkshire. We come to your home, workplace or roadside — get a free quote today.",
+    ogDescription: "24/7 mobile tyre fitting, repair and replacement in Wishaw. We come to you.",
+    introHeading: "Local Tyre Fitting For Wishaw Drivers",
+    introText:
+      "Wishaw sits in North Lanarkshire on the M8 corridor, within reach of our Bathgate base for a mobile callout. Wherever your vehicle is — at home, at work, or stopped at the roadside — we bring a fully equipped fitting van to you rather than asking you to find a garage. That covers new tyre fitting, replacements, puncture repair and out-of-hours emergency assistance. Get in touch with your location in Wishaw and we'll confirm availability and a price before we set off.",
+    areasText:
+      "As well as Wishaw, we regularly attend nearby towns including Shotts and Airdrie, as part of our wider coverage area. Coverage can vary depending on the day, distance and how busy we are, so if you're not sure whether your part of Wishaw is included, just get in touch with your location and we'll confirm before you book anything in.",
+    scenario1: { title: "A Flat Near The M8", text: "A tyre gives way close to the motorway near Wishaw. Rather than a tow to a garage, we can attend a safe roadside or nearby car park location and get you moving again." },
+    scenario2: { title: "Worn Tyres Ahead Of A Long Drive", text: "Tread depth is borderline before a longer trip out of Wishaw. We can check, advise honestly on whether a repair or replacement is the right call, and fit on the spot if new tyres are needed." },
+    nearby: [
+      { name: "Shotts", href: "/mobile-tyre-fitting-shotts/" },
+      { name: "Airdrie", href: "/mobile-tyre-fitting-airdrie/" },
+      { name: "West Lothian", href: "/mobile-tyre-fitting-west-lothian/" },
+      { name: "Bathgate", href: "/mobile-tyre-fitting-bathgate/" },
+    ],
+    faqs: [
+      { q: "Do you cover Wishaw?", a: "Yes, we attend callouts in Wishaw as part of our wider coverage area — get in touch with your location and we'll confirm." },
+      { q: "How quickly can you reach me in Wishaw?", a: "Let us know your location in Wishaw and we'll give you a realistic arrival estimate rather than a generic promise." },
+      { q: "Can you fit tyres at my workplace in Wishaw?", a: "Yes, we attend workplaces, car parks and driveways across Wishaw — just let us know the location when you get in touch." },
+      { q: "Can you help with a breakdown near the M8 at Wishaw?", a: "Yes, we attend roadside callouts near Wishaw, including close to the M8 — let us know exactly where you are so we can confirm arrival time safely." },
+      { q: "Do you offer emergency tyre assistance in Wishaw at night?", a: "Yes, we operate 24/7, so get in touch any time and we'll confirm what we can do for an out-of-hours callout in Wishaw." },
     ],
   },
 ];

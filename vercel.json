@@ -72,6 +72,11 @@
       "source": "/expert-locking-wheel-nut-removal/",
       "destination": "/locking-wheel-nut-removal/",
       "statusCode": 301
+    },
+    {
+      "source": "/caravan-trailer-tyre-fitting/",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
     }
   ]
 }

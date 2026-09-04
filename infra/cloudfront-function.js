@@ -28,7 +28,8 @@ var REDIRECTS = {
   "/category/best-mobile-tyre-fitting-service/": "/blog/",
   "/locking-wheel-nut-removal-bathgate/": "/mobile-locking-wheel-nut-removal/",
   "/best-emergency-locking-wheel-nut-removal-in-west-lothian/": "/locking-wheel-nut-removal/",
-  "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/"
+  "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/",
+  "/caravan-trailer-tyre-fitting/": "/mobile-trailer-and-caravan-tyre-fitting/"
 };
 
 function handler(event) {

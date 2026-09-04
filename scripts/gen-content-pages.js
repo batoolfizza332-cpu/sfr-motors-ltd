@@ -169,7 +169,7 @@ pages.push({
       <p>We stock a spread of tyres across premium, mid-range and value price points, so you can choose what suits your vehicle, driving and budget — not just whatever happens to be on the shelf. If you have a specific brand or spec in mind, let us know when you get in touch and we'll confirm availability before we arrive.</p>
 
       <h2>Car, van, caravan and trailer sizes</h2>
-      <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/caravan-trailer-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
+      <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/mobile-trailer-and-caravan-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
 
       <h2>Not sure which tyre you need?</h2>
       <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges.</p>
