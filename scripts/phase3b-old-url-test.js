@@ -104,6 +104,11 @@ const OLD_URLS = [
   { url: "/locking-wheel-nut-removal/", expect: "exact" },
   { url: "/best-emergency-locking-wheel-nut-removal-in-west-lothian/", expect: "redirect", to: "/locking-wheel-nut-removal/" },
   { url: "/expert-locking-wheel-nut-removal/", expect: "redirect", to: "/locking-wheel-nut-removal/" },
+  // ---- Phase 3B correction: found via external search after the first Phase 3B
+  // pass shipped — confirmed live, indexed, and previously entirely unaccounted
+  // for (no redirect, no recreated page). Recreated at their exact original slug. ----
+  { url: "/emergency-tyre-replacement/", expect: "exact" },
+  { url: "/the-best-tyres-for-your-ford-on-edinburghs-roads/", expect: "exact" },
   // ---- Blog ----
   { url: "/blog/", expect: "exact" },
   { url: "/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety/", expect: "exact" },

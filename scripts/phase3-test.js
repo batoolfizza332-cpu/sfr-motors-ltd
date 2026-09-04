@@ -221,6 +221,74 @@ async function main() {
     ok(`${source} -> ${destination} (301, single hop, 200)`);
   }
 
+  // ---- 4b. Phase 3B correction: explicit checks for the 2 restored URLs ----
+  // (/emergency-tyre-replacement/ and /the-best-tyres-for-your-ford-on-edinburghs-roads/,
+  // found missing from the migration entirely during Phase 3B re-verification —
+  // named checks here so their coverage doesn't depend solely on the generic
+  // sitemap sweep above.)
+  console.log(`\n== Phase 3B correction: restored URLs ==`);
+  const RESTORED_URLS = [
+    { path: "/emergency-tyre-replacement/", h1: "Emergency Tyre Replacement vs Garage Tyre Fitting" },
+    { path: "/the-best-tyres-for-your-ford-on-edinburghs-roads/", h1: "The Best Tyres For Your Ford On Edinburgh's Roads" },
+  ];
+  for (const { path: p, h1 } of RESTORED_URLS) {
+    const loc = `https://sfrmotors.co.uk${p}`;
+
+    if (REDIRECTS.has(p)) fail(`${p}: should not be a redirect source`, `found in redirect map -> ${REDIRECTS.get(p)}`);
+    else ok(`${p}: not a redirect (recreated page)`);
+
+    const res = await get(p);
+    if (res.status !== 200) {
+      fail(`${p}: expected 200, got ${res.status}`);
+      continue;
+    }
+    ok(`${p}: 200`);
+
+    const canonicalMatch = res.body.match(/<link rel="canonical" href="([^"]+)">/);
+    if (!canonicalMatch || canonicalMatch[1] !== loc) fail(`${p}: canonical mismatch`, canonicalMatch ? canonicalMatch[1] : "missing");
+    else ok(`${p}: self-referencing canonical`);
+
+    const h1s = [...res.body.matchAll(/<h1[^>]*>([^<]*)<\/h1>/g)];
+    if (h1s.length !== 1) fail(`${p}: expected exactly one H1, found ${h1s.length}`);
+    else if (h1s[0][1] !== h1) fail(`${p}: H1 text mismatch`, `"${h1s[0][1]}" != "${h1}"`);
+    else ok(`${p}: exactly one H1, correct text`);
+
+    const titleMatch = res.body.match(/<title>([^<]+)<\/title>/);
+    const descMatch = res.body.match(/<meta name="description" content="([^"]*)"/);
+    if (!titleMatch) fail(`${p}: missing <title>`);
+    else if ((titles.get(titleMatch[1]) || []).length !== 1) fail(`${p}: title not unique sitewide`, titleMatch[1]);
+    else ok(`${p}: unique <title>`);
+    if (!descMatch) fail(`${p}: missing meta description`);
+    else if ((descriptions.get(descMatch[1]) || []).length !== 1) fail(`${p}: meta description not unique sitewide`, descMatch[1]);
+    else ok(`${p}: unique meta description`);
+
+    const ldBlocks = [...res.body.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    let breadcrumbFound = false;
+    if (ldBlocks.length === 0) fail(`${p}: no JSON-LD blocks found`);
+    for (const [, block] of ldBlocks) {
+      try {
+        const parsed = JSON.parse(block);
+        if (parsed["@type"] === "BreadcrumbList") breadcrumbFound = true;
+      } catch (e) {
+        fail(`${p}: invalid JSON-LD`, e.message);
+      }
+    }
+    if (breadcrumbFound) ok(`${p}: valid BreadcrumbList JSON-LD present`);
+    else fail(`${p}: no valid BreadcrumbList JSON-LD found`);
+
+    if (!sitemapUrls.includes(loc)) fail(`${p}: not present in sitemap.xml`);
+    else ok(`${p}: present in sitemap.xml`);
+
+    const pageLinks = [...res.body.matchAll(/href="(\/[^"#]*)"/g)].map((m) => m[1]);
+    let brokenLinks = 0;
+    for (const link of pageLinks) {
+      const r = await get(link);
+      if (r.status !== 200 && r.status !== 301) brokenLinks++;
+    }
+    if (brokenLinks > 0) fail(`${p}: ${brokenLinks} broken internal link(s)`);
+    else ok(`${p}: all ${pageLinks.length} internal links resolve`);
+  }
+
   // ---- 5. non-trailing-slash / trailing-slash consistency spot check ----
   console.log(`\n== Trailing-slash consistency ==`);
   const spot = await get("/about-us");

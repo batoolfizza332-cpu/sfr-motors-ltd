@@ -35,7 +35,10 @@ const SLUG_MAP = {
   "trade-fleet-tyre-services.html": "/trade-fleet-tyre-services/",
   "van-tyre-replacement.html": "/van-tyre-replacement-services/",
   "caravan-trailer-tyre-fitting.html": "/caravan-trailer-tyre-fitting/",
-  "tpms-services.html": "/tpms-services/",
+  // Phase 3B verified sfrmotors.co.uk's live URL is /tyre-pressure-monitoring-system/,
+  // not /tpms-services/ — corrected here for accuracy; site/tpms-services.html
+  // no longer exists (already migrated), so this entry is now a documented no-op.
+  "tpms-services.html": "/tyre-pressure-monitoring-system/",
   "mobile-tyre-fitting-bathgate.html": "/mobile-tyre-fitting-bathgate/",
   "mobile-tyre-fitting-edinburgh.html": "/mobile-tyre-fitting-edinburgh/",
   "mobile-tyre-fitting-livingston.html": "/mobile-tyre-fitting-livingston/",

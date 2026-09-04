@@ -16,6 +16,14 @@
 // claims to be a specific, unverified fact about SFR Motors' own
 // equipment, stock or pricing.
 //
+// Phase 3B correction: also recreates two further live URLs found during
+// the follow-up verification pass (external search, since egress to
+// sfrmotors.co.uk is blocked here) that the first Phase 3B pass missed
+// entirely — /emergency-tyre-replacement/ and
+// /the-best-tyres-for-your-ford-on-edinburghs-roads/. Same rule as above:
+// freshly written from the known title/topic, no scraped content, no
+// invented prices, qualifications, response times or stats.
+//
 // Run once: `node scripts/gen-articles.js`.
 
 "use strict";
@@ -313,6 +321,52 @@ const pages = [
 
       <h2>Getting it done</h2>
       <p>We offer mobile locking wheel nut removal across Bathgate and West Lothian, 24/7 — see our <a href="/mobile-locking-wheel-nut-removal/">locking wheel nut removal service</a> for details.</p>`,
+  },
+  {
+    slug: "emergency-tyre-replacement",
+    title: "Emergency Tyre Replacement vs Garage Tyre Fitting | SFR Motors Ltd",
+    metaDescription: "What actually counts as a tyre emergency, and how emergency mobile tyre replacement compares to booking in at a garage.",
+    breadcrumbLabel: "Blog",
+    headline: "Emergency Tyre Replacement vs Garage Tyre Fitting",
+    bodyHtml: `      <p>Not every flat tyre is an emergency, and not every emergency needs the same response. Here's how to tell the difference, and what each option actually involves.</p>
+
+      <h2>What counts as a tyre emergency</h2>
+      <p>A blowout, a tyre too damaged to drive on, or a puncture that's left you stranded somewhere unsafe are genuine emergencies — the vehicle can't reasonably move again until the tyre is dealt with. A tyre that's simply worn or due for replacement soon isn't, even if it needs sorting.</p>
+
+      <h2>Why mobile replacement suits a real emergency</h2>
+      <p>If the car isn't safe to drive, it shouldn't be driven — including to a garage. Emergency mobile tyre replacement comes to wherever the vehicle actually is, whether that's home, work, or the roadside, so the tyre is dealt with without the vehicle needing to move on a damaged wheel first.</p>
+
+      <h2>When a garage visit is still the better choice</h2>
+      <p>If the tyre isn't urgent — you've noticed wear during a routine check, or you want to compare tyre brands and options in person — booking in at a garage on your own schedule is perfectly reasonable. There's no need to treat a non-urgent replacement as an emergency.</p>
+
+      <h2>What to have ready when you call</h2>
+      <p>Your location, vehicle registration or tyre size, and a description of what's happened all help us assess the job before anyone sets off, and confirm a price up front.</p>
+
+      <h2>Emergency cover across our area</h2>
+      <p>Our <a href="/emergency-tyre-change/">emergency tyre change service</a> covers Bathgate, <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh</a>, <a href="/mobile-tyre-fitting-falkirk/">Falkirk</a> and the surrounding area, 24/7.</p>`,
+  },
+  {
+    slug: "the-best-tyres-for-your-ford-on-edinburghs-roads",
+    title: "The Best Tyres For Your Ford On Edinburgh's Roads | SFR Motors Ltd",
+    metaDescription: "What to weigh up when choosing tyres for a Ford in Edinburgh — from city-run Fiestas to Transit vans — and how road conditions factor in.",
+    breadcrumbLabel: "Blog",
+    headline: "The Best Tyres For Your Ford On Edinburgh's Roads",
+    bodyHtml: `      <p>Ford covers a lot of ground — a Fiesta doing the school run is a very different proposition to a Transit on a full working day. What suits one doesn't automatically suit the other.</p>
+
+      <h2>Match the tyre to the vehicle, not just the brand</h2>
+      <p>The right tyre depends on your specific model's load and speed rating, not on "Ford" as a brand — a Fiesta, Focus, Kuga and Transit all call for different specs. Your vehicle's handbook or the plate on the driver's door pillar has the correct rating; we'll confirm it against your registration before fitting anything.</p>
+
+      <h2>Edinburgh's roads are a mixed test</h2>
+      <p>Cobbled and uneven stretches in the city centre, pothole-prone routes on the outskirts, and wet weather for a good part of the year all put tyres under different kinds of strain — good grip and sidewall condition matter as much as tread depth.</p>
+
+      <h2>Wear patterns worth checking</h2>
+      <p>Uneven wear across the front tyres is common on front-wheel-drive Fords doing a lot of urban stop-start driving, and is often a sign it's worth checking alignment and pressure rather than just replacing the tyre. If in doubt, ask us to take a look before you buy a replacement.</p>
+
+      <h2>Vans and load-carrying Fords</h2>
+      <p>A Transit or Transit Custom carrying regular loads needs tyres rated for that weight — see our <a href="/van-tyre-replacement-services/">van tyre replacement service</a> for what's involved.</p>
+
+      <h2>Getting fitted in Edinburgh</h2>
+      <p>See our <a href="/our-tyre-range/">tyre range</a> for what we carry, or our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> — get in touch with your registration for a price.</p>`,
   },
 ];
 
