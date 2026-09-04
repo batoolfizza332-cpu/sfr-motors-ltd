@@ -66,6 +66,48 @@ function articleSchema(slug, headline) {
 </script>`;
 }
 
+function faqSchema(qas) {
+  return `
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+${qas.map((qa) => `    {
+      "@type": "Question",
+      "name": "${qa.q}",
+      "acceptedAnswer": { "@type": "Answer", "text": "${qa.a}" }
+    }`).join(",\n")}
+  ]
+}
+</script>`;
+}
+
+function faqHtml(qas, groupName, headingId, faqTitle) {
+  return `
+<section class="sfr-faq" aria-labelledby="${headingId}">
+  <div class="sfr-faq__inner">
+    <div class="sfr-faq__head">
+      <div class="sfr-faq__eyebrow">FAQs</div>
+      <h2 class="sfr-faq__title" id="${headingId}">${faqTitle}</h2>
+    </div>
+
+    <div class="sfr-faq__list">
+${qas.map((qa) => `
+      <details class="sfr-faq__item" name="${groupName}">
+        <summary class="sfr-faq__summary">
+          <span class="sfr-faq__q">${qa.q}</span>
+          <span class="sfr-faq__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+        </summary>
+        <div class="sfr-faq__panel"><div class="sfr-faq__panel-inner">
+          <p>${qa.a}</p>
+        </div></div>
+      </details>`).join("\n")}
+    </div>
+  </div>
+</section>`;
+}
+
 const pages = [
   {
     slug: "mobile-tyre-fitting-guide",
@@ -368,18 +410,166 @@ const pages = [
       <h2>Getting fitted in Edinburgh</h2>
       <p>See our <a href="/our-tyre-range/">tyre range</a> for what we carry, or our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> — get in touch with your registration for a price.</p>`,
   },
+  // ---------------------------------------------------------------- Phase 4B Batch B1
+  {
+    slug: "11-benefits-of-emergency-mobile-tyre-fitting",
+    title: "11 Benefits of Emergency Mobile Tyre Fitting | SFR Motors Ltd",
+    metaDescription: "Eleven practical reasons calling a mobile tyre fitter beats driving on a damaged tyre or waiting for recovery, for drivers across West Lothian.",
+    breadcrumbLabel: "Blog",
+    headline: "11 Benefits of Emergency Mobile Tyre Fitting",
+    bodyHtml: `      <p>Not every flat tyre calls for the same response, but when it's a genuine emergency, calling a mobile fitter has real advantages over the alternatives. Here's why.</p>
+
+      <h2>1. You're not left driving on a damaged tyre</h2>
+      <p>A mobile fitter comes to wherever the vehicle is, so there's no need to nurse a damaged tyre to a garage first.</p>
+
+      <h2>2. No separate recovery or towing to arrange</h2>
+      <p>If the tyre itself is the only problem, a mobile fitter can often resolve it on the spot — without a tow truck being called at all.</p>
+
+      <h2>3. It works wherever you actually are</h2>
+      <p>Home, work, a car park, or the roadside — the fitter comes to the vehicle rather than the other way round.</p>
+
+      <h2>4. One less thing to arrange during a stressful moment</h2>
+      <p>A tyre emergency is disruptive enough without also having to sort out how to get the vehicle somewhere. Mobile fitting removes that step.</p>
+
+      <h2>5. A proper assessment on the spot</h2>
+      <p>Rather than guessing whether a tyre is safe to continue on, a fitter can physically inspect it where it is and explain what's actually needed.</p>
+
+      <h2>6. Suitable for a wide range of vehicles</h2>
+      <p>Cars, vans and 4x4s can typically all be dealt with by a properly equipped mobile fitter, without needing a specific garage.</p>
+
+      <h2>7. Minimal disruption to your day</h2>
+      <p>The vehicle doesn't need to leave where it's parked, so whatever you were doing — working, at home, running errands — is interrupted as little as possible.</p>
+
+      <h2>8. No queuing at a garage</h2>
+      <p>There's no waiting room and no queue behind other customers' cars — the fitter deals with your vehicle directly.</p>
+
+      <h2>9. Related issues can be picked up at the same time</h2>
+      <p>If something else is found during the callout — a stuck locking wheel nut, for example — it's often possible to deal with it in the same visit rather than booking a second one.</p>
+
+      <h2>10. Less time spent in a vulnerable position</h2>
+      <p>Whether that's a roadside verge or a car park after dark, resolving the tyre issue where you are reduces the time spent waiting in a less-than-ideal spot.</p>
+
+      <h2>11. Straightforward to get started</h2>
+      <p>Your location and some basic details about the vehicle and the tyre are usually all that's needed to get things moving.</p>
+
+      <h2>Get in touch</h2>
+      <p>SFR Motors Ltd operates 24 hours a day across Bathgate, Edinburgh and West Lothian. See our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement service</a> for more, or call us directly.</p>`,
+  },
+  {
+    slug: "7-warning-signs-your-tyres-need-immediate-professional-attention",
+    title: "7 Warning Signs Your Tyres Need Immediate Professional Attention | SFR Motors Ltd",
+    metaDescription: "Seven tyre warning signs worth acting on, and why only a physical inspection can confirm whether your tyre needs repair or replacement.",
+    breadcrumbLabel: "Blog",
+    headline: "7 Warning Signs Your Tyres Need Immediate Professional Attention",
+    bodyHtml: `      <p>Tyres don't usually fail without warning. Catching these signs early can be the difference between a straightforward repair and being caught out somewhere inconvenient.</p>
+
+      <h2>1. Losing pressure repeatedly</h2>
+      <p>A tyre that keeps needing air, even after topping up, can point to a slow puncture, a valve issue, or damage to the wheel itself — worth having checked before it becomes a sudden flat.</p>
+
+      <h2>2. Visible cracks or bulges</h2>
+      <p>Cracking or a bulge in the sidewall usually means the tyre's internal structure has been compromised. It's worth having looked at promptly rather than waiting to see if it gets worse.</p>
+
+      <h2>3. Uneven tread wear</h2>
+      <p>Wear that's heavier on one side, or patchy across the tyre, often points to an alignment, suspension or pressure issue rather than the tyre itself — and can affect how the vehicle handles.</p>
+
+      <h2>4. Vibration while driving</h2>
+      <p>A vibration through the steering wheel or seat can have several causes, from wheel balance to internal tyre damage. It's not something to ignore, even if it seems minor.</p>
+
+      <h2>5. Reduced grip in wet weather</h2>
+      <p>If the car feels less planted on wet roads than it used to, worn tread is one possible cause — and it directly affects stopping distance.</p>
+
+      <h2>6. A visible object in the tread</h2>
+      <p>A nail, screw or piece of debris lodged in the tyre doesn't always cause an immediate flat. Whether it's safe to leave in place, remove, or repair around depends on where it is and how deep it's gone — not something to judge by eye alone.</p>
+
+      <h2>7. Tyres showing their age</h2>
+      <p>Cracking or a slightly perished look to the rubber, even on a tyre with reasonable tread left, can be a sign it's due a closer look.</p>
+
+      <h2>What to do next</h2>
+      <p>None of the above tells you for certain whether a tyre needs a repair, a replacement, or nothing at all — that depends on the specific tyre, and we're not able to say from a description alone. A physical, on-site inspection is the only way to know for sure. If you notice any of these signs, it's best to stop in a safe location and get it looked at before continuing your journey.</p>
+
+      <p>See our <a href="/mobile-tyre-puncture-repair/">mobile puncture repair service</a> for suitable repairs, or our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement service</a> if the tyre needs replacing.</p>`,
+    faq: [
+      { q: "Does noticing one of these signs always mean I need a new tyre?", a: "Not necessarily — some of these signs point to a repairable issue, and others don't need any work at all once inspected. Only a physical inspection can confirm which applies to your tyre." },
+      { q: "Is it safe to keep driving if I notice one of these signs?", a: "We can't tell you that from a description alone. If you notice any of the signs above, the safest approach is to stop in a safe location and have the tyre looked at before continuing your journey." },
+    ],
+    faqTitle: "Tyre Warning Sign Questions",
+    faqGroup: "sfr-7ws-faq",
+  },
+  {
+    slug: "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key",
+    title: "Emergency Wheel Nut Removal: What To Do If You've Lost The Key | SFR Motors Ltd",
+    metaDescription: "Lost your locking wheel nut key? What to do next, why forcing it off yourself risks damage, and when professional removal is the safer option.",
+    breadcrumbLabel: "Blog",
+    headline: "Emergency Wheel Nut Removal: What To Do If You've Lost The Key",
+    bodyHtml: `      <p>A locking wheel nut with no key to hand can bring an otherwise simple tyre job to a stop. Here's what's actually worth doing about it.</p>
+
+      <h2>Why locking wheel nuts exist</h2>
+      <p>They're a theft deterrent fitted to alloy wheels — each one needs a matching key, a unique adaptor shaped to fit that nut, to come off. Without it, the nut is designed to resist being removed.</p>
+
+      <h2>Why keys go missing</h2>
+      <p>It happens more often than you'd think — left in a previous car, lost during a house move, or simply never handed over by a previous owner. It's a common problem, not an unusual one.</p>
+
+      <h2>Why forcing it isn't the answer</h2>
+      <p>Using pliers, a hammer, or other makeshift tools to try to remove a locking nut without its key risks rounding off the nut, damaging the alloy wheel, or snapping a wheel stud — turning a straightforward job into a more expensive one. It's not something we'd recommend attempting yourself.</p>
+
+      <h2>How professional removal works</h2>
+      <p>A specialist extraction tool, matched to the size and pattern of the nut, is used to remove it without relying on the original key. Done properly, this shouldn't damage the wheel. Whether a particular nut can be removed this way, and how straightforward it will be, depends on the nut itself — something a fitter can only confirm once they've actually seen it.</p>
+
+      <h2>When to get in touch</h2>
+      <p>If you can't find your key and need a wheel off — whether that's for a flat tyre, a tyre rotation, or anything else — it's worth arranging professional removal rather than working around the problem yourself.</p>
+
+      <h2>Avoiding it next time</h2>
+      <p>Once a new key is issued, keeping it somewhere memorable (rather than loose in the boot) and noting down any code the manufacturer provides can save the same hassle in future.</p>
+
+      <p>See our <a href="/mobile-locking-wheel-nut-removal/">mobile locking wheel nut removal service</a> for details, or get in touch.</p>`,
+    faq: [
+      { q: "Can I remove a locking wheel nut myself without the key?", a: "We wouldn't recommend it. Forcing the nut with pliers, a hammer or similar tools risks damaging the wheel, the stud or the locking mechanism itself. Specialist extraction tools are designed to remove it without that risk." },
+      { q: "What if I can't find my key anywhere?", a: "That's a common situation, not an unusual one. Get in touch and we can talk through removal using specialist tools that don't depend on the original key." },
+    ],
+    faqTitle: "Locking Wheel Nut Removal Questions",
+    faqGroup: "sfr-ewn-faq",
+  },
+  {
+    slug: "why-tyre-safety-is-more-important-than-most-drivers-realize",
+    title: "Why Tyre Safety Is More Important Than Most Drivers Realise | SFR Motors Ltd",
+    metaDescription: "Why tyre condition affects braking, grip and control more than most drivers expect — practical, non-alarmist safety advice for West Lothian drivers.",
+    breadcrumbLabel: "Blog",
+    headline: "Why Tyre Safety Is More Important Than Most Drivers Realise",
+    bodyHtml: `      <p>Most drivers think about tyres when something's obviously wrong — a puncture, a warning light, a flat. But tyre condition affects far more of how a car behaves than that, most of the time without you noticing.</p>
+
+      <h2>They're the only part of the car touching the road</h2>
+      <p>Braking, cornering and simply keeping the car pointing where you steer it all depend on the contact between tyre and road. When that contact is compromised — by low pressure, uneven wear, or damage — every one of those is affected, not just one.</p>
+
+      <h2>Pressure affects more than fuel economy</h2>
+      <p>Under- or over-inflated tyres change how a car handles, not just how much fuel it uses. Checking pressure regularly, against the figure in your vehicle's handbook or door-sill sticker, is one of the simplest checks that actually matters.</p>
+
+      <h2>Damage isn't always visible from the outside</h2>
+      <p>Hitting a pothole or clipping a kerb can damage a tyre's internal structure without leaving an obvious mark on the outside. If a tyre has taken a hard knock, it's worth having it checked even if nothing looks wrong at a glance.</p>
+
+      <h2>Worn tread matters most when you need it most</h2>
+      <p>The difference between good and worn tread is easy to overlook in dry weather, and far more obvious — and more dangerous — the moment the road is wet. Grip and stopping distance both suffer as tread wears down.</p>
+
+      <h2>Why regular checks are worth the two minutes</h2>
+      <p>Catching a developing issue during a routine check is far less disruptive than discovering it as a flat tyre on the way somewhere. A quick visual check and a pressure check, done regularly, catch most problems before they become urgent.</p>
+
+      <h2>If something doesn't look or feel right</h2>
+      <p>Not sure whether a mark, a vibration or a pressure drop needs attention? A physical inspection is the only way to know for certain — see our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> if it turns out to be repairable, or our <a href="/mobile-tyre-replacement/">tyre replacement service</a> if a new tyre is what's needed.</p>`,
+  },
 ];
 
 for (const p of pages) {
   const outDir = path.join(SITE_DIR, p.slug);
   fs.mkdirSync(outDir, { recursive: true });
+  const hasFaq = Array.isArray(p.faq) && p.faq.length > 0;
   const html = shell({
     slug: p.slug,
     title: p.title,
     metaDescription: p.metaDescription,
     breadcrumbLabel: p.breadcrumbLabel,
-    extraSchema: articleSchema(p.slug, p.headline),
-    bodyHtml: article({ title: p.headline, bodyHtml: p.bodyHtml }),
+    extraSchema: articleSchema(p.slug, p.headline) + (hasFaq ? faqSchema(p.faq) : ""),
+    bodyHtml:
+      article({ title: p.headline, bodyHtml: p.bodyHtml }) +
+      (hasFaq ? faqHtml(p.faq, p.faqGroup, `${p.slug}-faq-heading`, p.faqTitle) : ""),
   });
   fs.writeFileSync(path.join(outDir, "index.html"), html);
   console.log(`  generated site/${p.slug}/index.html`);

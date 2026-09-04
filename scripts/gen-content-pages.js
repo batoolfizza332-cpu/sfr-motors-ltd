@@ -200,6 +200,10 @@ const OTHER_ARTICLES = [
   { slug: "locking-wheel-nut-removal", title: "Locking Wheel Nut Removal: Your Options Explained", excerpt: "Lost your locking wheel nut key? Here's how removal actually works, and what to expect." },
   { slug: "emergency-tyre-replacement", title: "Emergency Tyre Replacement vs Garage Tyre Fitting", excerpt: "What actually counts as a tyre emergency, and how emergency mobile tyre replacement compares to booking in at a garage." },
   { slug: "the-best-tyres-for-your-ford-on-edinburghs-roads", title: "The Best Tyres For Your Ford On Edinburgh's Roads", excerpt: "What to weigh up when choosing tyres for a Ford in Edinburgh — from city-run Fiestas to Transit vans." },
+  { slug: "11-benefits-of-emergency-mobile-tyre-fitting", title: "11 Benefits of Emergency Mobile Tyre Fitting", excerpt: "Eleven practical reasons calling a mobile tyre fitter beats driving on a damaged tyre or waiting for recovery." },
+  { slug: "7-warning-signs-your-tyres-need-immediate-professional-attention", title: "7 Warning Signs Your Tyres Need Immediate Professional Attention", excerpt: "Seven tyre warning signs worth acting on, and why only a physical inspection can confirm what's needed." },
+  { slug: "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key", title: "Emergency Wheel Nut Removal: What To Do If You've Lost The Key", excerpt: "Why forcing a locking wheel nut off yourself risks damage, and when professional removal is the safer option." },
+  { slug: "why-tyre-safety-is-more-important-than-most-drivers-realize", title: "Why Tyre Safety Is More Important Than Most Drivers Realise", excerpt: "Why tyre condition affects braking, grip and control more than most drivers expect." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">
