@@ -106,18 +106,27 @@ Of the 90 published WordPress URLs:
 - **53** are currently missing — no page and no redirect. Left as-is, all
   53 would 404 on launch.
 
+(These three figures are the original audit-time snapshot, before any
+implementation decisions — they are not restated for each batch. The
+action-breakdown table immediately below **is** kept current as decisions
+are made, and is the authoritative post-decision picture.)
+
 The table's actual action breakdown, counted directly from §3 (90 rows,
-verified to total 90):
+verified to total 90). **Updated by the Phase 4B Batch B2 cannibalisation
+correction** — row 42 (`/behind-the-scenes-.../`) moved from "Keep at
+exact URL" into the one-to-one-redirect row, and row 84
+(`/what-tools-do-mobile-tyre-fitters-use/`) moved from "straightforward"
+into the "content caveat" row as the consolidated survivor, per §5 Group 3:
 
 | Action | Rows | Notes |
 |---|---|---|
-| Keep at exact URL | 29 | Already live, unchanged |
+| Keep at exact URL | 28 | Already live, unchanged |
 | 301 redirect (existing, correct) | 8 | Already in `infra/redirects.json` |
 | Exclude from migration | 7 | 4 self-excluded by the live site's own noindex+canonical metadata, 1 the live 404 page, 2 off-topic |
-| Recreate at exact URL (straightforward) | 31 | On-topic, no flags |
-| Recreate at exact URL (with a content caveat) | 9 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2, tyre-lifespan survivor ×1, Michelin rewrite ×1, competitor names removed ×1, why-professional consolidated rewrite ×1, year reference update ×1 *(9 caveated rows; see row-by-row detail in §3/§6)* |
+| Recreate at exact URL (straightforward) | 30 | On-topic, no flags |
+| Recreate at exact URL (with a content caveat) | 10 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2, tyre-lifespan survivor ×1, Michelin rewrite ×1, competitor names removed ×1, why-professional consolidated rewrite ×1, year reference update ×1, tools-pair consolidated survivor ×1 *(10 caveated rows; see row-by-row detail in §3/§5/§6)* |
 | Retain/keep at own URL, reversing original recommendation | 2 | `/24-7-mobile-tyre-replacement/` (§6 Q4), `/mobile-trailer-and-caravan-tyre-fitting/` (§6 Q2) |
-| One-to-one 301 redirect (weaker of a cannibalising pair) | 2 | `/tyre-lifespan/`, `/why-professional-...-information-to-all-drivers/` |
+| One-to-one 301 redirect (weaker of a cannibalising pair) | 3 | `/tyre-lifespan/`, `/why-professional-...-information-to-all-drivers/`, `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` (§5 Group 3) |
 | Hold — not implemented pending fact verification | 2 | Pirelli PNCS claims (§6 Q6), cited AA statistic (§6 Q7) |
 | **Total** | **90** | |
 
@@ -190,7 +199,7 @@ it's the destination page).
 | 39 | `/5-must-visit-places-in-edinburgh-for-first-time-travelers/` | post | 5 Must-Visit Places in Edinburgh for First-Time Travelers | No | Exclude from migration | — | Low |
 | 40 | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | post | 7 Warning Signs Your Tyres Need Immediate Professional Attention | No | Recreate at exact URL | `/7-warning-signs-your-tyres-need-immediate-professional-attention/` | Low |
 | 41 | `/asymmetric-and-directional-tyres-difference/` | post | Tyre Tread: Asymmetric vs Directional Tyres | No | Recreate at exact URL | `/asymmetric-and-directional-tyres-difference/` | Low |
-| 42 | `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` | post | Behind the Scenes: What Tools Do Mobile Tyre Fitters Really Use? | Yes | Keep at exact URL | `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` | Low |
+| 42 | `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` | post | Behind the Scenes: What Tools Do Mobile Tyre Fitters Really Use? | Yes → retired | **One-to-one 301 redirect (weaker of a cannibalising pair, §5 Group 3 — Phase 4B Batch B2 correction; originally, incorrectly, recorded as "Keep at exact URL")** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
 | 43 | `/best-emergency-locking-wheel-nut-removal-in-west-lothian/` | post | Best Emergency Locking Wheel Nut Removal in West Lothian | No | 301 redirect (existing, correct) | `/locking-wheel-nut-removal/` | Low |
 | 44 | `/best-mobile-tyre-fitter-west-lothian/` | post | Best Mobile Tyre Fitter – West Lothian | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-west-lothian/` | Low |
 | 45 | `/better-tyres-better-drive/` | post | Better Tyres, Better Drive | Yes | Keep at exact URL | `/better-tyres-better-drive/` | Low |
@@ -232,7 +241,7 @@ it's the destination page).
 | 81 | `/what-is-mobile-tyre-fitting/` | post | What is Mobile Tyre Fitting? | No | Recreate at exact URL | `/what-is-mobile-tyre-fitting/` | Low |
 | 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | What Fitters Check Before Changing a Tyre on a Hill | No | Recreate at exact URL *(strip leftover content-brief line)* | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | Low |
 | 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Same-Day Mobile Car Repair | No | **HOLD — do not recreate until the cited "over 40% of breakdowns" AA statistic is verified against a real, current AA source (owner-confirmed, §6 Q7)** | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | **Blocked pending verification** |
-| 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | No | Recreate at exact URL | `/what-tools-do-mobile-tyre-fitters-use/` | Low |
+| 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | No | **Recreate at exact URL — RETAINED as the consolidated survivor of a cannibalising pair (§5 Group 3 — Phase 4B Batch B2 correction); the shorter `/behind-the-scenes-.../` (row 42) redirects into it** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
 | 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Best Mobile Tyre Fitting Service Provider in the UK | No | Recreate at exact URL | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | Low |
 | 86 | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | post | Why Professional Mobile Tyre Services Are Essential | No | **Recreate at exact URL — consolidated rewrite of cannibalising pair (owner-confirmed, §6 Q9)** | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
 | 87 | `/why-professional-mobile-tyre-services-are-information-to-all-drivers/` | post | Why Professional Mobile Tyre Services Are Information to All | No | **One-to-one 301 redirect** — weaker of the pair (owner-confirmed, §6 Q9) | `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/` | Resolved |
@@ -289,13 +298,44 @@ neither original is strong enough to keep verbatim — one freshly-written
 consolidated page at the "essential-for-modern-drivers" URL, with
 "information-to-all-drivers" 301-redirecting into it.
 
+**Group 3 — "Mobile tyre fitter tools" (confirmed real duplicate intent —
+correction, see erratum below):** `/what-tools-do-mobile-tyre-fitters-use/`
+(post_id 2071, 1,410w, 2025-09-01) vs `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/`
+(post_id 2432, 1,280w, 2025-09-11). Both are real WordPress posts (both
+appear correctly as rows in §3) with an **identical exported SEO title**
+("9 Tools Mobile Tyre Fitters Use") and the same "Best Mobile Tyre Fitting
+Service" category. Recomputed word overlap is 25.2% (this document
+originally, and incorrectly, recorded 19% and described them as having
+"different angles" — see the erratum immediately below). Both are in fact
+flat equipment listicles covering the same core items (tyre changer, wheel
+balancer, impact/torque wrench, compressor, locking-wheel-nut tools, tyre
+repair kits, TPMS tools, safety/lighting gear); `/what-tools-do-mobile-tyre-fitters-use/`
+additionally covers ten more specialised items (spreaders, bead seaters,
+alignment gauges, generators, OBD diagnostics, van storage, recovery
+tools, scheduling software) not present in the shorter post at all.
+**Decision (Phase 4B Batch B2 correction):** consolidated into
+`/what-tools-do-mobile-tyre-fitters-use/` as the single comprehensive,
+freshly-written survivor (folding in what was genuinely unique to the
+shorter post); `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/`
+301-redirects into it.
+
+> **Erratum:** this pair was originally misclassified in two ways. First,
+> the Batch B2 implementation report incorrectly described
+> `/behind-the-scenes-.../` as a non-live, Phase-3B-invented development
+> slug — it is in fact a real WordPress post (post_id 2432), confirmed
+> against the WXR export. Second, and predating that, this document's own
+> original "Groups considered and NOT merged" list (below) had already
+> examined this exact pair and judged them distinct on the strength of a
+> "different angle (equipment walkthrough vs a more practical 'what to
+> ask/expect' framing)" — that description does not hold up against the
+> actual body content of `/what-tools-do-mobile-tyre-fitters-use/`, which
+> is itself a straight equipment listicle, not a "what to ask/expect"
+> piece. Both errors are corrected by Group 3 above; see also §2's updated
+> action-breakdown counts and §3 rows 42 and 84.
+
 **Groups considered and NOT merged** (title-similar, but body content
 confirmed genuinely distinct — kept as separate recreated pages per this
 session's instruction not to merge on title alone):
-- `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` (already
-  recreated, exact match) vs `/what-tools-do-mobile-tyre-fitters-use/`
-  (missing) — 19% word overlap, different angle (equipment walkthrough vs
-  a more practical "what to ask/expect" framing).
 - `/the-best-tyres-for-edinburgh-west-lothian-roads/` vs
   `/the-best-tyres-for-your-ford-on-edinburghs-roads/` (the latter already
   recreated, exact match) — 11% overlap; one is general, the other is
@@ -326,6 +366,28 @@ session's instruction not to merge on title alone):
   + `/preparing-your-car-tyres-for-winter-driving-in-livingston/` (post,
   missing) — 15% overlap pairwise, distinct angles (service page / common
   problems listicle / seasonal advice). Recreate both posts.
+
+**A pair outside the 90-URL export, reviewed for completeness (Phase 4B
+Batch B2):** `/what-is-mobile-tyre-fitting/` (a real WordPress post, added
+in Batch B2) vs `/mobile-tyre-fitting-guide/` (**not** a WordPress URL —
+a Phase 3B-era slug assigned via search-index sampling before the WXR
+export existed, with no confirmed live counterpart anywhere in the 90-URL
+inventory). Reviewed together because both sit in the same broad "what is
+mobile tyre fitting / how does it work" topic area. Word overlap ~35%
+(new-site content), but the two target genuinely different informational
+sub-intents: `/what-is-mobile-tyre-fitting/` is definitional (what it
+means, how it differs from a garage, who it suits — Bathgate-focused);
+`/mobile-tyre-fitting-guide/` owns the step-by-step booking/day-of
+process walkthrough (Edinburgh-focused). `/what-is-mobile-tyre-fitting/`
+was deliberately written to defer the booking walkthrough to
+`/mobile-tyre-fitting-guide/` rather than re-explain it, with a
+reciprocal link each way. **Decision: keep both** — distinct titles, meta
+descriptions, H1s and headings confirmed unique; guarded going forward by
+`scripts/phase4b-batchB2-test.js`, which checks identical titles/
+descriptions/H1s, identical paragraphs, an intent-drift marker in each H1
+("what is" / "guide"), and a documented 45% word-overlap threshold
+(current measured overlap: 35.2%) on every run, not just this one-off
+review.
 
 ## 6. Owner Decisions (all 9 resolved)
 
@@ -471,7 +533,7 @@ written at `/why-professional-mobile-tyre-services-are-essential-for-modern-driv
 | Pages already safely redirected | **8** |
 | Missing pages | **14** |
 | Missing posts | **39** |
-| Cannibalising/overlapping groups identified | **2 confirmed for merge/redirect** (owner-resolved) + 5 considered-and-kept-separate (flagged for internal linking) |
+| Cannibalising/overlapping groups identified | **3 confirmed for merge/redirect** (2 owner-resolved, §5 Groups 1–2; +1 Phase 4B Batch B2 correction, §5 Group 3) + 6 considered-and-kept-separate within the 90-URL export (flagged for internal linking) + 1 pair outside the export reviewed and kept separate (§5) |
 | Owner-input questions raised | **9** |
 | Owner-input questions resolved | **9 of 9** — see §6 |
 | Articles held pending fact verification (not yet cleared to implement) | **2** — Pirelli PNCS claims (Q6), cited AA statistic (Q7) |

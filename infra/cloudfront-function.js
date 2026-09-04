@@ -30,7 +30,8 @@ var REDIRECTS = {
   "/best-emergency-locking-wheel-nut-removal-in-west-lothian/": "/locking-wheel-nut-removal/",
   "/expert-locking-wheel-nut-removal/": "/locking-wheel-nut-removal/",
   "/caravan-trailer-tyre-fitting/": "/mobile-trailer-and-caravan-tyre-fitting/",
-  "/emergency-tyre-change/": "/24-7-mobile-tyre-replacement/"
+  "/emergency-tyre-change/": "/24-7-mobile-tyre-replacement/",
+  "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/": "/what-tools-do-mobile-tyre-fitters-use/"
 };
 
 function handler(event) {

@@ -97,7 +97,7 @@ const OLD_URLS = [
   { url: "/tyre-puncture-repair-near-me-west-lothian/", expect: "exact" },
   { url: "/best-mobile-tyre-fitters-bathgate/", expect: "exact" },
   { url: "/tyre-fitting-edinburgh-expert-technical-aspects-you-must-know/", expect: "exact" },
-  { url: "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/", expect: "exact" },
+  { url: "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/", expect: "redirect", to: "/what-tools-do-mobile-tyre-fitters-use/" },
   { url: "/better-tyres-better-drive/", expect: "exact" },
   { url: "/how-to-change-a-tyre/", expect: "exact" },
   { url: "/mobile-tyre-fitting-bathgate-questions/", expect: "redirect", to: "/mobile-tyre-fitting-bathgate/" },

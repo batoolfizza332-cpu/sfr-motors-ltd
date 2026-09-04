@@ -82,6 +82,11 @@
       "source": "/emergency-tyre-change/",
       "destination": "/24-7-mobile-tyre-replacement/",
       "statusCode": 301
+    },
+    {
+      "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "statusCode": 301
     }
   ]
 }

@@ -6,6 +6,14 @@
 //   /what-is-mobile-tyre-fitting/
 //   /what-tools-do-mobile-tyre-fitters-use/
 //
+// Plus the Batch B2 cannibalisation correction: /behind-the-scenes-what-
+// tools-do-mobile-tyre-fitters-really-use/ (a real WordPress post, post_id
+// 2432 — misclassified as a non-live dev slug in the original Batch B2
+// report) was consolidated into /what-tools-do-mobile-tyre-fitters-use/
+// and retired with a direct 301. See WORDPRESS_MIGRATION_AUDIT.md for the
+// full evidence (identical exported SEO titles, 25.2% Jaccard overlap on
+// the original WordPress bodies).
+//
 // This is in addition to — not a replacement for — scripts/phase3-test.js,
 // scripts/phase3b-old-url-test.js, scripts/phase4-test.js and the earlier
 // Batch A/B1 suites, which already cover these pages generically (sitemap
@@ -13,9 +21,12 @@
 // valid JSON-LD, no orphan pages, redirect single-hop). This file adds
 // Batch-B2-specific assertions: no leftover content-brief fragments, no
 // copied paragraphs between the five new pages, working phone/WhatsApp
-// links, and — because two of these five share a near-identical topic
-// with an already-live article — a dedicated cannibalisation guard
-// confirming no identical paragraph text between each such pair.
+// links, the retirement/redirect regression for the consolidated tools
+// pair, no procedural lifting/drilling/destructive wheel-nut instructions
+// on the survivor, and a standing cannibalisation guard on the one
+// deliberately-kept-separate pair (/what-is-mobile-tyre-fitting/ vs
+// /mobile-tyre-fitting-guide/) covering identical titles/meta/H1s,
+// identical paragraphs, intent-drift, and a documented overlap threshold.
 // A separate, optional axe-core mobile-viewport accessibility pass runs at
 // the end if a local Playwright + axe-core install is available.
 //
@@ -33,7 +44,7 @@ const PORT = 8943;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-const REDIRECTS_BEFORE = 16; // count confirmed unchanged from Phase 4B Batch A/B1
+const REDIRECTS_BEFORE = 17; // 16 as of Phase 4B Batch A, +1 from this batch's cannibalisation-correction redirect
 
 function contentTypeFor(file) {
   const ext = path.extname(file);
@@ -87,13 +98,21 @@ const NEW_URLS = [
   "/what-tools-do-mobile-tyre-fitters-use/",
 ];
 
-// Near-duplicate-topic pairs this batch deliberately created, per the
-// Batch B2 cannibalisation check against related pages — each new page's
-// content was written to complement, not repeat, its counterpart.
-const CANNIBALISATION_PAIRS = [
-  ["/what-is-mobile-tyre-fitting/", "/mobile-tyre-fitting-guide/"],
-  ["/what-tools-do-mobile-tyre-fitters-use/", "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/"],
-];
+const RETIRED_TOOLS_URL = "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/";
+const TOOLS_SURVIVOR_URL = "/what-tools-do-mobile-tyre-fitters-use/";
+
+// The one pair deliberately kept separate, per the Batch B2 cannibalisation
+// review — /mobile-tyre-fitting-guide/ is not a WordPress URL (Phase 3B,
+// pre-dates the WXR export) but the two pages sit close enough in topic
+// (both "what is / how does mobile tyre fitting work") to need a standing
+// guard against future drift, not just a one-off read.
+const KEPT_SEPARATE_PAIR = ["/what-is-mobile-tyre-fitting/", "/mobile-tyre-fitting-guide/"];
+// Documented threshold: current measured overlap between this pair is
+// ~35% Jaccard on body word sets (short, same-domain articles naturally
+// share a lot of vocabulary — "tyre", "mobile", "fitter", "garage" etc.).
+// 45% gives real headroom above that baseline while still catching a
+// future edit that lets the two pages converge back onto the same content.
+const OVERLAP_WARN_THRESHOLD = 0.45;
 
 function extractJsonLd(html) {
   const re = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
@@ -113,9 +132,30 @@ function stripTags(html) {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+// Scopes to just the article body — everything between the opening
+// sfr-legal__body div and its matching close — so word/paragraph
+// comparisons aren't polluted by the identical sitewide header, nav,
+// footer and JSON-LD boilerplate every page shares.
+function articleBodyHtml(html) {
+  const after = html.split('class="sfr-legal__body"')[1] || "";
+  const closeMatch = after.match(/<\/div>\s*<\/div>\s*<\/section>/);
+  return closeMatch ? after.slice(0, closeMatch.index) : after;
+}
+
 function paragraphs(html) {
-  const section = html.split('class="sfr-legal__body"')[1] || html;
+  const section = articleBodyHtml(html);
   return [...section.matchAll(/<p>([^<]{40,})<\/p>/g)].map((m) => m[1].trim());
+}
+
+function bodyWords(html) {
+  const text = stripTags(articleBodyHtml(html)).toLowerCase();
+  return new Set((text.match(/[a-z']+/g) || []));
+}
+
+function jaccard(setA, setB) {
+  const intersection = [...setA].filter((w) => setB.has(w)).length;
+  const union = new Set([...setA, ...setB]).size;
+  return union === 0 ? 0 : intersection / union;
 }
 
 const STALE_FRAGMENT_PATTERNS = [
@@ -130,6 +170,19 @@ const STALE_FRAGMENT_PATTERNS = [
   /\btbd\b/i,
   /lorem ipsum/i,
   /placeholder/i,
+];
+
+// Procedural lifting/drilling/destructive wheel-nut instruction patterns —
+// none of these should appear on the consolidated tools survivor, which
+// must stay a high-level equipment overview, not a how-to.
+const UNSAFE_PROCEDURAL_PATTERNS = [
+  /\bdrill(?:ing)?\b/i,
+  /\bhammer(?:ing)?\b/i,
+  /jack (?:the|your|up).{0,20}(?:car|vehicle) up/i,
+  /place the jack under/i,
+  /loosen the (?:wheel )?nuts? before/i,
+  /remove the (?:wheel )?nuts? (?:fully|completely)/i,
+  /lower the (?:car|vehicle)/i,
 ];
 
 async function main() {
@@ -234,25 +287,77 @@ async function main() {
   }
   if (!duplicateFound) ok();
 
-  // ---- 9. cannibalisation guard: no identical paragraphs against the pre-existing near-duplicate-topic articles ----
-  console.log("\n== Cannibalisation guard vs. related existing articles ==");
-  for (const [newUrl, existingUrl] of CANNIBALISATION_PAIRS) {
-    const existingRes = await get(existingUrl);
-    if (existingRes.status !== 200) {
-      fail(`${existingUrl}: expected 200 (needed for cannibalisation comparison)`, `got ${existingRes.status}`);
-      continue;
+  // ---- 9. consolidated tools survivor: retirement/redirect regression ----
+  console.log("\n== Tools-pair consolidation: retirement and redirect ==");
+  const survivor = pageData[TOOLS_SURVIVOR_URL];
+  const retired = await get(RETIRED_TOOLS_URL);
+  if (retired.status === 301 && retired.headers.location === TOOLS_SURVIVOR_URL) ok();
+  else fail(`${RETIRED_TOOLS_URL}: expected 301 -> ${TOOLS_SURVIVOR_URL}`, `got ${retired.status} ${retired.headers.location || ""}`);
+  // no chain: the destination must not itself be a redirect source
+  if (!vercelConfig.redirects.some((r) => r.source === TOOLS_SURVIVOR_URL)) ok();
+  else fail(`${TOOLS_SURVIVOR_URL}: is itself a redirect source — this would be a chain from ${RETIRED_TOOLS_URL}`);
+  // the retired page must no longer exist as a built file (not indexable)
+  if (!fs.existsSync(path.join(DIST_DIR, "behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use", "index.html"))) ok();
+  else fail(`${RETIRED_TOOLS_URL}: page file still exists in dist/ — it should have been removed`);
+
+  // ---- 10. consolidated tools survivor: content requirements ----
+  console.log("\n== Tools-pair consolidation: content requirements ==");
+  const survivorText = stripTags(survivor.body);
+  const unsafeHit = UNSAFE_PROCEDURAL_PATTERNS.find((re) => re.test(survivorText));
+  if (!unsafeHit) ok();
+  else fail(`${TOOLS_SURVIVOR_URL}: contains a procedural lifting/drilling/destructive instruction pattern`, unsafeHit.toString());
+  // must not imply every fitter carries identical equipment
+  if (/varies between providers|not every fitter carries identical/i.test(survivorText)) ok();
+  else fail(`${TOOLS_SURVIVOR_URL}: expected explicit wording that equipment varies between providers`);
+  // must not still reference the retired page anywhere
+  if (!survivor.body.includes(RETIRED_TOOLS_URL)) ok();
+  else fail(`${TOOLS_SURVIVOR_URL}: still references the retired URL ${RETIRED_TOOLS_URL}`);
+
+  // ---- 11. Pair 2 guard: /what-is-mobile-tyre-fitting/ vs /mobile-tyre-fitting-guide/ ----
+  console.log("\n== Kept-separate pair guard (definitional vs. guide) ==");
+  {
+    const [urlA, urlB] = KEPT_SEPARATE_PAIR;
+    const resB = await get(urlB);
+    if (resB.status !== 200) {
+      fail(`${urlB}: expected 200 (needed for the kept-separate-pair guard)`);
+    } else {
+      const bodyA = pageData[urlA].body;
+      const bodyB = resB.body;
+      const titleA = bodyA.match(/<title>([^<]*)<\/title>/)?.[1];
+      const titleB = bodyB.match(/<title>([^<]*)<\/title>/)?.[1];
+      const descA = bodyA.match(/name="description" content="([^"]*)"/)?.[1];
+      const descB = bodyB.match(/name="description" content="([^"]*)"/)?.[1];
+      const h1A = bodyA.match(/<h1[^>]*>([^<]*)/)?.[1];
+      const h1B = bodyB.match(/<h1[^>]*>([^<]*)/)?.[1];
+      // identical titles/descriptions/H1s
+      if (titleA && titleB && titleA !== titleB) ok();
+      else fail(`${urlA} and ${urlB}: titles must differ`, `${titleA} / ${titleB}`);
+      if (descA && descB && descA !== descB) ok();
+      else fail(`${urlA} and ${urlB}: meta descriptions must differ`, `${descA} / ${descB}`);
+      if (h1A && h1B && h1A !== h1B) ok();
+      else fail(`${urlA} and ${urlB}: H1s must differ`, `${h1A} / ${h1B}`);
+      // identical paragraphs
+      const parasA = paragraphs(bodyA);
+      const parasB = paragraphs(bodyB);
+      const sharedParas = parasA.filter((p) => parasB.includes(p));
+      if (sharedParas.length === 0) ok();
+      else fail(`${urlA} and ${urlB} share an identical paragraph`, sharedParas[0].slice(0, 80));
+      // search-intent drift: each page's H1 must keep its defining marker —
+      // "what is" for the definitional page, "guide" for the process page —
+      // so a future edit can't quietly blur the two back into the same intent
+      if (/what is/i.test(h1A || "")) ok();
+      else fail(`${urlA}: H1 no longer reads as a "what is" definitional page`, h1A);
+      if (/guide/i.test(h1B || "")) ok();
+      else fail(`${urlB}: H1 no longer reads as a "guide" process page`, h1B);
+      // excessive future content overlap, documented threshold
+      const overlap = jaccard(bodyWords(bodyA), bodyWords(bodyB));
+      if (overlap <= OVERLAP_WARN_THRESHOLD) ok();
+      else fail(`${urlA} and ${urlB}: word overlap ${(overlap * 100).toFixed(1)}% exceeds the ${(OVERLAP_WARN_THRESHOLD * 100).toFixed(0)}% documented threshold`);
+      console.log(`    (current word overlap: ${(overlap * 100).toFixed(1)}%, threshold: ${(OVERLAP_WARN_THRESHOLD * 100).toFixed(0)}%)`);
     }
-    const newParas = paragraphs(pageData[newUrl].body);
-    const existingParas = paragraphs(existingRes.body);
-    const shared = newParas.filter((p) => existingParas.includes(p));
-    if (shared.length === 0) ok();
-    else fail(`${newUrl} shares an identical paragraph with ${existingUrl}`, shared[0].slice(0, 80));
-    // the new page must explicitly cross-link to its companion, not silently duplicate it
-    if (pageData[newUrl].body.includes(`href="${existingUrl}"`)) ok();
-    else fail(`${newUrl}: expected a cross-link to its companion article ${existingUrl}`);
   }
 
-  // ---- 10. phone and WhatsApp links present and correctly formed ----
+  // ---- 12. phone and WhatsApp links present and correctly formed ----
   console.log("\n== Phone and WhatsApp links ==");
   for (const p of NEW_URLS) {
     const html = pageData[p].body;
@@ -262,8 +367,8 @@ async function main() {
     else fail(`${p}: missing/incorrect WhatsApp link`);
   }
 
-  // ---- 11. no broken internal links ----
-  console.log("\n== No broken internal links ==");
+  // ---- 13. no broken internal links, no stale links to the retired URL ----
+  console.log("\n== No broken internal links / no stale links to the retired URL ==");
   const siteFiles = [];
   (function walk(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -287,8 +392,18 @@ async function main() {
   }
   if (brokenLinks === 0) ok();
   else fail(`${brokenLinks} broken internal link(s) found`);
+  let staleLinks = 0;
+  for (const f of siteFiles) {
+    const html = fs.readFileSync(f, "utf8");
+    if (html.includes(`href="${RETIRED_TOOLS_URL}"`)) {
+      staleLinks++;
+      console.log(`    stale link to ${RETIRED_TOOLS_URL} in: ${path.relative(DIST_DIR, f)}`);
+    }
+  }
+  if (staleLinks === 0) ok();
+  else fail(`${staleLinks} file(s) still link to the retired URL ${RETIRED_TOOLS_URL}`);
 
-  // ---- 12. no orphan pages ----
+  // ---- 14. no orphan pages ----
   console.log("\n== No orphan pages ==");
   for (const p of NEW_URLS) {
     const linkedElsewhere = siteFiles.some((f) => {
@@ -300,7 +415,7 @@ async function main() {
     else fail(`${p}: appears to be orphaned — no inbound link found anywhere on the site`);
   }
 
-  // ---- 13. sitemap and page inventory remain 1:1 ----
+  // ---- 15. sitemap and page inventory remain 1:1, retired URL absent ----
   console.log("\n== Sitemap : page inventory 1:1 ==");
   const sitemap = fs.readFileSync(path.join(DIST_DIR, "sitemap.xml"), "utf8");
   const sitemapUrls = [...sitemap.matchAll(/<loc>https:\/\/sfrmotors\.co\.uk(\/[a-z0-9\-\/]*)<\/loc>/gi)].map((m) => m[1]);
@@ -310,9 +425,13 @@ async function main() {
     if (sitemapUrls.includes(p)) ok();
     else fail(`sitemap.xml: missing ${p}`);
   }
+  if (!sitemapUrls.includes(RETIRED_TOOLS_URL)) ok();
+  else fail(`sitemap.xml: still contains the retired ${RETIRED_TOOLS_URL}`);
+  if (siteFiles.length === 56) ok();
+  else fail(`expected exactly 56 pages after the consolidation`, `got ${siteFiles.length}`);
 
-  // ---- 14. no redirect changes (still 16) ----
-  console.log("\n== Redirect count unchanged ==");
+  // ---- 16. redirect count is 17 (16 + this correction's one redirect) ----
+  console.log("\n== Redirect count ==");
   if (vercelConfig.redirects.length === REDIRECTS_BEFORE) ok();
   else fail(`redirects: expected ${REDIRECTS_BEFORE}`, `got ${vercelConfig.redirects.length}`);
 

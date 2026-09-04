@@ -267,32 +267,6 @@ const pages = [
       <p>All of the above is standard practice for a proper mobile fitting job — see our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> or get in touch for a quote.</p>`,
   },
   {
-    slug: "behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use",
-    title: "Behind The Scenes: What Tools Do Mobile Tyre Fitters Really Use? | SFR Motors Ltd",
-    metaDescription: "A look at the equipment a well-equipped mobile tyre fitting van typically carries, from tyre changers to torque wrenches.",
-    breadcrumbLabel: "Blog",
-    headline: "Behind The Scenes: What Tools Do Mobile Tyre Fitters Really Use?",
-    bodyHtml: `      <p>A mobile tyre fitting van needs to carry a genuine workshop's worth of kit — just portable. Here's what a well-equipped one typically has on board.</p>
-
-      <h2>A portable tyre changer</h2>
-      <p>Removes the old tyre from the wheel rim and seats the new one, without damaging the rim — the core piece of equipment for any fitting job.</p>
-
-      <h2>A wheel balancer</h2>
-      <p>Checks and corrects the wheel's balance after a new tyre is fitted, so the vehicle doesn't vibrate at speed.</p>
-
-      <h2>An impact wrench and torque wrench</h2>
-      <p>The impact wrench removes wheel nuts quickly; the torque wrench does the final tightening to the exact figure the vehicle manufacturer specifies — two different jobs, two different tools.</p>
-
-      <h2>A compressor</h2>
-      <p>For inflating new tyres to the correct pressure and, where needed, topping up others during the same visit.</p>
-
-      <h2>TPMS tools</h2>
-      <p>For resetting or checking the tyre pressure monitoring system after a tyre change, where the vehicle needs it.</p>
-
-      <h2>Why this matters</h2>
-      <p>The right equipment, used properly, is the difference between a tyre that's fitted and one that's fitted safely. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included. For the fuller picture — repair kits, safety gear and diagnostic tools — see our <a href="/what-tools-do-mobile-tyre-fitters-use/">wider look at what mobile tyre fitters carry</a>.</p>`,
-  },
-  {
     slug: "better-tyres-better-drive",
     title: "Better Tyres, Better Drive: Why Tyre Condition Matters | SFR Motors Ltd",
     metaDescription: "How tyre condition affects safety, fuel efficiency and handling — and when it's time to replace, for Edinburgh and West Lothian drivers.",
@@ -657,25 +631,34 @@ const pages = [
   {
     slug: "what-tools-do-mobile-tyre-fitters-use",
     title: "What Tools Do Mobile Tyre Fitters Use? | SFR Motors Ltd",
-    metaDescription: "A categorised look at what a mobile tyre fitting van actually carries — fitting equipment, safety gear, and diagnostic tools.",
+    metaDescription: "An inside look at the equipment a mobile tyre fitting van typically carries — fitting, repair, safety and diagnostic tools, explained at a glance.",
     breadcrumbLabel: "Blog",
     headline: "What Tools Do Mobile Tyre Fitters Use?",
-    bodyHtml: `      <p>A mobile tyre fitting van carries more than just tyres. Here's a broader look at what's typically on board, grouped by what it's actually for.</p>
+    bodyHtml: `      <p>Ever wondered what's actually inside a mobile tyre fitting van? Every fitter's setup differs slightly, but here's a look at the kind of equipment a well-equipped one typically carries, grouped by what it's for.</p>
 
       <h2>Core fitting equipment</h2>
-      <p>The essentials — a portable tyre changer, wheel balancer, and torque wrench — do the actual work of removing, fitting and correctly tightening a tyre. See our <a href="/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/">behind-the-scenes look at this core equipment</a> for more detail on how each piece is used.</p>
+      <p>A portable tyre changer removes the old tyre from the wheel rim and seats the new one without damaging it, and a wheel balancer checks the wheel spins evenly afterwards. An impact wrench and a torque wrench handle two different jobs — one removes wheel nuts quickly, the other does the final tightening to the exact figure the vehicle manufacturer specifies.</p>
+
+      <h2>Lifting and stability equipment</h2>
+      <p>Working on a tyre away from a workshop means the vehicle needs to be safely and securely supported first. Vans typically carry jacks rated for the vehicles they work on, and this is specialist equipment used by trained fitters — not something to attempt without the right training and gear.</p>
+
+      <h2>Inflation and pressure equipment</h2>
+      <p>Air compressors and tyre inflators bring a new tyre up to the correct pressure, usually alongside a digital gauge for accuracy. Correct pressure matters for safety, handling and fuel efficiency alike.</p>
 
       <h2>Repair equipment</h2>
-      <p>Not every job needs a full replacement. Plug and patch kits, along with tools to properly assess a puncture, let a fitter carry out a suitable repair on the spot rather than automatically reaching for a new tyre.</p>
+      <p>Not every job needs a full replacement. Plug and patch kits, along with tools to properly assess a puncture — its size, position and depth — let a fitter carry out a suitable repair on the spot where the damage falls within safe repair guidelines.</p>
 
-      <h2>Safety equipment</h2>
-      <p>Working roadside or in a car park comes with its own risks. Hi-vis clothing, warning cones, and wheel chocks to stop the vehicle moving during the job are standard kit for any fitter working away from a workshop.</p>
+      <h2>Locking wheel nut tools</h2>
+      <p>Specialist extraction tools, matched to the nut, allow a locking wheel nut to be removed without relying on the original key. See our <a href="/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/">guide on lost locking wheel nut keys</a> for more on how that works and why it's not a DIY job.</p>
 
       <h2>Diagnostic tools</h2>
-      <p>Many modern vehicles need their tyre pressure monitoring system (TPMS) checked or reset after a tyre change, and some fitters carry basic diagnostic tools to check for related issues, such as alignment problems affecting tyre wear.</p>
+      <p>Many modern vehicles need their tyre pressure monitoring system (TPMS) checked or reset after a tyre change. Some fitters also carry basic diagnostic tools to check for related issues, such as wheel alignment problems that affect tyre wear.</p>
 
-      <h2>Why the range matters</h2>
-      <p>A well-equipped van is closer to a portable workshop than a toolbox — the right equipment, used properly, is what makes it possible to do the job safely and to the same standard as a garage, wherever the vehicle is. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included.</p>`,
+      <h2>Safety equipment</h2>
+      <p>Working roadside or in a car park comes with its own risks. Hi-vis clothing, warning cones, wheel chocks to stop the vehicle moving during the job, and portable lighting for after-dark callouts are standard kit for any fitter working away from a workshop.</p>
+
+      <h2>What this means for you</h2>
+      <p>Exactly what's on board varies between providers and vehicles — not every fitter carries identical equipment, and the right kit for a family car isn't necessarily what's needed for a van or a caravan. What matters is that the equipment is appropriate for the job and used by someone trained to use it properly. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included when you book with us.</p>`,
   },
 ];
 

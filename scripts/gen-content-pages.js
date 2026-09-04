@@ -194,7 +194,6 @@ const OTHER_ARTICLES = [
   { slug: "tyre-puncture-repair-near-me-west-lothian", title: "Finding Reliable Puncture Repair Near You In West Lothian", excerpt: "What to check before booking a 'puncture repair near me' search result." },
   { slug: "best-mobile-tyre-fitters-bathgate", title: "What Makes A Trustworthy Mobile Tyre Fitter In Bathgate", excerpt: "What to look for when choosing a mobile tyre fitter — response times, pricing, and honesty about the work." },
   { slug: "tyre-fitting-edinburgh-expert-technical-aspects-you-must-know", title: "Tyre Fitting In Edinburgh: Technical Aspects You Must Know", excerpt: "Load ratings, torque settings, balancing and TPMS resets — the technical side of a proper fitting job." },
-  { slug: "behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use", title: "Behind The Scenes: What Tools Do Mobile Tyre Fitters Really Use?", excerpt: "A look at the equipment a well-equipped mobile tyre fitting van typically carries." },
   { slug: "better-tyres-better-drive", title: "Better Tyres, Better Drive: Why Tyre Condition Matters", excerpt: "How tyre condition affects safety, fuel efficiency and handling — and when it's time to replace." },
   { slug: "how-to-change-a-tyre", title: "How To Change A Tyre: A West Lothian Driver's Guide", excerpt: "A step-by-step guide to changing a flat tyre safely, and when to call a mobile fitter instead." },
   { slug: "locking-wheel-nut-removal", title: "Locking Wheel Nut Removal: Your Options Explained", excerpt: "Lost your locking wheel nut key? Here's how removal actually works, and what to expect." },
@@ -208,7 +207,7 @@ const OTHER_ARTICLES = [
   { slug: "how-quality-tyres-improve-safety-and-driving-performance", title: "How Quality Tyres Improve Safety and Driving Performance", excerpt: "How tyre condition affects braking, handling and fuel efficiency — and why it's worth paying attention to." },
   { slug: "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road", title: "How To Avoid Common Tyre Problems And Stay Safe On The Road", excerpt: "Practical tyre maintenance habits that help you avoid common problems and stay safe." },
   { slug: "what-is-mobile-tyre-fitting", title: "What Is Mobile Tyre Fitting?", excerpt: "What mobile tyre fitting actually means, how it differs from a garage visit, and what it typically covers." },
-  { slug: "what-tools-do-mobile-tyre-fitters-use", title: "What Tools Do Mobile Tyre Fitters Use?", excerpt: "A categorised look at what a mobile tyre fitting van actually carries — fitting, safety and diagnostic tools." },
+  { slug: "what-tools-do-mobile-tyre-fitters-use", title: "What Tools Do Mobile Tyre Fitters Use?", excerpt: "An inside look at the equipment a mobile tyre fitting van typically carries, from fitting kit to safety gear." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">
