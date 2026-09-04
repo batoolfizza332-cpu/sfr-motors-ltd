@@ -198,6 +198,8 @@ const OTHER_ARTICLES = [
   { slug: "better-tyres-better-drive", title: "Better Tyres, Better Drive: Why Tyre Condition Matters", excerpt: "How tyre condition affects safety, fuel efficiency and handling — and when it's time to replace." },
   { slug: "how-to-change-a-tyre", title: "How To Change A Tyre: A West Lothian Driver's Guide", excerpt: "A step-by-step guide to changing a flat tyre safely, and when to call a mobile fitter instead." },
   { slug: "locking-wheel-nut-removal", title: "Locking Wheel Nut Removal: Your Options Explained", excerpt: "Lost your locking wheel nut key? Here's how removal actually works, and what to expect." },
+  { slug: "emergency-tyre-replacement", title: "Emergency Tyre Replacement vs Garage Tyre Fitting", excerpt: "What actually counts as a tyre emergency, and how emergency mobile tyre replacement compares to booking in at a garage." },
+  { slug: "the-best-tyres-for-your-ford-on-edinburghs-roads", title: "The Best Tyres For Your Ford On Edinburgh's Roads", excerpt: "What to weigh up when choosing tyres for a Ford in Edinburgh — from city-run Fiestas to Transit vans." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">
@@ -227,7 +229,7 @@ pages.push({
       </article>
 ${BLOG_ARTICLE_ENTRIES}
     </div>
-    <p style="margin-top:28px;font-size:13.5px;color:var(--sfr-sub);">Looking for something specific? <a href="/contact-us/">get in touch</a>.</p>
+    <p style="margin-top:28px;font-size:13.5px;color:var(--sfr-sub);">Looking for something specific? <a href="/contact-us/" style="color:var(--sfr-orange);">get in touch</a>.</p>
   </div>
 </section>`,
 });

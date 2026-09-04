@@ -30,7 +30,8 @@ function shell({ slug, title, metaDescription, breadcrumbLabel, bodyHtml, robots
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"></noscript>
 
 <link rel="stylesheet" href="/assets/css/main.css">
 
@@ -81,6 +82,7 @@ function shell({ slug, title, metaDescription, breadcrumbLabel, bodyHtml, robots
         <li><a href="/#sfr-areas-heading">Areas We Cover</a></li>
         <li><a href="/#sfr-reviews-heading">Reviews</a></li>
         <li><a href="/#sfr-faq-heading">FAQ</a></li>
+        <li><a href="/blog/">Blog</a></li>
         <li><a href="/contact-us/#quote-form">Get A Quote</a></li>
       </ul>
     </nav>
@@ -138,6 +140,7 @@ ${bodyHtml}
         <li><a href="/services/">Services</a></li>
         <li><a href="/#sfr-areas-heading">Areas We Cover</a></li>
         <li><a href="/#sfr-faq-heading">FAQ</a></li>
+        <li><a href="/blog/">Blog</a></li>
         <li><a href="/contact-us/">Contact</a></li>
       </ul>
     </nav>

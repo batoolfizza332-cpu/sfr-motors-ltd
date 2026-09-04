@@ -475,8 +475,8 @@ a { text-underline-offset: 2px; }
     font-weight:700;
     color:var(--sfr-ink);
     text-decoration:none;
+    padding:5px 0;
     border-bottom:1.5px solid var(--sfr-orange);
-    padding-bottom:2px;
     width:fit-content;
   }
   .sfr-services__link svg{width:14px;height:14px;stroke:var(--sfr-orange);transition:transform .2s ease;}
@@ -1581,8 +1581,10 @@ a { text-underline-offset: 2px; }
     border-radius:2px;
   }
 
-  .sfr-footer__links{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+  .sfr-footer__links{list-style:none;margin:0;padding:0;display:grid;gap:2px;}
   .sfr-footer__links a{
+    display:inline-block;
+    padding:5px 0;
     font-size:14px;
     color:var(--sfr-body);
     text-decoration:none;
