@@ -411,8 +411,10 @@ async function main() {
     if (sitemapUrls.includes(p)) ok();
     else fail(`sitemap.xml: missing ${p}`);
   }
-  if (siteFiles.length === 60) ok();
-  else fail(`expected exactly 60 pages after Batch B3`, `got ${siteFiles.length}`);
+  // Absolute page count isn't checked here — it grows with every later
+  // batch. phase3-test.js and each batch's own dedicated suite track the
+  // current total; this file only needs the 1:1 match and the four new
+  // URLs present (both checked above).
 
   // ---- 19. redirect count unchanged (17) ----
   console.log("\n== Redirect count unchanged ==");

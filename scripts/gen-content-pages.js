@@ -172,7 +172,7 @@ pages.push({
       <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/mobile-trailer-and-caravan-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
 
       <h2>Not sure which tyre you need?</h2>
-      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges. Curious about tread patterns? See our guide on <a href="/asymmetric-and-directional-tyres-difference/">asymmetric vs directional tyres</a>.</p>
+      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges. Curious about tread patterns? See our guide on <a href="/asymmetric-and-directional-tyres-difference/">asymmetric vs directional tyres</a>. Thinking about a different size altogether? Try our <a href="/tyre-size-calculator/">tyre size calculator</a> to compare the difference before you decide.</p>
 
       <h2>How to get a price</h2>
       <p>Call <a href="tel:01312020289">0131 202 0289</a>, message us on <a href="https://wa.me/447448427154" target="_blank" rel="noopener">WhatsApp</a>, or use the <a href="/contact-us/#quote-form">quote form</a> and we'll get back to you with pricing for your vehicle.</p>`,
@@ -212,6 +212,7 @@ const OTHER_ARTICLES = [
   { slug: "the-best-tyres-for-edinburgh-west-lothian-roads", title: "How To Choose The Right Tyres For Edinburgh & West Lothian Driving", excerpt: "What actually determines the right tyre for your car — vehicle requirements, size, season and how you drive." },
   { slug: "tyre-services-west-lothian", title: "Common Causes of a Slow Tyre Leak", excerpt: "Why a tyre might be slowly losing air, and why a leak always needs a proper inspection rather than a guess." },
   { slug: "your-guide-to-safe-tyre-services-in-harthill", title: "Your Guide to Safe Tyre Care for Harthill Drivers", excerpt: "Why professional tyre care matters, and how punctures and locking wheel nuts are safely handled." },
+  { slug: "tyre-size-calculator", title: "Tyre Size Calculator", excerpt: "Compare two tyre sizes and see the difference in diameter, circumference and estimated speedometer reading." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

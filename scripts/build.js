@@ -138,7 +138,7 @@ async function buildHtmlFiles(assetMap) {
 
 function copyStaticFiles() {
   const all = walk(SITE_DIR);
-  const skip = new Set(["assets/css/main.css", "assets/js/main.js", "assets/js/analytics.js"]);
+  const skip = new Set(["assets/css/main.css", "assets/js/main.js", "assets/js/analytics.js", "assets/js/tyre-calculator.js"]);
   let count = 0;
   for (const rel of all) {
     const relNorm = rel.replace(/\\/g, "/");
@@ -163,7 +163,7 @@ async function main() {
   const cssMap = [await buildCss("assets/css/main.css")];
 
   console.log("Minifying JS...");
-  const jsMap = [await buildJs("assets/js/main.js"), await buildJs("assets/js/analytics.js")];
+  const jsMap = [await buildJs("assets/js/main.js"), await buildJs("assets/js/analytics.js"), await buildJs("assets/js/tyre-calculator.js")];
 
   console.log("Copying static files...");
   copyStaticFiles();

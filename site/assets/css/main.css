@@ -1914,3 +1914,82 @@ a { text-underline-offset: 2px; }
 .sfr-band__text{font-size:15px;line-height:1.7;color:var(--sfr-sub);margin:0;}
 .sfr-band__text a{color:#d29a4c;font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;}
 .sfr-band__text a:hover{color:#d29a4c;}
+
+/* ===== Tyre Size Calculator ===== */
+.sfr-calc{
+  --sfr-ink:#e9ece4;--sfr-paper:#141d1c;--sfr-card:#1a2422;--sfr-line:#34423d;
+  --sfr-sub:#b7bfb2;--sfr-orange:#d29a4c;--sfr-orange-deep:#e8b467;
+  background:var(--sfr-paper);
+  padding:0 clamp(20px,5vw,32px) clamp(56px,8vw,88px);
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+}
+.sfr-calc *{box-sizing:border-box;}
+.sfr-calc__inner{max-width:760px;margin:0 auto;}
+.sfr-calc__heading{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sfr-orange);margin:0 0 16px;}
+.sfr-calc__form{
+  background:var(--sfr-card);border:1px solid var(--sfr-line);border-radius:14px;
+  padding:clamp(20px,4vw,30px);
+}
+.sfr-calc__sizes{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:start;}
+.sfr-calc__size h3{font-size:14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--sfr-ink);margin:0 0 14px;}
+.sfr-calc__arrow{display:flex;align-items:center;justify-content:center;color:var(--sfr-sub);padding-top:34px;}
+.sfr-calc__arrow svg{width:20px;height:20px;}
+.sfr-calc__field{display:grid;gap:4px;margin-bottom:14px;}
+.sfr-calc__field label{font-size:13px;font-weight:700;color:var(--sfr-ink);}
+.sfr-calc__field input{
+  font:inherit;font-size:14.5px;border:1.5px solid var(--sfr-line);border-radius:8px;
+  padding:11px 13px;background:var(--sfr-paper);color:var(--sfr-ink);width:100%;
+}
+.sfr-calc__field input:focus{outline:none;border-color:var(--sfr-orange);box-shadow:0 0 0 3px rgba(210,154,76,.2);}
+.sfr-calc__field input[aria-invalid="true"]{border-color:#e05c50;}
+.sfr-calc__hint{font-size:11.5px;color:var(--sfr-sub);}
+.sfr-calc__error{font-size:12.5px;font-weight:600;color:#ff8a80;min-height:15px;display:block;}
+.sfr-calc__actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.sfr-calc__btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font:inherit;font-weight:700;font-size:15px;border-radius:9px;padding:13px 24px;cursor:pointer;
+  min-height:48px;min-width:48px;transition:background .18s ease;
+}
+.sfr-calc__btn--primary{background:var(--sfr-orange);color:#1a1305;border:none;}
+.sfr-calc__btn--primary:hover{background:var(--sfr-orange-deep);}
+.sfr-calc__btn--secondary{background:transparent;color:var(--sfr-ink);border:1.5px solid var(--sfr-line);}
+.sfr-calc__btn--secondary:hover{border-color:var(--sfr-orange);}
+.sfr-calc__form-error{
+  font-size:14px;font-weight:600;color:#ff8a80;background:rgba(179,38,30,.18);
+  border-radius:8px;padding:12px 14px;margin:14px 0 0;display:none;
+}
+.sfr-calc__form-error[data-visible="true"]{display:block;}
+
+.sfr-calc__results{margin-top:20px;}
+.sfr-calc__diff{
+  text-align:center;font-size:14.5px;font-weight:600;color:var(--sfr-sub);
+  background:var(--sfr-card);border:1px solid var(--sfr-line);border-radius:10px;
+  padding:18px 16px;margin-bottom:18px;
+}
+.sfr-calc__diff strong{font-size:30px;font-weight:900;color:var(--sfr-orange);display:block;margin-bottom:4px;}
+.sfr-calc__table{width:100%;border-collapse:collapse;font-size:14px;}
+.sfr-calc__table-caption{
+  text-align:left;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--sfr-sub);padding-bottom:8px;
+}
+.sfr-calc__table th,.sfr-calc__table td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--sfr-line);color:var(--sfr-sub);}
+.sfr-calc__table thead th{color:var(--sfr-ink);font-weight:700;}
+.sfr-calc__table tbody th{color:var(--sfr-ink);font-weight:600;}
+.sfr-calc__table td{text-align:right;}
+.sfr-calc__table thead th:not(:first-child){text-align:right;}
+.sfr-calc__speedo{font-size:13.5px;line-height:1.6;color:var(--sfr-sub);margin:16px 0 0;}
+.sfr-calc__status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+@media (max-width:640px){
+  .sfr-calc__sizes{grid-template-columns:1fr;}
+  .sfr-calc__arrow{transform:rotate(90deg);padding:0;margin:-4px 0;}
+  .sfr-calc__table{font-size:13px;}
+  .sfr-calc__table th,.sfr-calc__table td{padding:8px 8px;}
+}
+@media (max-width:768px){
+  .sfr-calc__field input{font-size:16px;padding:13px 14px;}
+  .sfr-calc__btn{min-height:50px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .sfr-calc__btn{transition:none;}
+}
