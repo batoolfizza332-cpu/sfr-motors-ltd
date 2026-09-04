@@ -208,6 +208,10 @@ const OTHER_ARTICLES = [
   { slug: "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road", title: "How To Avoid Common Tyre Problems And Stay Safe On The Road", excerpt: "Practical tyre maintenance habits that help you avoid common problems and stay safe." },
   { slug: "what-is-mobile-tyre-fitting", title: "What Is Mobile Tyre Fitting?", excerpt: "What mobile tyre fitting actually means, how it differs from a garage visit, and what it typically covers." },
   { slug: "what-tools-do-mobile-tyre-fitters-use", title: "What Tools Do Mobile Tyre Fitters Use?", excerpt: "An inside look at the equipment a mobile tyre fitting van typically carries, from fitting kit to safety gear." },
+  { slug: "professional-mobile-tyre-services-on-drivers-linlithgow", title: "Professional Mobile Tyre Services for Linlithgow Drivers", excerpt: "Why regular tyre maintenance matters, and what commercial van drivers in Linlithgow should know about tyre care." },
+  { slug: "the-best-tyres-for-edinburgh-west-lothian-roads", title: "How To Choose The Right Tyres For Edinburgh & West Lothian Driving", excerpt: "What actually determines the right tyre for your car — vehicle requirements, size, season and how you drive." },
+  { slug: "tyre-services-west-lothian", title: "Common Causes of a Slow Tyre Leak", excerpt: "Why a tyre might be slowly losing air, and why a leak always needs a proper inspection rather than a guess." },
+  { slug: "your-guide-to-safe-tyre-services-in-harthill", title: "Your Guide to Safe Tyre Care for Harthill Drivers", excerpt: "Why professional tyre care matters, and how punctures and locking wheel nuts are safely handled." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

@@ -660,6 +660,110 @@ const pages = [
       <h2>What this means for you</h2>
       <p>Exactly what's on board varies between providers and vehicles — not every fitter carries identical equipment, and the right kit for a family car isn't necessarily what's needed for a van or a caravan. What matters is that the equipment is appropriate for the job and used by someone trained to use it properly. See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for what's included when you book with us.</p>`,
   },
+  // ---------------------------------------------------------------- Phase 4B Batch B3
+  {
+    slug: "professional-mobile-tyre-services-on-drivers-linlithgow",
+    title: "Professional Mobile Tyre Services for Linlithgow Drivers | SFR Motors Ltd",
+    metaDescription: "Why regular tyre maintenance matters, how punctures are properly assessed, and what commercial van drivers in Linlithgow should know about tyre care.",
+    breadcrumbLabel: "Blog",
+    headline: "Professional Mobile Tyre Services for Linlithgow Drivers",
+    bodyHtml: `      <p>Keeping on top of tyre condition matters for every driver, but it's easy to let it slip until something goes wrong. Here's what's worth knowing — whether you're driving a car or running a van for work.</p>
+
+      <h2>Why regular tyre checks matter</h2>
+      <p>Tyres affect braking, grip and fuel efficiency, and small issues rarely announce themselves clearly. Cuts, bulges, low pressure and vibration while driving are all worth investigating rather than waiting to see if they get worse — catching a problem early is usually cheaper and safer than dealing with it after a breakdown.</p>
+
+      <h2>What happens with a puncture</h2>
+      <p>Not every puncture means a new tyre. The safe response depends on where the damage is, how large it is, and how deep it goes — details that only a physical inspection can properly assess. A puncture that seems minor at first can weaken the tyre further if driven on, so it's worth having it looked at rather than continuing to drive and hoping it holds.</p>
+
+      <h2>Tyres on commercial vans</h2>
+      <p>Vans used for work carry more load and cover more miles than the average car, which puts extra demand on their tyres. Correctly rated tyres matter for safety, fuel economy and load stability, and regular checks help avoid a van being taken off the road unexpectedly during a working day.</p>
+
+      <h2>Getting a professional opinion</h2>
+      <p>If you're not sure whether a tyre needs attention, a professional inspection is the only reliable way to know — not a guess based on how it looks or feels while driving. See our <a href="/mobile-tyre-fitting-linlithgow/">mobile tyre fitting in Linlithgow</a> page to arrange a visit, or our <a href="/van-tyre-replacement-services/">van tyre replacement service</a> for commercial vehicles.</p>`,
+  },
+  {
+    slug: "the-best-tyres-for-edinburgh-west-lothian-roads",
+    title: "How To Choose The Right Tyres For Edinburgh & West Lothian Driving | SFR Motors Ltd",
+    metaDescription: "What actually determines the right tyre for your car — vehicle requirements, size, load and speed rating, season, and how you drive.",
+    breadcrumbLabel: "Blog",
+    headline: "How To Choose The Right Tyres For Edinburgh & West Lothian Driving",
+    bodyHtml: `      <p>There's no single answer to "what tyre should I choose" — the right tyre depends on your vehicle, how you drive, and what you need from it. Here's what actually goes into the decision.</p>
+
+      <h2>Start with your vehicle's own requirements</h2>
+      <p>Every vehicle has a manufacturer-specified tyre size, load rating and speed rating, found in the handbook or on the plate inside the driver's door. Fitting anything below that specification isn't a matter of preference — it's a genuine safety issue, so this is always the starting point, not an afterthought.</p>
+
+      <h2>Matching tyres to how you actually use the vehicle</h2>
+      <p>A car doing mostly short urban trips has different demands than one covering long motorway journeys regularly, and a van carrying loads is different again. Usage affects which tyre characteristics — wear resistance, load capacity, noise, fuel efficiency — matter most for you.</p>
+
+      <h2>Seasonal considerations</h2>
+      <p>Scotland's weather varies through the year, and some drivers choose winter or all-season tyres for extra grip in cold, wet or icy conditions, while others stick with summer tyres year-round. Whether it's worth switching depends on your own driving pattern and where you typically drive, not a single rule that suits everyone.</p>
+
+      <h2>Budget, premium and everything in between</h2>
+      <p>Tyres span a wide price range, and the right choice depends on your budget and priorities as much as the vehicle. We'll talk through the options that fit your specification rather than steering you toward one tier by default.</p>
+
+      <h2>Getting the right fit for you</h2>
+      <p>There's no single fixed choice here — the right tyre is the one that matches your vehicle's specification, your driving and your budget. Tell us your registration or tyre size and we'll talk through suitable options — see our <a href="/our-tyre-range/">tyre range</a> for what we carry, or our <a href="/mobile-tyre-fitting-edinburgh/">Edinburgh coverage page</a> to arrange a fitting.</p>`,
+  },
+  {
+    slug: "tyre-services-west-lothian",
+    title: "Common Causes of a Slow Tyre Leak | SFR Motors Ltd",
+    metaDescription: "Why a tyre might be slowly losing air — several possible causes, and why a leak always needs a proper inspection rather than a guess.",
+    breadcrumbLabel: "Blog",
+    headline: "Common Causes of a Slow Tyre Leak",
+    bodyHtml: `      <p>A tyre that keeps losing air without an obvious flat can be one of several different things — and telling them apart usually needs a proper look, not a guess.</p>
+
+      <h2>Punctures from nails or debris</h2>
+      <p>Sharp objects like nails, screws or glass are a common cause of a slow leak, and the puncture isn't always obvious just from looking at the tyre.</p>
+
+      <h2>Damaged or worn valve stems</h2>
+      <p>Valve stems wear out over time, and a crack or perished seal can let air escape gradually without anything else being wrong with the tyre.</p>
+
+      <h2>Bead seal issues</h2>
+      <p>The bead is where the tyre meets the rim, and corrosion or an imperfect seal there can cause a slow, sometimes hard-to-spot leak.</p>
+
+      <h2>Corroded or damaged rims</h2>
+      <p>Potholes and kerb strikes can bend or corrode a rim, creating tiny gaps that let air escape slowly over time.</p>
+
+      <h2>Temperature changes</h2>
+      <p>Tyre pressure naturally drops as the temperature falls, which can look like a leak during colder spells even when the tyre itself is fine — worth ruling out before assuming there's damage.</p>
+
+      <h2>Sidewall damage</h2>
+      <p>Kerb strikes and road debris can damage a tyre's sidewall in ways that aren't always visible, and this can be a more serious safety issue than a tread-area puncture.</p>
+
+      <h2>An ageing tyre</h2>
+      <p>Rubber degrades over time, and an older tyre can start to lose air more easily even without an obvious injury.</p>
+
+      <h2>A faulty TPMS sensor</h2>
+      <p>Where a vehicle has a tyre pressure monitoring system, a faulty sensor can itself cause a small leak around its seal, separate from anything wrong with the tyre.</p>
+
+      <h2>Why it needs a proper look</h2>
+      <p>Because a slow leak can come from several different causes — some straightforward to fix, others needing more than a repair — we can't tell you which applies to your tyre without inspecting it. If you're noticing repeated low pressure, uneven wear, or a dashboard warning light, it's worth getting it checked rather than continuing to top up and hope it holds.</p>
+
+      <p>See our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> for suitable repairs, or our <a href="/mobile-tyre-fitting-west-lothian/">West Lothian coverage page</a> to arrange a visit.</p>`,
+  },
+  {
+    slug: "your-guide-to-safe-tyre-services-in-harthill",
+    title: "Your Guide to Safe Tyre Care for Harthill Drivers | SFR Motors Ltd",
+    metaDescription: "Why professional tyre care matters, how punctures and locking wheel nuts are safely handled, and what to look out for before a tyre becomes a problem.",
+    breadcrumbLabel: "Blog",
+    headline: "Your Guide to Safe Tyre Care for Harthill Drivers",
+    bodyHtml: `      <p>Tyre problems rarely pick a convenient moment. Here's a practical look at what keeps them safe, how punctures are properly assessed, and what to know about locking wheel nuts.</p>
+
+      <h2>Why tyre condition matters</h2>
+      <p>Tyres are one of the most safety-critical parts of any vehicle — condition affects braking, fuel use and steering control. Checking regularly for vibration, uneven wear or pressure loss helps catch a developing problem before it becomes a bigger one.</p>
+
+      <h2>Assessing a puncture properly</h2>
+      <p>A puncture doesn't always mean a new tyre. Continuing to drive on one can weaken the tyre's structure further and make a repair less likely to be possible, so it's worth having it looked at rather than waiting. A professional inspection is the only way to know whether a repair is safe or whether replacement is the better option.</p>
+
+      <h2>Locking wheel nuts: a note on safety</h2>
+      <p>Locking wheel nuts protect against wheel theft, but they can be difficult to remove if the key is lost, damaged or worn. Forcing them with unauthorised tools risks damaging the wheel, the stud, or the locking mechanism itself — specialist extraction tools, used correctly, avoid that risk. See our <a href="/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/">guide on lost locking wheel nut keys</a> for more.</p>
+
+      <h2>Why professional care is worth it</h2>
+      <p>Skilled fitting, done properly, reduces the likelihood of problems coming back and keeps a vehicle roadworthy without unnecessary cost. Regular checks and prompt attention when something's off go a long way toward avoiding a breakdown altogether.</p>
+
+      <h2>Getting it looked at in Harthill</h2>
+      <p>See our <a href="/mobile-tyre-fitting-harthill/">Harthill coverage page</a> to arrange a visit, or get in touch with your vehicle details for advice.</p>`,
+  },
 ];
 
 for (const p of pages) {
