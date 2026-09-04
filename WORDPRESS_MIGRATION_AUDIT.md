@@ -124,7 +124,7 @@ into the "content caveat" row as the consolidated survivor, per §5 Group 3:
 | 301 redirect (existing, correct) | 8 | Already in `infra/redirects.json` |
 | Exclude from migration | 7 | 4 self-excluded by the live site's own noindex+canonical metadata, 1 the live 404 page, 2 off-topic |
 | Recreate at exact URL (straightforward) | 30 | On-topic, no flags |
-| Recreate at exact URL (with a content caveat) | 10 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2, tyre-lifespan survivor ×1 (`/tyre-lifespan/` — reversed from the guide variant, see the Q1 erratum), Michelin rewrite ×1, competitor names removed ×1 (locking-wheel-nut industry article — **implemented, Phase 4B Batch C**), why-professional consolidated rewrite ×1 (**implemented, Phase 4B Batch C**), year reference update ×1, tools-pair consolidated survivor ×1 *(10 caveated rows; see row-by-row detail in §3/§5/§6)* |
+| Recreate at exact URL (with a content caveat) | 10 | Shotts ×1, Wishaw ×1, strip leftover content-brief line ×2 (row 82 hill-jacking article — **implemented, Phase 4B Batch D1**; row 68 puncture-repairs article — not yet implemented, held in Batch D2 per the Phase 4B planning review), tyre-lifespan survivor ×1 (`/tyre-lifespan/` — reversed from the guide variant, see the Q1 erratum), Michelin rewrite ×1, competitor names removed ×1 (locking-wheel-nut industry article — **implemented, Phase 4B Batch C**), why-professional consolidated rewrite ×1 (**implemented, Phase 4B Batch C**), year reference update ×1, tools-pair consolidated survivor ×1 *(10 caveated rows; see row-by-row detail in §3/§5/§6)* |
 | Retain/keep at own URL, reversing original recommendation | 2 | `/24-7-mobile-tyre-replacement/` (§6 Q4), `/mobile-trailer-and-caravan-tyre-fitting/` (§6 Q2) |
 | One-to-one 301 redirect (weaker of a cannibalising pair) | 3 | `/tyre-lifespan-mobile-tyre-repair-guide/` (**implemented, Phase 4B Batch C — reversed from the original Q1 reading**), `/why-professional-...-information-to-all-drivers/` (**implemented, Phase 4B Batch C**), `/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/` (§5 Group 3) |
 | Hold — not implemented pending fact verification | 2 | Pirelli PNCS claims (§6 Q6), cited AA statistic (§6 Q7) |
@@ -210,26 +210,26 @@ it's the destination page).
 | 50 | `/how-quality-tyres-improve-safety-and-driving-performance/` | post | How Quality Tyres Improve Safety and Performance | No | Recreate at exact URL | `/how-quality-tyres-improve-safety-and-driving-performance/` | Low |
 | 51 | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | post | How to Avoid Common Tyre Problems | No | Recreate at exact URL | `/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/` | Low |
 | 52 | `/how-to-change-a-tyre/` | post | How to Change a Tyre: West Lothian Guide | Yes | Keep at exact URL | `/how-to-change-a-tyre/` | Low |
-| 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Best Tyres for My Car – Buying Guide | No | Recreate at exact URL | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | Low |
-| 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | How to Extend Tyre Life | No | Recreate at exact URL | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | Low |
+| 53 | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | post | Best Tyres for My Car – Buying Guide | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "tyre-shop Directory" artifact and informal non-SFR voice; explains size/load/speed codes, seasonal types, the tyre label and named brands only as neutral examples with no performance claims; tread-depth wording corrected to GOV.UK's minimum-vs-good-practice framing (no flat "replace at 3mm" rule) | `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/` | Resolved |
+| 54 | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | post | How to Extend Tyre Life | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the "Students will recognize..." content-brief artifact and third-person non-SFR voice; reframed as everyday maintenance habits (pressure, damage checks, alignment, load, driving style, manufacturer guidance) rather than a lifespan-factors explainer, to stay distinct from `/tyre-lifespan/`; no fixed lifespan or mileage promised | `/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/` | Resolved |
 | 55 | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | post | Locking Wheel Nut Removal: Industry Practice & Disclaimer | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch C). Rewritten scope went beyond the original §6 Q8 competitor-name removal: the exported original also described a destructive "invasive" removal technique in procedural step-by-step detail, cited unverifiable sources (owner forums, "Hometyre technical notes," an unattributed police-advisory statistic), quoted Hometyre's own disclaimer wording directly, and framed a disclaimer as something the business requires to protect itself. The rewrite removes all of this: no procedural destructive-removal detail, no invented sourcing, no named competitors or specific commercial products (a "Laser Tools 8842" reference was also generic-ised), and no implication that a disclaimer removes legal responsibility — it instead explains that removal risk is real and asks the customer to confirm they understand it before work starts** | `/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/` | Resolved |
 | 56 | `/locking-wheel-nut-removal/` | post | Complete Guide to Locking Wheel Nut Removal in the UK | Yes | Keep at exact URL | `/locking-wheel-nut-removal/` | Low |
 | 57 | `/michelin-radial-tire-history-innovation/` | post | The Invention that Changed Tires Forever (Michelin) | No | Recreate at exact URL — **rewrite the historical facts in fresh, original wording, do not migrate existing text verbatim (owner-confirmed, §6 Q5)** | `/michelin-radial-tire-history-innovation/` | Resolved |
 | 58 | `/mobile-tyre-fitter-near-me-myths/` | post | Mobile Tyre Fitter Myths Busted (...in 2025) | No | Recreate at exact URL *(update year reference)* | `/mobile-tyre-fitter-near-me-myths/` | Low |
 | 59 | `/mobile-tyre-fitting-bathgate-questions/` | post | 8 Questions Before Booking — Bathgate | No | 301 redirect (existing, correct) | `/mobile-tyre-fitting-bathgate/` | Low |
-| 60 | `/mobile-tyre-fitting-livingston-tyre-problems/` | post | Top 5 Tyre Problems — Livingston | No | Recreate at exact URL | `/mobile-tyre-fitting-livingston-tyre-problems/` | Low |
+| 60 | `/mobile-tyre-fitting-livingston-tyre-problems/` | post | Top 5 Tyre Problems — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: diagnostic/educational angle only (punctures, uneven wear, low tread, sidewall damage, pressure), no remote repairability diagnosis, no invented local landmarks beyond place names already established elsewhere on the site; `/mobile-tyre-fitting-livingston/` remains the primary transactional Livingston page | `/mobile-tyre-fitting-livingston-tyre-problems/` | Resolved |
 | 61 | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | post | Mobile Tyre Fitting vs Recovery | Yes | Keep at exact URL | `/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/` | Low |
 | 62 | `/mobile-tyre-repair-edinburgh-west-lothian/` | post | Mobile Tyre Repair — Edinburgh & West Lothian | Yes | Keep at exact URL | `/mobile-tyre-repair-edinburgh-west-lothian/` | Low |
 | 63 | `/motors-tire-pressure-off-road/` | post | Tire Pressure Guide for Dual Sport & Off-Road (motorcycles) | No | Exclude from migration | — | Low |
 | 64 | `/pirelli-silent-tyres-uk/` | post | Pirelli Silent Tyres UK | No | **HOLD — do not recreate until PNCS/technical claims are verified against Pirelli's current official information (owner-confirmed, §6 Q6)** | `/pirelli-silent-tyres-uk/` | **Blocked pending verification** |
 | 65 | `/premium-or-budget-which-tyres-keep-you-safer/` | post | Premium or Budget Tyres | No | Recreate at exact URL | `/premium-or-budget-which-tyres-keep-you-safer/` | Low |
-| 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Winter Tyre Prep — Livingston | No | Recreate at exact URL | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | Low |
+| 66 | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | post | Winter Tyre Prep — Livingston | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: removes the unverified "283 Google reviews" claim and the step-by-step DIY spare-wheel-changing instructions entirely; no recommendation to change a wheel on a motorway/hard shoulder/slope; AA/RAC/Green Flag mentioned only as breakdown-cover options, explicitly not as endorsements; kept distinct from the Livingston service page and the tyre-problems post (seasonal preparation angle) | `/preparing-your-car-tyres-for-winter-driving-in-livingston/` | Resolved |
 | 67 | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | post | Professional Mobile Tyre Services — Linlithgow | No | Recreate at exact URL | `/professional-mobile-tyre-services-on-drivers-linlithgow/` | Low |
 | 68 | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | post | Puncture Repairs: What's Actually Being Done | No | Recreate at exact URL *(strip leftover content-brief line)* | `/puncture-repairs-whats-actually-being-done-to-your-tyre/` | Low |
 | 69 | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | post | Spare Wheel Delete | No | Recreate at exact URL | `/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/` | Low |
 | 70 | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | post | Best Tyres for Edinburgh & West Lothian Roads | No | Recreate at exact URL | `/the-best-tyres-for-edinburgh-west-lothian-roads/` | Low |
 | 71 | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | post | Best Tyres for Your Ford on Edinburgh's Roads | Yes | Keep at exact URL | `/the-best-tyres-for-your-ford-on-edinburghs-roads/` | Low |
-| 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | No | Recreate at exact URL | `/tyre-blowout-causes-prevention/` | Low |
+| 72 | `/tyre-blowout-causes-prevention/` | post | Tyre Blowout Causes & Prevention | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: emergency-response wording verified against GOV.UK's Highway Code guidance before publishing (ease off the accelerator rather than braking hard, hold the wheel firmly, move to a place of relative safety rather than stopping in a live lane, hazard lights on, never change a wheel yourself on a motorway); the fixed "every 6,000–8,000 miles" rotation claim removed; links to `/24-7-mobile-tyre-replacement/`, not the retired `/emergency-tyre-change/` slug | `/tyre-blowout-causes-prevention/` | Resolved |
 | 73 | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | post | Tyre Care & Flat Tyre Help — Linlithgow | No | Recreate at exact URL | `/tyre-care-and-flat-tyre-help-in-linlithgow/` | Low |
 | 74 | `/tyre-lifespan-mobile-tyre-repair-guide/` | post | How Long Should Tyres Last? (guide variant) | No | **One-to-one 301 redirect (weaker of the pair) — Phase 4B Batch C implementation; reverses this document's original reading of §6 Q1 (see the erratum under Q1) — the older, shorter, clearer `/tyre-lifespan/` URL was chosen as the actual survivor instead** | `/tyre-lifespan/` | Resolved |
 | 75 | `/tyre-lifespan/` | post | How Long Should Tyres Last? | Yes | **Recreate at exact URL — RETAINED as the primary surviving URL of the cannibalising pair (Phase 4B Batch C); safety-focused guide per §6 Q1's content requirements — no fixed mileage/front-rear-split stated as guaranteed fact, manufacturer guidance, condition/age/damage, the UK legal 1.6mm tread minimum framed as a minimum not a target** | `/tyre-lifespan/` | Resolved |
@@ -239,7 +239,7 @@ it's the destination page).
 | 79 | `/tyres-bathgate-guide/` | post | SFR Mobile Tyres Bathgate Guide | Yes | Keep at exact URL | `/tyres-bathgate-guide/` | Low |
 | 80 | `/tyres-bathgate-technical-breakdown/` | post | Tyres Bathgate: Decoding Sidewall Markings | No | Recreate at exact URL | `/tyres-bathgate-technical-breakdown/` | Low |
 | 81 | `/what-is-mobile-tyre-fitting/` | post | What is Mobile Tyre Fitting? | No | Recreate at exact URL | `/what-is-mobile-tyre-fitting/` | Low |
-| 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | What Fitters Check Before Changing a Tyre on a Hill | No | Recreate at exact URL *(strip leftover content-brief line)* | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | Low |
+| 82 | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | post | What Fitters Check Before Changing a Tyre on a Hill | Yes | **Recreate at exact URL — IMPLEMENTED (Phase 4B Batch D1).** Original rewrite: strips the leading content-brief/target-keyword line; gives no instructions to lift or work on a vehicle on a slope — instead explains that a technician assesses whether the location is safe, recommends moving to level ground only when it can be done safely, and otherwise advises professional/recovery assistance | `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/` | Resolved |
 | 83 | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | post | Same-Day Mobile Car Repair | No | **HOLD — do not recreate until the cited "over 40% of breakdowns" AA statistic is verified against a real, current AA source (owner-confirmed, §6 Q7)** | `/what-to-expect-from-a-same-day-mobile-car-repair-service/` | **Blocked pending verification** |
 | 84 | `/what-tools-do-mobile-tyre-fitters-use/` | post | What Tools Do Mobile Tyre Fitters Use? | No | **Recreate at exact URL — RETAINED as the consolidated survivor of a cannibalising pair (§5 Group 3 — Phase 4B Batch B2 correction); the shorter `/behind-the-scenes-.../` (row 42) redirects into it** | `/what-tools-do-mobile-tyre-fitters-use/` | Resolved |
 | 85 | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | post | Best Mobile Tyre Fitting Service Provider in the UK | No | Recreate at exact URL | `/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/` | Low |
@@ -534,6 +534,40 @@ fix in place, or a different approach).
 written at `/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/`;
 `/why-professional-mobile-tyre-services-are-information-to-all-drivers/`
 301-redirects into it.
+
+## 6a. Phase 4B Batch D1 — Implementation Notes and Verified Sources
+
+Following the read-only Batch D planning review, six posts identified as
+"safe to rewrite by removing unsupported claims" (D1) were implemented at
+their exact WordPress URLs: `/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/`,
+`/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/`,
+`/mobile-tyre-fitting-livingston-tyre-problems/`, `/tyre-blowout-causes-prevention/`,
+`/preparing-your-car-tyres-for-winter-driving-in-livingston/`, and
+`/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/`. See §3
+rows 53, 54, 60, 66, 72 and 82 for the row-level implementation notes.
+D2, D3 and the rest of the Batch D plan remain unimplemented.
+
+**External sources checked before writing, and what they were used for:**
+
+- **GOV.UK — The Highway Code, Annex 6 (vehicle maintenance, safety and
+  security)**, and **GOV.UK — The Highway Code, motorway rules on
+  breakdowns (rule 275, "place of relative safety")**: confirmed the
+  1.6mm legal minimum tread depth (central three-quarters, full
+  circumference); confirmed the good-practice replacement guidance is
+  2mm in summer / 3mm in winter — not a flat, year-round 3mm figure as
+  several of the exported WordPress bodies stated — used to correct the
+  tread-depth wording on `/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/`;
+  confirmed the emergency-blowout sequence (ease off the accelerator
+  rather than braking hard, hold the wheel firmly, slow gradually, move
+  to a place of relative safety rather than stopping in a live traffic
+  lane, hazard lights on, never change a wheel yourself on a motorway) —
+  used directly in `/tyre-blowout-causes-prevention/`.
+- No claim on any of the six D1 pages relies on a statistic, review
+  count, price, or response-time figure — those categories were removed
+  outright per the global requirements rather than sourced, consistent
+  with the source-verification rule in the Batch D planning review (if no
+  authoritative source supports a claim, remove it rather than replace it
+  with another invented figure).
 
 ## 7. Totals
 

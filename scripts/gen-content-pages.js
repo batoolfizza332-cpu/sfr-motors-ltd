@@ -172,7 +172,7 @@ pages.push({
       <p>Our vans carry common sizes for cars and light commercials, plus specialist sizes for caravans and trailers — see our <a href="/van-tyre-replacement-services/">van tyre replacement</a> and <a href="/mobile-trailer-and-caravan-tyre-fitting/">caravan &amp; trailer tyre fitting</a> pages for more on those.</p>
 
       <h2>Not sure which tyre you need?</h2>
-      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges. Curious about tread patterns? See our guide on <a href="/asymmetric-and-directional-tyres-difference/">asymmetric vs directional tyres</a>. Thinking about a different size altogether? Try our <a href="/tyre-size-calculator/">tyre size calculator</a> to compare the difference before you decide.</p>
+      <p>Tell us your vehicle's registration or the size on your tyre's sidewall when you get in touch, and we'll confirm exactly what's needed and a price before we set off — no guesswork, no hidden charges. Curious about tread patterns? See our guide on <a href="/asymmetric-and-directional-tyres-difference/">asymmetric vs directional tyres</a>. Thinking about a different size altogether? Try our <a href="/tyre-size-calculator/">tyre size calculator</a> to compare the difference before you decide. New to choosing tyres altogether? See our <a href="/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/">guide to choosing the right tyres for your car</a>.</p>
 
       <h2>How to get a price</h2>
       <p>Call <a href="tel:01312020289">0131 202 0289</a>, message us on <a href="https://wa.me/447448427154" target="_blank" rel="noopener">WhatsApp</a>, or use the <a href="/contact-us/#quote-form">quote form</a> and we'll get back to you with pricing for your vehicle.</p>`,
@@ -216,6 +216,12 @@ const OTHER_ARTICLES = [
   { slug: "tyre-lifespan", title: "How Long Should Tyres Last?", excerpt: "What actually determines how long a tyre lasts, without relying on a single mileage figure." },
   { slug: "why-professional-mobile-tyre-services-are-essential-for-modern-drivers", title: "Why Professional Mobile Tyre Services Matter", excerpt: "Why professional tyre fitting and inspection matters for safety, not just convenience." },
   { slug: "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk", title: "Locking Wheel Nut Removal: Industry Practice And Wheel Damage Risk", excerpt: "What professional locking wheel nut removal actually involves, and what's worth asking before work begins." },
+  { slug: "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill", title: "Changing A Tyre On A Slope: Why We Check First", excerpt: "Why we won't lift a vehicle on an unsafe slope, and what we assess before starting work." },
+  { slug: "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns", title: "Everyday Habits That Help Your Tyres Last", excerpt: "Simple maintenance habits that help you avoid unexpected tyre problems on the road." },
+  { slug: "mobile-tyre-fitting-livingston-tyre-problems", title: "Common Tyre Problems Livingston Drivers Face", excerpt: "The tyre problems we see most often in Livingston, and how to tell when it needs a proper look." },
+  { slug: "tyre-blowout-causes-prevention", title: "Tyre Blowouts: Causes, Prevention And What To Do", excerpt: "What causes a tyre blowout, how to reduce the risk, and the safest way to respond if one happens." },
+  { slug: "preparing-your-car-tyres-for-winter-driving-in-livingston", title: "Preparing Your Tyres For Winter Driving In Livingston", excerpt: "A pre-winter tyre checklist for Livingston drivers, and what to do if you're caught out." },
+  { slug: "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide", title: "How To Choose The Right Tyres For Your Car", excerpt: "Understanding tyre size, load index, speed rating, seasonal options and the tyre label." },
 ];
 const BLOG_ARTICLE_ENTRIES = OTHER_ARTICLES.map(
   (a) => `      <article class="sfr-bloglist__item">

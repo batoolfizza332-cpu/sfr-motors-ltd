@@ -847,6 +847,160 @@ const pages = [
     faqTitle: "Locking Wheel Nut Removal Questions",
     faqGroup: "sfr-lwn-industry-faq",
   },
+  // ---------------------------------------------------------------- Phase 4B Batch D1
+  {
+    slug: "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill",
+    title: "Changing A Tyre On A Slope: Why We Check First | SFR Motors Ltd",
+    metaDescription: "Why we won't lift a vehicle on an unsafe slope, what we assess before starting work, and what to do if you're stuck somewhere uneven.",
+    breadcrumbLabel: "Blog",
+    headline: "Changing A Tyre On A Slope: Why We Check First",
+    bodyHtml: `      <p>Not every roadside is flat, and not every flat tyre happens somewhere convenient. Before we lift a vehicle anywhere, we check whether the location is actually safe to work in &mdash; here's why that matters and what we're looking at.</p>
+
+      <h2>Why a slope changes things</h2>
+      <p>A jack is designed to take weight straight down. On level ground that's exactly what happens. On a slope, part of the vehicle's weight pushes sideways instead, and every jack has a limit to how much side-load it can safely take. This isn't about the jack being poor quality &mdash; it's a physical limit that applies to any jack, and going past it is how a vehicle comes off a jack unexpectedly.</p>
+
+      <h2>What we assess before starting</h2>
+      <p>We look at the angle of the ground, the surface underneath (firm tarmac behaves very differently to loose gravel or wet grass), which way the vehicle is pointing, the condition of the jacking point itself, and the vehicle type &mdash; a taller vehicle with a higher centre of gravity is less forgiving on a slope than a low saloon. Taken together, these tell us whether it's safe to lift the vehicle where it's stopped.</p>
+
+      <h2>If the location isn't safe to work in</h2>
+      <p>Sometimes a vehicle can be moved a short distance to level ground safely &mdash; for example, if there's still some air in the tyre. In that situation, we may ask you to move it carefully while we follow. If it can't be moved safely, we won't attempt the job where it's parked. We'll explain why and talk through the safest next step, which may mean waiting for us to arrange a safer approach, or recommending recovery if the vehicle genuinely can't be worked on where it is.</p>
+
+      <h2>What to do if you're stuck somewhere uneven</h2>
+      <p>Stay in the vehicle if it's safe to do so, and if you do need to get out, keep to the uphill or verge side, away from moving traffic. Put your hazard lights on so you're visible to other drivers. Then get in touch and tell us it's on a slope &mdash; we'll ask a few questions about the angle and surface so we know what to expect before anyone sets off.</p>
+
+      <h2>Getting help</h2>
+      <p>See our <a href="/mobile-tyre-fitting/">mobile tyre fitting service</a> for how a routine callout works, or our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement</a> page if you need help right now.</p>`,
+  },
+  {
+    slug: "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns",
+    title: "Everyday Habits That Help Your Tyres Last | SFR Motors Ltd",
+    metaDescription: "Simple maintenance habits — pressure, inspection, alignment, load and driving style — that help you avoid unexpected tyre problems on the road.",
+    breadcrumbLabel: "Blog",
+    headline: "Everyday Habits That Help Your Tyres Last",
+    bodyHtml: `      <p>Plenty of tyre problems that end up as a roadside breakdown started out as something small and missable. None of the habits below take long, and together they catch most of the common causes before they turn into a flat tyre at the worst possible time.</p>
+
+      <h2>Check pressure regularly, not just when something feels off</h2>
+      <p>Under- and over-inflated tyres both wear faster and unevenly, and low pressure in particular increases the risk of overheating and structural damage. A monthly check, done cold, is enough to catch a slow drop before it becomes a problem &mdash; your vehicle's handbook or the sticker inside the driver's door will have the correct figure for your car.</p>
+
+      <h2>Look for damage, not just tread depth</h2>
+      <p>Tread depth matters, but so does the condition of the tyre itself. Cracking, bulges, cuts or anything embedded in the tread are all worth having looked at, even if there's plenty of tread left &mdash; a tyre can be structurally compromised well before it looks worn.</p>
+
+      <h2>Keep an eye on alignment</h2>
+      <p>If a vehicle pulls to one side, or you notice a tyre wearing unevenly across its width, it's usually a sign the alignment needs checking. Left alone, poor alignment wears tyres unevenly and can shorten their working life considerably.</p>
+
+      <h2>Mind what you're carrying</h2>
+      <p>Every tyre has a weight it's rated to carry, and regularly loading a vehicle beyond that adds strain that shows up as faster wear and a higher risk of failure. Your vehicle's manual will have the recommended load limits.</p>
+
+      <h2>Driving style makes a real difference</h2>
+      <p>Harsh braking, rapid acceleration and hard cornering all put more stress on tyres than smooth, steady driving. It's not about driving unnaturally cautiously &mdash; just being aware that an aggressive style wears tyres down faster than it needs to.</p>
+
+      <h2>Follow your manufacturer's guidance</h2>
+      <p>Your vehicle and tyre manufacturers' own recommendations &mdash; on pressure, rotation intervals and general care &mdash; are worth following rather than a generic rule of thumb, since they're specific to your actual vehicle and tyres.</p>
+
+      <h2>Don't ignore a slow puncture</h2>
+      <p>A tyre that's slowly losing air is worth getting looked at promptly rather than continuing to top it up. See our <a href="/mobile-tyre-puncture-repair/">puncture repair service</a> if that's what you're dealing with.</p>
+
+      <h2>Want to understand what actually determines how long a tyre lasts?</h2>
+      <p>This page is about the everyday habits that help. For a fuller look at the factors behind tyre lifespan itself, see our guide on <a href="/tyre-lifespan/">how long tyres should last</a>, or our piece on <a href="/better-tyres-better-drive/">why tyre condition matters</a> for the safety side of things.</p>`,
+  },
+  {
+    slug: "mobile-tyre-fitting-livingston-tyre-problems",
+    title: "Common Tyre Problems Livingston Drivers Face | SFR Motors Ltd",
+    metaDescription: "The tyre problems we see most often in Livingston — punctures, uneven wear, low tread and pressure issues — and how to tell when it needs a proper look.",
+    breadcrumbLabel: "Blog",
+    headline: "Common Tyre Problems Livingston Drivers Face",
+    bodyHtml: `      <p>Livingston's mix of distributor roads, roundabouts and retail park car parks throws up a fairly consistent set of tyre problems. Here's what we see most often, and how to tell whether something needs attention.</p>
+
+      <h2>Punctures from road debris</h2>
+      <p>Nails, glass and general debris on busier roads and car parks are a common cause of a slow leak or a sudden flat. A pressure warning light, a car pulling slightly to one side, or something visibly stuck in the tread are all signs worth acting on rather than waiting out.</p>
+
+      <h2>Uneven wear</h2>
+      <p>Stop-start traffic and frequent roundabouts can accelerate uneven wear, often linked to alignment, pressure or suspension issues. Uneven wear reduces grip and shortens a tyre's working life, so it's worth having the cause identified rather than just replacing the tyre and expecting a different result.</p>
+
+      <h2>Low tread depth</h2>
+      <p>By law, tyres need at least 1.6mm of tread across the central three-quarters of the tyre, all the way round &mdash; this is a legal minimum, not a target, and grip in wet conditions declines before tread reaches that point. The 20p coin test (insert a 20p coin into the main grooves; if the outer band is visible, it's worth getting checked) is a quick way to get a rough sense of where you stand, though a proper measurement needs a tread depth gauge.</p>
+
+      <h2>Sidewall damage</h2>
+      <p>Kerb strikes around retail parks and residential streets, along with potholes on some of the older West Lothian roads, can cause bulges, cracks or cuts in a tyre's sidewall. Sidewall damage isn't repairable &mdash; if you notice any of these signs, the tyre needs replacing rather than patching.</p>
+
+      <h2>Pressure problems</h2>
+      <p>Cold mornings cause tyre pressure to drop, and it's easy to over-correct using a petrol station pump that isn't accurately calibrated. Incorrect pressure affects fuel efficiency, wear and the risk of a blowout, so a regular check against your vehicle's recommended figure is worth doing.</p>
+
+      <h2>When it needs a professional look</h2>
+      <p>We can't tell whether a specific tyre is repairable or needs replacing without seeing it &mdash; the location, size and depth of any damage all affect that decision, and it isn't something we can judge from a description alone. If you're dealing with any of the above, see our <a href="/mobile-tyre-fitting-livingston/">Livingston coverage page</a> to arrange a visit.</p>`,
+  },
+  {
+    slug: "tyre-blowout-causes-prevention",
+    title: "Tyre Blowouts: Causes, Prevention And What To Do | SFR Motors Ltd",
+    metaDescription: "What causes a tyre blowout, practical steps to reduce the risk, and the safest way to respond if one happens while you're driving.",
+    breadcrumbLabel: "Blog",
+    headline: "Tyre Blowouts: Causes, Prevention And What To Do",
+    bodyHtml: `      <p>A tyre blowout &mdash; a sudden, complete loss of pressure rather than a slow leak &mdash; is rare, but it's unsettling enough that it's worth knowing both what causes one and how to respond safely if it happens.</p>
+
+      <h2>What causes a blowout</h2>
+      <p>Under-inflation is one of the most common causes: running low on air lets a tyre flex more than it's designed to, generating heat that weakens its structure. Overloading a vehicle beyond its tyres' rated capacity has a similar effect. Worn tyres with little tread left are more vulnerable to failure, as are tyres damaged by sharp debris or potholes. Extreme heat accelerates all of these; a manufacturing defect, while less common, can also be a factor.</p>
+
+      <h2>Reducing the risk</h2>
+      <p>Checking tyre pressure regularly, keeping within your vehicle's rated load limits, and visually inspecting tyres for cracks, bulges or embedded debris before a long journey all reduce the chances of a blowout. Following your tyre and vehicle manufacturer's own guidance on rotation and maintenance is worth doing rather than relying on a generic mileage figure, since the right interval varies by vehicle and driving.</p>
+
+      <h2>If it happens while you're driving</h2>
+      <p>Ease off the accelerator rather than braking hard &mdash; sudden braking on a suddenly deflated tyre increases the risk of losing control. Hold the steering wheel firmly and keep the vehicle as straight as you can. Let the car slow gradually, and once you have it under control, move towards a place away from moving traffic &mdash; the hard shoulder or verge on a motorway, or the side of the road elsewhere &mdash; rather than stopping in a live traffic lane. Put your hazard lights on to warn other drivers. On a motorway in particular, never attempt to change the wheel yourself; move behind a barrier if you can and wait for professional help.</p>
+
+      <h2>Getting a replacement afterwards</h2>
+      <p>A tyre that's blown out needs replacing, not repairing. See our <a href="/24-7-mobile-tyre-replacement/">24/7 mobile tyre replacement</a> page to arrange a callout.</p>`,
+  },
+  {
+    slug: "preparing-your-car-tyres-for-winter-driving-in-livingston",
+    title: "Preparing Your Tyres For Winter Driving In Livingston | SFR Motors Ltd",
+    metaDescription: "A pre-winter tyre checklist for Livingston drivers — pressure, tread and condition checks, and what to do if you're caught out.",
+    breadcrumbLabel: "Blog",
+    headline: "Preparing Your Tyres For Winter Driving In Livingston",
+    bodyHtml: `      <p>Cold, wet weather and Livingston's roundabouts and distributor roads are a demanding combination for tyres. A few checks before winter sets in go a long way toward avoiding a problem once the weather turns.</p>
+
+      <h2>Check pressure as the temperature drops</h2>
+      <p>Tyre pressure falls as the temperature does, so it's worth checking monthly through the colder months rather than assuming it's still correct from earlier in the year. Your vehicle's handbook or the sticker inside the driver's door will have the right figure &mdash; under-inflation costs you both grip and fuel efficiency.</p>
+
+      <h2>Check tread depth properly</h2>
+      <p>By law, tyres need at least 1.6mm of tread across the central three-quarters, all the way round &mdash; that's a legal minimum, not a target, and wet-weather grip declines before a tyre reaches it. The 20p coin test (insert a 20p coin into the main grooves; if the outer band is visible, get it checked) gives a rough indication, though a tread depth gauge is the accurate way to measure it.</p>
+
+      <h2>Look for damage before it worsens</h2>
+      <p>Hitting a kerb or a pothole in Livingston's residential areas or retail park car parks can cause a bulge or a cut in the sidewall that isn't always obvious at a glance. A quick visual check before winter, and after any kerb strike, is worth doing &mdash; sidewall damage isn't repairable and needs a replacement.</p>
+
+      <h2>A note on seasonal tyres</h2>
+      <p>Winter and all-season tyres aren't a legal requirement in Scotland, but they're designed to stay more flexible in cold temperatures than a standard summer tyre, which can help with grip in icy or snowy conditions. Whether it's worth it for you depends on how and where you drive &mdash; it's a personal decision, not something we'd tell you is essential.</p>
+
+      <h2>If you're caught out</h2>
+      <p>If a tyre fails while you're out, get to a safe position away from moving traffic where you can, and put your hazard lights on. If you have breakdown cover through the AA, RAC, Green Flag or another provider, that's one route to getting help &mdash; we're not affiliated with any of them, just noting they're an option. Otherwise, get in touch with us directly and we'll come to you. See our <a href="/mobile-tyre-fitting-livingston/">Livingston coverage page</a> for how that works, or our guide to <a href="/mobile-tyre-fitting-livingston-tyre-problems/">common tyre problems Livingston drivers face</a> if you're trying to work out what's going on before you call.</p>`,
+  },
+  {
+    slug: "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide",
+    title: "How To Choose The Right Tyres For Your Car | SFR Motors Ltd",
+    metaDescription: "Understanding tyre size, load index, speed rating, seasonal options and the EU tyre label — what actually matters when choosing new tyres.",
+    breadcrumbLabel: "Blog",
+    headline: "How To Choose The Right Tyres For Your Car",
+    bodyHtml: `      <p>Choosing tyres doesn't have to mean guessing between whatever's cheapest and whatever sounds most impressive. A handful of details on the tyre itself, and a clear sense of how you actually drive, cover most of what matters.</p>
+
+      <h2>Reading the sidewall</h2>
+      <p>A marking like 205/55 R16 91V isn't random: 205 is the tyre's width in millimetres, 55 is the sidewall height as a percentage of that width, R16 means radial construction on a 16-inch rim, and 91V is the load index and speed rating together. Matching these to your vehicle's specification &mdash; found in the handbook or on the door-jamb sticker &mdash; is the starting point, and it's not somewhere to guess or downgrade to save money.</p>
+
+      <h2>Matching your vehicle and how you drive</h2>
+      <p>Beyond the size itself, it's worth thinking honestly about your driving: mostly short local trips, regular motorway miles, a heavier vehicle that's often loaded, or a car that sees genuinely poor weather. None of these mean you need the most expensive option available &mdash; they just narrow down which characteristics actually matter for your situation.</p>
+
+      <h2>Seasonal options</h2>
+      <p>Summer tyres are the default for most of the year and perform well in dry and wet conditions above around 7°C. Winter tyres use a softer compound that stays flexible in the cold, improving grip on icy or snowy roads, but they wear faster and grip less well once temperatures rise. All-season tyres are a compromise between the two, suited to drivers who'd rather not swap tyres twice a year but don't face extreme conditions either way.</p>
+
+      <h2>Understanding the tyre label</h2>
+      <p>Every tyre sold in the UK carries a label rating fuel efficiency, wet-weather grip and external noise. It's worth checking alongside the price rather than instead of it &mdash; two tyres at a similar cost can have meaningfully different wet-grip ratings, and that's the rating most directly tied to stopping distance in the rain.</p>
+
+      <h2>Tread depth and knowing when to replace</h2>
+      <p>The UK legal minimum is 1.6mm of tread across the central three-quarters of the tyre, all the way round &mdash; but that's a minimum, not a target. Official guidance suggests treating 2mm in summer and 3mm in winter as sensible points to plan a replacement, since wet-weather grip declines well before tread reaches the legal limit. For more on what affects how long a tyre lasts in the first place, see our guide on <a href="/tyre-lifespan/">tyre lifespan</a>.</p>
+
+      <h2>A note on brands and budget</h2>
+      <p>Well-known manufacturers such as Michelin, Bridgestone and Continental sit at the premium end, with brands like Falken, Kumho and Toyo generally positioned as solid mid-range options. This isn't a claim that one tier is always better for every driver &mdash; it's a starting point for narrowing down options, and budget genuinely varies by household. Whatever tier you're considering, checking the label ratings above still applies.</p>
+
+      <h2>Getting fitted properly</h2>
+      <p>Once you've settled on a size and type, correct fitting &mdash; balancing, torque and a check of the valve &mdash; matters as much as the tyre itself. See our <a href="/our-tyre-range/">tyre range</a> for what we carry, or get in touch with your registration or tyre size for a price.</p>`,
+  },
 ];
 
 for (const p of pages) {

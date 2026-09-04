@@ -31,7 +31,7 @@ const BASE = `http://127.0.0.1:${PORT}`;
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
 const REDIRECTS_BEFORE = 19; // 17 after the Batch B2 correction, +2 from this batch
-const EXPECTED_PAGE_COUNT = 64; // 61 after Batch B4, +3 new survivor pages (see the Batch C report for why this isn't 62)
+const EXPECTED_PAGE_COUNT = 70; // 64 after Batch C, +6 new Batch D1 pages (Batch C itself added 3, from 61 after Batch B4)
 
 function contentTypeFor(file) {
   const ext = path.extname(file);
