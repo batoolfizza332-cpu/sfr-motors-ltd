@@ -1,4 +1,102 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/home-tyre-fitting/",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/on-demand-mobile-tire-fitting/",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/premium-vehicle-tyre-service/",
+      "destination": "/our-tyre-range/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sfr-mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-mobile-tyre-fitter-west-lothian/",
+      "destination": "/mobile-tyre-fitting-west-lothian/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-fitter-edinburgh-falkirk/",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-questions/",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-replacement-call-out-bathgate/",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/best-mobile-tyre-fitting-service/",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal-bathgate/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/expert-locking-wheel-nut-removal/",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/caravan-trailer-tyre-fitting/",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-change/",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-lifespan-mobile-tyre-repair-guide/",
+      "destination": "/tyre-lifespan/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "statusCode": 301
+    }
+  ]
 }

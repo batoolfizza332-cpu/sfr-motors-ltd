@@ -1,0 +1,905 @@
+{
+  "total": 90,
+  "entries": [
+    {
+      "url": "/",
+      "type": "page",
+      "title": "Home",
+      "disposition": "Preserved",
+      "destination": "/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/11-benefits-of-emergency-mobile-tyre-fitting/",
+      "type": "post",
+      "title": "11 Benefits of Emergency Mobile Tyre Fitting",
+      "disposition": "Recreated",
+      "destination": "/11-benefits-of-emergency-mobile-tyre-fitting/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+      "type": "page",
+      "title": "24/7 Mobile Tire Replacement Service Edinburgh",
+      "disposition": "Redirected",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/24-7-mobile-tyre-replacement/",
+      "type": "page",
+      "title": "24/7 Mobile Tyre Replacement",
+      "disposition": "Recreated",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/5-must-visit-places-in-edinburgh-for-first-time-travelers/",
+      "type": "post",
+      "title": "5 Must-Visit Places in Edinburgh for First-Time Travelers",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Indexable in WXR (no noindex flag) — excluded as off-topic (outside SFR's tyre-service scope), not for indexability reasons",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/7-warning-signs-your-tyres-need-immediate-professional-attention/",
+      "type": "post",
+      "title": "7 Warning Signs Your Tyres Need Immediate Professional Attention",
+      "disposition": "Recreated",
+      "destination": "/7-warning-signs-your-tyres-need-immediate-professional-attention/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/about-us/",
+      "type": "page",
+      "title": "About Us",
+      "disposition": "Preserved",
+      "destination": "/about-us/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/asymmetric-and-directional-tyres-difference/",
+      "type": "post",
+      "title": "Tyre Tread: What’s the Difference Between Asymmetric and Directional Tyres?",
+      "disposition": "Recreated",
+      "destination": "/asymmetric-and-directional-tyres-difference/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+      "type": "post",
+      "title": "Behind the Scenes: What Tools Do Mobile Tyre Fitters Really Use?",
+      "disposition": "Redirected",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+      "type": "post",
+      "title": "Best Emergency Locking Wheel Nut Removal in West Lothian",
+      "disposition": "Redirected",
+      "destination": "/locking-wheel-nut-removal/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/best-mobile-tyre-fitter-west-lothian/",
+      "type": "post",
+      "title": "Best Mobile Tyre Fitter – Expert On-Road Service in West Lothian",
+      "disposition": "Redirected",
+      "destination": "/mobile-tyre-fitting-west-lothian/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/better-tyres-better-drive/",
+      "type": "post",
+      "title": "Better Tyres, Better Drive – The Power of Mobile Tyre Fitting",
+      "disposition": "Preserved",
+      "destination": "/better-tyres-better-drive/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/blog/",
+      "type": "page",
+      "title": "Blog",
+      "disposition": "Preserved",
+      "destination": "/blog/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/broxburn/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Broxburn",
+      "disposition": "Preserved",
+      "destination": "/broxburn/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/contact-us/",
+      "type": "page",
+      "title": "Contact Us",
+      "disposition": "Preserved",
+      "destination": "/contact-us/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/emergency-mobile-tyre-fitting/",
+      "type": "page",
+      "title": "Emergency Mobile Tyre Fitting",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Noindex, nofollow, canonical->homepage (WXR postmeta)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/emergency-tyre-fitter-edinburgh-falkirk/",
+      "type": "post",
+      "title": "How an Emergency Tyre Fitter Can Help You Anywhere in Edinburgh & Falkirk",
+      "disposition": "Redirected",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/emergency-tyre-replacement/",
+      "type": "post",
+      "title": "Emergency Tyre Replacement vs Garage Tyre Fitting: Pros & Cons",
+      "disposition": "Preserved",
+      "destination": "/emergency-tyre-replacement/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+      "type": "post",
+      "title": "Emergency Wheel Nut Removal: What to Do If You’ve Lost the Key",
+      "disposition": "Recreated",
+      "destination": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/expert-locking-wheel-nut-removal/",
+      "type": "page",
+      "title": "Expert Locking Wheel Nut Removal",
+      "disposition": "Redirected",
+      "destination": "/locking-wheel-nut-removal/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-much-does-mobile-tyre-fitting-cost/",
+      "type": "post",
+      "title": "How Much Does Mobile Tyre Fitting Cost?",
+      "disposition": "Recreated",
+      "destination": "/how-much-does-mobile-tyre-fitting-cost/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-quality-tyres-improve-safety-and-driving-performance/",
+      "type": "post",
+      "title": "How Quality Tyres Improve Safety and Driving Performance",
+      "disposition": "Recreated",
+      "destination": "/how-quality-tyres-improve-safety-and-driving-performance/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+      "type": "post",
+      "title": "How to Avoid Common Tyre Problems and Stay Safe on the Road",
+      "disposition": "Recreated",
+      "destination": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-to-change-a-tyre/",
+      "type": "post",
+      "title": "How to Change a Tyre: Mobile Tyre Fitting West Lothian Guide",
+      "disposition": "Preserved",
+      "destination": "/how-to-change-a-tyre/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+      "type": "post",
+      "title": "How to Choose the Best Tyres for My Car – Expert Buying Guide",
+      "disposition": "Recreated",
+      "destination": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+      "type": "post",
+      "title": "How to Extend Tyre Life and Avoid Unexpected Roadside Breakdowns",
+      "disposition": "Recreated",
+      "destination": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/locking-wheel-nut-removal-bathgate/",
+      "type": "page",
+      "title": "Mobile Locking Wheel Nut Removal Service Bathgate",
+      "disposition": "Redirected",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
+      "type": "post",
+      "title": "Locking Wheel Nut Removal: Industry Practice, Disclaimer Requirements, and Wheel Damage Risk",
+      "disposition": "Recreated",
+      "destination": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/locking-wheel-nut-removal/",
+      "type": "post",
+      "title": "Complete Guide to Locking Wheel Nut Removal in the UK",
+      "disposition": "Preserved",
+      "destination": "/locking-wheel-nut-removal/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/michelin-radial-tire-history-innovation/",
+      "type": "post",
+      "title": "The Invention that Changed Tires Forever: Michelin's Steel-Belted Radial",
+      "disposition": "Recreated",
+      "destination": "/michelin-radial-tire-history-innovation/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-locking-wheel-nut-removal/",
+      "type": "page",
+      "title": "Mobile Locking Wheel Nut Removal Service",
+      "disposition": "Preserved",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "type": "page",
+      "title": "Mobile Trailer & Caravan Tyre Fitting",
+      "disposition": "Recreated",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-change/",
+      "type": "page",
+      "title": "Mobile Tyre Change",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Noindex, nofollow, canonical->homepage (WXR postmeta)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitter-near-me-myths/",
+      "type": "post",
+      "title": "Mobile Tyre Fitter Myths Busted: What Every UK Driver Should Know in 2025",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitter-near-me-myths/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-3/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Noindex, nofollow, canonical->homepage (WXR postmeta)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-airdrie/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Airdrie",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-airdrie/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-bathgate-questions/",
+      "type": "post",
+      "title": "8 Questions to Ask Before Booking a Mobile Tyre Fitting in Bathgate",
+      "disposition": "Redirected",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-bathgate/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Bathgate",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-boness/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Bo'ness",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-boness/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-edinburgh/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Edinburgh",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-edinburgh/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-falkirk/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Falkirk",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-falkirk/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-harthill/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Harthill",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-harthill/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-in-addiewell/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Addiewell",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-in-addiewell/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-linlithgow/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Linlithgow",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-linlithgow/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-livingston-tyre-problems/",
+      "type": "post",
+      "title": "Top 5 Common Tyre Problems Livingston Drivers Face (and How to Fix Them)",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-livingston-tyre-problems/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-livingston/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Livingston",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-shotts/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting & Repair Shotts",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-shotts/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "type": "post",
+      "title": "Mobile Tyre Fitting vs Recovery – What’s Best for Your Situation?",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-west-calder/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting West Calder",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-west-calder/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-west-lothian/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting West Lothian",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-west-lothian/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-whitburn/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Whitburn",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-fitting-whitburn/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-fitting-wishaw/",
+      "type": "page",
+      "title": "Mobile Tyre Fitting Wishaw",
+      "disposition": "Recreated",
+      "destination": "/mobile-tyre-fitting-wishaw/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-puncture-repair/",
+      "type": "page",
+      "title": "Mobile Puncture Repair Near You",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "type": "post",
+      "title": "How Mobile Tyre Repair Works in Edinburgh & West Lothian",
+      "disposition": "Preserved",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/mobile-tyre-repair/",
+      "type": "page",
+      "title": "Mobile Tyre Repair",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Noindex, nofollow, canonical->homepage (WXR postmeta)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/motors-tire-pressure-off-road/",
+      "type": "post",
+      "title": "Tire Pressure: The Ultimate Guide for Dual Sport & Off-Road Riders",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Indexable in WXR (no noindex flag) — excluded as off-topic (outside SFR's tyre-service scope), not for indexability reasons",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/our-tyre-range/",
+      "type": "page",
+      "title": "Our Tyre Range",
+      "disposition": "Preserved",
+      "destination": "/our-tyre-range/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/page-not-found/",
+      "type": "page",
+      "title": "SFR Motors Ltd - Mobile Tyre Fitters",
+      "disposition": "Excluded",
+      "destination": "—",
+      "http": "404",
+      "indexability": "Indexable per WXR rank_math flag, but canonicalized elsewhere by Yoast — this is the live site's own 404 page and must not become an indexed content page",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/pirelli-silent-tyres-uk/",
+      "type": "post",
+      "title": "Pirelli silent tyres UK, quiet tyres UK, and mobile tyre fitting Pirelli.",
+      "disposition": "Recreated",
+      "destination": "/pirelli-silent-tyres-uk/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/premium-or-budget-which-tyres-keep-you-safer/",
+      "type": "post",
+      "title": "Premium or Budget: Which Tyres Keep You Safer?",
+      "disposition": "Recreated",
+      "destination": "/premium-or-budget-which-tyres-keep-you-safer/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/preparing-your-car-tyres-for-winter-driving-in-livingston/",
+      "type": "post",
+      "title": "Preparing Your Car Tyres for Winter Driving in Livingston",
+      "disposition": "Recreated",
+      "destination": "/preparing-your-car-tyres-for-winter-driving-in-livingston/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/privacy-policy/",
+      "type": "page",
+      "title": "Privacy Policy",
+      "disposition": "Preserved",
+      "destination": "/privacy-policy/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/professional-mobile-tyre-services-on-drivers-linlithgow/",
+      "type": "post",
+      "title": "Professional Mobile Tyre Services On Drivers Linlithgow",
+      "disposition": "Recreated",
+      "destination": "/professional-mobile-tyre-services-on-drivers-linlithgow/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/puncture-repairs-whats-actually-being-done-to-your-tyre/",
+      "type": "post",
+      "title": "Puncture Repairs: What's Actually Being Done to Your Tyre",
+      "disposition": "Recreated",
+      "destination": "/puncture-repairs-whats-actually-being-done-to-your-tyre/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/",
+      "type": "post",
+      "title": "Spare Wheel Delete: Why New Cars Don't Have Them, and What the Data Says About Repair Kits",
+      "disposition": "Pending GSC decision",
+      "destination": "—",
+      "http": "404 (current; pending GSC review)",
+      "indexability": "Was indexable in WXR (no noindex flag) — excluded for content-quality reasons, not indexability",
+      "gsc_required": "Yes"
+    },
+    {
+      "url": "/the-best-tyres-for-edinburgh-west-lothian-roads/",
+      "type": "post",
+      "title": "The best tyres for Edinburgh & West Lothian Roads.",
+      "disposition": "Recreated",
+      "destination": "/the-best-tyres-for-edinburgh-west-lothian-roads/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/the-best-tyres-for-your-ford-on-edinburghs-roads/",
+      "type": "post",
+      "title": "The Best Tyres for Your Ford on Edinburgh’s Roads",
+      "disposition": "Preserved",
+      "destination": "/the-best-tyres-for-your-ford-on-edinburghs-roads/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/trade-fleet-tyre-services/",
+      "type": "page",
+      "title": "Trade & Fleet Tyre Services",
+      "disposition": "Preserved",
+      "destination": "/trade-fleet-tyre-services/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-blowout-causes-prevention/",
+      "type": "post",
+      "title": "Tyre Blowout Causes & Prevention – What to Do in an Emergency",
+      "disposition": "Recreated",
+      "destination": "/tyre-blowout-causes-prevention/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-care-and-flat-tyre-help-in-linlithgow/",
+      "type": "post",
+      "title": "Tyre Care & Flat Tyre Help in Linlithgow",
+      "disposition": "Recreated",
+      "destination": "/tyre-care-and-flat-tyre-help-in-linlithgow/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-lifespan-mobile-tyre-repair-guide/",
+      "type": "post",
+      "title": "How Long Should Tyres Last? Factors That Affect Tyre Lifespan | Mobile Tyre Repair Guide",
+      "disposition": "Redirected",
+      "destination": "/tyre-lifespan/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-lifespan/",
+      "type": "post",
+      "title": "How Long Should Tyres Last? Factors That Affect Tyre Lifespan",
+      "disposition": "Recreated",
+      "destination": "/tyre-lifespan/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-pressure-monitoring-system/",
+      "type": "page",
+      "title": "Tyre Pressure Monitoring System",
+      "disposition": "Preserved",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-puncture-repair-near-me-west-lothian/",
+      "type": "post",
+      "title": "24-Hour Tyre Puncture Repair Near Me – Trusted Technicians in West Lothian",
+      "disposition": "Preserved",
+      "destination": "/tyre-puncture-repair-near-me-west-lothian/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-replacement-call-out-bathgate/",
+      "type": "page",
+      "title": "Tyre Replacement Call Out Service Bathgate",
+      "disposition": "Redirected",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-services-west-lothian/",
+      "type": "post",
+      "title": "Mobile Tyre Services West Lothian: 8 Common Reasons for Slow Tyre Leaks",
+      "disposition": "Recreated",
+      "destination": "/tyre-services-west-lothian/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyre-size-calculator/",
+      "type": "post",
+      "title": "Tyre Size Calculator",
+      "disposition": "Recreated",
+      "destination": "/tyre-size-calculator/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyres-bathgate-guide/",
+      "type": "post",
+      "title": "SFR Mobile Tyres Bathgate Guide: Choosing the Right Van Tyres",
+      "disposition": "Preserved",
+      "destination": "/tyres-bathgate-guide/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/tyres-bathgate-technical-breakdown/",
+      "type": "post",
+      "title": "Tyres Bathgate Technical Breakdown: Decoding Sidewall Markings and Manufacturing Dates",
+      "disposition": "Recreated",
+      "destination": "/tyres-bathgate-technical-breakdown/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/van-tyre-replacement-services/",
+      "type": "page",
+      "title": "Van tyre replacement services",
+      "disposition": "Preserved",
+      "destination": "/van-tyre-replacement-services/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/what-is-mobile-tyre-fitting/",
+      "type": "post",
+      "title": "What is Mobile Tyre Fitting?",
+      "disposition": "Recreated",
+      "destination": "/what-is-mobile-tyre-fitting/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+      "type": "post",
+      "title": "What Mobile Fitters Check Before Changing a Tyre on a Hill",
+      "disposition": "Recreated",
+      "destination": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/what-to-expect-from-a-same-day-mobile-car-repair-service/",
+      "type": "post",
+      "title": "What to Expect from a Same-Day Mobile Car Repair Service",
+      "disposition": "Pending GSC decision",
+      "destination": "—",
+      "http": "404 (current; pending GSC review)",
+      "indexability": "Was indexable in WXR (no noindex flag) — excluded for content-quality reasons, not indexability",
+      "gsc_required": "Yes"
+    },
+    {
+      "url": "/what-tools-do-mobile-tyre-fitters-use/",
+      "type": "post",
+      "title": "What Tools Do Mobile Tyre Fitters Use?",
+      "disposition": "Recreated",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+      "type": "post",
+      "title": "Which is The Best Mobile Tyre Fitting Service Provider in the UK?",
+      "disposition": "Recreated",
+      "destination": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "type": "post",
+      "title": "Why Professional Mobile Tyre Services Are Essential for Modern Drivers",
+      "disposition": "Recreated",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+      "type": "post",
+      "title": "Why Professional Mobile Tyre Services Are Information to All Drivers.",
+      "disposition": "Redirected",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "http": "301 (single-hop, verified no chain)",
+      "indexability": "N/A (redirects)",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/why-tyre-safety-is-more-important-than-most-drivers-realize/",
+      "type": "post",
+      "title": "Why Tyre Safety is More Important than Most Drivers Realize",
+      "disposition": "Recreated",
+      "destination": "/why-tyre-safety-is-more-important-than-most-drivers-realize/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
+      "type": "post",
+      "title": "Why Tyres Fail: Expert Breakdown of Common Tyre Problems and How Mobile Tyre Fitting in Falkirk Solves Them",
+      "disposition": "Recreated",
+      "destination": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    },
+    {
+      "url": "/your-guide-to-safe-tyre-services-in-harthill/",
+      "type": "post",
+      "title": "Your guide to safe tyre services in Harthill.",
+      "disposition": "Recreated",
+      "destination": "/your-guide-to-safe-tyre-services-in-harthill/",
+      "http": "200",
+      "indexability": "Index",
+      "gsc_required": "No"
+    }
+  ]
+}

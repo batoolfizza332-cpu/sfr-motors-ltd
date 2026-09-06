@@ -6,8 +6,10 @@
     "build": "node scripts/build.js"
   },
   "devDependencies": {
+    "axe-core": "^4.13.0",
     "clean-css": "^5.3.3",
     "html-minifier-terser": "^7.2.0",
+    "playwright": "^1.56.1",
     "terser": "^5.31.0"
   }
 }
