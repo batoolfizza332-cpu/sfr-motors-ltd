@@ -117,6 +117,33 @@ deployed. `npm run build` (Node 18+) turns one into the other:
 run it separately — `npm install && npm run build` locally is only useful
 for previewing the exact bundle that will ship (`npx http-server dist`).
 
+## Quality gate
+
+`npm run verify` (Node 18+, `npm install` first) runs the production build
+and then inspects `site/` for the things that are easy to break by hand:
+
+- the build itself completes without error
+- no broken internal `.html` links or `#anchor` targets
+- every indexable page has exactly one `<h1>`
+- every page has a non-empty, unique `<title>` and meta description
+- every page has a correct, unique canonical URL on `https://sfrmotors.co.uk/`
+- every local image reference actually exists
+- meaningful images have alt text; all `<img>` have explicit width/height
+- `sitemap.xml` is well-formed and lists every indexable page
+- no leftover placeholder text, `localhost`, or `*.vercel.app` URLs
+- `git diff --check` passes (no trailing whitespace / conflict markers)
+
+It's read-only — it never edits `site/` or git state, it only builds
+(gitignored `dist/`) and reports. Run it before committing changes to `site/`:
+
+```bash
+npm run verify
+```
+
+Prints `QUALITY GATE: PASSED` with a check count on success, or
+`QUALITY GATE: FAILED` with one `Error` / `Affected file` / `Suggested fix`
+block per issue found, and exits non-zero — safe to wire into CI as-is.
+
 ## Deploying the site (hosting)
 
 Requires an ACM certificate for your domain, issued in **us-east-1**

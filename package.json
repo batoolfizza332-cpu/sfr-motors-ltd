@@ -3,7 +3,8 @@
   "private": true,
   "description": "Build-only tooling that turns site/ into a minified, cache-fingerprinted dist/ ready for S3 + CloudFront. Nothing here ships to the browser.",
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "verify": "node scripts/verify.js"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",
