@@ -192,6 +192,16 @@ Resources:
           /mobile-puncture-repair/ -> 301 (never actually live as a
           clean-URL rewrite on this branch, redirected defensively in
           case of external links) -> /mobile-tyre-puncture-repair/;
+          /tyre-pressure-monitoring-system/ -> internal rewrite (URL shown
+          to the visitor is unchanged) -> /tpms-services.html (audit row
+          35, "Keep at exact URL" — the audit source and the new site's
+          existing page are content-identical once path/business-detail
+          differences are set aside, so reused rather than published as a
+          duplicate second page);
+          /tpms-services.html -> 301 -> /tyre-pressure-monitoring-system/;
+          /tpms-services/ -> 301 (never actually live as a clean-URL
+          rewrite on this branch, redirected defensively in case of
+          external links) -> /tyre-pressure-monitoring-system/;
           /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
           shown to the visitor is unchanged) ->
           /how-much-does-mobile-tyre-fitting-cost.html;
@@ -363,6 +373,9 @@ Resources:
                 '/mobile-puncture-repair.html': '/mobile-tyre-puncture-repair/',
                 '/mobile-puncture-repair/': '/mobile-tyre-puncture-repair/',
                 '/mobile-puncture-repair': '/mobile-tyre-puncture-repair/',
+                '/tpms-services.html': '/tyre-pressure-monitoring-system/',
+                '/tpms-services/': '/tyre-pressure-monitoring-system/',
+                '/tpms-services': '/tyre-pressure-monitoring-system/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
@@ -417,6 +430,8 @@ Resources:
                 '/mobile-trailer-and-caravan-tyre-fitting': '/caravan-trailer-tyre-fitting.html',
                 '/mobile-tyre-puncture-repair/': '/mobile-puncture-repair.html',
                 '/mobile-tyre-puncture-repair': '/mobile-puncture-repair.html',
+                '/tyre-pressure-monitoring-system/': '/tpms-services.html',
+                '/tyre-pressure-monitoring-system': '/tpms-services.html',
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
