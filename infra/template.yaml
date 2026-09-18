@@ -150,21 +150,29 @@ Resources:
       AutoPublish: true
       FunctionConfig:
         Comment: >-
-          Redirects the old WordPress URL
-          /locking-wheel-nut-removal-bathgate/ (with or without trailing
-          slash) to the equivalent static page,
-          /mobile-locking-wheel-nut-removal.html. All other requests pass
+          Redirects old WordPress URLs to their equivalent static pages
+          (with or without trailing slash on the old path):
+          /locking-wheel-nut-removal-bathgate/ ->
+          /mobile-locking-wheel-nut-removal.html;
+          /24-7-mobile-tyre-replacement-in-edinburgh/ ->
+          /mobile-tyre-fitting-edinburgh.html. All other requests pass
           through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
             var uri = event.request.uri;
-            if (uri === '/locking-wheel-nut-removal-bathgate/' || uri === '/locking-wheel-nut-removal-bathgate') {
+            var redirects = {
+                '/locking-wheel-nut-removal-bathgate/': '/mobile-locking-wheel-nut-removal.html',
+                '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal.html',
+                '/24-7-mobile-tyre-replacement-in-edinburgh/': '/mobile-tyre-fitting-edinburgh.html',
+                '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html'
+            };
+            if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
                     statusCode: 301,
                     statusDescription: 'Moved Permanently',
                     headers: {
-                        location: { value: '/mobile-locking-wheel-nut-removal.html' }
+                        location: { value: redirects[uri] }
                     }
                 };
             }
