@@ -202,6 +202,17 @@ Resources:
           /tpms-services/ -> 301 (never actually live as a clean-URL
           rewrite on this branch, redirected defensively in case of
           external links) -> /tyre-pressure-monitoring-system/;
+          /van-tyre-replacement-services/ -> internal rewrite (URL shown
+          to the visitor is unchanged) -> /van-tyre-replacement.html
+          (audit row 37, "Keep at exact URL" — the audit source and the
+          new site's existing page are content-identical once
+          path/business-detail differences are set aside, so reused
+          rather than published as a duplicate second page);
+          /van-tyre-replacement.html -> 301 ->
+          /van-tyre-replacement-services/;
+          /van-tyre-replacement/ -> 301 (never actually live as a
+          clean-URL rewrite on this branch, redirected defensively in
+          case of external links) -> /van-tyre-replacement-services/;
           /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
           shown to the visitor is unchanged) ->
           /how-much-does-mobile-tyre-fitting-cost.html;
@@ -315,8 +326,11 @@ Resources:
           it's time to replace" content repeats what's already on the
           destination service page, so it is consolidated there rather
           than kept as a separate "Keep at exact URL" page as the
-          original WordPress migration audit recorded) ->
-          /van-tyre-replacement.html;
+          original WordPress migration audit recorded — destination
+          updated to the service page's own preserved-URL canonical,
+          /van-tyre-replacement-services/, so this stays a single hop
+          rather than chaining through /van-tyre-replacement.html) ->
+          /van-tyre-replacement-services/;
           /expert-locking-wheel-nut-removal/ -> 301 (near-duplicate
           informational locking-wheel-nut article per the WordPress
           migration audit, consolidated into the recreated article) ->
@@ -376,6 +390,9 @@ Resources:
                 '/tpms-services.html': '/tyre-pressure-monitoring-system/',
                 '/tpms-services/': '/tyre-pressure-monitoring-system/',
                 '/tpms-services': '/tyre-pressure-monitoring-system/',
+                '/van-tyre-replacement.html': '/van-tyre-replacement-services/',
+                '/van-tyre-replacement/': '/van-tyre-replacement-services/',
+                '/van-tyre-replacement': '/van-tyre-replacement-services/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
@@ -404,8 +421,8 @@ Resources:
                 '/mobile-tyre-repair-edinburgh-west-lothian.html': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyre-puncture-repair-near-me-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
-                '/tyres-bathgate-guide/': '/van-tyre-replacement.html',
-                '/tyres-bathgate-guide': '/van-tyre-replacement.html',
+                '/tyres-bathgate-guide/': '/van-tyre-replacement-services/',
+                '/tyres-bathgate-guide': '/van-tyre-replacement-services/',
                 '/expert-locking-wheel-nut-removal/': '/locking-wheel-nut-removal/',
                 '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/',
                 '/tyre-replacement-call-out-bathgate/': '/mobile-tyre-fitting-bathgate.html',
@@ -432,6 +449,8 @@ Resources:
                 '/mobile-tyre-puncture-repair': '/mobile-puncture-repair.html',
                 '/tyre-pressure-monitoring-system/': '/tpms-services.html',
                 '/tyre-pressure-monitoring-system': '/tpms-services.html',
+                '/van-tyre-replacement-services/': '/van-tyre-replacement.html',
+                '/van-tyre-replacement-services': '/van-tyre-replacement.html',
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',

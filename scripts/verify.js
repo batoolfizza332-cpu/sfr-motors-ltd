@@ -49,6 +49,7 @@ const CANONICAL_URL_OVERRIDES = {
   "caravan-trailer-tyre-fitting.html": "mobile-trailer-and-caravan-tyre-fitting/",
   "mobile-puncture-repair.html": "mobile-tyre-puncture-repair/",
   "tpms-services.html": "tyre-pressure-monitoring-system/",
+  "van-tyre-replacement.html": "van-tyre-replacement-services/",
   "how-much-does-mobile-tyre-fitting-cost.html": "how-much-does-mobile-tyre-fitting-cost/",
   "7-warning-signs-your-tyres-need-immediate-professional-attention.html": "7-warning-signs-your-tyres-need-immediate-professional-attention/",
   "blog.html": "blog/",
