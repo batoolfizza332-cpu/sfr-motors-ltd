@@ -211,7 +211,13 @@ Resources:
           /preparing-your-car-tyres-for-winter-driving-in-livingston.html;
           /preparing-your-car-tyres-for-winter-driving-in-livingston.html
           -> 301 ->
-          /preparing-your-car-tyres-for-winter-driving-in-livingston/. In
+          /preparing-your-car-tyres-for-winter-driving-in-livingston/;
+          /how-quality-tyres-improve-safety-and-driving-performance/ ->
+          internal rewrite (URL shown to the visitor is unchanged) ->
+          /how-quality-tyres-improve-safety-and-driving-performance.html;
+          /how-quality-tyres-improve-safety-and-driving-performance.html
+          -> 301 ->
+          /how-quality-tyres-improve-safety-and-driving-performance/. In
           each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -237,7 +243,8 @@ Resources:
                 '/why-professional-mobile-tyre-services-are-information-to-all-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
                 '/tyre-size-calculator.html': '/tyre-size-calculator/',
                 '/tyre-care-and-flat-tyre-help-in-linlithgow.html': '/tyre-care-and-flat-tyre-help-in-linlithgow/',
-                '/preparing-your-car-tyres-for-winter-driving-in-livingston.html': '/preparing-your-car-tyres-for-winter-driving-in-livingston/'
+                '/preparing-your-car-tyres-for-winter-driving-in-livingston.html': '/preparing-your-car-tyres-for-winter-driving-in-livingston/',
+                '/how-quality-tyres-improve-safety-and-driving-performance.html': '/how-quality-tyres-improve-safety-and-driving-performance/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -261,7 +268,9 @@ Resources:
                 '/tyre-care-and-flat-tyre-help-in-linlithgow/': '/tyre-care-and-flat-tyre-help-in-linlithgow.html',
                 '/tyre-care-and-flat-tyre-help-in-linlithgow': '/tyre-care-and-flat-tyre-help-in-linlithgow.html',
                 '/preparing-your-car-tyres-for-winter-driving-in-livingston/': '/preparing-your-car-tyres-for-winter-driving-in-livingston.html',
-                '/preparing-your-car-tyres-for-winter-driving-in-livingston': '/preparing-your-car-tyres-for-winter-driving-in-livingston.html'
+                '/preparing-your-car-tyres-for-winter-driving-in-livingston': '/preparing-your-car-tyres-for-winter-driving-in-livingston.html',
+                '/how-quality-tyres-improve-safety-and-driving-performance/': '/how-quality-tyres-improve-safety-and-driving-performance.html',
+                '/how-quality-tyres-improve-safety-and-driving-performance': '/how-quality-tyres-improve-safety-and-driving-performance.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {

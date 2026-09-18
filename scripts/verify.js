@@ -53,6 +53,7 @@ const CANONICAL_URL_OVERRIDES = {
   "tyre-size-calculator.html": "tyre-size-calculator/",
   "tyre-care-and-flat-tyre-help-in-linlithgow.html": "tyre-care-and-flat-tyre-help-in-linlithgow/",
   "preparing-your-car-tyres-for-winter-driving-in-livingston.html": "preparing-your-car-tyres-for-winter-driving-in-livingston/",
+  "how-quality-tyres-improve-safety-and-driving-performance.html": "how-quality-tyres-improve-safety-and-driving-performance/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
