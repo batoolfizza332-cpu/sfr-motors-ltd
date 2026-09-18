@@ -183,6 +183,15 @@ Resources:
           actually live as a clean-URL rewrite on this branch, redirected
           defensively in case of external links) ->
           /mobile-trailer-and-caravan-tyre-fitting/;
+          /mobile-tyre-puncture-repair/ -> internal rewrite (URL shown to
+          the visitor is unchanged) -> /mobile-puncture-repair.html (audit
+          row 29, "Keep at exact URL" — the audit source and the new
+          site's existing page are substantively the same content, so
+          reused rather than published as a near-duplicate second page);
+          /mobile-puncture-repair.html -> 301 -> /mobile-tyre-puncture-repair/;
+          /mobile-puncture-repair/ -> 301 (never actually live as a
+          clean-URL rewrite on this branch, redirected defensively in
+          case of external links) -> /mobile-tyre-puncture-repair/;
           /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
           shown to the visitor is unchanged) ->
           /how-much-does-mobile-tyre-fitting-cost.html;
@@ -351,6 +360,9 @@ Resources:
                 '/caravan-trailer-tyre-fitting.html': '/mobile-trailer-and-caravan-tyre-fitting/',
                 '/caravan-trailer-tyre-fitting/': '/mobile-trailer-and-caravan-tyre-fitting/',
                 '/caravan-trailer-tyre-fitting': '/mobile-trailer-and-caravan-tyre-fitting/',
+                '/mobile-puncture-repair.html': '/mobile-tyre-puncture-repair/',
+                '/mobile-puncture-repair/': '/mobile-tyre-puncture-repair/',
+                '/mobile-puncture-repair': '/mobile-tyre-puncture-repair/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
@@ -403,6 +415,8 @@ Resources:
                 '/broxburn': '/broxburn.html',
                 '/mobile-trailer-and-caravan-tyre-fitting/': '/caravan-trailer-tyre-fitting.html',
                 '/mobile-trailer-and-caravan-tyre-fitting': '/caravan-trailer-tyre-fitting.html',
+                '/mobile-tyre-puncture-repair/': '/mobile-puncture-repair.html',
+                '/mobile-tyre-puncture-repair': '/mobile-puncture-repair.html',
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
