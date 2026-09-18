@@ -51,6 +51,7 @@ const CANONICAL_URL_OVERRIDES = {
   "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html": "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
   "why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html": "why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
   "tyre-size-calculator.html": "tyre-size-calculator/",
+  "tyre-care-and-flat-tyre-help-in-linlithgow.html": "tyre-care-and-flat-tyre-help-in-linlithgow/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

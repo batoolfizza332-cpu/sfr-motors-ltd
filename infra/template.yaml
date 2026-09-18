@@ -200,10 +200,14 @@ Resources:
           /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
           /tyre-size-calculator/ -> internal rewrite (URL shown to the
           visitor is unchanged) -> /tyre-size-calculator.html;
-          /tyre-size-calculator.html -> 301 -> /tyre-size-calculator/.
-          In each rewrite/redirect pair, the rewritten path is the one
-          primary, indexable URL. All other requests pass through
-          unchanged.
+          /tyre-size-calculator.html -> 301 -> /tyre-size-calculator/;
+          /tyre-care-and-flat-tyre-help-in-linlithgow/ -> internal rewrite
+          (URL shown to the visitor is unchanged) ->
+          /tyre-care-and-flat-tyre-help-in-linlithgow.html;
+          /tyre-care-and-flat-tyre-help-in-linlithgow.html -> 301 ->
+          /tyre-care-and-flat-tyre-help-in-linlithgow/. In each
+          rewrite/redirect pair, the rewritten path is the one primary,
+          indexable URL. All other requests pass through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -224,7 +228,8 @@ Resources:
                 '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
                 '/why-professional-mobile-tyre-services-are-information-to-all-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
                 '/why-professional-mobile-tyre-services-are-information-to-all-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
-                '/tyre-size-calculator.html': '/tyre-size-calculator/'
+                '/tyre-size-calculator.html': '/tyre-size-calculator/',
+                '/tyre-care-and-flat-tyre-help-in-linlithgow.html': '/tyre-care-and-flat-tyre-help-in-linlithgow/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -244,7 +249,9 @@ Resources:
                 '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html',
                 '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html',
                 '/tyre-size-calculator/': '/tyre-size-calculator.html',
-                '/tyre-size-calculator': '/tyre-size-calculator.html'
+                '/tyre-size-calculator': '/tyre-size-calculator.html',
+                '/tyre-care-and-flat-tyre-help-in-linlithgow/': '/tyre-care-and-flat-tyre-help-in-linlithgow.html',
+                '/tyre-care-and-flat-tyre-help-in-linlithgow': '/tyre-care-and-flat-tyre-help-in-linlithgow.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
