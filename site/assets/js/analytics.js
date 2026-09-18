@@ -62,7 +62,18 @@
     return currentPageFile() === "contact.html";
   }
 
+  // The trailer/caravan service page's canonical URL is the pretty path
+  // /mobile-trailer-and-caravan-tyre-fitting/ (a CloudFront-edge rewrite
+  // serves caravan-trailer-tyre-fitting.html there without changing the
+  // visible URL), so currentPageFile() returns "" for it, not a filename
+  // in SERVICE_PAGES. Checked before the array lookup so page_type stays
+  // "service" for both slash variants of the new canonical, without
+  // changing classification for the old .html path or any other page.
   function pageType() {
+    var path = window.location.pathname;
+    if (path === "/mobile-trailer-and-caravan-tyre-fitting/" || path === "/mobile-trailer-and-caravan-tyre-fitting") {
+      return "service";
+    }
     var page = currentPageFile();
     if (LOCATION_PAGES.indexOf(page) !== -1) return "location";
     if (SERVICE_PAGES.indexOf(page) !== -1) return "service";
