@@ -143,6 +143,34 @@ Resources:
           HeadersConfig: { HeaderBehavior: none }
           QueryStringsConfig: { QueryStringBehavior: none }
 
+  LegacyRedirectFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub "${DomainName}-legacy-redirects"
+      AutoPublish: true
+      FunctionConfig:
+        Comment: >-
+          Redirects the old WordPress URL
+          /locking-wheel-nut-removal-bathgate/ (with or without trailing
+          slash) to the equivalent static page,
+          /mobile-locking-wheel-nut-removal.html. All other requests pass
+          through unchanged.
+        Runtime: cloudfront-js-1.0
+      FunctionCode: |
+        function handler(event) {
+            var uri = event.request.uri;
+            if (uri === '/locking-wheel-nut-removal-bathgate/' || uri === '/locking-wheel-nut-removal-bathgate') {
+                return {
+                    statusCode: 301,
+                    statusDescription: 'Moved Permanently',
+                    headers: {
+                        location: { value: '/mobile-locking-wheel-nut-removal.html' }
+                    }
+                };
+            }
+            return event.request;
+        }
+
   Distribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -167,6 +195,9 @@ Resources:
           CachePolicyId: !Ref CachePolicyHtml
           ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
           AllowedMethods: [GET, HEAD]
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt LegacyRedirectFunction.FunctionMetadata.FunctionARN
         CacheBehaviors:
           - PathPattern: assets/*
             TargetOriginId: s3-origin
