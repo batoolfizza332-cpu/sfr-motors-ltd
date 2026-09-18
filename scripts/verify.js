@@ -58,6 +58,7 @@ const CANONICAL_URL_OVERRIDES = {
   "professional-mobile-tyre-services-on-drivers-linlithgow.html": "professional-mobile-tyre-services-on-drivers-linlithgow/",
   "your-guide-to-safe-tyre-services-in-harthill.html": "your-guide-to-safe-tyre-services-in-harthill/",
   "the-best-tyres-for-edinburgh-west-lothian-roads.html": "the-best-tyres-for-edinburgh-west-lothian-roads/",
+  "the-best-tyres-for-your-ford-on-edinburghs-roads.html": "the-best-tyres-for-your-ford-on-edinburghs-roads/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
