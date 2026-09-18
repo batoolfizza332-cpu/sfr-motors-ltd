@@ -173,10 +173,12 @@ Resources:
           /7-warning-signs-your-tyres-need-immediate-professional-attention.html;
           /7-warning-signs-your-tyres-need-immediate-professional-attention.html
           -> 301 ->
-          /7-warning-signs-your-tyres-need-immediate-professional-attention/.
-          In each rewrite/redirect pair, the rewritten path is the one
-          primary, indexable URL. All other requests pass through
-          unchanged.
+          /7-warning-signs-your-tyres-need-immediate-professional-attention/;
+          /blog/ -> internal rewrite (URL shown to the visitor is
+          unchanged) -> /blog.html;
+          /blog.html -> 301 -> /blog/. In each rewrite/redirect pair, the
+          rewritten path is the one primary, indexable URL. All other
+          requests pass through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -190,7 +192,8 @@ Resources:
                 '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
                 '/about.html': '/about-us/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
-                '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/'
+                '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
+                '/blog.html': '/blog/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -200,7 +203,9 @@ Resources:
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
-                '/7-warning-signs-your-tyres-need-immediate-professional-attention': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html'
+                '/7-warning-signs-your-tyres-need-immediate-professional-attention': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
+                '/blog/': '/blog.html',
+                '/blog': '/blog.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
