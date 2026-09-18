@@ -67,6 +67,7 @@ const CANONICAL_URL_OVERRIDES = {
   "better-tyres-better-drive.html": "better-tyres-better-drive/",
   "how-to-change-a-tyre.html": "how-to-change-a-tyre/",
   "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html": "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+  "mobile-tyre-repair-edinburgh-west-lothian.html": "mobile-tyre-repair-edinburgh-west-lothian/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
