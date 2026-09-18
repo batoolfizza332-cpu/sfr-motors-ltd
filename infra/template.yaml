@@ -290,7 +290,11 @@ Resources:
           /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
           rewrite on this branch, so the redirect targets its actual
           canonical, /mobile-tyre-fitting-bathgate.html, instead) ->
-          /mobile-tyre-fitting-bathgate.html.
+          /mobile-tyre-fitting-bathgate.html;
+          /best-emergency-locking-wheel-nut-removal-in-west-lothian/ -> 301
+          (near-duplicate informational locking-wheel-nut article per the
+          WordPress migration audit, consolidated into the recreated
+          article) -> /locking-wheel-nut-removal/.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -341,7 +345,9 @@ Resources:
                 '/expert-locking-wheel-nut-removal/': '/locking-wheel-nut-removal/',
                 '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/',
                 '/tyre-replacement-call-out-bathgate/': '/mobile-tyre-fitting-bathgate.html',
-                '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate.html'
+                '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate.html',
+                '/best-emergency-locking-wheel-nut-removal-in-west-lothian/': '/locking-wheel-nut-removal/',
+                '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
