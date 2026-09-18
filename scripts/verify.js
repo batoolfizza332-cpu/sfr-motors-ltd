@@ -57,6 +57,7 @@ const CANONICAL_URL_OVERRIDES = {
   "why-tyre-safety-is-more-important-than-most-drivers-realize.html": "why-tyre-safety-is-more-important-than-most-drivers-realize/",
   "professional-mobile-tyre-services-on-drivers-linlithgow.html": "professional-mobile-tyre-services-on-drivers-linlithgow/",
   "your-guide-to-safe-tyre-services-in-harthill.html": "your-guide-to-safe-tyre-services-in-harthill/",
+  "the-best-tyres-for-edinburgh-west-lothian-roads.html": "the-best-tyres-for-edinburgh-west-lothian-roads/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

@@ -234,7 +234,12 @@ Resources:
           rewrite (URL shown to the visitor is unchanged) ->
           /your-guide-to-safe-tyre-services-in-harthill.html;
           /your-guide-to-safe-tyre-services-in-harthill.html -> 301 ->
-          /your-guide-to-safe-tyre-services-in-harthill/. In each
+          /your-guide-to-safe-tyre-services-in-harthill/;
+          /the-best-tyres-for-edinburgh-west-lothian-roads/ -> internal
+          rewrite (URL shown to the visitor is unchanged) ->
+          /the-best-tyres-for-edinburgh-west-lothian-roads.html;
+          /the-best-tyres-for-edinburgh-west-lothian-roads.html -> 301 ->
+          /the-best-tyres-for-edinburgh-west-lothian-roads/. In each
           rewrite/redirect pair, the rewritten path is the one primary,
           indexable URL. All other requests pass through unchanged.
         Runtime: cloudfront-js-1.0
@@ -263,7 +268,8 @@ Resources:
                 '/how-quality-tyres-improve-safety-and-driving-performance.html': '/how-quality-tyres-improve-safety-and-driving-performance/',
                 '/why-tyre-safety-is-more-important-than-most-drivers-realize.html': '/why-tyre-safety-is-more-important-than-most-drivers-realize/',
                 '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/',
-                '/your-guide-to-safe-tyre-services-in-harthill.html': '/your-guide-to-safe-tyre-services-in-harthill/'
+                '/your-guide-to-safe-tyre-services-in-harthill.html': '/your-guide-to-safe-tyre-services-in-harthill/',
+                '/the-best-tyres-for-edinburgh-west-lothian-roads.html': '/the-best-tyres-for-edinburgh-west-lothian-roads/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -295,7 +301,9 @@ Resources:
                 '/professional-mobile-tyre-services-on-drivers-linlithgow/': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
                 '/professional-mobile-tyre-services-on-drivers-linlithgow': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
                 '/your-guide-to-safe-tyre-services-in-harthill/': '/your-guide-to-safe-tyre-services-in-harthill.html',
-                '/your-guide-to-safe-tyre-services-in-harthill': '/your-guide-to-safe-tyre-services-in-harthill.html'
+                '/your-guide-to-safe-tyre-services-in-harthill': '/your-guide-to-safe-tyre-services-in-harthill.html',
+                '/the-best-tyres-for-edinburgh-west-lothian-roads/': '/the-best-tyres-for-edinburgh-west-lothian-roads.html',
+                '/the-best-tyres-for-edinburgh-west-lothian-roads': '/the-best-tyres-for-edinburgh-west-lothian-roads.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
