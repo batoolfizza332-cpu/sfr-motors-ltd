@@ -156,6 +156,8 @@ Resources:
           /mobile-locking-wheel-nut-removal.html;
           /24-7-mobile-tyre-replacement-in-edinburgh/ -> 301 ->
           /mobile-tyre-fitting-edinburgh.html;
+          /emergency-tyre-fitter-edinburgh-falkirk/ -> 301 (dual-location
+          emergency content, consolidated) -> /24-7-mobile-tyre-replacement/;
           /24-7-mobile-tyre-replacement/ -> internal rewrite (URL shown to
           the visitor is unchanged) -> /emergency-tyre-change.html;
           /emergency-tyre-change.html -> 301 ->
@@ -257,6 +259,8 @@ Resources:
                 '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh/': '/mobile-tyre-fitting-edinburgh.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
+                '/emergency-tyre-fitter-edinburgh-falkirk/': '/24-7-mobile-tyre-replacement/',
+                '/emergency-tyre-fitter-edinburgh-falkirk': '/24-7-mobile-tyre-replacement/',
                 '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
                 '/about.html': '/about-us/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
