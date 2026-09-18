@@ -61,6 +61,7 @@ const CANONICAL_URL_OVERRIDES = {
   "the-best-tyres-for-your-ford-on-edinburghs-roads.html": "the-best-tyres-for-your-ford-on-edinburghs-roads/",
   "puncture-repairs-whats-actually-being-done-to-your-tyre.html": "puncture-repairs-whats-actually-being-done-to-your-tyre/",
   "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html": "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+  "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html": "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

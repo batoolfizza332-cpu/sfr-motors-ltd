@@ -258,7 +258,13 @@ Resources:
           /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html;
           /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html
           -> 301 ->
-          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/.
+          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/;
+          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/
+          -> internal rewrite (URL shown to the visitor is unchanged) ->
+          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html;
+          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html
+          -> 301 ->
+          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -294,7 +300,8 @@ Resources:
                 '/the-best-tyres-for-edinburgh-west-lothian-roads.html': '/the-best-tyres-for-edinburgh-west-lothian-roads/',
                 '/the-best-tyres-for-your-ford-on-edinburghs-roads.html': '/the-best-tyres-for-your-ford-on-edinburghs-roads/',
                 '/puncture-repairs-whats-actually-being-done-to-your-tyre.html': '/puncture-repairs-whats-actually-being-done-to-your-tyre/',
-                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/'
+                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/',
+                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -334,7 +341,9 @@ Resources:
                 '/puncture-repairs-whats-actually-being-done-to-your-tyre/': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html',
                 '/puncture-repairs-whats-actually-being-done-to-your-tyre': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html',
                 '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html',
-                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html'
+                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html',
+                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html',
+                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
