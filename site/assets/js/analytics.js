@@ -73,7 +73,9 @@
     "/mobile-trailer-and-caravan-tyre-fitting/",
     "/mobile-trailer-and-caravan-tyre-fitting",
     "/mobile-tyre-puncture-repair/",
-    "/mobile-tyre-puncture-repair"
+    "/mobile-tyre-puncture-repair",
+    "/tyre-pressure-monitoring-system/",
+    "/tyre-pressure-monitoring-system"
   ];
 
   function pageType() {
