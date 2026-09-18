@@ -305,7 +305,8 @@ Resources:
                 '/emergency-tyre-replacement.html': '/emergency-tyre-replacement/',
                 '/locking-wheel-nut-removal.html': '/locking-wheel-nut-removal/',
                 '/better-tyres-better-drive.html': '/better-tyres-better-drive/',
-                '/how-to-change-a-tyre.html': '/how-to-change-a-tyre/'
+                '/how-to-change-a-tyre.html': '/how-to-change-a-tyre/',
+                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -355,7 +356,9 @@ Resources:
                 '/better-tyres-better-drive/': '/better-tyres-better-drive.html',
                 '/better-tyres-better-drive': '/better-tyres-better-drive.html',
                 '/how-to-change-a-tyre/': '/how-to-change-a-tyre.html',
-                '/how-to-change-a-tyre': '/how-to-change-a-tyre.html'
+                '/how-to-change-a-tyre': '/how-to-change-a-tyre.html',
+                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html',
+                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {

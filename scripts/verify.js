@@ -66,6 +66,7 @@ const CANONICAL_URL_OVERRIDES = {
   "locking-wheel-nut-removal.html": "locking-wheel-nut-removal/",
   "better-tyres-better-drive.html": "better-tyres-better-drive/",
   "how-to-change-a-tyre.html": "how-to-change-a-tyre/",
+  "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html": "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
