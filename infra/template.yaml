@@ -165,6 +165,9 @@ Resources:
           /about-us/ -> internal rewrite (URL shown to the visitor is
           unchanged) -> /about.html;
           /about.html -> 301 -> /about-us/;
+          /contact-us/ -> internal rewrite (URL shown to the visitor is
+          unchanged) -> /contact.html;
+          /contact.html -> 301 -> /contact-us/;
           /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
           shown to the visitor is unchanged) ->
           /how-much-does-mobile-tyre-fitting-cost.html;
@@ -328,6 +331,7 @@ Resources:
                 '/emergency-tyre-fitter-edinburgh-falkirk': '/24-7-mobile-tyre-replacement/',
                 '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
                 '/about.html': '/about-us/',
+                '/contact.html': '/contact-us/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
@@ -374,6 +378,8 @@ Resources:
                 '/24-7-mobile-tyre-replacement': '/emergency-tyre-change.html',
                 '/about-us/': '/about.html',
                 '/about-us': '/about.html',
+                '/contact-us/': '/contact.html',
+                '/contact-us': '/contact.html',
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',

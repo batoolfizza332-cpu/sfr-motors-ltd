@@ -44,6 +44,7 @@ function listHtmlFiles() {
 const CANONICAL_URL_OVERRIDES = {
   "emergency-tyre-change.html": "24-7-mobile-tyre-replacement/",
   "about.html": "about-us/",
+  "contact.html": "contact-us/",
   "how-much-does-mobile-tyre-fitting-cost.html": "how-much-does-mobile-tyre-fitting-cost/",
   "7-warning-signs-your-tyres-need-immediate-professional-attention.html": "7-warning-signs-your-tyres-need-immediate-professional-attention/",
   "blog.html": "blog/",
