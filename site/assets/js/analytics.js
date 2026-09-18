@@ -62,16 +62,23 @@
     return currentPageFile() === "contact.html";
   }
 
-  // The trailer/caravan service page's canonical URL is the pretty path
-  // /mobile-trailer-and-caravan-tyre-fitting/ (a CloudFront-edge rewrite
-  // serves caravan-trailer-tyre-fitting.html there without changing the
-  // visible URL), so currentPageFile() returns "" for it, not a filename
-  // in SERVICE_PAGES. Checked before the array lookup so page_type stays
-  // "service" for both slash variants of the new canonical, without
-  // changing classification for the old .html path or any other page.
+  // Some service pages' canonical URL is a pretty path (a CloudFront-edge
+  // rewrite serves the underlying SERVICE_PAGES file there without
+  // changing the visible URL), so currentPageFile() returns "" for them,
+  // not a filename in SERVICE_PAGES. Checked before the array lookup so
+  // page_type stays "service" for both slash variants of each pretty
+  // canonical, without changing classification for the old .html paths
+  // or any other page.
+  var SERVICE_PRETTY_PATHS = [
+    "/mobile-trailer-and-caravan-tyre-fitting/",
+    "/mobile-trailer-and-caravan-tyre-fitting",
+    "/mobile-tyre-puncture-repair/",
+    "/mobile-tyre-puncture-repair"
+  ];
+
   function pageType() {
     var path = window.location.pathname;
-    if (path === "/mobile-trailer-and-caravan-tyre-fitting/" || path === "/mobile-trailer-and-caravan-tyre-fitting") {
+    if (SERVICE_PRETTY_PATHS.indexOf(path) !== -1) {
       return "service";
     }
     var page = currentPageFile();
