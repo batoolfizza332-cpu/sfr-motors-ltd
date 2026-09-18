@@ -150,7 +150,13 @@ function checkLinksAndAnchors(pages) {
       if (/^(https?:|tel:|mailto:)/i.test(href)) continue; // external, out of scope
 
       const [targetFileRaw, fragment] = href.split("#");
-      let targetFile = targetFileRaw === "" ? file : targetFileRaw.split("?")[0];
+      // A leading "/" makes the link root-relative rather than relative to
+      // the current page — required on pages served at a pretty path (e.g.
+      // /broxburn/), where a plain relative href would otherwise resolve
+      // underneath that path instead of at the site root. Every physical
+      // file already lives at the root of site/, so stripping it resolves
+      // to the same filename a same-directory relative link would use.
+      let targetFile = targetFileRaw === "" ? file : targetFileRaw.replace(/^\//, "").split("?")[0];
 
       if (targetFileRaw !== "") {
         targetFile = ROUTE_ALIAS_TO_FILE[targetFile] || targetFile;
