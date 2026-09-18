@@ -52,6 +52,7 @@ const CANONICAL_URL_OVERRIDES = {
   "why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html": "why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
   "tyre-size-calculator.html": "tyre-size-calculator/",
   "tyre-care-and-flat-tyre-help-in-linlithgow.html": "tyre-care-and-flat-tyre-help-in-linlithgow/",
+  "preparing-your-car-tyres-for-winter-driving-in-livingston.html": "preparing-your-car-tyres-for-winter-driving-in-livingston/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
