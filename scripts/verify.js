@@ -46,6 +46,7 @@ const CANONICAL_URL_OVERRIDES = {
   "about.html": "about-us/",
   "contact.html": "contact-us/",
   "broxburn.html": "broxburn/",
+  "caravan-trailer-tyre-fitting.html": "mobile-trailer-and-caravan-tyre-fitting/",
   "how-much-does-mobile-tyre-fitting-cost.html": "how-much-does-mobile-tyre-fitting-cost/",
   "7-warning-signs-your-tyres-need-immediate-professional-attention.html": "7-warning-signs-your-tyres-need-immediate-professional-attention/",
   "blog.html": "blog/",

@@ -171,6 +171,18 @@ Resources:
           /broxburn/ -> internal rewrite (URL shown to the visitor is
           unchanged) -> /broxburn.html;
           /broxburn.html -> 301 -> /broxburn/;
+          /mobile-trailer-and-caravan-tyre-fitting/ -> internal rewrite (URL
+          shown to the visitor is unchanged) ->
+          /caravan-trailer-tyre-fitting.html (WordPress migration audit §6
+          Q2, owner decision: the WordPress URL is retained as the final
+          URL and the new site's page is renamed to it, reversing the
+          original "new site wins" default);
+          /caravan-trailer-tyre-fitting.html -> 301 ->
+          /mobile-trailer-and-caravan-tyre-fitting/;
+          /caravan-trailer-tyre-fitting/ -> 301 (old new-site slug, never
+          actually live as a clean-URL rewrite on this branch, redirected
+          defensively in case of external links) ->
+          /mobile-trailer-and-caravan-tyre-fitting/;
           /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
           shown to the visitor is unchanged) ->
           /how-much-does-mobile-tyre-fitting-cost.html;
@@ -336,6 +348,9 @@ Resources:
                 '/about.html': '/about-us/',
                 '/contact.html': '/contact-us/',
                 '/broxburn.html': '/broxburn/',
+                '/caravan-trailer-tyre-fitting.html': '/mobile-trailer-and-caravan-tyre-fitting/',
+                '/caravan-trailer-tyre-fitting/': '/mobile-trailer-and-caravan-tyre-fitting/',
+                '/caravan-trailer-tyre-fitting': '/mobile-trailer-and-caravan-tyre-fitting/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
@@ -386,6 +401,8 @@ Resources:
                 '/contact-us': '/contact.html',
                 '/broxburn/': '/broxburn.html',
                 '/broxburn': '/broxburn.html',
+                '/mobile-trailer-and-caravan-tyre-fitting/': '/caravan-trailer-tyre-fitting.html',
+                '/mobile-trailer-and-caravan-tyre-fitting': '/caravan-trailer-tyre-fitting.html',
                 '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
