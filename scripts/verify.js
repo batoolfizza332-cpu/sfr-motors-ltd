@@ -59,6 +59,7 @@ const CANONICAL_URL_OVERRIDES = {
   "your-guide-to-safe-tyre-services-in-harthill.html": "your-guide-to-safe-tyre-services-in-harthill/",
   "the-best-tyres-for-edinburgh-west-lothian-roads.html": "the-best-tyres-for-edinburgh-west-lothian-roads/",
   "the-best-tyres-for-your-ford-on-edinburghs-roads.html": "the-best-tyres-for-your-ford-on-edinburghs-roads/",
+  "puncture-repairs-whats-actually-being-done-to-your-tyre.html": "puncture-repairs-whats-actually-being-done-to-your-tyre/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

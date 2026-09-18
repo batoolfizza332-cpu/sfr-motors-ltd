@@ -246,9 +246,16 @@ Resources:
           rewrite (URL shown to the visitor is unchanged) ->
           /the-best-tyres-for-your-ford-on-edinburghs-roads.html;
           /the-best-tyres-for-your-ford-on-edinburghs-roads.html -> 301
-          -> /the-best-tyres-for-your-ford-on-edinburghs-roads/. In each
-          rewrite/redirect pair, the rewritten path is the one primary,
-          indexable URL. All other requests pass through unchanged.
+          -> /the-best-tyres-for-your-ford-on-edinburghs-roads/;
+          /puncture-repairs-whats-actually-being-done-to-your-tyre/ ->
+          internal rewrite (URL shown to the visitor is unchanged) ->
+          /puncture-repairs-whats-actually-being-done-to-your-tyre.html;
+          /puncture-repairs-whats-actually-being-done-to-your-tyre.html
+          -> 301 ->
+          /puncture-repairs-whats-actually-being-done-to-your-tyre/. In
+          each rewrite/redirect pair, the rewritten path is the one
+          primary, indexable URL. All other requests pass through
+          unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -279,7 +286,8 @@ Resources:
                 '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/',
                 '/your-guide-to-safe-tyre-services-in-harthill.html': '/your-guide-to-safe-tyre-services-in-harthill/',
                 '/the-best-tyres-for-edinburgh-west-lothian-roads.html': '/the-best-tyres-for-edinburgh-west-lothian-roads/',
-                '/the-best-tyres-for-your-ford-on-edinburghs-roads.html': '/the-best-tyres-for-your-ford-on-edinburghs-roads/'
+                '/the-best-tyres-for-your-ford-on-edinburghs-roads.html': '/the-best-tyres-for-your-ford-on-edinburghs-roads/',
+                '/puncture-repairs-whats-actually-being-done-to-your-tyre.html': '/puncture-repairs-whats-actually-being-done-to-your-tyre/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -315,7 +323,9 @@ Resources:
                 '/the-best-tyres-for-edinburgh-west-lothian-roads/': '/the-best-tyres-for-edinburgh-west-lothian-roads.html',
                 '/the-best-tyres-for-edinburgh-west-lothian-roads': '/the-best-tyres-for-edinburgh-west-lothian-roads.html',
                 '/the-best-tyres-for-your-ford-on-edinburghs-roads/': '/the-best-tyres-for-your-ford-on-edinburghs-roads.html',
-                '/the-best-tyres-for-your-ford-on-edinburghs-roads': '/the-best-tyres-for-your-ford-on-edinburghs-roads.html'
+                '/the-best-tyres-for-your-ford-on-edinburghs-roads': '/the-best-tyres-for-your-ford-on-edinburghs-roads.html',
+                '/puncture-repairs-whats-actually-being-done-to-your-tyre/': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html',
+                '/puncture-repairs-whats-actually-being-done-to-your-tyre': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
