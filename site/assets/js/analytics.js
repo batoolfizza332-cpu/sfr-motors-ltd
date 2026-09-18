@@ -75,7 +75,9 @@
     "/mobile-tyre-puncture-repair/",
     "/mobile-tyre-puncture-repair",
     "/tyre-pressure-monitoring-system/",
-    "/tyre-pressure-monitoring-system"
+    "/tyre-pressure-monitoring-system",
+    "/van-tyre-replacement-services/",
+    "/van-tyre-replacement-services"
   ];
 
   function pageType() {
