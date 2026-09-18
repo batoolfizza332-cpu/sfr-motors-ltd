@@ -223,8 +223,14 @@ Resources:
           /why-tyre-safety-is-more-important-than-most-drivers-realize.html;
           /why-tyre-safety-is-more-important-than-most-drivers-realize.html
           -> 301 ->
-          /why-tyre-safety-is-more-important-than-most-drivers-realize/.
-          In each rewrite/redirect pair, the rewritten path is the one
+          /why-tyre-safety-is-more-important-than-most-drivers-realize/;
+          /professional-mobile-tyre-services-on-drivers-linlithgow/ ->
+          internal rewrite (URL shown to the visitor is unchanged) ->
+          /professional-mobile-tyre-services-on-drivers-linlithgow.html;
+          /professional-mobile-tyre-services-on-drivers-linlithgow.html
+          -> 301 ->
+          /professional-mobile-tyre-services-on-drivers-linlithgow/. In
+          each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
         Runtime: cloudfront-js-1.0
@@ -251,7 +257,8 @@ Resources:
                 '/tyre-care-and-flat-tyre-help-in-linlithgow.html': '/tyre-care-and-flat-tyre-help-in-linlithgow/',
                 '/preparing-your-car-tyres-for-winter-driving-in-livingston.html': '/preparing-your-car-tyres-for-winter-driving-in-livingston/',
                 '/how-quality-tyres-improve-safety-and-driving-performance.html': '/how-quality-tyres-improve-safety-and-driving-performance/',
-                '/why-tyre-safety-is-more-important-than-most-drivers-realize.html': '/why-tyre-safety-is-more-important-than-most-drivers-realize/'
+                '/why-tyre-safety-is-more-important-than-most-drivers-realize.html': '/why-tyre-safety-is-more-important-than-most-drivers-realize/',
+                '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -279,7 +286,9 @@ Resources:
                 '/how-quality-tyres-improve-safety-and-driving-performance/': '/how-quality-tyres-improve-safety-and-driving-performance.html',
                 '/how-quality-tyres-improve-safety-and-driving-performance': '/how-quality-tyres-improve-safety-and-driving-performance.html',
                 '/why-tyre-safety-is-more-important-than-most-drivers-realize/': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
-                '/why-tyre-safety-is-more-important-than-most-drivers-realize': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html'
+                '/why-tyre-safety-is-more-important-than-most-drivers-realize': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
+                '/professional-mobile-tyre-services-on-drivers-linlithgow/': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
+                '/professional-mobile-tyre-services-on-drivers-linlithgow': '/professional-mobile-tyre-services-on-drivers-linlithgow.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
