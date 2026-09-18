@@ -44,6 +44,7 @@ function listHtmlFiles() {
 const CANONICAL_URL_OVERRIDES = {
   "emergency-tyre-change.html": "24-7-mobile-tyre-replacement/",
   "about.html": "about-us/",
+  "how-much-does-mobile-tyre-fitting-cost.html": "how-much-does-mobile-tyre-fitting-cost/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

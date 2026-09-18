@@ -162,9 +162,14 @@ Resources:
           /24-7-mobile-tyre-replacement/;
           /about-us/ -> internal rewrite (URL shown to the visitor is
           unchanged) -> /about.html;
-          /about.html -> 301 -> /about-us/. In each rewrite/redirect pair,
-          the rewritten path is the one primary, indexable URL. All other
-          requests pass through unchanged.
+          /about.html -> 301 -> /about-us/;
+          /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
+          shown to the visitor is unchanged) ->
+          /how-much-does-mobile-tyre-fitting-cost.html;
+          /how-much-does-mobile-tyre-fitting-cost.html -> 301 ->
+          /how-much-does-mobile-tyre-fitting-cost/. In each rewrite/redirect
+          pair, the rewritten path is the one primary, indexable URL. All
+          other requests pass through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -176,13 +181,16 @@ Resources:
                 '/24-7-mobile-tyre-replacement-in-edinburgh/': '/mobile-tyre-fitting-edinburgh.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
                 '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
-                '/about.html': '/about-us/'
+                '/about.html': '/about-us/',
+                '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
                 '/24-7-mobile-tyre-replacement': '/emergency-tyre-change.html',
                 '/about-us/': '/about.html',
-                '/about-us': '/about.html'
+                '/about-us': '/about.html',
+                '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
+                '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
