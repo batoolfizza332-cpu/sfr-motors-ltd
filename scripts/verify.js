@@ -64,6 +64,7 @@ const CANONICAL_URL_OVERRIDES = {
   "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html": "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
   "emergency-tyre-replacement.html": "emergency-tyre-replacement/",
   "locking-wheel-nut-removal.html": "locking-wheel-nut-removal/",
+  "better-tyres-better-drive.html": "better-tyres-better-drive/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
