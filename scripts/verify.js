@@ -48,6 +48,7 @@ const CANONICAL_URL_OVERRIDES = {
   "7-warning-signs-your-tyres-need-immediate-professional-attention.html": "7-warning-signs-your-tyres-need-immediate-professional-attention/",
   "blog.html": "blog/",
   "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html": "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+  "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html": "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
