@@ -279,7 +279,11 @@ Resources:
           destination service page, so it is consolidated there rather
           than kept as a separate "Keep at exact URL" page as the
           original WordPress migration audit recorded) ->
-          /van-tyre-replacement.html.
+          /van-tyre-replacement.html;
+          /expert-locking-wheel-nut-removal/ -> 301 (near-duplicate
+          informational locking-wheel-nut article per the WordPress
+          migration audit, consolidated into the recreated article) ->
+          /locking-wheel-nut-removal/.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -326,7 +330,9 @@ Resources:
                 '/tyre-puncture-repair-near-me-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyres-bathgate-guide/': '/van-tyre-replacement.html',
-                '/tyres-bathgate-guide': '/van-tyre-replacement.html'
+                '/tyres-bathgate-guide': '/van-tyre-replacement.html',
+                '/expert-locking-wheel-nut-removal/': '/locking-wheel-nut-removal/',
+                '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
