@@ -264,7 +264,14 @@ Resources:
           /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html;
           /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html
           -> 301 ->
-          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/.
+          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/;
+          /tyre-puncture-repair-near-me-west-lothian/ -> 301 (never built
+          as its own page on this branch; its provider-selection-checklist
+          content duplicates mobile-tyre-repair-edinburgh-west-lothian.html,
+          which also covers West Lothian, so it is consolidated there
+          rather than kept as a separate "Keep at exact URL" page as the
+          original WordPress migration audit recorded) ->
+          /mobile-tyre-repair-edinburgh-west-lothian/.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -307,7 +314,9 @@ Resources:
                 '/better-tyres-better-drive.html': '/better-tyres-better-drive/',
                 '/how-to-change-a-tyre.html': '/how-to-change-a-tyre/',
                 '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/',
-                '/mobile-tyre-repair-edinburgh-west-lothian.html': '/mobile-tyre-repair-edinburgh-west-lothian/'
+                '/mobile-tyre-repair-edinburgh-west-lothian.html': '/mobile-tyre-repair-edinburgh-west-lothian/',
+                '/tyre-puncture-repair-near-me-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian/',
+                '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
