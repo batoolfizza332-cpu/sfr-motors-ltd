@@ -43,6 +43,7 @@ function listHtmlFiles() {
 // URL path (no leading slash).
 const CANONICAL_URL_OVERRIDES = {
   "emergency-tyre-change.html": "24-7-mobile-tyre-replacement/",
+  "about.html": "about-us/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
