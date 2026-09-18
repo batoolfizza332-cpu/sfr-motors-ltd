@@ -65,6 +65,7 @@ const CANONICAL_URL_OVERRIDES = {
   "emergency-tyre-replacement.html": "emergency-tyre-replacement/",
   "locking-wheel-nut-removal.html": "locking-wheel-nut-removal/",
   "better-tyres-better-drive.html": "better-tyres-better-drive/",
+  "how-to-change-a-tyre.html": "how-to-change-a-tyre/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

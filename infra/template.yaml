@@ -304,7 +304,8 @@ Resources:
                 '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/',
                 '/emergency-tyre-replacement.html': '/emergency-tyre-replacement/',
                 '/locking-wheel-nut-removal.html': '/locking-wheel-nut-removal/',
-                '/better-tyres-better-drive.html': '/better-tyres-better-drive/'
+                '/better-tyres-better-drive.html': '/better-tyres-better-drive/',
+                '/how-to-change-a-tyre.html': '/how-to-change-a-tyre/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -352,7 +353,9 @@ Resources:
                 '/locking-wheel-nut-removal/': '/locking-wheel-nut-removal.html',
                 '/locking-wheel-nut-removal': '/locking-wheel-nut-removal.html',
                 '/better-tyres-better-drive/': '/better-tyres-better-drive.html',
-                '/better-tyres-better-drive': '/better-tyres-better-drive.html'
+                '/better-tyres-better-drive': '/better-tyres-better-drive.html',
+                '/how-to-change-a-tyre/': '/how-to-change-a-tyre.html',
+                '/how-to-change-a-tyre': '/how-to-change-a-tyre.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
