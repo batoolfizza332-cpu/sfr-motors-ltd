@@ -271,7 +271,15 @@ Resources:
           which also covers West Lothian, so it is consolidated there
           rather than kept as a separate "Keep at exact URL" page as the
           original WordPress migration audit recorded) ->
-          /mobile-tyre-repair-edinburgh-west-lothian/.
+          /mobile-tyre-repair-edinburgh-west-lothian/;
+          /tyres-bathgate-guide/ -> 301 (never built as its own page on
+          this branch; despite its generic WordPress-audit title, the
+          finished source is entirely van-tyre-specific and its "signs
+          it's time to replace" content repeats what's already on the
+          destination service page, so it is consolidated there rather
+          than kept as a separate "Keep at exact URL" page as the
+          original WordPress migration audit recorded) ->
+          /van-tyre-replacement.html.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -316,7 +324,9 @@ Resources:
                 '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/',
                 '/mobile-tyre-repair-edinburgh-west-lothian.html': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyre-puncture-repair-near-me-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian/',
-                '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/'
+                '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
+                '/tyres-bathgate-guide/': '/van-tyre-replacement.html',
+                '/tyres-bathgate-guide': '/van-tyre-replacement.html'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
