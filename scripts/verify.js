@@ -47,6 +47,7 @@ const CANONICAL_URL_OVERRIDES = {
   "how-much-does-mobile-tyre-fitting-cost.html": "how-much-does-mobile-tyre-fitting-cost/",
   "7-warning-signs-your-tyres-need-immediate-professional-attention.html": "7-warning-signs-your-tyres-need-immediate-professional-attention/",
   "blog.html": "blog/",
+  "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html": "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that

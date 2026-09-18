@@ -176,9 +176,16 @@ Resources:
           /7-warning-signs-your-tyres-need-immediate-professional-attention/;
           /blog/ -> internal rewrite (URL shown to the visitor is
           unchanged) -> /blog.html;
-          /blog.html -> 301 -> /blog/. In each rewrite/redirect pair, the
-          rewritten path is the one primary, indexable URL. All other
-          requests pass through unchanged.
+          /blog.html -> 301 -> /blog/;
+          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/ ->
+          internal rewrite (URL shown to the visitor is unchanged) ->
+          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html;
+          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html
+          -> 301 ->
+          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/. In
+          each rewrite/redirect pair, the rewritten path is the one
+          primary, indexable URL. All other requests pass through
+          unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -193,7 +200,8 @@ Resources:
                 '/about.html': '/about-us/',
                 '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
-                '/blog.html': '/blog/'
+                '/blog.html': '/blog/',
+                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -205,7 +213,9 @@ Resources:
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
                 '/blog/': '/blog.html',
-                '/blog': '/blog.html'
+                '/blog': '/blog.html',
+                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html',
+                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
