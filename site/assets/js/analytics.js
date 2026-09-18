@@ -50,6 +50,18 @@
     return path || "index.html";
   }
 
+  // The contact page's canonical URL is the pretty path /contact-us/ (a
+  // CloudFront-edge rewrite serves contact.html there without changing the
+  // visible URL), so currentPageFile() — which reads the last "/"-segment —
+  // returns "" for it, not "contact.html". Checked separately from
+  // pageType()'s classification so this fix stays scoped to the contact
+  // conversion event and doesn't touch page_type on any other page.
+  function isContactPage() {
+    var path = window.location.pathname;
+    if (path === "/contact-us/" || path === "/contact-us") return true;
+    return currentPageFile() === "contact.html";
+  }
+
   function pageType() {
     var page = currentPageFile();
     if (LOCATION_PAGES.indexOf(page) !== -1) return "location";
@@ -129,7 +141,7 @@
   document.addEventListener("sfr:quote-submitted", function () {
     gtag("event", "quote_request", { page_type: pageType() });
 
-    if (currentPageFile() === "contact.html") {
+    if (isContactPage()) {
       gtag("event", "contact_form_submit", { page_type: pageType() });
     }
   });
