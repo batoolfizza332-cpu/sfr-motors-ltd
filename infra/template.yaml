@@ -229,10 +229,14 @@ Resources:
           /professional-mobile-tyre-services-on-drivers-linlithgow.html;
           /professional-mobile-tyre-services-on-drivers-linlithgow.html
           -> 301 ->
-          /professional-mobile-tyre-services-on-drivers-linlithgow/. In
-          each rewrite/redirect pair, the rewritten path is the one
-          primary, indexable URL. All other requests pass through
-          unchanged.
+          /professional-mobile-tyre-services-on-drivers-linlithgow/;
+          /your-guide-to-safe-tyre-services-in-harthill/ -> internal
+          rewrite (URL shown to the visitor is unchanged) ->
+          /your-guide-to-safe-tyre-services-in-harthill.html;
+          /your-guide-to-safe-tyre-services-in-harthill.html -> 301 ->
+          /your-guide-to-safe-tyre-services-in-harthill/. In each
+          rewrite/redirect pair, the rewritten path is the one primary,
+          indexable URL. All other requests pass through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -258,7 +262,8 @@ Resources:
                 '/preparing-your-car-tyres-for-winter-driving-in-livingston.html': '/preparing-your-car-tyres-for-winter-driving-in-livingston/',
                 '/how-quality-tyres-improve-safety-and-driving-performance.html': '/how-quality-tyres-improve-safety-and-driving-performance/',
                 '/why-tyre-safety-is-more-important-than-most-drivers-realize.html': '/why-tyre-safety-is-more-important-than-most-drivers-realize/',
-                '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/'
+                '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/',
+                '/your-guide-to-safe-tyre-services-in-harthill.html': '/your-guide-to-safe-tyre-services-in-harthill/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -288,7 +293,9 @@ Resources:
                 '/why-tyre-safety-is-more-important-than-most-drivers-realize/': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
                 '/why-tyre-safety-is-more-important-than-most-drivers-realize': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
                 '/professional-mobile-tyre-services-on-drivers-linlithgow/': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
-                '/professional-mobile-tyre-services-on-drivers-linlithgow': '/professional-mobile-tyre-services-on-drivers-linlithgow.html'
+                '/professional-mobile-tyre-services-on-drivers-linlithgow': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
+                '/your-guide-to-safe-tyre-services-in-harthill/': '/your-guide-to-safe-tyre-services-in-harthill.html',
+                '/your-guide-to-safe-tyre-services-in-harthill': '/your-guide-to-safe-tyre-services-in-harthill.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {

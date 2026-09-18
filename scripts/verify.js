@@ -56,6 +56,7 @@ const CANONICAL_URL_OVERRIDES = {
   "how-quality-tyres-improve-safety-and-driving-performance.html": "how-quality-tyres-improve-safety-and-driving-performance/",
   "why-tyre-safety-is-more-important-than-most-drivers-realize.html": "why-tyre-safety-is-more-important-than-most-drivers-realize/",
   "professional-mobile-tyre-services-on-drivers-linlithgow.html": "professional-mobile-tyre-services-on-drivers-linlithgow/",
+  "your-guide-to-safe-tyre-services-in-harthill.html": "your-guide-to-safe-tyre-services-in-harthill/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
