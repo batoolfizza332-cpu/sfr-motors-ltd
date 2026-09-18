@@ -35,8 +35,25 @@ function listHtmlFiles() {
     .sort();
 }
 
+// Pages whose intentional public/canonical URL differs from their on-disk
+// filename, because a CloudFront Function (infra/template.yaml,
+// LegacyRedirectFunction) rewrites that URL to this file at the edge —
+// preserving a legacy URL as the single primary one rather than serving
+// duplicate content at two URLs. Keyed by filename; value is the public
+// URL path (no leading slash).
+const CANONICAL_URL_OVERRIDES = {
+  "emergency-tyre-change.html": "24-7-mobile-tyre-replacement/",
+};
+
+// Reverse lookup, for resolving internal links/sitemap entries that
+// intentionally use the rewritten public path instead of the filename.
+const ROUTE_ALIAS_TO_FILE = Object.fromEntries(
+  Object.entries(CANONICAL_URL_OVERRIDES).map(([file, urlPath]) => [urlPath, file])
+);
+
 function expectedCanonical(file) {
-  return file === "index.html" ? `${PROD_DOMAIN}/` : `${PROD_DOMAIN}/${file}`;
+  if (file === "index.html") return `${PROD_DOMAIN}/`;
+  return `${PROD_DOMAIN}/${CANONICAL_URL_OVERRIDES[file] || file}`;
 }
 
 function isIndexable(html) {
@@ -102,9 +119,10 @@ function checkLinksAndAnchors(pages) {
       if (/^(https?:|tel:|mailto:)/i.test(href)) continue; // external, out of scope
 
       const [targetFileRaw, fragment] = href.split("#");
-      const targetFile = targetFileRaw === "" ? file : targetFileRaw.split("?")[0];
+      let targetFile = targetFileRaw === "" ? file : targetFileRaw.split("?")[0];
 
       if (targetFileRaw !== "") {
+        targetFile = ROUTE_ALIAS_TO_FILE[targetFile] || targetFile;
         if (!pages[targetFile]) {
           fail(
             "2. Internal links",
@@ -322,7 +340,10 @@ function checkSitemap(pages) {
 
   const fileFor = (url) => {
     if (url === `${PROD_DOMAIN}/`) return "index.html";
-    if (url.startsWith(`${PROD_DOMAIN}/`)) return url.slice(PROD_DOMAIN.length + 1);
+    if (url.startsWith(`${PROD_DOMAIN}/`)) {
+      const urlPath = url.slice(PROD_DOMAIN.length + 1);
+      return ROUTE_ALIAS_TO_FILE[urlPath] || urlPath;
+    }
     return null;
   };
 
