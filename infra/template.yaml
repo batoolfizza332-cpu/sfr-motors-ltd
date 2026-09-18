@@ -188,7 +188,16 @@ Resources:
           /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html;
           /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html
           -> 301 ->
-          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/.
+          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/;
+          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/
+          -> internal rewrite (URL shown to the visitor is unchanged) ->
+          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html;
+          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html
+          -> 301 ->
+          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
+          /why-professional-mobile-tyre-services-are-information-to-all-drivers/
+          -> 301 (duplicate WordPress post, consolidated) ->
+          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/.
           In each rewrite/redirect pair, the rewritten path is the one
           primary, indexable URL. All other requests pass through
           unchanged.
@@ -208,7 +217,10 @@ Resources:
                 '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
                 '/blog.html': '/blog/',
                 '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/',
-                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/'
+                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/',
+                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
+                '/why-professional-mobile-tyre-services-are-information-to-all-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
+                '/why-professional-mobile-tyre-services-are-information-to-all-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/'
             };
             var rewrites = {
                 '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
@@ -224,7 +236,9 @@ Resources:
                 '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html',
                 '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html',
                 '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html',
-                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html'
+                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html',
+                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html',
+                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {

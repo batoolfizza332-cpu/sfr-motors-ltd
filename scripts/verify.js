@@ -49,6 +49,7 @@ const CANONICAL_URL_OVERRIDES = {
   "blog.html": "blog/",
   "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html": "how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
   "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html": "how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+  "why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html": "why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
