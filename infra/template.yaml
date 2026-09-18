@@ -159,9 +159,12 @@ Resources:
           /24-7-mobile-tyre-replacement/ -> internal rewrite (URL shown to
           the visitor is unchanged) -> /emergency-tyre-change.html;
           /emergency-tyre-change.html -> 301 ->
-          /24-7-mobile-tyre-replacement/, so the rewritten path is the one
-          primary, indexable URL. All other requests pass through
-          unchanged.
+          /24-7-mobile-tyre-replacement/;
+          /about-us/ -> internal rewrite (URL shown to the visitor is
+          unchanged) -> /about.html;
+          /about.html -> 301 -> /about-us/. In each rewrite/redirect pair,
+          the rewritten path is the one primary, indexable URL. All other
+          requests pass through unchanged.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
@@ -172,7 +175,14 @@ Resources:
                 '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh/': '/mobile-tyre-fitting-edinburgh.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
-                '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/'
+                '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
+                '/about.html': '/about-us/'
+            };
+            var rewrites = {
+                '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
+                '/24-7-mobile-tyre-replacement': '/emergency-tyre-change.html',
+                '/about-us/': '/about.html',
+                '/about-us': '/about.html'
             };
             if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
                 return {
@@ -183,8 +193,8 @@ Resources:
                     }
                 };
             }
-            if (uri === '/24-7-mobile-tyre-replacement/' || uri === '/24-7-mobile-tyre-replacement') {
-                request.uri = '/emergency-tyre-change.html';
+            if (Object.prototype.hasOwnProperty.call(rewrites, uri)) {
+                request.uri = rewrites[uri];
                 return request;
             }
             return request;
