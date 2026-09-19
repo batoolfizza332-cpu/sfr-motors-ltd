@@ -100,7 +100,7 @@ Resources:
               font-src 'self' https://fonts.gstatic.com;
               img-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
               connect-src 'self' https://api.sfrmotors.co.uk https://*.google-analytics.com https://*.analytics.google.com;
-              frame-src https://maps.google.com;
+              frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
               form-action 'self';
