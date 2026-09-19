@@ -517,6 +517,180 @@ function checkRootFavicon() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 15: cookie consent + consent-gated Google Analytics
+// ---------------------------------------------------------------------------
+// The single central implementation is site/assets/js/analytics.js. These
+// checks are structural (function bodies, call sites, parsed CSP directives)
+// rather than exact-string matches, so harmless reformatting does not trip them.
+const APPROVED_GA_ID = "G-B9TY4GMXYT";
+
+// Body of `function name(...) { ... }` by brace matching, or null.
+function functionBody(source, name) {
+  const start = source.search(new RegExp(`function\\s+${name}\\s*\\(`));
+  if (start === -1) return null;
+  const open = source.indexOf("{", start);
+  let depth = 0;
+  for (let i = open; i < source.length; i++) {
+    if (source[i] === "{") depth++;
+    else if (source[i] === "}" && --depth === 0) return source.slice(open + 1, i);
+  }
+  return null;
+}
+
+function parseCsp() {
+  const template = fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8").replace(/\r/g, "");
+  const m = template.match(/ContentSecurityPolicy: >-\n([\s\S]*?)\n\s*Override: true/);
+  if (!m) return null;
+  const directives = {};
+  for (const part of m[1].split(";")) {
+    const tokens = part.trim().split(/\s+/).filter(Boolean);
+    if (tokens.length) directives[tokens[0]] = tokens.slice(1);
+  }
+  return directives;
+}
+
+function checkConsentAndAnalytics(pages) {
+  const check = "15. Cookie consent & Analytics";
+  const jsFile = "site/assets/js/analytics.js";
+  // Comments are stripped first so prose that mentions a function name cannot satisfy or trip a check.
+  const js = fs
+    .readFileSync(path.join(ROOT, jsFile), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/(^|[^:"'\w])\/\/.*$/gm, "$1");
+
+  // -- Measurement ID: approved, configured once, in the central file only ------
+  const ids = matchAll(/\bGA_MEASUREMENT_ID\s*=\s*["']([^"']*)["']/g, js).map((m) => m[1]);
+  if (ids.length !== 1 || ids[0] !== APPROVED_GA_ID) {
+    fail(check, `analytics.js must define GA_MEASUREMENT_ID exactly once as the approved ${APPROVED_GA_ID} (found: ${ids.join(", ") || "none"}).`, jsFile, `Set GA_MEASUREMENT_ID = "${APPROVED_GA_ID}".`);
+  }
+  // The old "not configured" placeholder path must be gone, not merely silenced.
+  if (/Analytics not configured|G-X{6,}/.test(js)) {
+    fail(check, 'analytics.js still contains the old placeholder ID / "Analytics not configured" branch.', jsFile, "Remove the placeholder branch; the real ID is configured.");
+  }
+  for (const rel of fs.readdirSync(path.join(SITE_DIR, "assets", "js"))) {
+    if (rel === "analytics.js") continue;
+    if (/G-[A-Z0-9]{10}\b|googletagmanager\.com|google-analytics\.com/.test(fs.readFileSync(path.join(SITE_DIR, "assets", "js", rel), "utf8"))) {
+      fail(check, `site/assets/js/${rel} contains a GA ID or Google Analytics URL; analytics must live only in analytics.js.`, `site/assets/js/${rel}`, "Move it into analytics.js.");
+    }
+  }
+
+  // -- Nothing loads Analytics unconditionally ---------------------------------
+  for (const [file, page] of Object.entries(pages)) {
+    if (/googletagmanager\.com|google-analytics\.com|\bgtag\s*\(|\bdataLayer\b|\bG-[A-Z0-9]{10}\b/.test(page.html)) {
+      fail(check, "Page HTML references Google Analytics/gtag directly; it must only load through the consent-gated analytics.js.", `site/${file}`, "Remove the inline tag/script; analytics.js loads gtag.js after consent.");
+    }
+    const tags = matchAll(/<script\b[^>]*\bsrc=["'][^"']*assets\/js\/analytics\.js["'][^>]*>/g, page.html);
+    if (tags.length !== 1 || !/\bdefer\b/.test(tags[0][0])) {
+      fail(check, `Page must include assets/js/analytics.js exactly once with defer (found ${tags.length}).`, `site/${file}`, 'Add <script src="assets/js/analytics.js" defer></script> once, matching the page\'s other script paths.');
+    }
+    const openers = matchAll(/<button\b[^>]*\bdata-sfr-cookie-settings\b[^>]*>([^<]*)<\/button>/g, page.html);
+    const inFooter = /<footer\b[\s\S]*data-sfr-cookie-settings[\s\S]*<\/footer>/.test(page.html);
+    if (openers.length !== 1 || !/Cookie settings/i.test(openers[0][1]) || !inFooter) {
+      fail(check, `Page needs exactly one footer "Cookie settings" button (data-sfr-cookie-settings); found ${openers.length}.`, `site/${file}`, 'Add <button type="button" class="sfr-footer__cookie" data-sfr-cookie-settings hidden>Cookie settings</button> to the footer bottom bar.');
+    }
+  }
+
+  // -- gtag.js is requested only from acceptAnalytics(), and only after "granted" --
+  const gtagRefs = matchAll(/googletagmanager\.com\/gtag\/js/g, js).length;
+  const accept = functionBody(js, "acceptAnalytics");
+  if (gtagRefs !== 1 || !accept || !/createElement\(\s*["']script["']\s*\)/.test(accept) || !/GTAG_URL/.test(accept)) {
+    fail(check, "gtag.js must be referenced once and injected only inside acceptAnalytics().", jsFile, "Keep a single GTAG_URL and create the <script> only in acceptAnalytics().");
+  }
+  if (accept && !/document\.querySelector\([^)]*gtag\/js/.test(accept) && !/analyticsLoaded/.test(accept)) {
+    fail(check, "acceptAnalytics() has no guard against inserting gtag.js twice.", jsFile, "Guard with an analyticsLoaded flag / existing-script check.");
+  }
+  if (accept && matchAll(/gtag\(\s*["']config["']/g, accept).length !== 1) {
+    fail(check, 'acceptAnalytics() must call gtag("config", ...) exactly once (duplicate page_view otherwise).', jsFile, 'Keep one gtag("config") call.');
+  }
+  const callSites = matchAll(/\bacceptAnalytics\(\)/g, js).filter((m) => !/function\s+$/.test(js.slice(Math.max(0, m.index - 10), m.index)));
+  for (const m of callSites) {
+    if (!/["']granted["']/.test(js.slice(Math.max(0, m.index - 200), m.index))) {
+      fail(check, "acceptAnalytics() is called somewhere without an immediately preceding \"granted\" consent check.", jsFile, "Only call acceptAnalytics() when the stored/selected choice is granted.");
+    }
+  }
+  if (callSites.length < 2) {
+    fail(check, "Expected acceptAnalytics() to be called from both the accept action and the remembered-consent start-up path.", jsFile, "Restore the call sites.");
+  }
+  if (/localStorage|sessionStorage/.test(js)) {
+    fail(check, "analytics.js uses web storage; the consent preference is meant to be a single first-party cookie.", jsFile, "Store only the sfr_consent cookie.");
+  }
+
+  // -- Consent controls: equal Accept / Reject, withdrawal, cookie attributes ---
+  for (const [value, label] of [["granted", "Accept analytics"], ["denied", "Reject analytics"]]) {
+    if (!new RegExp(`data-sfr-consent=\\\\?["']${value}\\\\?["'][^<]*>${label}<`).test(js)) {
+      fail(check, `Consent panel is missing the "${label}" button (data-sfr-consent="${value}").`, jsFile, `Add a "${label}" button with the same prominence as its counterpart.`);
+    }
+  }
+  if (!/data-sfr-cookie-settings/.test(js) || !/clearAnalyticsCookies\(\)/.test(js) || !/ga-disable-/.test(js)) {
+    fail(check, "Withdrawal handling (Cookie settings opener, cookie clearing, ga-disable flag) is incomplete.", jsFile, "Restore reopen + clearAnalyticsCookies() + the ga-disable-<ID> flag.");
+  }
+  const maxAge = Number((js.match(/CONSENT_MAX_AGE\s*=\s*(\d+)/) || [])[1]);
+  const cookieName = (js.match(/CONSENT_COOKIE\s*=\s*["']([^"']+)["']/) || [])[1];
+  if (!maxAge || !cookieName || !/SameSite=Lax/.test(js) || !/Path=\//.test(js) || !/protocol\s*===\s*["']https:["'][\s\S]{0,30}Secure/.test(js)) {
+    fail(check, "Consent cookie must have a name, a Max-Age, Path=/, SameSite=Lax and Secure on HTTPS.", jsFile, "Restore the cookie attributes in writeChoice().");
+  }
+
+  // -- Privacy policy describes what the code really does -----------------------
+  const policy = pages["privacy-policy.html"] ? pages["privacy-policy.html"].html : "";
+  const text = policy.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
+  const gaCookie = "_ga_" + APPROVED_GA_ID.slice(2);
+  const required = [
+    ["the consent cookie name", cookieName],
+    ["the consent cookie lifetime", maxAge ? `${Math.round(maxAge / 86400)} days` : null],
+    ["the _ga cookie", "_ga"],
+    ["the container cookie", gaCookie],
+    ["Google Analytics 4", "Google Analytics 4"],
+    ["the Cookie settings control", "Cookie settings"],
+    ["the Reject choice", "Reject analytics"],
+  ];
+  for (const [what, needle] of required) {
+    if (!needle || !text.includes(needle)) {
+      fail(check, `privacy-policy.html does not mention ${what} (${needle}).`, "site/privacy-policy.html", "Keep the Cookie/Analytics sections in sync with analytics.js.");
+    }
+  }
+  if (/Google Ads (tracking|and)/i.test(text)) {
+    fail(check, "privacy-policy.html claims Google Ads tracking, which this site does not load.", "site/privacy-policy.html", "Describe only tags the site actually uses.");
+  }
+
+  // -- CSP: exact Google origins, no wildcards or unsafe allowances -------------
+  const csp = parseCsp();
+  if (!csp) {
+    fail(check, "Could not parse the ContentSecurityPolicy in infra/template.yaml.", "infra/template.yaml", "Restore the ContentSecurityPolicy block.");
+  } else {
+    const has = (dir, origin) => (csp[dir] || []).includes(origin);
+    for (const [dir, origin] of [
+      ["script-src", "https://www.googletagmanager.com"],
+      ["connect-src", "https://www.google-analytics.com"],
+      ["connect-src", "https://region1.google-analytics.com"],
+      ["frame-src", "https://maps.google.com"],
+      ["frame-src", "https://www.google.com"],
+    ]) {
+      if (!has(dir, origin)) fail(check, `CSP ${dir} is missing ${origin}.`, "infra/template.yaml", `Add ${origin} to ${dir}.`);
+    }
+    for (const dir of ["default-src", "script-src", "style-src", "connect-src", "img-src", "frame-src"]) {
+      for (const src of csp[dir] || []) {
+        if (/\*/.test(src)) fail(check, `CSP ${dir} contains a wildcard source "${src}".`, "infra/template.yaml", "List exact origins instead.");
+        if (/unsafe-eval|unsafe-inline/.test(src)) fail(check, `CSP ${dir} allows ${src}.`, "infra/template.yaml", "Remove it; the site needs no inline/eval allowances.");
+      }
+    }
+    for (const dir of ["script-src", "connect-src", "img-src"]) {
+      for (const src of csp[dir] || []) {
+        if (/(^|\.)(google\.com|doubleclick\.net|googlesyndication\.com)$/.test(src.replace(/^https:\/\//, ""))) {
+          fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Google signals/ads are off; remove it.");
+        }
+      }
+    }
+  }
+
+  // -- Build output carries the same implementation ----------------------------
+  const distJs = path.join(ROOT, "dist", "assets", "js");
+  const built = fs.existsSync(distJs) ? fs.readdirSync(distJs).filter((f) => /^analytics\.[0-9a-f]{8}\.js$/.test(f)) : [];
+  if (built.length !== 1 || !fs.readFileSync(path.join(distJs, built[0]), "utf8").includes(APPROVED_GA_ID)) {
+    fail(check, "dist/ does not contain exactly one fingerprinted analytics.js carrying the approved Measurement ID.", "scripts/build.js", "Rebuild and make sure analytics.js is fingerprinted into dist/.");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -535,7 +709,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 14;
+const TOTAL_CHECKS = 15;
 
 function main() {
   const buildOk = checkBuild();
@@ -550,6 +724,7 @@ function main() {
   checkNoPlaceholders(pages);
   checkPrettyPathAssets(pages);
   checkRootFavicon();
+  checkConsentAndAnalytics(pages);
   checkGitDiff();
 
   if (failures.length === 0) {

@@ -32,7 +32,7 @@ site/
   assets/
     css/main.css         one shared stylesheet, all pages
     js/main.js            ~110 lines, vanilla JS: mobile nav toggle + quote form submit
-    js/analytics.js       GA4 conversion tracking (no-ops until a real measurement ID is set)
+    js/analytics.js       cookie-consent banner + consent-gated GA4 conversion tracking
     img/                  AVIF + WebP + JPEG for every photo, pre-generated
 ```
 
@@ -69,7 +69,7 @@ then open http://localhost:5500.
 | Caching & compression | CloudFront `Compress: true` (gzip/brotli) on both cache behaviors; long `max-age=604800, immutable` on `/assets/*`, short cache on HTML so edits show up quickly — see `infra/deploy-site.sh` |
 | Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + the quote API), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
-| Analytics without hurting Core Web Vitals | `gtag.js` is injected via JS with `async`, after the page's own `dataLayer`/`gtag()` are defined synchronously (so no early events are lost) — no render-blocking script tag, no impact on LCP/CLS/INP. See "Analytics & conversion tracking" below |
+| Analytics without hurting Core Web Vitals | `gtag.js` is not requested at all until a visitor accepts analytics; then it is injected via JS with `async` — no render-blocking script tag, no impact on LCP/CLS/INP. The consent banner is `position:fixed`, so it causes no layout shift. See "Analytics & conversion tracking" below |
 
 ## Quote/contact form: WhatsApp, not the backend
 
@@ -230,49 +230,67 @@ always-on compute anywhere in this stack to pay for at idle.
 
 ## Known placeholders to fill in before going live
 
-- `site/assets/js/analytics.js` — `GA_MEASUREMENT_ID` (see below)
 - `footer-section.html` / the footer in `site/index.html` — Facebook and
   Instagram icons currently link to `#`. Multiple similarly-named accounts
   turned up in a search and none are linked from the live WordPress site,
   so rather than guess, these are left for you to fill in with the
   confirmed official profile URLs.
 
-## Analytics & conversion tracking
+## Analytics, cookie consent & conversion tracking
 
-`assets/js/analytics.js` loads GA4 (`gtag.js`) asynchronously — it never
-blocks rendering — and tracks these conversion events automatically on
-every page:
+`assets/js/analytics.js` is the whole implementation (one file, loaded on
+every page): a small first-party consent banner plus consent-gated Google
+Analytics 4. The Measurement ID (`G-B9TY4GMXYT`, public by design) is set
+once in that file as `GA_MEASUREMENT_ID`.
 
-| Event | Fires when |
+**Consent behaviour**
+
+| State | What happens |
 |---|---|
-| `phone_click` | any `tel:` link is clicked (header, hero, footer, "Call Now" buttons — one listener covers all of them) |
-| `whatsapp_click` | any `https://wa.me/...` link is clicked |
-| `quote_request` | the quote/contact form is submitted **and WhatsApp opens with the enquiry pre-filled** — never on the honeypot/bot-timing silent-success path, so bot traffic can't inflate this number |
-| `contact_form_submit` | the same successful submission, specifically when it happened on `contact.html` |
-| `cta_click` | a "Get A Free Quote" / "Request..." link pointing at `#quote-form` is clicked, before submission — separates click-through from actual completed requests |
-| `nav_click` | a main navigation link is clicked |
+| First visit | A compact banner offers **Accept analytics** and **Reject analytics** (same size, weight and contrast). Nothing Google-related is requested, no `dataLayer`/`gtag` exists, no `_ga` cookie is set. Scrolling, waiting or pressing Escape is *not* consent. |
+| Accepted | `sfr_consent=v1:analytics=granted` is stored; `gtag.js` is injected once (`https://www.googletagmanager.com/gtag/js?id=G-B9TY4GMXYT`), initialised once (one `page_view`), then phone/WhatsApp/quote events are sent. |
+| Rejected | `sfr_consent=v1:analytics=denied` is stored; Google is never loaded; any `_ga*` cookies are cleared. The site works exactly the same. |
+| Change / withdraw | Every page footer has a **Cookie settings** button that reopens the choices (modal, keyboard-trapped, Escape closes without changing anything). Accept -> Reject stops the tag (`ga-disable-<ID>`), deletes `_ga` / `_ga_B9TY4GMXYT`, then reloads the page so no Google code is left running. Reject -> Accept loads GA once, with no reload. |
 
-Every event also carries a `page_type` parameter (`core` / `service` /
-`location`), computed from the URL by `analytics.js` itself — so "key
-service page visits" and "location page visits" can be segmented in GA4
-without editing all 18 pages individually to tag them.
+The preference is one essential first-party cookie, `sfr_consent`
+(`Path=/`, `SameSite=Lax`, `Secure` on HTTPS, **180 days**), holding only
+the choice and a version marker — no personal data, no web storage. It is
+not forwarded by CloudFront (the cache policies use `CookieBehavior: none`).
 
-**Not tracked, by design:** nothing typed into the form (name, phone,
-email, message) is ever sent as an event parameter — only the fact that
-a submission happened.
+**Events (sent only while consent is granted)**
 
-**To activate:** put your real GA4 Measurement ID (Google Analytics ->
-Admin -> Data Streams -> your web stream) into `GA_MEASUREMENT_ID` in
-`site/assets/js/analytics.js`. It's not a secret — Measurement IDs are
-public by design, visible in any browser's network tab on every GA4
-site — this is a single named placeholder purely so there's one place to
-set it instead of 18. Until it's set, the file no-ops entirely: no
-script loads, no listeners attach, nothing is sent.
+| Event | Fires when | Parameters |
+|---|---|---|
+| `phone_click` | any `tel:` link is clicked | `page_path`, `page_type`, `link_location` (`top_bar` / `header` / `footer` / `page_content`) — never the number or link text |
+| `whatsapp_click` | any `https://wa.me/...` link is clicked | same three — never the number or message |
+| `quote_request` | the quote/contact form is submitted **and WhatsApp opens with the enquiry pre-filled** (never on the honeypot/bot-timing path) | `page_path`, `page_type` — no form content |
+| `contact_form_submit` | the same submission, on the Contact page | `page_path`, `page_type` |
+| `cta_click` | a link pointing at `#quote-form` is clicked | `page_path`, `page_type`, `link_location`, `link_text` |
+| `nav_click` | a main-navigation link is clicked | `page_path`, `page_type`, `link_location`, `link_text` |
 
-**Before enabling real tracking:** as a UK business, cookie-based
-analytics like GA4 generally needs visitor consent under UK PECR/GDPR
-rules. This setup doesn't include a consent banner or Google Consent
-Mode — deliberately, since that's a compliance decision for you to make
-(a simple accept/reject banner, Consent Mode with default-denied
-analytics, or accepting the risk at low traffic are all common choices
-for a small business site) rather than something to bake in unasked.
+`page_type` is `core` / `service` / `location`, computed from the URL.
+Google signals and ad personalisation are switched off in the tag config
+and the Consent Mode default denies `ad_storage`, `ad_user_data` and
+`ad_personalization`, so no advertising cookies or Google Ads origins are
+involved. GA4's "Enhanced measurement" (scroll, outbound-click, etc.) is a
+property-side setting in the Analytics admin, not controlled by this code.
+
+**Local previews never reach Google.** On `localhost` / `127.0.0.1` the
+banner and the stored choice work, but Google Analytics is deliberately not
+loaded, so testing the preview cannot pollute the live GA4 property.
+
+**CSP** (`infra/template.yaml`): `script-src` allows `www.googletagmanager.com`;
+`connect-src` and `img-src` allow exactly `www.google-analytics.com` and
+`region1.google-analytics.com` (the regional collection host Google serves
+to UK/EU visitors). No wildcards, no `google.com` / `doubleclick.net`. If
+data from visitors in another region is missing after launch, check the
+browser console for a CSP violation naming another `*.google-analytics.com`
+host. `scripts/verify.js` check 15 enforces all of the above (ID configured
+once, no inline/unconditional gtag in any page, consent controls and footer
+button on every page, policy text in sync with the code, exact CSP origins).
+
+**Policy text:** `site/privacy-policy.html` sections 3 and 4 describe the
+optional analytics, the cookies (`sfr_consent`, `_ga`, `_ga_B9TY4GMXYT`),
+their lifetimes, and how to change the choice. Keep them in sync with
+`analytics.js` — check 15 fails if the cookie names or the 180-day lifetime
+drift apart.

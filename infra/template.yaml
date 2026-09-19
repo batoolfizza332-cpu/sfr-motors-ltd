@@ -88,18 +88,29 @@ Resources:
           ContentSecurityPolicy:
             # Matches the site's actual resources exactly, so nothing needs
             # 'unsafe-inline'/'unsafe-eval': the scripts are assets/js/main.js
-            # and assets/js/analytics.js (which loads GA4's gtag.js itself),
-            # the only stylesheet besides main.css is Google Fonts, the only
-            # embed is the Google Maps iframe on contact.html, and the quote
-            # form calls the API subdomain below. JSON-LD <script> blocks are
-            # inert and aren't restricted by script-src in any current browser.
+            # and assets/js/analytics.js (the cookie-consent banner, which loads
+            # GA4's gtag.js only AFTER the visitor accepts analytics), the only
+            # stylesheet besides main.css is Google Fonts, the only embed is the
+            # Google Maps iframe on contact.html, and the quote form calls the
+            # API subdomain below. JSON-LD <script> blocks are inert and aren't
+            # restricted by script-src in any current browser.
+            # Google Analytics origins are exact hosts, no wildcards, and were
+            # taken from a real gtag.js run (collection blocked locally):
+            #   script-src  www.googletagmanager.com    - gtag.js itself
+            #   connect-src www.google-analytics.com    - GA4 /g/collect, default endpoint
+            #               region1.google-analytics.com - GA4 /g/collect, served to UK/EU visitors
+            #   img-src     same two hosts              - listed in Google's CSP guide for GA4 image beacons
+            # Google signals and ad personalisation are off in analytics.js, so
+            # no google.com / doubleclick.net origins are needed. If GA data from
+            # some visitors goes missing, check the console for CSP violations
+            # from another regional *.google-analytics.com host.
             ContentSecurityPolicy: >-
               default-src 'self';
               script-src 'self' https://www.googletagmanager.com;
               style-src 'self' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com;
-              img-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
-              connect-src 'self' https://api.sfrmotors.co.uk https://*.google-analytics.com https://*.analytics.google.com;
+              img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
+              connect-src 'self' https://api.sfrmotors.co.uk https://www.google-analytics.com https://region1.google-analytics.com;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';

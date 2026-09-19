@@ -2001,3 +2001,94 @@ a { text-underline-offset: 2px; }
 @media (prefers-reduced-motion:reduce){
   .sfr-calc__btn{transition:none;}
 }
+
+/* ===== Cookie consent banner + footer "Cookie settings" (assets/js/analytics.js) ===== */
+.sfr-consent{
+  --sfr-ink:#ffffff;
+  --sfr-paper:#141414;
+  --sfr-line:#2b2b2b;
+  --sfr-sub:#d4d4d4;
+  --sfr-orange:#ff7f00;
+  --sfr-orange-deep:#ff9f40;
+  --sfr-on-light:#0d0d0d;
+  position:fixed;
+  left:0;right:0;bottom:0;
+  z-index:1100;
+  padding:0 12px 12px;
+  pointer-events:none;
+  font-family:"Roboto","Segoe UI",Arial,sans-serif;
+}
+.sfr-consent *{box-sizing:border-box;}
+.sfr-consent--settings{top:0;display:flex;align-items:flex-end;justify-content:center;}
+.sfr-consent__scrim{position:absolute;inset:0;background:rgba(0,0,0,.65);pointer-events:auto;}
+.sfr-consent__card{
+  position:relative;
+  width:100%;max-width:640px;
+  margin:0 auto;
+  padding:14px 16px 16px;
+  background:var(--sfr-paper);
+  color:var(--sfr-ink);
+  border:1px solid var(--sfr-line);
+  border-top:3px solid var(--sfr-orange);
+  border-radius:12px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);
+  pointer-events:auto;
+}
+.sfr-consent__card:focus{outline:none;}
+.sfr-consent__title{margin:0 0 6px;font-size:15px;font-weight:700;line-height:1.3;}
+.sfr-consent__text,.sfr-consent__status{margin:0 0 12px;font-size:13.5px;line-height:1.5;color:var(--sfr-sub);}
+.sfr-consent__status{color:var(--sfr-ink);font-weight:700;}
+.sfr-consent__text a{color:var(--sfr-orange-deep);text-decoration:underline;text-underline-offset:2px;}
+.sfr-consent__text a:hover{color:var(--sfr-ink);}
+.sfr-consent__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sfr-consent__btn{
+  min-height:44px;
+  padding:10px 12px;
+  border:2px solid transparent;
+  border-radius:9px;
+  font:700 14.5px/1.2 "Roboto","Segoe UI",Arial,sans-serif;
+  color:var(--sfr-on-light);
+  cursor:pointer;
+}
+.sfr-consent__btn--accept{background:var(--sfr-orange);}
+.sfr-consent__btn--accept:hover{background:var(--sfr-orange-deep);}
+.sfr-consent__btn--reject{background:var(--sfr-ink);}
+.sfr-consent__btn--reject:hover{background:#e6e6e6;}
+.sfr-consent__btn:focus-visible,
+.sfr-consent__close:focus-visible,
+.sfr-consent__text a:focus-visible{outline:3px solid var(--sfr-ink);outline-offset:3px;}
+.sfr-consent__close{
+  display:block;
+  min-height:44px;
+  margin:6px auto -8px;
+  padding:8px 14px;
+  background:none;border:0;
+  font:600 14px/1.2 "Roboto","Segoe UI",Arial,sans-serif;
+  color:var(--sfr-sub);
+  text-decoration:underline;text-underline-offset:2px;
+  cursor:pointer;
+}
+.sfr-consent__close:hover{color:var(--sfr-ink);}
+.sfr-sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+.sfr-footer__cookie{
+  margin:0 0 0 12px;
+  padding:0;
+  background:none;border:0;
+  font:inherit;
+  color:inherit;
+  text-decoration:underline;text-underline-offset:2px;
+  cursor:pointer;
+}
+.sfr-footer__cookie[hidden]{display:none;}
+.sfr-footer__cookie:hover{color:var(--sfr-orange);}
+.sfr-footer__cookie:focus-visible{outline:2px solid var(--sfr-orange);outline-offset:2px;}
+@media (max-width:560px){
+  .sfr-footer__cookie{display:inline-block;min-height:44px;padding:12px 8px;margin:-8px 0 -8px 4px;} /* touch-friendly minimum, same visual spacing */
+}
+@media (min-width:480px){
+  .sfr-consent__card{padding:16px 20px 18px;}
+}
+@media print{
+  .sfr-consent,.sfr-footer__cookie{display:none;}
+}
