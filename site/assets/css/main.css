@@ -1890,16 +1890,19 @@ a { text-underline-offset: 2px; }
 .sfr-legal__section li{margin-bottom:8px;}
 .sfr-legal__section li:last-child{margin-bottom:0;}
 .sfr-legal__section li strong{color:var(--sfr-ink);font-weight:700;}
-/* Blog article body links: the browser-default blue/purple was ~2:1 on this dark page.
-   Brand orange, kept underlined (not colour-only); the global :focus-visible ring still applies.
-   The :not() keeps the non-blog calculator page, which shares .sfr-legal, untouched. */
-.sfr-legal:not([aria-labelledby^="sfr-calc"]) .sfr-legal__section a{
+/* Content links in article bodies and process-step text: the browser-default blue/purple was ~2:1 on
+   this dark page. Brand orange, kept underlined (not colour-only); the global :focus-visible ring still applies. */
+.sfr-legal__section a,
+.sfr-how__step p a{
   --sfr-link-visited:#df9f60;--sfr-link-active:#ffb366;
   color:var(--sfr-orange);text-decoration:underline;
 }
-.sfr-legal:not([aria-labelledby^="sfr-calc"]) .sfr-legal__section a:visited{color:var(--sfr-link-visited);}
-.sfr-legal:not([aria-labelledby^="sfr-calc"]) .sfr-legal__section a:hover{color:var(--sfr-orange-deep);text-decoration-thickness:2px;}
-.sfr-legal:not([aria-labelledby^="sfr-calc"]) .sfr-legal__section a:active{color:var(--sfr-link-active);}
+.sfr-legal__section a:visited,
+.sfr-how__step p a:visited{color:var(--sfr-link-visited);}
+.sfr-legal__section a:hover,
+.sfr-how__step p a:hover{color:var(--sfr-orange-deep);text-decoration-thickness:2px;}
+.sfr-legal__section a:active,
+.sfr-how__step p a:active{color:var(--sfr-link-active);}
 @media (max-width:640px){
   .sfr-legal__section h2{font-size:18px;}
   .sfr-legal__section p,.sfr-legal__section ul,.sfr-legal__lead{font-size:14.5px;}
