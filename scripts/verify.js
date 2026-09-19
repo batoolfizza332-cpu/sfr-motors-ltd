@@ -432,6 +432,54 @@ function checkNoPlaceholders(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 13: pretty-path pages never use document-relative local assets
+// ---------------------------------------------------------------------------
+// A page served at a pretty path (e.g. /blog/) resolves a plain
+// href="assets/..." to /blog/assets/..., which doesn't exist. The routing
+// source of truth is the `rewrites` map in the CloudFront Function in
+// infra/template.yaml, unioned with CANONICAL_URL_OVERRIDES.
+function prettyPathFiles() {
+  const template = fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8");
+  const block = template.match(/var rewrites = \{([\s\S]*?)\n\s*\};/);
+  const routed = block ? matchAll(/'\/[^']*':\s*'\/([^']+\.html)'/g, block[1]).map((m) => m[1]) : [];
+  if (routed.length === 0) {
+    fail(
+      "13. Pretty-path assets",
+      "Could not find any pretty-path rewrites in infra/template.yaml (LegacyRedirectFunction `var rewrites`).",
+      "infra/template.yaml",
+      "Restore the `rewrites` map, or update prettyPathFiles() in scripts/verify.js to match the new routing."
+    );
+  }
+  return [...new Set([...routed, ...Object.keys(CANONICAL_URL_OVERRIDES)])].sort();
+}
+
+function checkPrettyPathAssets(pages) {
+  for (const file of prettyPathFiles()) {
+    const page = pages[file];
+    if (!page) {
+      fail("13. Pretty-path assets", `Pretty-path routing points at site/${file}, which does not exist.`, `site/${file}`, "Fix the routing or restore the page.");
+      continue;
+    }
+    for (const [, tag] of matchAll(/(<[a-zA-Z][^>]*>)/g, page.html)) {
+      for (const [, attrName, , value] of matchAll(/\b(href|src|srcset|imagesrcset|poster)\s*=\s*(["'])([^"']*)\2/gi, tag)) {
+        const isSrcset = /srcset$/i.test(attrName);
+        for (const entry of isSrcset ? value.split(",") : [value]) {
+          const url = entry.trim().split(/\s+/)[0];
+          // Only local asset paths that don't start with "/" (or a scheme) are flagged.
+          if (!/^(\.{1,2}\/)*assets\//.test(url)) continue;
+          fail(
+            "13. Pretty-path assets",
+            `${attrName.toLowerCase()}="${url}" is document-relative; on a pretty-path page it resolves under the page's own path and 404s.`,
+            `site/${file}`,
+            `Change it to "/${url.replace(/^(\.{1,2}\/)*/, "")}".`
+          );
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -450,7 +498,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 12;
+const TOTAL_CHECKS = 13;
 
 function main() {
   const buildOk = checkBuild();
@@ -463,6 +511,7 @@ function main() {
   checkImages(pages);
   checkSitemap(pages);
   checkNoPlaceholders(pages);
+  checkPrettyPathAssets(pages);
   checkGitDiff();
 
   if (failures.length === 0) {
