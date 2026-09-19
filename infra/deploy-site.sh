@@ -43,6 +43,14 @@ aws s3 cp "$DIST_DIR/sitemap.xml" "s3://$BUCKET/sitemap.xml" \
   --cache-control "public, max-age=3600" \
   --content-type "application/xml; charset=utf-8"
 
+# Root favicon: some browsers, crawlers and feed readers request
+# /favicon.ico directly even when pages declare an icon. It lives outside
+# assets/, so it needs its own upload (unhashed, so same short cache as
+# robots/sitemap).
+aws s3 cp "$DIST_DIR/favicon.ico" "s3://$BUCKET/favicon.ico" \
+  --cache-control "public, max-age=3600" \
+  --content-type "image/vnd.microsoft.icon"
+
 echo "Invalidating CloudFront cache for pages ..."
 # Only HTML/robots.txt/sitemap.xml ever need invalidating — assets/ is
 # content-hashed, so a stale cached copy is simply never referenced again
@@ -51,6 +59,6 @@ echo "Invalidating CloudFront cache for pages ..."
 # its own key (via DefaultRootObject), so "/*.html" alone would miss it.
 aws cloudfront create-invalidation \
   --distribution-id "$DISTRIBUTION_ID" \
-  --paths "/" "/*.html" "/robots.txt" "/sitemap.xml"
+  --paths "/" "/*.html" "/robots.txt" "/sitemap.xml" "/favicon.ico"
 
 echo "Done."

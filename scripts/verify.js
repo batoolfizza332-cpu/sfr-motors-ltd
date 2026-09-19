@@ -480,6 +480,43 @@ function checkPrettyPathAssets(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 14: root /favicon.ico exists, is a valid ICO, ships in the build and
+// in the deploy script
+// ---------------------------------------------------------------------------
+function checkRootFavicon() {
+  const check = "14. Root favicon";
+  const srcPath = path.join(SITE_DIR, "favicon.ico");
+  if (!fs.existsSync(srcPath)) {
+    fail(check, "site/favicon.ico is missing, so /favicon.ico would 404.", "site/favicon.ico", "Restore site/favicon.ico (an ICO made from the approved logo, assets/img/logo.webp).");
+    return;
+  }
+  const buf = fs.readFileSync(srcPath);
+  // ICONDIR: reserved=0, type=1 (icon), count>=1; each 16-byte ICONDIRENTRY
+  // must point at non-empty image data (PNG or BMP DIB) inside the file.
+  let valid = buf.length >= 22 && buf.readUInt16LE(0) === 0 && buf.readUInt16LE(2) === 1 && buf.readUInt16LE(4) >= 1;
+  for (let i = 0; valid && i < buf.readUInt16LE(4); i++) {
+    const size = buf.readUInt32LE(6 + 16 * i + 8);
+    const offset = buf.readUInt32LE(6 + 16 * i + 12);
+    const isPng = buf.subarray(offset, offset + 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+    const isDib = buf.readUInt32LE(offset) === 40;
+    valid = size > 0 && offset + size <= buf.length && (isPng || isDib);
+  }
+  if (!valid) {
+    fail(check, "site/favicon.ico is not a valid ICO file (bad header or image entry).", "site/favicon.ico", "Regenerate it as a real ICO from assets/img/logo.webp.");
+  }
+
+  const distPath = path.join(ROOT, "dist", "favicon.ico");
+  if (!fs.existsSync(distPath) || !fs.readFileSync(distPath).equals(buf)) {
+    fail(check, "dist/favicon.ico is missing or differs from site/favicon.ico after the build.", "scripts/build.js", "Make sure the build copies site/favicon.ico to dist/favicon.ico unchanged.");
+  }
+
+  const deploy = fs.readFileSync(path.join(ROOT, "infra", "deploy-site.sh"), "utf8");
+  if (!deploy.includes('"$DIST_DIR/favicon.ico"')) {
+    fail(check, "infra/deploy-site.sh does not upload favicon.ico (only assets/, *.html, robots.txt and sitemap.xml are synced).", "infra/deploy-site.sh", "Add an `aws s3 cp \"$DIST_DIR/favicon.ico\" ...` step.");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -498,7 +535,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 13;
+const TOTAL_CHECKS = 14;
 
 function main() {
   const buildOk = checkBuild();
@@ -512,6 +549,7 @@ function main() {
   checkSitemap(pages);
   checkNoPlaceholders(pages);
   checkPrettyPathAssets(pages);
+  checkRootFavicon();
   checkGitDiff();
 
   if (failures.length === 0) {
