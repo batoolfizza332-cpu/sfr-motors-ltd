@@ -120,6 +120,8 @@ async function buildHtmlFiles(assetMap) {
       // Matches href="assets/css/main.css" / src="assets/js/main.js" exactly —
       // the quoted attribute value, not any incidental substring elsewhere.
       html = html.split(`"${from}"`).join(`"${to}"`);
+      // Pretty-path pages reference assets root-relatively ("/assets/..."); keep the fingerprint swap working for both forms.
+      html = html.split(`"/${from}"`).join(`"/${to}"`);
     }
 
     const minified = await minifyHtml(html, HTML_MINIFY_OPTIONS);
