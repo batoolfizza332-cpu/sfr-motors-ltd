@@ -2092,3 +2092,55 @@ a { text-underline-offset: 2px; }
 @media print{
   .sfr-consent,.sfr-footer__cookie{display:none;}
 }
+
+/* ===== Home only: emergency CTA photo (.sfr-cta--photo) =====
+   The shared .sfr-cta shows its photo at 34% under a 74-96% scrim, so the
+   subject is invisible. Here the photo runs at full strength and is darkened
+   only behind the copy (centre), staying visible at the sides and edges. */
+.sfr-cta--photo .sfr-cta__bg{
+  opacity:1;
+  object-position:50% 82%;
+}
+.sfr-cta--photo .sfr-cta__overlay{
+  background:
+    radial-gradient(ellipse 58% 92% at 50% 50%, rgba(8,8,9,.78) 0%, rgba(8,8,9,.68) 55%, rgba(8,8,9,.36) 100%),
+    linear-gradient(0deg, rgba(8,8,9,.28), rgba(8,8,9,.08) 45%, rgba(8,8,9,.28));
+}
+.sfr-cta--photo .sfr-cta__eyebrow{background:rgba(8,8,9,.6);}
+.sfr-cta--photo .sfr-cta__text{color:#e4e4e4;}
+@media (max-width:700px){
+  .sfr-cta--photo .sfr-cta__bg{object-position:52% 50%;}
+  .sfr-cta--photo .sfr-cta__overlay{
+    background:linear-gradient(180deg, rgba(8,8,9,.6), rgba(8,8,9,.76) 50%, rgba(8,8,9,.6));
+  }
+}
+
+/* ===== Home only: About photo frame (.sfr-about--framed) =====
+   One clean component: a clipped, rounded photo card with a hairline edge and
+   a same-size orange outline offset by a small, even amount down and right.
+   The offset lives in the media box's own padding, so nothing overflows the
+   column or the viewport at any width. */
+.sfr-about--framed .sfr-about__media{
+  --sfr-frame-offset:14px;
+  --sfr-frame-radius:16px;
+  padding:0 var(--sfr-frame-offset) var(--sfr-frame-offset) 0;
+}
+.sfr-about--framed .sfr-about__media::before{
+  top:var(--sfr-frame-offset);
+  left:var(--sfr-frame-offset);
+  right:0;
+  bottom:0;
+  width:auto;
+  height:auto;
+  border-radius:var(--sfr-frame-radius);
+}
+.sfr-about--framed .sfr-about__frame{
+  aspect-ratio:4/5;
+  border-radius:var(--sfr-frame-radius);
+  isolation:isolate; /* keeps the rounded clip when the hover zoom runs (Safari) */
+  box-shadow:0 0 0 1px rgba(255,255,255,.14), 0 18px 36px -18px rgba(0,0,0,.8);
+}
+.sfr-about--framed .sfr-about__frame img{object-position:50% 50%;}
+@media (max-width:820px){
+  .sfr-about--framed .sfr-about__media{max-width:374px;} /* 360px photo + the 14px outline offset */
+}
