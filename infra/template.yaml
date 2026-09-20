@@ -102,9 +102,12 @@ Resources:
             # Matches the site's actual resources exactly, so nothing needs
             # 'unsafe-inline'/'unsafe-eval': the scripts are assets/js/main.js
             # and assets/js/analytics.js (the cookie-consent banner, which loads
-            # GA4's gtag.js only AFTER the visitor accepts analytics), the only
-            # stylesheet besides main.css is Google Fonts, the only embed is the
-            # Google Maps iframe on contact.html. The quote form no longer calls
+            # GA4's gtag.js only AFTER the visitor accepts analytics). The only
+            # stylesheet is main.css and Roboto is self-hosted (assets/fonts), so
+            # style-src and font-src are 'self' only. The only embed is the Google
+            # Maps iframe on contact.html, created ONLY after the visitor presses
+            # "Load Google Map" (frame-src is needed at that moment, not before:
+            # maps.google.com redirects to www.google.com/maps/embed). The quote form no longer calls
             # any API (it opens a pre-filled WhatsApp message), so connect-src has
             # no first-party API origin. JSON-LD <script> blocks are inert and
             # aren't restricted by script-src in any current browser.
@@ -121,8 +124,8 @@ Resources:
             ContentSecurityPolicy: >-
               default-src 'self';
               script-src 'self' https://www.googletagmanager.com;
-              style-src 'self' https://fonts.googleapis.com;
-              font-src 'self' https://fonts.gstatic.com;
+              style-src 'self';
+              font-src 'self';
               img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
               connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
               frame-src https://maps.google.com https://www.google.com;
@@ -391,6 +394,8 @@ Resources:
   #   In each rewrite/redirect pair, the rewritten path is the one
   #   primary, indexable URL. All other requests pass through
   #   unchanged.
+  #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
+  #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
   #   'www.' is 301-redirected in one hop to the apex domain (path and query
   #   string kept; legacy/.html URLs are remapped in the same hop), matching
@@ -467,6 +472,9 @@ Resources:
 
             if (has.call(legacy, bare)) {
                 target = legacy[bare];
+            } else if (uri === '/index.html') {
+                // the Home page has one URL: /
+                target = '/';
             } else if (uri.slice(-5) === '.html') {
                 // /<file>.html -> 301 -> /<slug>/ (the pretty path is the one primary URL)
                 var base = uri.slice(1, -5);

@@ -143,10 +143,15 @@ function loadPages() {
 // Check 2 & 3: internal .html links resolve, and #anchor targets exist
 // ---------------------------------------------------------------------------
 function checkLinksAndAnchors(pages) {
+  const inbound = new Map(Object.keys(pages).map((f) => [f, new Set()])); // file -> pages that link to it
   for (const [file, page] of Object.entries(pages)) {
     const hrefs = matchAll(/<a\s[^>]*href=["']([^"']+)["']/g, page.html).map((m) => m[1]);
     for (const href of hrefs) {
-      if (href === "#") continue; // intentional no-op placeholder (social icons)
+      if (href === "#") {
+        // placeholder links (the removed Facebook/Instagram icons) go nowhere; add real URLs or nothing
+        fail("2. Internal links", 'Placeholder link href="#" (goes nowhere).', `site/${file}`, "Remove it, or give it a real destination.");
+        continue;
+      }
       if (/^(https?:|tel:|mailto:)/i.test(href)) continue; // external, out of scope
 
       const [targetFileRaw, fragment] = href.split("#");
@@ -157,6 +162,13 @@ function checkLinksAndAnchors(pages) {
       // file already lives at the root of site/, so stripping it resolves
       // to the same filename a same-directory relative link would use.
       let targetFile = targetFileRaw === "" ? file : targetFileRaw.replace(/^\//, "").split("?")[0];
+
+      // "/" is the Home page (index.html). /index.html itself 301s to "/", so nothing may link to it.
+      if (/^\/?index\.html$/.test(targetFileRaw)) {
+        fail("2. Internal links", `Link to the redirecting /index.html: href="${href}".`, `site/${file}`, 'Point it at "/" (the canonical Home URL).');
+        continue;
+      }
+      if (targetFileRaw !== "" && targetFile === "") targetFile = "index.html";
 
       if (targetFileRaw !== "") {
         targetFile = ROUTE_ALIAS_TO_FILE[targetFile] || targetFile;
@@ -171,6 +183,8 @@ function checkLinksAndAnchors(pages) {
         }
       }
 
+      if (targetFile !== file) inbound.get(targetFile) && inbound.get(targetFile).add(file);
+
       if (fragment) {
         const targetPage = pages[targetFile];
         if (!targetPage.ids.has(fragment)) {
@@ -182,6 +196,14 @@ function checkLinksAndAnchors(pages) {
           );
         }
       }
+    }
+  }
+
+  // every indexable page must be reachable from at least one other page (sitemap alone is not internal linking)
+  for (const [file, page] of Object.entries(pages)) {
+    if (file === "index.html" || !page.indexable) continue;
+    if (inbound.get(file).size === 0) {
+      fail("2. Internal links", `Orphan page: nothing links to ${expectedCanonical(file)}.`, `site/${file}`, "Link to it from a relevant listing (for example the Areas We Cover list).");
     }
   }
 }
@@ -776,7 +798,8 @@ function checkCloudFrontRouting(pages) {
     () => call(`/${aboutSlug}`).uri === `/${aboutFile}` && call(`/${aboutSlug}`, "sfrmotors.co.uk").uri === `/${aboutFile}`,
     () => { const r = call(`/${aboutFile}`); return r.statusCode === 301 && r.headers.location.value === `/${aboutSlug}`; },
     () => { const r = call("/x/", "www.sfrmotors.co.uk"); return r.statusCode === 301 && r.headers.location.value === "https://sfrmotors.co.uk/x/"; },
-    () => call("/index.html").uri === "/index.html" && call("/").uri === "/" && call("/constructor").uri === "/constructor",
+    () => { const r = call("/index.html"); return r.statusCode === 301 && r.headers.location.value === "/"; },
+    () => call("/").uri === "/" && call("/constructor").uri === "/constructor" && call("/index.html/").uri === "/index.html/",
   ];
   cases.forEach((c, i) => { let ok = false; try { ok = c(); } catch (e) { /* falls through */ } if (!ok) fail(check, `LegacyRedirectFunction behaviour case ${i + 1} failed (pretty rewrite / .html 301 / www 301 / pass-through).`, tpl, "Restore the routing logic."); });
 
@@ -812,6 +835,90 @@ function checkStructuredDataUrls(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 18: owner-approved corrections that must not regress
+// ---------------------------------------------------------------------------
+// Self-hosted fonts, click-to-load map, robots policy, no placeholder social links, no street address,
+// the company disclosure, and the values the owner fixed (rating, no priceRange, WhatsApp channel).
+function checkOwnerApprovedCorrections(pages) {
+  const check = "18. Approved corrections";
+  const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
+  const css = read("site/assets/css/main.css");
+  const mainJs = read("site/assets/js/main.js");
+  const template = read("infra/template.yaml").replace(/\r/g, "");
+  const shipped = [...Object.values(pages).map((p) => p.html), css, mainJs, read("site/assets/js/analytics.js"), template].join("\n");
+
+  // -- fonts: self-hosted, no Google Fonts anywhere ------------------------------
+  if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(shipped)) fail(check, "Google Fonts is still referenced (HTML, CSS, JS or the CSP).", "site/", "Self-host the font (site/assets/fonts) and remove every fonts.googleapis.com / fonts.gstatic.com reference.");
+  const faces = matchAll(/@font-face\s*\{([^}]*)\}/g, css).map((m) => m[1]);
+  const fontFiles = new Set();
+  if (faces.length === 0) fail(check, "No @font-face rule found; the site font is not self-hosted.", "site/assets/css/main.css", "Restore the Roboto @font-face rules.");
+  for (const face of faces) {
+    if (!/font-display:\s*swap/.test(face)) fail(check, "An @font-face rule lacks font-display: swap.", "site/assets/css/main.css", "Add font-display:swap.");
+    const url = (face.match(/url\(["']?([^"')]+)["']?\)/) || [])[1];
+    if (!url || !fs.existsSync(path.join(SITE_DIR, url.replace(/^\//, "")))) fail(check, `@font-face points at a missing file: ${url}.`, "site/assets/css/main.css", "Add the WOFF2 file under site/assets/fonts/.");
+    else fontFiles.add(url);
+  }
+  if (!fs.existsSync(path.join(SITE_DIR, "assets", "fonts", "OFL.txt"))) fail(check, "The font licence (site/assets/fonts/OFL.txt) is missing.", "site/assets/fonts/OFL.txt", "Ship the SIL OFL text next to the font.");
+  for (const [file, page] of Object.entries(pages)) {
+    const pre = matchAll(/<link\s+rel="preload"[^>]*>/g, page.html).map((m) => m[0]);
+    if (pre.length !== 1 || ![...fontFiles].some((u) => pre[0].includes(`href="${u}"`)) || !/crossorigin/.test(pre[0]) || !/as="font"/.test(pre[0])) {
+      fail(check, "Page must preload the self-hosted font exactly once (as=font, crossorigin).", `site/${file}`, 'Add <link rel="preload" href="/assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>.');
+    }
+  }
+  const csp = parseCsp();
+  if (csp) {
+    for (const dir of ["style-src", "font-src"]) {
+      if (!(csp[dir] || []).length || !(csp[dir] || []).every((v) => v === "'self'")) fail(check, `CSP ${dir} must be 'self' only (fonts and CSS are self-hosted); found: ${(csp[dir] || []).join(" ")}.`, "infra/template.yaml", `Set ${dir} 'self'.`);
+    }
+  }
+
+  // -- Google Map: nothing from Google before a deliberate click ------------------
+  for (const [file, page] of Object.entries(pages)) {
+    if (/<iframe\b/i.test(page.html)) fail(check, "Page contains an <iframe> at load time; the map must be created only after the visitor clicks.", `site/${file}`, "Use the click-to-load placeholder (data-sfr-map).");
+    const stripped = page.html.replace(/<a\b[^>]*class="sfr-(?:map__directions|reviews__link)"[\s\S]*?<\/a>/g, "").replace(/data-src="[^"]*"/g, "");
+    if (/google\.com\/maps|maps\.google\.com/.test(stripped)) fail(check, "Page references Google Maps outside the click-to-load button/link.", `site/${file}`, "Keep the map URL only in the button's data-src and the explicit 'View ... on Google Maps' / 'Read reviews' links.");
+  }
+  const contact = pages["contact.html"] ? pages["contact.html"].html : "";
+  if (!/<button[^>]*data-sfr-map-load[^>]*data-src="https:\/\/maps\.google\.com\/maps\?q=Bathgate%2C\+West\+Lothian[^"]*"[^>]*>Load Google Map<\/button>/.test(contact)) {
+    fail(check, 'Contact page needs the "Load Google Map" button whose data-src is the general Bathgate, West Lothian map.', "site/contact.html", "Restore the click-to-load placeholder.");
+  }
+  const clickAt = mainJs.indexOf('mapButton.addEventListener("click"');
+  const frameAt = mainJs.indexOf('createElement("iframe")');
+  if (clickAt === -1 || frameAt === -1 || frameAt < clickAt || mainJs.split('createElement("iframe")').length !== 2) fail(check, "main.js must create the map iframe once, inside the button's click handler.", "site/assets/js/main.js", "Create the iframe only in the click handler.");
+
+  // -- robots.txt -----------------------------------------------------------------
+  const robots = read("site/robots.txt");
+  const group = (agent) => { const m = robots.match(new RegExp(`User-agent:\\s*${agent}\\s*\\n((?:(?!User-agent)[^\\n]*\\n?)*)`, "i")); return m ? m[1] : null; };
+  const oai = group("OAI-SearchBot") || "", gpt = group("GPTBot") || "", any = group("\\*") || "";
+  if (!/^Allow:\s*\/\s*$/m.test(oai) || /^Disallow:\s*\S/m.test(oai)) fail(check, "robots.txt must explicitly allow OAI-SearchBot.", "site/robots.txt", "Add a `User-agent: OAI-SearchBot` group with `Allow: /`.");
+  if (!/^Disallow:\s*\/\s*$/m.test(gpt)) fail(check, "robots.txt must explicitly disallow GPTBot.", "site/robots.txt", "Add a `User-agent: GPTBot` group with `Disallow: /`.");
+  if (!/^Allow:\s*\/\s*$/m.test(any) || /^Disallow:\s*\S/m.test(any)) fail(check, "robots.txt must keep general crawling (and rendering assets) allowed.", "site/robots.txt", "Keep `User-agent: *` with `Allow: /` and no Disallow rules.");
+  if (!/^Sitemap:\s*https:\/\/sfrmotors\.co\.uk\/sitemap\.xml\s*$/m.test(robots)) fail(check, "robots.txt lost its Sitemap line.", "site/robots.txt", "Restore `Sitemap: https://sfrmotors.co.uk/sitemap.xml`.");
+
+  // -- no street address; registered office only in the legal line ------------------
+  const walk = (p) => (fs.statSync(path.join(ROOT, p)).isDirectory() ? fs.readdirSync(path.join(ROOT, p)).flatMap((f) => (f === "node_modules" ? [] : walk(path.posix.join(p, f)))) : [p]);
+  for (const rel of ["site", "backend", "SFR_Website_Info.txt"].flatMap(walk)) {
+    if (!/\.(html|js|css|txt|xml|yaml|json|md)$/.test(rel)) continue;
+    if (/loch park|EH48|W932\+|streetAddress|postalCode/i.test(read(rel))) fail(check, "A street address / postcode / Plus Code for the working location appears in the source.", rel, "SFR Motors is a service-area business; the public location is Bathgate, West Lothian only.");
+  }
+  for (const [file, page] of Object.entries(pages)) {
+    const footer = (page.html.match(/<footer[\s\S]*<\/footer>/) || [""])[0];
+    if (!/<p class="sfr-footer__legal">SFR Motors Ltd\. Registered in England and Wales, company number 15819240\. Registered office: 143 Beverley Drive, Edgware, England, HA8 5NH\.<\/p>/.test(footer)) {
+      fail(check, "Footer is missing the company disclosure line (name, England and Wales, company number, registered office).", `site/${file}`, "Restore the .sfr-footer__legal paragraph.");
+    }
+    const outsideLegal = page.html.replace(/<p class="sfr-footer__legal">[\s\S]*?<\/p>/g, "");
+    if (/Beverley/.test(outsideLegal) && file !== "privacy-policy.html") fail(check, "The registered office appears outside the footer legal line (it must not read as a service location).", `site/${file}`, "Show it only in the legal line.");
+    if (/<script type="application\/ld\+json">(?:(?!<\/script>)[\s\S])*Beverley/.test(page.html) || /href="[^"]*Beverley/.test(page.html)) fail(check, "The registered office is used in structured data or a link.", `site/${file}`, "Never present it as a business location or map destination.");
+    if (!/07448 427154/.test(footer) || !/wa\.me\/447448427154/.test(footer)) fail(check, "Footer must list the WhatsApp channel (07448 427154).", `site/${file}`, "Restore the WhatsApp contact line.");
+    if (/priceRange/.test(page.html)) fail(check, "priceRange must not be present in structured data.", `site/${file}`, "Remove it (the owner has not approved a price classification).");
+  }
+  const home = pages["index.html"] ? pages["index.html"].html : "";
+  if (!/"ratingValue": "4\.9"[\s\S]{0,60}"reviewCount": "282"/.test(home)) fail(check, "Home aggregateRating must stay 4.9 / 282.", "site/index.html", "Restore ratingValue 4.9 and reviewCount 282.");
+  if (!/<a class="sfr-areas__pin" href="broxburn\/"/.test(home)) fail(check, "The Areas We Cover list must link to the existing /broxburn/ page.", "site/index.html", 'Restore the <a class="sfr-areas__pin" href="broxburn/"> entry.');
+  if (!/"telephone": "\+447448427154"/.test(contact)) fail(check, "The Contact page structured data must list the WhatsApp channel.", "site/contact.html", "Restore the WhatsApp ContactPoint.");
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -830,7 +937,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 17;
+const TOTAL_CHECKS = 18;
 
 function main() {
   const buildOk = checkBuild();
@@ -849,6 +956,7 @@ function main() {
   checkConsentAndAnalytics(pages);
   checkCloudFrontRouting(pages);
   checkStructuredDataUrls(pages);
+  checkOwnerApprovedCorrections(pages);
   checkGitDiff();
 
   if (failures.length === 0) {

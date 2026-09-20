@@ -31,6 +31,7 @@ site/
   sitemap.xml
   assets/
     css/main.css         one shared stylesheet, all pages
+    fonts/               self-hosted Roboto (latin, one variable WOFF2) + OFL.txt licence
     js/main.js            ~110 lines, vanilla JS: mobile nav toggle + quote form submit
     js/analytics.js       cookie-consent banner + consent-gated GA4 conversion tracking
     img/                  AVIF + WebP + JPEG for every photo, pre-generated
@@ -67,7 +68,7 @@ then open http://localhost:5500.
 | Strong Core Web Vitals | Single hero image is the only eager-loaded asset (LCP candidate), no layout-shifting web fonts (font-display: swap), no render-blocking JS |
 | Secure forms with spam protection | Quote form has a honeypot field + a submit-timing check (both checked client- and server-side) + real server-side validation in the Lambda handler + API Gateway rate limiting — see `backend/` |
 | Caching & compression | CloudFront `Compress: true` (gzip/brotli) on both cache behaviors; long `max-age=604800, immutable` on `/assets/*`, short cache on HTML so edits show up quickly — see `infra/deploy-site.sh` |
-| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + consent-gated Google Analytics), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
+| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + a click-to-load Google Maps embed + consent-gated Google Analytics; fonts are self-hosted, so no Google Fonts origins), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
 | Analytics without hurting Core Web Vitals | `gtag.js` is not requested at all until a visitor accepts analytics; then it is injected via JS with `async` — no render-blocking script tag, no impact on LCP/CLS/INP. The consent banner is `position:fixed`, so it causes no layout shift. See "Analytics & conversion tracking" below |
 
@@ -242,13 +243,21 @@ Realistic total: **a few dollars a month**, dominated by CloudFront data
 transfer once traffic grows — there's no database, container, or
 always-on compute anywhere in this stack to pay for at idle.
 
-## Known placeholders to fill in before going live
+## Owner-approved site policies (do not undo without the owner)
 
-- `footer-section.html` / the footer in `site/index.html` — Facebook and
-  Instagram icons currently link to `#`. Multiple similarly-named accounts
-  turned up in a search and none are linked from the live WordPress site,
-  so rather than guess, these are left for you to fill in with the
-  confirmed official profile URLs.
+- **Social links:** the Facebook / Instagram placeholder icons (`href="#"`) were removed. Add real ones only when the owner
+  supplies the confirmed profile URLs; `verify.js` fails on any `href="#"`.
+- **Service-area business:** the only public location is **Bathgate, West Lothian**. No street address, postcode or Plus Code
+  appears anywhere (check 18 scans `site/`, `backend/` and the info file). The registered office appears **only** in the
+  footer legal line and the Privacy Policy, never as a service location, in structured data or on a map.
+- **Company disclosure (footer, every page):** SFR Motors Ltd, registered in England and Wales, company number 15819240,
+  registered office 143 Beverley Drive, Edgware, England, HA8 5NH.
+- **Contact channels:** phone 0131 202 0289, WhatsApp 07448 427154, email info@sfrmotors.co.uk.
+- **Contact-page map:** click-to-load only (nothing is requested from Google until "Load Google Map" is pressed); it shows the
+  general Bathgate area, never a business pin.
+- **Fonts:** Roboto is self-hosted (`site/assets/fonts/`, SIL OFL 1.1). No request goes to fonts.googleapis.com or fonts.gstatic.com.
+- **robots.txt:** everything allowed for normal crawlers; **OAI-SearchBot explicitly allowed; GPTBot disallowed**.
+- **Home URL:** `/` is the only Home URL; `/index.html` 301-redirects to `/` and nothing links to it.
 
 ## Analytics, cookie consent & conversion tracking
 
@@ -303,7 +312,7 @@ host. `scripts/verify.js` check 15 enforces all of the above (ID configured
 once, no inline/unconditional gtag in any page, consent controls and footer
 button on every page, policy text in sync with the code, exact CSP origins).
 
-**Policy text:** `site/privacy-policy.html` sections 3 and 4 describe the
+**Policy text:** `site/privacy-policy.html` sections 5 and 6 (analytics and cookies) describe the
 optional analytics, the cookies (`sfr_consent`, `_ga`, `_ga_B9TY4GMXYT`),
 their lifetimes, and how to change the choice. Keep them in sync with
 `analytics.js` — check 15 fails if the cookie names or the 180-day lifetime

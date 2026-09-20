@@ -30,6 +30,24 @@
     });
   }
 
+  // ---- Click-to-load Google Map (Contact page) ----
+  // Nothing is requested from Google until the visitor presses "Load Google Map":
+  // the iframe does not exist in the page before that, so there is no connection,
+  // cookie or IP disclosure to Google on a normal visit.
+  var mapBox = document.querySelector("[data-sfr-map]");
+  var mapButton = mapBox && mapBox.querySelector("[data-sfr-map-load]");
+  if (mapBox && mapButton) {
+    mapButton.addEventListener("click", function () {
+      if (mapBox.querySelector("iframe")) return; // load once only
+      var frame = document.createElement("iframe");
+      frame.src = mapButton.getAttribute("data-src");
+      frame.title = mapBox.getAttribute("data-map-title") || "Google Map";
+      mapBox.innerHTML = "";
+      mapBox.appendChild(frame);
+      frame.focus(); // keyboard focus moves to the map so it is not lost when the button disappears
+    });
+  }
+
   // ---- Quote / contact form ----
   // Enquiries go straight to SFR Motors' WhatsApp as a pre-filled message —
   // there's no backend to send them to instead. Do not add one back in

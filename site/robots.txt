@@ -1,4 +1,13 @@
+# Search and AI-search discovery
 User-agent: *
 Allow: /
+
+# ChatGPT Search (OpenAI's search crawler) is explicitly allowed
+User-agent: OAI-SearchBot
+Allow: /
+
+# GPTBot (OpenAI model-training crawler) is disallowed; this does not affect ChatGPT Search above
+User-agent: GPTBot
+Disallow: /
 
 Sitemap: https://sfrmotors.co.uk/sitemap.xml
