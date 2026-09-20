@@ -190,16 +190,16 @@ a { text-underline-offset: 2px; }
 }
 .sfr-hero__bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  /* The van photo is framed tight, so pick the window deliberately: signage panels and rear doors stay in view. */
-  object-fit: cover; object-position: 50% 45%;
+  /* The photo is framed tight, so pick the window deliberately: the Audi's grille and the van's signage panel stay in view. */
+  object-fit: cover; object-position: 50% 62%;
 }
 .sfr-hero__overlay {
   position: absolute; inset: 0;
-  /* Text sits on the left, so keep that side dark and let the van show through on the right. */
-  background: linear-gradient(100deg, rgba(6,6,7,.92) 0%, rgba(6,6,7,.86) 38%, rgba(6,6,7,.45) 72%, rgba(6,6,7,.2) 100%);
+  /* Text sits on the left, so keep that side dark and let the car front and the van show through on the right. */
+  background: linear-gradient(100deg, rgba(6,6,7,.92) 0%, rgba(6,6,7,.86) 32%, rgba(6,6,7,.5) 50%, rgba(6,6,7,.22) 68%, rgba(6,6,7,.12) 100%);
 }
 @media (max-width: 700px) {
-  .sfr-hero__bg { object-position: 100% 50%; }
+  .sfr-hero__bg { object-position: 30% 50%; }
   .sfr-hero__overlay { background: linear-gradient(180deg, rgba(6,6,7,.86) 0%, rgba(6,6,7,.74) 55%, rgba(6,6,7,.5) 100%); }
 }
 .sfr-hero__inner {
@@ -1057,26 +1057,12 @@ a { text-underline-offset: 2px; }
     align-items:center;
   }
 
-  /* One clean framed-photo component, used by every page: a clipped, rounded photo card with a hairline edge and a
-     same-size orange outline offset a small, even amount down and right. The offset lives in the media box's own
-     padding (nothing can overflow the column or the viewport), and <picture> is made a block so the image fills
-     the frame exactly instead of leaving an inline gap that pushed the outline out of line with the photo. */
+  /* One clean framed-photo component, used by every page: a clipped, rounded photo card with a hairline edge and
+     no decorative outline. <picture> is made a block so the image fills the frame exactly instead of leaving an
+     inline gap. */
   .sfr-about__media{
-    --sfr-frame-offset:14px;
     --sfr-frame-radius:16px;
     position:relative;
-    padding:0 var(--sfr-frame-offset) var(--sfr-frame-offset) 0;
-  }
-  .sfr-about__media::before{
-    content:"";
-    position:absolute;
-    top:var(--sfr-frame-offset);
-    left:var(--sfr-frame-offset);
-    right:0;
-    bottom:0;
-    border:2px solid var(--sfr-orange);
-    border-radius:var(--sfr-frame-radius);
-    z-index:0;
   }
   .sfr-about__frame{
     position:relative;
@@ -1172,7 +1158,7 @@ a { text-underline-offset: 2px; }
        size to stretch to before the aspect-ratio on .sfr-about__frame
        tries to resolve — without it, stretch + auto margins + aspect-ratio
        deadlock and the photo collapses to 0x0 on mobile. */
-    .sfr-about__media{width:100%;max-width:374px;margin-inline:auto;} /* 360px photo + the 14px outline offset */
+    .sfr-about__media{width:100%;max-width:360px;margin-inline:auto;}
   }
   @media (prefers-reduced-motion:reduce){
     .sfr-about__frame img,.sfr-about__btn,.sfr-about__btn svg{transition:none;}
