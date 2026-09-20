@@ -314,10 +314,12 @@ always-on compute anywhere in this stack to pay for at idle.
 - **Social links:** the Facebook / Instagram placeholder icons (`href="#"`) were removed. Add real ones only when the owner
   supplies the confirmed profile URLs; `verify.js` fails on any `href="#"`.
 - **Service-area business:** the only public location is **Bathgate, West Lothian**. No street address, postcode or Plus Code
-  appears anywhere (check 18 scans `site/`, `backend/` and the info file). The registered office appears **only** in the
-  footer legal line and the Privacy Policy, never as a service location, in structured data or on a map.
-- **Company disclosure (footer, every page):** SFR Motors Ltd, registered in England and Wales, company number 15819240,
-  registered office 143 Beverley Drive, Edgware, England, HA8 5NH.
+  appears anywhere (check 18 scans `site/`, `backend/` and the info file). The incorrect London registered-office address
+  (Beverley Drive, Edgware) was **removed from every page and the Privacy Policy on the owner's instruction**; check 18 fails
+  if it comes back.
+- **Company line (footer, every page):** "SFR Motors Ltd. Registered in England and Wales, company number 15819240." (no address).
+  Note for the owner: UK company law expects a company website to state its registered office address; this was hidden
+  because the owner said the London address shown is incorrect. Supply the correct registered office and it can be shown.
 - **Contact channels:** phone 0131 202 0289, WhatsApp 07448 427154, email info@sfrmotors.co.uk.
 - **Contact-page map:** click-to-load only (nothing is requested from Google until "Load Google Map" is pressed); it shows the
   general Bathgate area, never a business pin.

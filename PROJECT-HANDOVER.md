@@ -92,6 +92,11 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 * `priceRange` removed from structured data (no price classification is approved). `aggregateRating` 4.9 / 282 is kept.
 * **Vercel Preview checkpoint:** generated `vercel.json` (section 2A); Analytics and the WhatsApp form restricted to the production hostnames (sections 6 and 8A); browser test suite
   brought into the repo (`scripts/browser-tests/`) with the stale Map/robots expectations corrected; documentation drift fixed (Private repository, current hosting plan).
+* **Owner review corrections (after viewing the protected Preview):** new Home hero photo (Audi + SFR van, no "NEXT DAY SERVICE" wording; the old van hero was removed);
+  a real photo in the Trailer & Caravan hero; one shared framed-photo component for every `sfr-about` image (the image now fills its frame exactly);
+  a larger header logo/name lockup (the menu collapses to a button below 1000px); all repeated "Get A Quote" / "Get A Free Quote" buttons replaced by **Call Now**
+  or **WhatsApp Us** using the existing verified links (the quote form and its own submit button are unchanged; `verify` check 18 fails if a quote button returns);
+  the incorrect London registered-office address removed (section 8).
 * **Owner-approved corrections (earlier checkpoint):** placeholder Facebook/Instagram links removed; click-to-load Google Map; self-hosted Roboto;
   `robots.txt` (OAI-SearchBot allowed, GPTBot disallowed); `/index.html` -> `/` 301; `/broxburn/` linked from Areas We Cover; service-area address
   policy (no street address anywhere); company disclosure in the footer; WhatsApp 07448 427154 as a contact channel; rewritten Privacy Policy; Route 53 runbook.
@@ -170,9 +175,10 @@ Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a ze
   in `site/`, `backend/` or the info file (check 18). The address `39 S Loch Park` was removed on the owner's instruction — **do not add it back.**
   (It still exists in old git history of this Private repository — see section 13.)
 * **Contact channels:** phone **0131 202 0289**; WhatsApp **07448 427154** (`https://wa.me/447448427154`); email **info@sfrmotors.co.uk**.
-* **Company disclosure** (footer, every page): SFR Motors Ltd, registered in England and Wales, company number **15819240**, **Registered office:
-  143 Beverley Drive, Edgware, England, HA8 5NH** — shown only in the footer legal line and the Privacy Policy, never as a service location, in
-  structured data, or as a map destination.
+* **Company line** (footer, every page): "SFR Motors Ltd. Registered in England and Wales, company number **15819240**." — **no address.** The London
+  registered-office address (Beverley Drive, Edgware) that used to follow it was **removed from all 58 pages and the Privacy Policy on the owner's
+  instruction** (2026-09-20: the owner said it is incorrect); `verify` check 18 fails if `Beverley` / `Edgware` / `HA8 5NH` reappears anywhere in `site/`.
+  Open point for the owner: a company website is normally expected to state the registered office address; provide the correct one and it can be shown again.
 * No placeholder social links: Facebook/Instagram icons were removed. Add them back only when the owner supplies confirmed URLs.
 * **Never invent** prices, response times, review counts, certifications, guarantees, service or safety claims, or business details.
   `priceRange` must stay absent. Home `aggregateRating` stays **ratingValue 4.9 / reviewCount 282** (owner-verified); change only with a new owner-verified figure.

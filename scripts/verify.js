@@ -895,20 +895,23 @@ function checkOwnerApprovedCorrections(pages) {
   if (!/^Allow:\s*\/\s*$/m.test(any) || /^Disallow:\s*\S/m.test(any)) fail(check, "robots.txt must keep general crawling (and rendering assets) allowed.", "site/robots.txt", "Keep `User-agent: *` with `Allow: /` and no Disallow rules.");
   if (!/^Sitemap:\s*https:\/\/sfrmotors\.co\.uk\/sitemap\.xml\s*$/m.test(robots)) fail(check, "robots.txt lost its Sitemap line.", "site/robots.txt", "Restore `Sitemap: https://sfrmotors.co.uk/sitemap.xml`.");
 
-  // -- no street address; registered office only in the legal line ------------------
+  // -- no street address; the London registered-office address is not shown anywhere (owner instruction) ------
   const walk = (p) => (fs.statSync(path.join(ROOT, p)).isDirectory() ? fs.readdirSync(path.join(ROOT, p)).flatMap((f) => (f === "node_modules" ? [] : walk(path.posix.join(p, f)))) : [p]);
   for (const rel of ["site", "backend", "SFR_Website_Info.txt"].flatMap(walk)) {
     if (!/\.(html|js|css|txt|xml|yaml|json|md)$/.test(rel)) continue;
     if (/loch park|EH48|W932\+|streetAddress|postalCode/i.test(read(rel))) fail(check, "A street address / postcode / Plus Code for the working location appears in the source.", rel, "SFR Motors is a service-area business; the public location is Bathgate, West Lothian only.");
+    if (/beverl(e)?y|edgware|HA8\s?5NH/i.test(read(rel))) fail(check, "The incorrect London registered-office address (Beverley Drive / Edgware / HA8 5NH) appears in the source.", rel, "The owner has asked for it not to be shown; remove it.");
   }
   for (const [file, page] of Object.entries(pages)) {
     const footer = (page.html.match(/<footer[\s\S]*<\/footer>/) || [""])[0];
-    if (!/<p class="sfr-footer__legal">SFR Motors Ltd\. Registered in England and Wales, company number 15819240\. Registered office: 143 Beverley Drive, Edgware, England, HA8 5NH\.<\/p>/.test(footer)) {
-      fail(check, "Footer is missing the company disclosure line (name, England and Wales, company number, registered office).", `site/${file}`, "Restore the .sfr-footer__legal paragraph.");
+    if (!/<p class="sfr-footer__legal">SFR Motors Ltd\. Registered in England and Wales, company number 15819240\.<\/p>/.test(footer)) {
+      fail(check, "Footer is missing the company line (name, England and Wales, company number) or it still shows an address.", `site/${file}`, "Restore the .sfr-footer__legal paragraph without the registered-office address.");
     }
-    const outsideLegal = page.html.replace(/<p class="sfr-footer__legal">[\s\S]*?<\/p>/g, "");
-    if (/Beverley/.test(outsideLegal) && file !== "privacy-policy.html") fail(check, "The registered office appears outside the footer legal line (it must not read as a service location).", `site/${file}`, "Show it only in the legal line.");
-    if (/<script type="application\/ld\+json">(?:(?!<\/script>)[\s\S])*Beverley/.test(page.html) || /href="[^"]*Beverley/.test(page.html)) fail(check, "The registered office is used in structured data or a link.", `site/${file}`, "Never present it as a business location or map destination.");
+    // The repeated quote CTAs were replaced by Call Now / WhatsApp Us; only the quote form itself (and prose links to it) remain.
+    for (const m of page.html.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/g)) {
+      const label = m[1].replace(/<svg[\s\S]*?<\/svg>/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (/^(get a (free )?quote|request (a|your) (free )?quote|get quote)$/i.test(label)) fail(check, `A repeated quote button/link ("${label}") is back; use Call Now or WhatsApp Us.`, `site/${file}`, "Replace it with the existing tel: / wa.me action (the quote form itself stays).");
+    }
     if (!/07448 427154/.test(footer) || !/wa\.me\/447448427154/.test(footer)) fail(check, "Footer must list the WhatsApp channel (07448 427154).", `site/${file}`, "Restore the WhatsApp contact line.");
     if (/priceRange/.test(page.html)) fail(check, "priceRange must not be present in structured data.", `site/${file}`, "Remove it (the owner has not approved a price classification).");
   }

@@ -99,7 +99,7 @@ function robotsAllows(txt, agent, p) {
   t(all.every(([, h]) => !/loch park|EH48|streetAddress|postalCode/i.test(h)), "build: no street address / postcode / streetAddress anywhere in the built HTML");
   t(all.every(([, h]) => !/href="#"/.test(h) && !/on Facebook|on Instagram/.test(h)), `build: no placeholder href="#" and no Facebook/Instagram controls in ${htmls.length} pages`);
   t(all.every(([, h]) => !/fonts\.googleapis|fonts\.gstatic/.test(h)), "build: no Google Fonts reference in any page");
-  t(all.every(([f, h]) => /<p class="sfr-footer__legal">SFR Motors Ltd\. Registered in England and Wales, company number 15819240\. Registered office: 143 Beverley Drive, Edgware, England, HA8 5NH\.<\/p>/.test(h)), `build: company disclosure present on all ${htmls.length} pages`);
+  t(all.every(([f, h]) => /<p class="sfr-footer__legal">SFR Motors Ltd\. Registered in England and Wales, company number 15819240\.<\/p>/.test(h) && !/beverl(e)?y|edgware|HA8\s?5NH/i.test(h)), `build: company name/number line present and the London registered-office address absent on all ${htmls.length} pages`);
   t(all.every(([f, h]) => !/priceRange/.test(h)) && /"ratingValue":\s*"4\.9"[\s\S]{0,40}"reviewCount":\s*"282"/.test(all.find(([f]) => f === "index.html")[1]), "build: priceRange absent; Home aggregateRating still 4.9 / 282");
   t(all.every(([, h]) => !/href="\/?index\.html/.test(h)), "build: no internal link to /index.html");
   const css = fs.readdirSync(dist + "/assets/css").map((f) => fs.readFileSync(dist + "/assets/css/" + f, "utf8")).join("");
