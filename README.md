@@ -178,7 +178,7 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 
 ## Deploying the site (hosting)
 
-> **Current hosting plan (owner decision).** A **Vercel Preview** is used only so the owner
+> **Current hosting plan (owner decision).** A protected **Vercel Preview** is used only so the owner
 > and trusted reviewers can look at the site; the intended **Production** host is the
 > owner's existing **Hostinger** hosting. The AWS S3 + CloudFront + Route 53 material in
 > this section, `infra/` and the runbook is the **previous plan, kept as reference** (no
@@ -192,13 +192,20 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 > `X-Robots-Tag: noindex, nofollow` (Vercel review copy only; never in `infra/template.yaml`
 > or on the real hosting).
 >
-> **Deployments so far.** (1) `https://sfr-motors-preview.vercel.app`, `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR`:
-> Vercel target **production** (assigned automatically to the project's first deployment), **public**,
-> built before the noindex header existed, no `X-Robots-Tag` seen on it — treat it as an **indexing
-> risk**. (2) `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`,
-> `dpl_6YRuZrLQC7pcahxbZJT8dSeespys`: target **preview**, behind **Vercel Authentication**; its login
-> response carries Vercel's own `X-Robots-Tag: noindex`, but the **application response headers are
-> still unverified**.
+> **Vercel state (owner-reported from the Vercel Dashboard, 2026-09-20).** One Vercel project remains,
+> `sfr-motors-preview` (Project ID `prj_GXRf5TeUa7jJk9PaF2gsy5DMWqMz`), with one deployment: the protected
+> **Preview** `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`
+> (`dpl_6YRuZrLQC7pcahxbZJT8dSeespys`), target **preview**, Ready, **Vercel Authentication enabled**. Its
+> login response carries Vercel's own `X-Robots-Tag: noindex`, but the **application response headers are
+> still unverified**. No custom domain is attached to Vercel; the live `sfrmotors.co.uk` is still WordPress
+> and DNS, `main` and the live website are unchanged. The next Preview deployment is not yet authorised;
+> when it is, pass `--target=preview` explicitly.
+>
+> **Deleted by the owner (Dashboard, permanent):** the first, accidental **Production** deployment
+> `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR` (`https://sfr-motors-preview.vercel.app`; Vercel assigns a project's
+> first deployment to Production automatically; it was public and had no `X-Robots-Tag`), and the older,
+> separate Vercel project `sfr-motors-ltd` (only its Vercel deployments, `*.vercel.app` domains and project
+> settings; the GitHub repository and the live WordPress site were not affected).
 >
 > `node scripts/check-vercel-deployment.js https://<name>.vercel.app` verifies the application headers
 > of a **publicly reachable** `*.vercel.app` copy only (plain GETs, redirects not followed, nothing
@@ -207,11 +214,10 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 >
 > **Warning: `npx vercel curl` is not read-only.** On a protected deployment it can create a
 > project-level *Protection Bypass for Automation* secret (it did once; the owner removed it in the
-> Dashboard). Such a value may remain in already-built deployments until a redeploy (none is
+> Dashboard). Such a value may remain in the already-built Preview until a redeploy (none is
 > authorised yet). Never create a bypass secret, shareable link or protection exception without
-> explicit owner approval. Never attach
-> `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview project and never create a
-> Production deployment from it.
+> explicit owner approval. Never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview
+> project and never create a Production deployment from it.
 
 **Read `infra/CUTOVER-RUNBOOK.md` first** — it holds the backup, cutover and
 rollback plan (the live site is WordPress on Hostinger, and its e-mail is

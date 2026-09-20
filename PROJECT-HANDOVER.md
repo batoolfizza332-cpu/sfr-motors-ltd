@@ -16,14 +16,14 @@ Companion documents: [`README.md`](README.md) (build, verify, hosting, analytics
 |---|---|
 | Project | Static replacement website for **SFR Motors Ltd**, a mobile tyre-fitting business (service-area business, Bathgate, West Lothian) |
 | Live site today | `https://sfrmotors.co.uk` — **WordPress on Hostinger** (unchanged, still live) |
-| Hosting plan (current, owner decision) | **Vercel** review deployments (for visual review only; their real access/indexing state is in section 2A) and **Hostinger** (the owner's existing hosting) as the intended **Production** host. See section 2A. |
+| Hosting plan (current, owner decision) | **Vercel** (one protected review Preview, for visual review only; state in section 2A) and **Hostinger** (the owner's existing hosting) as the intended **Production** host. See section 2A. |
 | Previous plan (reference only) | Static site on **AWS S3 + CloudFront**, DNS on **AWS Route 53**. No usable AWS account exists; nothing was created. The AWS files stay in the repository as reference and must not be deleted without a later, explicit task. |
 | Local path (Windows) | `C:\Users\batoo\Desktop\SFR Motors Website` |
 | Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (**Private** repository; confirmed by the owner and by `gh repo view`) |
 | Working branch | `feature/seo-safe-migration` (not merged into `main`) |
-| Checkpoint history | `27bf898` baseline -> `4412584` owner-approved corrections + this document -> `45107ba` records that hash -> the Vercel Preview checkpoint (branch tip; `git rev-parse HEAD` is authoritative) |
+| Checkpoint history | `27bf898` baseline -> `4412584` owner-approved corrections + this document -> `45107ba` records that hash -> `60de141` Vercel Preview checkpoint -> `e4e61b0` noindex hardening + deployment checker -> the Vercel documentation update (branch tip; `git rev-parse HEAD` is authoritative) |
 | GA4 Measurement ID | `G-B9TY4GMXYT` (public by design; confirmed active by the owner) |
-| Migration status | **Build finished and audited; NOT merged; NOT deployed to the live domain; no DNS, Hostinger or AWS change.** A Vercel **Preview** deployment is created for review only (section 2A; its URL is given in the task report, not stored here). |
+| Migration status | **Build finished and audited; NOT merged; NOT deployed to the live domain; no DNS, Hostinger or AWS change.** One protected Vercel **Preview** exists for review only (section 2A); no custom domain, no Production deployment, live site still WordPress. |
 
 ## 2. Architecture: live WordPress vs future static site
 
@@ -40,19 +40,25 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 
 ## 2A. Current hosting plan: Vercel Preview + Hostinger Production
 
-* **Vercel Preview (review only).** A separate, clearly named Vercel project (`sfr-motors-preview`, personal/Hobby team) hosts review deployments of this branch so the owner and trusted reviewers can look at the site (access differs per deployment; see below). It is **not** the launch. The project has **no custom domain**:
-  `sfrmotors.co.uk` and `www.sfrmotors.co.uk` must never be attached to it, and no further Production deployment (`vercel --prod`) may be created from it (none was ever requested; see deployment 1).
-  **Deployments so far (2026-09-20):**
-  1. **First public deployment — Vercel target `production`:** `https://sfr-motors-preview.vercel.app`, Deployment ID `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR`. Vercel assigns a project's first deployment to Production automatically
-     (it was not requested with `--prod`); it is on Vercel's own `*.vercel.app` names only — no custom domain. It is **public** (opens without a Vercel login; owner-confirmed in an Incognito window). It was built before
-     the noindex header existed and **no `X-Robots-Tag` was seen on its responses** when checked; that header is **not confirmed** there. **Treat it as an indexing risk** until it is replaced or protected (owner decision; it has not been deleted, promoted or changed).
-  2. **New protected Preview — Vercel target `preview`:** `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`, Deployment ID `dpl_6YRuZrLQC7pcahxbZJT8dSeespys` (target confirmed with `vercel inspect`). It sits behind
-     **Vercel Authentication**: unauthenticated requests get a 302 to the Vercel login, and that login response carries Vercel's own `X-Robots-Tag: noindex`. The **application response headers of this deployment (CSP, security headers,
-     `X-Robots-Tag: noindex, nofollow`) are still UNVERIFIED** — they have never been read, because reading them needs an authenticated request.
-  Later deployments made without `--prod` are Previews.
+* **Vercel Preview (review only).** One Vercel project remains: `sfr-motors-preview` (Project ID `prj_GXRf5TeUa7jJk9PaF2gsy5DMWqMz`, personal/Hobby team `batoolfizza332-cpu`). It hosts a single review
+  deployment of this branch so the owner and trusted reviewers can look at the site. It is **not** the launch. **No custom domain is attached to Vercel** (owner-stated): `sfrmotors.co.uk` and
+  `www.sfrmotors.co.uk` must never be attached to it, and no Production deployment (`vercel --prod`) may be created from it. The live `sfrmotors.co.uk` is still the old WordPress site on Hostinger;
+  DNS, the `main` branch and the live website have not been changed.
+  **Current Vercel state (owner-reported from the Vercel Dashboard, 2026-09-20; the repository tooling has not re-checked it):**
+  1. **The only deployment — a protected Preview:** `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`, Deployment ID `dpl_6YRuZrLQC7pcahxbZJT8dSeespys`, target `preview` (confirmed earlier with
+     `vercel inspect`), status Ready, **Vercel Authentication enabled**. Unauthenticated requests get a 302 to the Vercel login, and that login response carries Vercel's own `X-Robots-Tag: noindex`.
+     The **application response headers of this deployment (CSP, security headers, `X-Robots-Tag: noindex, nofollow`) are still UNVERIFIED** — they have never been read, because reading them needs an authenticated request.
+  2. **Deleted by the owner in the Vercel Dashboard (permanent):**
+     * The first, **accidental Production deployment** `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR` at `https://sfr-motors-preview.vercel.app`. Vercel had assigned it to Production automatically because it was the project's first
+       deployment (`--prod` was never requested). While it existed it was public and, when checked, carried no `X-Robots-Tag`; whether any search engine fetched it in that window is unknown.
+     * The older, **separate Vercel project `sfr-motors-ltd`** (not the GitHub repository of the same name). Deleting it removed only its Vercel deployments, its `*.vercel.app` domains and its project settings;
+       the GitHub repository and the live WordPress website were **not** affected.
+  3. **Not done and not authorised:** no further Preview deployment and no redeploy has been made or approved. When one is authorised, pass `--target=preview` explicitly (a project's first deployment is otherwise
+     assigned to Production automatically, which is what happened before).
+  **Sharing:** the Preview is behind Vercel login, so reviewers need Vercel access granted by the owner; any shareable link or protection exception needs explicit owner approval each time.
   **Warning — `npx vercel curl` is NOT a read-only check.** On a protected deployment it calls `PATCH /v1/projects/<id>/protection-bypass` and generates a project-level *Protection Bypass for Automation* secret. This happened once
   (2026-09-20) for `sfr-motors-preview`; the owner then **removed that secret in the Vercel Dashboard** (the section is empty again). Vercel may expose such a secret to deployments as the system environment value
-  `VERCEL_AUTOMATION_BYPASS_SECRET`; whether either existing deployment holds a value is **unverified**, and any such value could remain until a redeploy replaces those deployments. **No redeploy is authorised yet.**
+  `VERCEL_AUTOMATION_BYPASS_SECRET`; whether the remaining Preview holds a value is **unverified**, and any such value could remain until a redeploy replaces that deployment. **No redeploy is authorised yet.**
   **Never create a protection-bypass secret, a shareable link or any protection exception without explicit owner approval**, and never use `vercel curl` (or `--protection-bypass`) to get around Vercel Authentication.
 * **Configuration:** `vercel.json` is **generated** from `infra/template.yaml` by `node scripts/vercel-config.js` (never edit it by hand): 301 redirects for every
   `/<file>.html` of a pretty page, the 15 legacy WordPress URLs (with/without trailing slash) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
@@ -64,7 +70,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
   `scripts/vercel-config.js`, and `infra/template.yaml` / the real hosting must **never** carry it (verify check 19 enforces both). For a **publicly reachable** review copy,
   `node scripts/check-vercel-deployment.js https://<name>.vercel.app` (plain GETs on 10 URLs, redirects not followed, no cookies/tokens/secrets; refuses everything that is not an https `*.vercel.app` address) verifies the
   application response headers. On a **protected** deployment it prints "Deployment is protected; application headers remain unverified." and exits 3 — that is neither a pass nor a failure, and it must not be worked
-  around with a bypass. The first deployment predates the noindex header, so it lacks it until a new public deployment replaces it. Google Analytics loads only on `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, and the quote form
+  around with a bypass. The current Preview was built with this header configured, but it is protected, so its application headers (including this one) are unverified. Google Analytics loads only on `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, and the quote form
   opens WhatsApp only there (sections 6 and 8A). Canonical URLs, the sitemap and `robots.txt` are unchanged and keep pointing at `https://sfrmotors.co.uk/`.
 * **Hostinger (intended Production).** The Hostinger deployment steps (how the static `dist/` replaces WordPress, how redirects/rewrites/headers/404 are reproduced there,
   what happens to `www`, e-mail and rollback) are **not written yet** and no Hostinger detail may be assumed or invented. That is a separate task; the redirect/route/header tables in
@@ -225,7 +231,7 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 3. No destructive git operations (`reset`, `clean`, force-push, rebase, amend) unless explicitly authorised. Do not open a Pull Request unless asked.
 4. Never request or store credentials, tokens, customer IDs or personal data in the repository or in chat.
 5. Preserve approved URLs, content, business details, SEO structure and structured data; do not redesign.
-6. Vercel: Preview deployments only. Never `vercel --prod`, never a Production target, never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, never change Deployment Protection to public without the owner, never link the Preview project to GitHub without the owner, never create a protection-bypass secret / shareable link / protection exception without explicit owner approval, and never run `vercel curl` against a protected deployment (it creates a bypass secret).
+6. Vercel: Preview deployments only, always with an explicit `--target=preview`. Never `vercel --prod`, never a Production target, never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, never change Deployment Protection to public without the owner, never link the Preview project to GitHub without the owner, never create a protection-bypass secret / shareable link / protection exception without explicit owner approval, and never run `vercel curl` against a protected deployment (it creates a bypass secret).
 
 ## 13. Known limitations and open items
 
@@ -247,7 +253,7 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 - [ ] Owner decisions: history rewrite yes/no; duplicate Broxburn page; whether to apply the Home photo-frame style to the seven other `about` frames.
 - [ ] Google Business Profile set as service-area business (outside the repo).
 - [ ] Review the two Broxburn pages (duplicate H1 / content risk) and the history-rewrite question (owner decisions above).
-- [ ] Owner review of the Vercel Preview (visual check on desktop and phone).
+- [ ] Owner review of the protected Vercel Preview (visual check on desktop and phone). The next Preview deployment is not yet authorised; its application headers are still unverified.
 - [ ] Write the **Hostinger** deployment documentation (how `dist/` replaces WordPress; redirects, rewrites, headers/CSP and 404 on Hostinger; `www`; e-mail; backup and rollback). Do not assume Hostinger capabilities: verify them with the owner first.
 - [ ] Take the backups in runbook section A (WordPress, e-mail baseline, Search Console verification method); the AWS/Route 53 steps in the runbook are the previous plan.
 - [ ] Owner approval to merge; then separate owner approval to deploy to the live domain (each separately).
