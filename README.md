@@ -67,7 +67,7 @@ then open http://localhost:5500.
 | Strong Core Web Vitals | Single hero image is the only eager-loaded asset (LCP candidate), no layout-shifting web fonts (font-display: swap), no render-blocking JS |
 | Secure forms with spam protection | Quote form has a honeypot field + a submit-timing check (both checked client- and server-side) + real server-side validation in the Lambda handler + API Gateway rate limiting — see `backend/` |
 | Caching & compression | CloudFront `Compress: true` (gzip/brotli) on both cache behaviors; long `max-age=604800, immutable` on `/assets/*`, short cache on HTML so edits show up quickly — see `infra/deploy-site.sh` |
-| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + the quote API), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
+| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + consent-gated Google Analytics), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
 | Analytics without hurting Core Web Vitals | `gtag.js` is not requested at all until a visitor accepts analytics; then it is injected via JS with `async` — no render-blocking script tag, no impact on LCP/CLS/INP. The consent banner is `position:fixed`, so it causes no layout shift. See "Analytics & conversion tracking" below |
 
@@ -132,6 +132,12 @@ and then inspects `site/` for the things that are easy to break by hand:
 - `sitemap.xml` is well-formed and lists every indexable page
 - no leftover placeholder text, `localhost`, or `*.vercel.app` URLs
 - `git diff --check` passes (no trailing whitespace / conflict markers)
+- cookie consent + consent-gated Google Analytics (check 15, see below)
+- the CloudFront Function stays within AWS's service limits (10,240-byte code,
+  128-character comment), its routing tables match the canonical URL map, and
+  CloudFront serves the dedicated `404.html` for missing URLs (check 16)
+- every URL inside the JSON-LD is absolute and on the production domain (check 17)
+- no image file in `site/assets/img` is unreferenced (check 7)
 
 It's read-only — it never edits `site/` or git state, it only builds
 (gitignored `dist/`) and reports. Run it before committing changes to `site/`:
@@ -146,8 +152,16 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 
 ## Deploying the site (hosting)
 
-Requires an ACM certificate for your domain, issued in **us-east-1**
-(CloudFront requirement) — create and DNS-validate that first.
+**Read `infra/CUTOVER-RUNBOOK.md` first** — it holds the backup, cutover and
+rollback plan (the live site is WordPress on Hostinger, and its e-mail is
+hosted there too). Merging to `main` triggers an automatic deploy to S3
+(see "Automatic deployments" below).
+
+Requires an ACM certificate issued in **us-east-1** (CloudFront requirement)
+that covers **both `sfrmotors.co.uk` and `www.sfrmotors.co.uk`** (the
+CloudFront Function 301-redirects `www` to the apex, as WordPress does today;
+pass `IncludeWww=false` only if `www` is deliberately unused) — create and
+DNS-validate that first.
 
 ```bash
 cd infra
@@ -157,9 +171,9 @@ aws cloudformation deploy \
   --parameter-overrides DomainName=sfrmotors.co.uk AcmCertificateArn=<your-cert-arn>
 ```
 
-Then point your domain's DNS at the CloudFront distribution (Route 53 alias,
-or a CNAME to the `DistributionDomainName` output if using another DNS
-provider), and push content with:
+Then point your domain's DNS at the CloudFront distribution (Route 53 alias
+records; an apex/root domain cannot be a plain CNAME, so another DNS provider
+must offer an ALIAS/ANAME record type — see the runbook), and push content with:
 
 ```bash
 BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-site.sh

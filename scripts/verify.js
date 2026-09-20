@@ -269,6 +269,12 @@ function checkCanonicals(pages) {
     const canonical = m ? m[1].trim() : "";
     const expected = expectedCanonical(file);
 
+    // Non-indexable pages (the CloudFront 404 page) have no public URL of their own, so no canonical.
+    if (!page.indexable) {
+      if (canonical) fail("6. Canonical URL", "A noindex page must not declare a canonical URL.", `site/${file}`, "Remove the <link rel=\"canonical\"> tag.");
+      continue;
+    }
+
     if (!canonical) {
       fail("6. Canonical URL", "Page has no <link rel=\"canonical\"> tag.", `site/${file}`, `Add <link rel="canonical" href="${expected}">.`);
       continue;
@@ -363,6 +369,19 @@ function checkImages(pages) {
   }
 }
 
+// Every file in assets/img must be used somewhere: unreferenced images still ship to S3 (and can carry
+// content that was deliberately replaced, e.g. a source photo with a corner watermark).
+function checkUnreferencedImages(pages) {
+  const imgDir = path.join(SITE_DIR, "assets", "img");
+  const readDir = (d) => fs.readdirSync(path.join(SITE_DIR, d)).map((f) => fs.readFileSync(path.join(SITE_DIR, d, f), "utf8")).join("\n");
+  const haystack = Object.values(pages).map((p) => p.html).join("\n") + readDir("assets/css") + readDir("assets/js");
+  for (const f of fs.readdirSync(imgDir)) {
+    if (!haystack.includes(f)) {
+      fail("7. Unreferenced images", `site/assets/img/${f} is not referenced by any page, stylesheet or script.`, `site/assets/img/${f}`, "Delete it (it is history-recoverable in git) or reference it.");
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Check 9: sitemap URLs are valid and required indexable pages are included
 // ---------------------------------------------------------------------------
@@ -438,19 +457,39 @@ function checkNoPlaceholders(pages) {
 // href="assets/..." to /blog/assets/..., which doesn't exist. The routing
 // source of truth is the `rewrites` map in the CloudFront Function in
 // infra/template.yaml, unioned with CANONICAL_URL_OVERRIDES.
+// The CloudFront Function's routing tables, parsed out of infra/template.yaml:
+//   special: public slug -> file basename where they differ; same: slugs whose file has the same name;
+//   legacy: old WordPress paths (no trailing slash) -> 301 destination.
+function loadRoutingTables() {
+  const template = fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8").replace(/\r/g, "");
+  const code = (template.match(/FunctionCode: \|\n([\s\S]*?)\n\n  Distribution:/) || [])[1];
+  if (!code) return null;
+  const obj = (name) => {
+    const block = code.match(new RegExp(`var ${name} = \\{([\\s\\S]*?)\\n\\s*\\};`));
+    return block ? Object.fromEntries(matchAll(/'([^']*)':\s*'([^']*)'/g, block[1]).map((m) => [m[1], m[2]])) : null;
+  };
+  const sameBlock = code.match(/var same = \(([\s\S]*?)\)\.split\(' '\);/);
+  const same = sameBlock ? matchAll(/'([^']*)'/g, sameBlock[1]).map((m) => m[1]).join("").split(" ").filter(Boolean) : null;
+  const special = obj("special");
+  const legacy = obj("legacy");
+  if (!special || !same || !legacy) return null;
+  const pageFiles = { ...Object.fromEntries(Object.entries(special).map(([slug, file]) => [`${file}.html`, `${slug}/`])), ...Object.fromEntries(same.map((s) => [`${s}.html`, `${s}/`])) };
+  return { code, template, special, same, legacy, pageFiles };
+}
+
 function prettyPathFiles() {
-  const template = fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8");
-  const block = template.match(/var rewrites = \{([\s\S]*?)\n\s*\};/);
-  const routed = block ? matchAll(/'\/[^']*':\s*'\/([^']+\.html)'/g, block[1]).map((m) => m[1]) : [];
-  if (routed.length === 0) {
+  const routing = loadRoutingTables();
+  if (!routing) {
     fail(
       "13. Pretty-path assets",
-      "Could not find any pretty-path rewrites in infra/template.yaml (LegacyRedirectFunction `var rewrites`).",
+      "Could not read the routing tables (special / same / legacy) from the LegacyRedirectFunction in infra/template.yaml.",
       "infra/template.yaml",
-      "Restore the `rewrites` map, or update prettyPathFiles() in scripts/verify.js to match the new routing."
+      "Restore the tables, or update loadRoutingTables() in scripts/verify.js to match the new routing."
     );
+    return Object.keys(CANONICAL_URL_OVERRIDES).sort();
   }
-  return [...new Set([...routed, ...Object.keys(CANONICAL_URL_OVERRIDES)])].sort();
+  // 404.html is served by CloudFront for a missing URL at ANY depth, so it needs root-relative assets too.
+  return [...new Set([...Object.keys(routing.pageFiles), ...Object.keys(CANONICAL_URL_OVERRIDES), "404.html"])].sort();
 }
 
 function checkPrettyPathAssets(pages) {
@@ -691,6 +730,88 @@ function checkConsentAndAnalytics(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 16: CloudFront Function limits + routing tables + 404 page
+// ---------------------------------------------------------------------------
+// AWS rejects a CloudFront Function whose code exceeds 10 KB (10,240 bytes, not adjustable) or whose
+// Comment exceeds 128 characters — the stack could not even be created. Nothing else in this repo can
+// notice that before deploy day, so it is checked here, together with the routing it implements.
+function checkCloudFrontRouting(pages) {
+  const check = "16. CloudFront routing & 404 page";
+  const tpl = "infra/template.yaml";
+  const routing = loadRoutingTables();
+  if (!routing) return; // already reported by check 13
+  const { code, template, special, same, legacy, pageFiles } = routing;
+
+  const bytes = Buffer.byteLength(code);
+  if (bytes >= 10240) fail(check, `LegacyRedirectFunction code is ${bytes} bytes; CloudFront Functions are limited to 10,240 bytes.`, tpl, "Shrink the routing tables/code (keep documentation in YAML comments, not in the function).");
+  const comment = (template.match(/FunctionConfig:\n\s+Comment: (?:>-\n)?([\s\S]*?)\n\s+Runtime:/) || [])[1] || "";
+  if (comment.replace(/\s+/g, " ").trim().length > 128) fail(check, `LegacyRedirectFunction Comment is ${comment.replace(/\s+/g, " ").trim().length} characters; the limit is 128.`, tpl, "Shorten FunctionConfig.Comment; move the detail into YAML comments above the resource.");
+  if (/=>|\blet\b|\bconst\b|`/.test(code)) fail(check, "LegacyRedirectFunction uses syntax outside the cloudfront-js-1.0 (ES5) runtime.", tpl, "Use var / function expressions / string concatenation only.");
+  const csp = (template.match(/ContentSecurityPolicy: >-\n([\s\S]*?)\n\s*Override: true/) || [])[1];
+  if (csp && csp.split("\n").map((l) => l.trim()).join(" ").length > 1783) fail(check, "Content-Security-Policy header value exceeds CloudFront's 1,783-character limit.", tpl, "Shorten the CSP.");
+
+  // The routing tables must describe exactly the pretty-path pages verify.js already knows about.
+  const derived = Object.fromEntries(Object.entries(pageFiles));
+  const expected = Object.fromEntries(Object.entries(CANONICAL_URL_OVERRIDES));
+  for (const [file, slug] of Object.entries(expected)) {
+    if (derived[file] !== slug) fail(check, `Routing tables map ${file} to ${derived[file] || "nothing"}, but its canonical is /${slug}.`, tpl, "Keep the special/same tables and CANONICAL_URL_OVERRIDES in sync.");
+  }
+  for (const [file, slug] of Object.entries(derived)) {
+    if (!expected[file]) fail(check, `Routing tables serve /${slug} from ${file}, which is not in CANONICAL_URL_OVERRIDES.`, tpl, "Add it to CANONICAL_URL_OVERRIDES (and the sitemap) or remove it from the function.");
+    if (!pages[file]) fail(check, `Routing tables point at site/${file}, which does not exist.`, tpl, "Restore the page or remove the route.");
+  }
+  if (new Set(same).size !== same.length) fail(check, "Duplicate slug in the `same` table.", tpl, "Remove the duplicate.");
+  for (const [from, to] of Object.entries(legacy)) {
+    const dest = to.replace(/^\//, "");
+    const ok = pages[dest] || Object.values(derived).includes(dest) || Object.values(derived).includes(dest + (dest.endsWith("/") ? "" : "/"));
+    if (!ok) fail(check, `Legacy redirect ${from} -> ${to} does not land on an existing page.`, tpl, "Point it at a page that exists (its canonical URL).");
+  }
+
+  // Run the real function code against known cases.
+  let handler;
+  try { handler = require("vm").runInNewContext(code + "\n;handler"); } catch (e) { fail(check, `LegacyRedirectFunction does not evaluate: ${e.message}`, tpl, "Fix the syntax."); return; }
+  const call = (uri, host) => handler({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
+  const [aboutFile, aboutSlug] = Object.entries(derived).find(([f]) => f === "about.html") || [];
+  const cases = [
+    () => call(`/${aboutSlug}`).uri === `/${aboutFile}` && call(`/${aboutSlug}`, "sfrmotors.co.uk").uri === `/${aboutFile}`,
+    () => { const r = call(`/${aboutFile}`); return r.statusCode === 301 && r.headers.location.value === `/${aboutSlug}`; },
+    () => { const r = call("/x/", "www.sfrmotors.co.uk"); return r.statusCode === 301 && r.headers.location.value === "https://sfrmotors.co.uk/x/"; },
+    () => call("/index.html").uri === "/index.html" && call("/").uri === "/" && call("/constructor").uri === "/constructor",
+  ];
+  cases.forEach((c, i) => { let ok = false; try { ok = c(); } catch (e) { /* falls through */ } if (!ok) fail(check, `LegacyRedirectFunction behaviour case ${i + 1} failed (pretty rewrite / .html 301 / www 301 / pass-through).`, tpl, "Restore the routing logic."); });
+
+  // Error pages: a dedicated, noindex, root-relative 404 page
+  const errors = matchAll(/ErrorCode: (\d+)\n\s+ResponseCode: (\d+)\n\s+ResponsePagePath: (\S+)/g, template);
+  if (errors.length === 0 || errors.some((e) => e[3] !== "/404.html" || e[2] !== "404")) fail(check, "CloudFront custom error responses must return /404.html with status 404.", tpl, "Point every CustomErrorResponses entry at /404.html with ResponseCode 404.");
+  const p404 = pages["404.html"];
+  if (!p404) fail(check, "site/404.html is missing (CloudFront serves it for missing URLs).", "site/404.html", "Restore it.");
+  else if (p404.indexable || /rel=["']canonical["']/i.test(p404.html)) fail(check, "site/404.html must be noindex and have no canonical.", "site/404.html", 'Use <meta name="robots" content="noindex, follow"> and no canonical.');
+}
+
+// ---------------------------------------------------------------------------
+// Check 17: JSON-LD is valid and every URL in it is absolute and on the production domain
+// ---------------------------------------------------------------------------
+// Relative URLs in structured data are invalid schema.org and (when they name a redirecting .html
+// path) point crawlers at the wrong URL. The `sameAs` list is deliberately excluded (external profiles).
+function checkStructuredDataUrls(pages) {
+  const check = "17. Structured data URLs";
+  for (const [file, page] of Object.entries(pages)) {
+    for (const [, body] of matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, page.html)) {
+      let data;
+      try { data = JSON.parse(body); } catch (e) { fail(check, `Invalid JSON-LD: ${e.message}`, `site/${file}`, "Fix the JSON syntax."); continue; }
+      const walk = (node, key) => {
+        if (Array.isArray(node)) return node.forEach((n) => walk(n, key));
+        if (node && typeof node === "object") return Object.entries(node).forEach(([k, v]) => k !== "sameAs" && walk(v, k));
+        if (typeof node === "string" && ["url", "item", "@id", "logo", "image", "contentUrl"].includes(key) && !node.startsWith(`${PROD_DOMAIN}/`) && !node.startsWith("#")) {
+          fail(check, `JSON-LD "${key}" is not an absolute ${PROD_DOMAIN}/ URL: "${node}".`, `site/${file}`, `Use the page's full canonical URL under ${PROD_DOMAIN}/.`);
+        }
+      };
+      walk(data, "");
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -709,7 +830,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 15;
+const TOTAL_CHECKS = 17;
 
 function main() {
   const buildOk = checkBuild();
@@ -720,11 +841,14 @@ function main() {
   checkTitleAndDescription(pages);
   checkCanonicals(pages);
   checkImages(pages);
+  checkUnreferencedImages(pages);
   checkSitemap(pages);
   checkNoPlaceholders(pages);
   checkPrettyPathAssets(pages);
   checkRootFavicon();
   checkConsentAndAnalytics(pages);
+  checkCloudFrontRouting(pages);
+  checkStructuredDataUrls(pages);
   checkGitDiff();
 
   if (failures.length === 0) {

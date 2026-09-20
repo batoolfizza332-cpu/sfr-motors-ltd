@@ -17,6 +17,19 @@ Parameters:
       ARN of an ACM certificate for DomainName, issued in us-east-1
       (CloudFront requires this). Create/validate it in ACM first —
       DNS validation can't be automated by this template.
+  IncludeWww:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+    Description: >
+      Also answer for www.<DomainName> and 301-redirect it to the apex domain
+      (the WordPress site does this today, and www is a CNAME to the apex in
+      DNS). The ACM certificate must cover BOTH <DomainName> and
+      www.<DomainName>, otherwise the stack update is rejected. Set 'false'
+      only if www is deliberately unused.
+
+Conditions:
+  ServeWww: !Equals [!Ref IncludeWww, 'true']
 
 Resources:
   SiteBucket:
@@ -91,9 +104,10 @@ Resources:
             # and assets/js/analytics.js (the cookie-consent banner, which loads
             # GA4's gtag.js only AFTER the visitor accepts analytics), the only
             # stylesheet besides main.css is Google Fonts, the only embed is the
-            # Google Maps iframe on contact.html, and the quote form calls the
-            # API subdomain below. JSON-LD <script> blocks are inert and aren't
-            # restricted by script-src in any current browser.
+            # Google Maps iframe on contact.html. The quote form no longer calls
+            # any API (it opens a pre-filled WhatsApp message), so connect-src has
+            # no first-party API origin. JSON-LD <script> blocks are inert and
+            # aren't restricted by script-src in any current browser.
             # Google Analytics origins are exact hosts, no wildcards, and were
             # taken from a real gtag.js run (collection blocked locally):
             #   script-src  www.googletagmanager.com    - gtag.js itself
@@ -110,7 +124,7 @@ Resources:
               style-src 'self' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com;
               img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
-              connect-src 'self' https://api.sfrmotors.co.uk https://www.google-analytics.com https://region1.google-analytics.com;
+              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
@@ -154,376 +168,342 @@ Resources:
           HeadersConfig: { HeaderBehavior: none }
           QueryStringsConfig: { QueryStringBehavior: none }
 
+  # ---------------------------------------------------------------------------
+  # Routing rules implemented by LegacyRedirectFunction (documentation only).
+  # The function code itself is generated from three small tables; it was
+  # compacted because CloudFront Functions are limited to 10 KB of code and a
+  # 128-character Comment (the previous 13 KB / 11.8k-character version could
+  # not have been created). scripts/verify.js check 16 keeps both limits, and
+  # the routing table itself, protected. Original audit rationale, unchanged:
+  # ---------------------------------------------------------------------------
+  #   Legacy WordPress URL handling (with or without trailing slash on
+  #   the old path):
+  #   /locking-wheel-nut-removal-bathgate/ -> 301 ->
+  #   /mobile-locking-wheel-nut-removal.html;
+  #   /24-7-mobile-tyre-replacement-in-edinburgh/ -> 301 ->
+  #   /mobile-tyre-fitting-edinburgh.html;
+  #   /emergency-tyre-fitter-edinburgh-falkirk/ -> 301 (dual-location
+  #   emergency content, consolidated) -> /24-7-mobile-tyre-replacement/;
+  #   /24-7-mobile-tyre-replacement/ -> internal rewrite (URL shown to
+  #   the visitor is unchanged) -> /emergency-tyre-change.html;
+  #   /emergency-tyre-change.html -> 301 ->
+  #   /24-7-mobile-tyre-replacement/;
+  #   /about-us/ -> internal rewrite (URL shown to the visitor is
+  #   unchanged) -> /about.html;
+  #   /about.html -> 301 -> /about-us/;
+  #   /contact-us/ -> internal rewrite (URL shown to the visitor is
+  #   unchanged) -> /contact.html;
+  #   /contact.html -> 301 -> /contact-us/;
+  #   /broxburn/ -> internal rewrite (URL shown to the visitor is
+  #   unchanged) -> /broxburn.html;
+  #   /broxburn.html -> 301 -> /broxburn/;
+  #   /mobile-trailer-and-caravan-tyre-fitting/ -> internal rewrite (URL
+  #   shown to the visitor is unchanged) ->
+  #   /caravan-trailer-tyre-fitting.html (WordPress migration audit §6
+  #   Q2, owner decision: the WordPress URL is retained as the final
+  #   URL and the new site's page is renamed to it, reversing the
+  #   original "new site wins" default);
+  #   /caravan-trailer-tyre-fitting.html -> 301 ->
+  #   /mobile-trailer-and-caravan-tyre-fitting/;
+  #   /caravan-trailer-tyre-fitting/ -> 301 (old new-site slug, never
+  #   actually live as a clean-URL rewrite on this branch, redirected
+  #   defensively in case of external links) ->
+  #   /mobile-trailer-and-caravan-tyre-fitting/;
+  #   /mobile-tyre-puncture-repair/ -> internal rewrite (URL shown to
+  #   the visitor is unchanged) -> /mobile-puncture-repair.html (audit
+  #   row 29, "Keep at exact URL" — the audit source and the new
+  #   site's existing page are substantively the same content, so
+  #   reused rather than published as a near-duplicate second page);
+  #   /mobile-puncture-repair.html -> 301 -> /mobile-tyre-puncture-repair/;
+  #   /mobile-puncture-repair/ -> 301 (never actually live as a
+  #   clean-URL rewrite on this branch, redirected defensively in
+  #   case of external links) -> /mobile-tyre-puncture-repair/;
+  #   /tyre-pressure-monitoring-system/ -> internal rewrite (URL shown
+  #   to the visitor is unchanged) -> /tpms-services.html (audit row
+  #   35, "Keep at exact URL" — the audit source and the new site's
+  #   existing page are content-identical once path/business-detail
+  #   differences are set aside, so reused rather than published as a
+  #   duplicate second page);
+  #   /tpms-services.html -> 301 -> /tyre-pressure-monitoring-system/;
+  #   /tpms-services/ -> 301 (never actually live as a clean-URL
+  #   rewrite on this branch, redirected defensively in case of
+  #   external links) -> /tyre-pressure-monitoring-system/;
+  #   /van-tyre-replacement-services/ -> internal rewrite (URL shown
+  #   to the visitor is unchanged) -> /van-tyre-replacement.html
+  #   (audit row 37, "Keep at exact URL" — the audit source and the
+  #   new site's existing page are content-identical once
+  #   path/business-detail differences are set aside, so reused
+  #   rather than published as a duplicate second page);
+  #   /van-tyre-replacement.html -> 301 ->
+  #   /van-tyre-replacement-services/;
+  #   /van-tyre-replacement/ -> 301 (never actually live as a
+  #   clean-URL rewrite on this branch, redirected defensively in
+  #   case of external links) -> /van-tyre-replacement-services/;
+  #   /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
+  #   shown to the visitor is unchanged) ->
+  #   /how-much-does-mobile-tyre-fitting-cost.html;
+  #   /how-much-does-mobile-tyre-fitting-cost.html -> 301 ->
+  #   /how-much-does-mobile-tyre-fitting-cost/;
+  #   /7-warning-signs-your-tyres-need-immediate-professional-attention/
+  #   -> internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /7-warning-signs-your-tyres-need-immediate-professional-attention.html;
+  #   /7-warning-signs-your-tyres-need-immediate-professional-attention.html
+  #   -> 301 ->
+  #   /7-warning-signs-your-tyres-need-immediate-professional-attention/;
+  #   /blog/ -> internal rewrite (URL shown to the visitor is
+  #   unchanged) -> /blog.html;
+  #   /blog.html -> 301 -> /blog/;
+  #   /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html;
+  #   /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html
+  #   -> 301 ->
+  #   /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/;
+  #   /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/
+  #   -> internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html;
+  #   /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html
+  #   -> 301 ->
+  #   /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/;
+  #   /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/
+  #   -> internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html;
+  #   /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html
+  #   -> 301 ->
+  #   /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
+  #   /why-professional-mobile-tyre-services-are-information-to-all-drivers/
+  #   -> 301 (duplicate WordPress post, consolidated) ->
+  #   /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
+  #   /tyre-size-calculator/ -> internal rewrite (URL shown to the
+  #   visitor is unchanged) -> /tyre-size-calculator.html;
+  #   /tyre-size-calculator.html -> 301 -> /tyre-size-calculator/;
+  #   /tyre-care-and-flat-tyre-help-in-linlithgow/ -> internal rewrite
+  #   (URL shown to the visitor is unchanged) ->
+  #   /tyre-care-and-flat-tyre-help-in-linlithgow.html;
+  #   /tyre-care-and-flat-tyre-help-in-linlithgow.html -> 301 ->
+  #   /tyre-care-and-flat-tyre-help-in-linlithgow/;
+  #   /preparing-your-car-tyres-for-winter-driving-in-livingston/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /preparing-your-car-tyres-for-winter-driving-in-livingston.html;
+  #   /preparing-your-car-tyres-for-winter-driving-in-livingston.html
+  #   -> 301 ->
+  #   /preparing-your-car-tyres-for-winter-driving-in-livingston/;
+  #   /how-quality-tyres-improve-safety-and-driving-performance/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /how-quality-tyres-improve-safety-and-driving-performance.html;
+  #   /how-quality-tyres-improve-safety-and-driving-performance.html
+  #   -> 301 ->
+  #   /how-quality-tyres-improve-safety-and-driving-performance/;
+  #   /why-tyre-safety-is-more-important-than-most-drivers-realize/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /why-tyre-safety-is-more-important-than-most-drivers-realize.html;
+  #   /why-tyre-safety-is-more-important-than-most-drivers-realize.html
+  #   -> 301 ->
+  #   /why-tyre-safety-is-more-important-than-most-drivers-realize/;
+  #   /professional-mobile-tyre-services-on-drivers-linlithgow/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /professional-mobile-tyre-services-on-drivers-linlithgow.html;
+  #   /professional-mobile-tyre-services-on-drivers-linlithgow.html
+  #   -> 301 ->
+  #   /professional-mobile-tyre-services-on-drivers-linlithgow/;
+  #   /your-guide-to-safe-tyre-services-in-harthill/ -> internal
+  #   rewrite (URL shown to the visitor is unchanged) ->
+  #   /your-guide-to-safe-tyre-services-in-harthill.html;
+  #   /your-guide-to-safe-tyre-services-in-harthill.html -> 301 ->
+  #   /your-guide-to-safe-tyre-services-in-harthill/;
+  #   /the-best-tyres-for-edinburgh-west-lothian-roads/ -> internal
+  #   rewrite (URL shown to the visitor is unchanged) ->
+  #   /the-best-tyres-for-edinburgh-west-lothian-roads.html;
+  #   /the-best-tyres-for-edinburgh-west-lothian-roads.html -> 301 ->
+  #   /the-best-tyres-for-edinburgh-west-lothian-roads/;
+  #   /the-best-tyres-for-your-ford-on-edinburghs-roads/ -> internal
+  #   rewrite (URL shown to the visitor is unchanged) ->
+  #   /the-best-tyres-for-your-ford-on-edinburghs-roads.html;
+  #   /the-best-tyres-for-your-ford-on-edinburghs-roads.html -> 301
+  #   -> /the-best-tyres-for-your-ford-on-edinburghs-roads/;
+  #   /puncture-repairs-whats-actually-being-done-to-your-tyre/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /puncture-repairs-whats-actually-being-done-to-your-tyre.html;
+  #   /puncture-repairs-whats-actually-being-done-to-your-tyre.html
+  #   -> 301 ->
+  #   /puncture-repairs-whats-actually-being-done-to-your-tyre/;
+  #   /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/ ->
+  #   internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html;
+  #   /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html
+  #   -> 301 ->
+  #   /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/;
+  #   /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/
+  #   -> internal rewrite (URL shown to the visitor is unchanged) ->
+  #   /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html;
+  #   /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html
+  #   -> 301 ->
+  #   /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/;
+  #   /tyre-puncture-repair-near-me-west-lothian/ -> 301 (never built
+  #   as its own page on this branch; its provider-selection-checklist
+  #   content duplicates mobile-tyre-repair-edinburgh-west-lothian.html,
+  #   which also covers West Lothian, so it is consolidated there
+  #   rather than kept as a separate "Keep at exact URL" page as the
+  #   original WordPress migration audit recorded) ->
+  #   /mobile-tyre-repair-edinburgh-west-lothian/;
+  #   /tyres-bathgate-guide/ -> 301 (never built as its own page on
+  #   this branch; despite its generic WordPress-audit title, the
+  #   finished source is entirely van-tyre-specific and its "signs
+  #   it's time to replace" content repeats what's already on the
+  #   destination service page, so it is consolidated there rather
+  #   than kept as a separate "Keep at exact URL" page as the
+  #   original WordPress migration audit recorded — destination
+  #   updated to the service page's own preserved-URL canonical,
+  #   /van-tyre-replacement-services/, so this stays a single hop
+  #   rather than chaining through /van-tyre-replacement.html) ->
+  #   /van-tyre-replacement-services/;
+  #   /expert-locking-wheel-nut-removal/ -> 301 (near-duplicate
+  #   informational locking-wheel-nut article per the WordPress
+  #   migration audit, consolidated into the recreated article) ->
+  #   /locking-wheel-nut-removal/;
+  #   /tyre-replacement-call-out-bathgate/ -> 301 (same transactional
+  #   intent as the Bathgate location page, per the WordPress
+  #   migration audit; the audit recorded the destination as
+  #   /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
+  #   rewrite on this branch, so the redirect targets its actual
+  #   canonical, /mobile-tyre-fitting-bathgate.html, instead) ->
+  #   /mobile-tyre-fitting-bathgate.html;
+  #   /best-emergency-locking-wheel-nut-removal-in-west-lothian/ -> 301
+  #   (near-duplicate informational locking-wheel-nut article per the
+  #   WordPress migration audit, consolidated into the recreated
+  #   article) -> /locking-wheel-nut-removal/;
+  #   /best-mobile-tyre-fitter-west-lothian/ -> 301 (per the WordPress
+  #   migration audit; the audit recorded the destination as
+  #   /mobile-tyre-fitting-west-lothian/, but that page has no
+  #   clean-URL rewrite on this branch — its own canonical tag and
+  #   every internal link site-wide use the .html path — so the
+  #   redirect targets its actual canonical,
+  #   /mobile-tyre-fitting-west-lothian.html, instead) ->
+  #   /mobile-tyre-fitting-west-lothian.html;
+  #   /mobile-tyre-fitting-bathgate-questions/ -> 301 (same transactional
+  #   intent as the Bathgate location page, per the WordPress migration
+  #   audit; the audit recorded the destination as
+  #   /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
+  #   rewrite on this branch, so the redirect targets its actual
+  #   canonical, /mobile-tyre-fitting-bathgate.html, instead — same
+  #   destination already used for /tyre-replacement-call-out-bathgate/)
+  #   -> /mobile-tyre-fitting-bathgate.html.
+  #   In each rewrite/redirect pair, the rewritten path is the one
+  #   primary, indexable URL. All other requests pass through
+  #   unchanged.
+  #   Added with the compaction: any request whose Host header starts with
+  #   'www.' is 301-redirected in one hop to the apex domain (path and query
+  #   string kept; legacy/.html URLs are remapped in the same hop), matching
+  #   what the WordPress site does today.
   LegacyRedirectFunction:
     Type: AWS::CloudFront::Function
     Properties:
       Name: !Sub "${DomainName}-legacy-redirects"
       AutoPublish: true
       FunctionConfig:
-        Comment: >-
-          Legacy WordPress URL handling (with or without trailing slash on
-          the old path):
-          /locking-wheel-nut-removal-bathgate/ -> 301 ->
-          /mobile-locking-wheel-nut-removal.html;
-          /24-7-mobile-tyre-replacement-in-edinburgh/ -> 301 ->
-          /mobile-tyre-fitting-edinburgh.html;
-          /emergency-tyre-fitter-edinburgh-falkirk/ -> 301 (dual-location
-          emergency content, consolidated) -> /24-7-mobile-tyre-replacement/;
-          /24-7-mobile-tyre-replacement/ -> internal rewrite (URL shown to
-          the visitor is unchanged) -> /emergency-tyre-change.html;
-          /emergency-tyre-change.html -> 301 ->
-          /24-7-mobile-tyre-replacement/;
-          /about-us/ -> internal rewrite (URL shown to the visitor is
-          unchanged) -> /about.html;
-          /about.html -> 301 -> /about-us/;
-          /contact-us/ -> internal rewrite (URL shown to the visitor is
-          unchanged) -> /contact.html;
-          /contact.html -> 301 -> /contact-us/;
-          /broxburn/ -> internal rewrite (URL shown to the visitor is
-          unchanged) -> /broxburn.html;
-          /broxburn.html -> 301 -> /broxburn/;
-          /mobile-trailer-and-caravan-tyre-fitting/ -> internal rewrite (URL
-          shown to the visitor is unchanged) ->
-          /caravan-trailer-tyre-fitting.html (WordPress migration audit §6
-          Q2, owner decision: the WordPress URL is retained as the final
-          URL and the new site's page is renamed to it, reversing the
-          original "new site wins" default);
-          /caravan-trailer-tyre-fitting.html -> 301 ->
-          /mobile-trailer-and-caravan-tyre-fitting/;
-          /caravan-trailer-tyre-fitting/ -> 301 (old new-site slug, never
-          actually live as a clean-URL rewrite on this branch, redirected
-          defensively in case of external links) ->
-          /mobile-trailer-and-caravan-tyre-fitting/;
-          /mobile-tyre-puncture-repair/ -> internal rewrite (URL shown to
-          the visitor is unchanged) -> /mobile-puncture-repair.html (audit
-          row 29, "Keep at exact URL" — the audit source and the new
-          site's existing page are substantively the same content, so
-          reused rather than published as a near-duplicate second page);
-          /mobile-puncture-repair.html -> 301 -> /mobile-tyre-puncture-repair/;
-          /mobile-puncture-repair/ -> 301 (never actually live as a
-          clean-URL rewrite on this branch, redirected defensively in
-          case of external links) -> /mobile-tyre-puncture-repair/;
-          /tyre-pressure-monitoring-system/ -> internal rewrite (URL shown
-          to the visitor is unchanged) -> /tpms-services.html (audit row
-          35, "Keep at exact URL" — the audit source and the new site's
-          existing page are content-identical once path/business-detail
-          differences are set aside, so reused rather than published as a
-          duplicate second page);
-          /tpms-services.html -> 301 -> /tyre-pressure-monitoring-system/;
-          /tpms-services/ -> 301 (never actually live as a clean-URL
-          rewrite on this branch, redirected defensively in case of
-          external links) -> /tyre-pressure-monitoring-system/;
-          /van-tyre-replacement-services/ -> internal rewrite (URL shown
-          to the visitor is unchanged) -> /van-tyre-replacement.html
-          (audit row 37, "Keep at exact URL" — the audit source and the
-          new site's existing page are content-identical once
-          path/business-detail differences are set aside, so reused
-          rather than published as a duplicate second page);
-          /van-tyre-replacement.html -> 301 ->
-          /van-tyre-replacement-services/;
-          /van-tyre-replacement/ -> 301 (never actually live as a
-          clean-URL rewrite on this branch, redirected defensively in
-          case of external links) -> /van-tyre-replacement-services/;
-          /how-much-does-mobile-tyre-fitting-cost/ -> internal rewrite (URL
-          shown to the visitor is unchanged) ->
-          /how-much-does-mobile-tyre-fitting-cost.html;
-          /how-much-does-mobile-tyre-fitting-cost.html -> 301 ->
-          /how-much-does-mobile-tyre-fitting-cost/;
-          /7-warning-signs-your-tyres-need-immediate-professional-attention/
-          -> internal rewrite (URL shown to the visitor is unchanged) ->
-          /7-warning-signs-your-tyres-need-immediate-professional-attention.html;
-          /7-warning-signs-your-tyres-need-immediate-professional-attention.html
-          -> 301 ->
-          /7-warning-signs-your-tyres-need-immediate-professional-attention/;
-          /blog/ -> internal rewrite (URL shown to the visitor is
-          unchanged) -> /blog.html;
-          /blog.html -> 301 -> /blog/;
-          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html;
-          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html
-          -> 301 ->
-          /how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/;
-          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/
-          -> internal rewrite (URL shown to the visitor is unchanged) ->
-          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html;
-          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html
-          -> 301 ->
-          /how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/;
-          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/
-          -> internal rewrite (URL shown to the visitor is unchanged) ->
-          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html;
-          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html
-          -> 301 ->
-          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
-          /why-professional-mobile-tyre-services-are-information-to-all-drivers/
-          -> 301 (duplicate WordPress post, consolidated) ->
-          /why-professional-mobile-tyre-services-are-essential-for-modern-drivers/;
-          /tyre-size-calculator/ -> internal rewrite (URL shown to the
-          visitor is unchanged) -> /tyre-size-calculator.html;
-          /tyre-size-calculator.html -> 301 -> /tyre-size-calculator/;
-          /tyre-care-and-flat-tyre-help-in-linlithgow/ -> internal rewrite
-          (URL shown to the visitor is unchanged) ->
-          /tyre-care-and-flat-tyre-help-in-linlithgow.html;
-          /tyre-care-and-flat-tyre-help-in-linlithgow.html -> 301 ->
-          /tyre-care-and-flat-tyre-help-in-linlithgow/;
-          /preparing-your-car-tyres-for-winter-driving-in-livingston/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /preparing-your-car-tyres-for-winter-driving-in-livingston.html;
-          /preparing-your-car-tyres-for-winter-driving-in-livingston.html
-          -> 301 ->
-          /preparing-your-car-tyres-for-winter-driving-in-livingston/;
-          /how-quality-tyres-improve-safety-and-driving-performance/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /how-quality-tyres-improve-safety-and-driving-performance.html;
-          /how-quality-tyres-improve-safety-and-driving-performance.html
-          -> 301 ->
-          /how-quality-tyres-improve-safety-and-driving-performance/;
-          /why-tyre-safety-is-more-important-than-most-drivers-realize/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /why-tyre-safety-is-more-important-than-most-drivers-realize.html;
-          /why-tyre-safety-is-more-important-than-most-drivers-realize.html
-          -> 301 ->
-          /why-tyre-safety-is-more-important-than-most-drivers-realize/;
-          /professional-mobile-tyre-services-on-drivers-linlithgow/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /professional-mobile-tyre-services-on-drivers-linlithgow.html;
-          /professional-mobile-tyre-services-on-drivers-linlithgow.html
-          -> 301 ->
-          /professional-mobile-tyre-services-on-drivers-linlithgow/;
-          /your-guide-to-safe-tyre-services-in-harthill/ -> internal
-          rewrite (URL shown to the visitor is unchanged) ->
-          /your-guide-to-safe-tyre-services-in-harthill.html;
-          /your-guide-to-safe-tyre-services-in-harthill.html -> 301 ->
-          /your-guide-to-safe-tyre-services-in-harthill/;
-          /the-best-tyres-for-edinburgh-west-lothian-roads/ -> internal
-          rewrite (URL shown to the visitor is unchanged) ->
-          /the-best-tyres-for-edinburgh-west-lothian-roads.html;
-          /the-best-tyres-for-edinburgh-west-lothian-roads.html -> 301 ->
-          /the-best-tyres-for-edinburgh-west-lothian-roads/;
-          /the-best-tyres-for-your-ford-on-edinburghs-roads/ -> internal
-          rewrite (URL shown to the visitor is unchanged) ->
-          /the-best-tyres-for-your-ford-on-edinburghs-roads.html;
-          /the-best-tyres-for-your-ford-on-edinburghs-roads.html -> 301
-          -> /the-best-tyres-for-your-ford-on-edinburghs-roads/;
-          /puncture-repairs-whats-actually-being-done-to-your-tyre/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /puncture-repairs-whats-actually-being-done-to-your-tyre.html;
-          /puncture-repairs-whats-actually-being-done-to-your-tyre.html
-          -> 301 ->
-          /puncture-repairs-whats-actually-being-done-to-your-tyre/;
-          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/ ->
-          internal rewrite (URL shown to the visitor is unchanged) ->
-          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html;
-          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html
-          -> 301 ->
-          /what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/;
-          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/
-          -> internal rewrite (URL shown to the visitor is unchanged) ->
-          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html;
-          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html
-          -> 301 ->
-          /locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/;
-          /tyre-puncture-repair-near-me-west-lothian/ -> 301 (never built
-          as its own page on this branch; its provider-selection-checklist
-          content duplicates mobile-tyre-repair-edinburgh-west-lothian.html,
-          which also covers West Lothian, so it is consolidated there
-          rather than kept as a separate "Keep at exact URL" page as the
-          original WordPress migration audit recorded) ->
-          /mobile-tyre-repair-edinburgh-west-lothian/;
-          /tyres-bathgate-guide/ -> 301 (never built as its own page on
-          this branch; despite its generic WordPress-audit title, the
-          finished source is entirely van-tyre-specific and its "signs
-          it's time to replace" content repeats what's already on the
-          destination service page, so it is consolidated there rather
-          than kept as a separate "Keep at exact URL" page as the
-          original WordPress migration audit recorded — destination
-          updated to the service page's own preserved-URL canonical,
-          /van-tyre-replacement-services/, so this stays a single hop
-          rather than chaining through /van-tyre-replacement.html) ->
-          /van-tyre-replacement-services/;
-          /expert-locking-wheel-nut-removal/ -> 301 (near-duplicate
-          informational locking-wheel-nut article per the WordPress
-          migration audit, consolidated into the recreated article) ->
-          /locking-wheel-nut-removal/;
-          /tyre-replacement-call-out-bathgate/ -> 301 (same transactional
-          intent as the Bathgate location page, per the WordPress
-          migration audit; the audit recorded the destination as
-          /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
-          rewrite on this branch, so the redirect targets its actual
-          canonical, /mobile-tyre-fitting-bathgate.html, instead) ->
-          /mobile-tyre-fitting-bathgate.html;
-          /best-emergency-locking-wheel-nut-removal-in-west-lothian/ -> 301
-          (near-duplicate informational locking-wheel-nut article per the
-          WordPress migration audit, consolidated into the recreated
-          article) -> /locking-wheel-nut-removal/;
-          /best-mobile-tyre-fitter-west-lothian/ -> 301 (per the WordPress
-          migration audit; the audit recorded the destination as
-          /mobile-tyre-fitting-west-lothian/, but that page has no
-          clean-URL rewrite on this branch — its own canonical tag and
-          every internal link site-wide use the .html path — so the
-          redirect targets its actual canonical,
-          /mobile-tyre-fitting-west-lothian.html, instead) ->
-          /mobile-tyre-fitting-west-lothian.html;
-          /mobile-tyre-fitting-bathgate-questions/ -> 301 (same transactional
-          intent as the Bathgate location page, per the WordPress migration
-          audit; the audit recorded the destination as
-          /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
-          rewrite on this branch, so the redirect targets its actual
-          canonical, /mobile-tyre-fitting-bathgate.html, instead — same
-          destination already used for /tyre-replacement-call-out-bathgate/)
-          -> /mobile-tyre-fitting-bathgate.html.
-          In each rewrite/redirect pair, the rewritten path is the one
-          primary, indexable URL. All other requests pass through
-          unchanged.
+        Comment: Legacy WordPress + .html 301s, pretty-path rewrites, www->apex 301. Rules documented in template comments.
         Runtime: cloudfront-js-1.0
       FunctionCode: |
         function handler(event) {
             var request = event.request;
             var uri = request.uri;
-            var redirects = {
-                '/locking-wheel-nut-removal-bathgate/': '/mobile-locking-wheel-nut-removal.html',
+            var host = request.headers.host ? request.headers.host.value : '';
+            var has = Object.prototype.hasOwnProperty;
+
+            // Pretty-path pages served from a differently named file: public slug -> file (no .html)
+            var special = {
+                '24-7-mobile-tyre-replacement': 'emergency-tyre-change',
+                'about-us': 'about',
+                'contact-us': 'contact',
+                'mobile-trailer-and-caravan-tyre-fitting': 'caravan-trailer-tyre-fitting',
+                'mobile-tyre-puncture-repair': 'mobile-puncture-repair',
+                'tyre-pressure-monitoring-system': 'tpms-services',
+                'van-tyre-replacement-services': 'van-tyre-replacement'
+            };
+            // Pretty-path pages whose file name equals the slug
+            var same = (
+                'broxburn how-much-does-mobile-tyre-fitting-cost ' +
+                '7-warning-signs-your-tyres-need-immediate-professional-attention blog ' +
+                'how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road ' +
+                'how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns ' +
+                'why-professional-mobile-tyre-services-are-essential-for-modern-drivers tyre-size-calculator ' +
+                'tyre-care-and-flat-tyre-help-in-linlithgow ' +
+                'preparing-your-car-tyres-for-winter-driving-in-livingston ' +
+                'how-quality-tyres-improve-safety-and-driving-performance ' +
+                'why-tyre-safety-is-more-important-than-most-drivers-realize ' +
+                'professional-mobile-tyre-services-on-drivers-linlithgow ' +
+                'your-guide-to-safe-tyre-services-in-harthill the-best-tyres-for-edinburgh-west-lothian-roads ' +
+                'the-best-tyres-for-your-ford-on-edinburghs-roads ' +
+                'puncture-repairs-whats-actually-being-done-to-your-tyre ' +
+                'what-mobile-fitters-check-before-changing-a-tyre-on-a-hill ' +
+                'locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk ' +
+                'emergency-tyre-replacement locking-wheel-nut-removal better-tyres-better-drive ' +
+                'how-to-change-a-tyre mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation ' +
+                'mobile-tyre-repair-edinburgh-west-lothian'
+            ).split(' ');
+            // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
+            var legacy = {
                 '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal.html',
-                '/24-7-mobile-tyre-replacement-in-edinburgh/': '/mobile-tyre-fitting-edinburgh.html',
                 '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
-                '/emergency-tyre-fitter-edinburgh-falkirk/': '/24-7-mobile-tyre-replacement/',
                 '/emergency-tyre-fitter-edinburgh-falkirk': '/24-7-mobile-tyre-replacement/',
-                '/emergency-tyre-change.html': '/24-7-mobile-tyre-replacement/',
-                '/about.html': '/about-us/',
-                '/contact.html': '/contact-us/',
-                '/broxburn.html': '/broxburn/',
-                '/caravan-trailer-tyre-fitting.html': '/mobile-trailer-and-caravan-tyre-fitting/',
-                '/caravan-trailer-tyre-fitting/': '/mobile-trailer-and-caravan-tyre-fitting/',
                 '/caravan-trailer-tyre-fitting': '/mobile-trailer-and-caravan-tyre-fitting/',
-                '/mobile-puncture-repair.html': '/mobile-tyre-puncture-repair/',
-                '/mobile-puncture-repair/': '/mobile-tyre-puncture-repair/',
                 '/mobile-puncture-repair': '/mobile-tyre-puncture-repair/',
-                '/tpms-services.html': '/tyre-pressure-monitoring-system/',
-                '/tpms-services/': '/tyre-pressure-monitoring-system/',
                 '/tpms-services': '/tyre-pressure-monitoring-system/',
-                '/van-tyre-replacement.html': '/van-tyre-replacement-services/',
-                '/van-tyre-replacement/': '/van-tyre-replacement-services/',
                 '/van-tyre-replacement': '/van-tyre-replacement-services/',
-                '/how-much-does-mobile-tyre-fitting-cost.html': '/how-much-does-mobile-tyre-fitting-cost/',
-                '/7-warning-signs-your-tyres-need-immediate-professional-attention.html': '/7-warning-signs-your-tyres-need-immediate-professional-attention/',
-                '/blog.html': '/blog/',
-                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/',
-                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/',
-                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
-                '/why-professional-mobile-tyre-services-are-information-to-all-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
                 '/why-professional-mobile-tyre-services-are-information-to-all-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
-                '/tyre-size-calculator.html': '/tyre-size-calculator/',
-                '/tyre-care-and-flat-tyre-help-in-linlithgow.html': '/tyre-care-and-flat-tyre-help-in-linlithgow/',
-                '/preparing-your-car-tyres-for-winter-driving-in-livingston.html': '/preparing-your-car-tyres-for-winter-driving-in-livingston/',
-                '/how-quality-tyres-improve-safety-and-driving-performance.html': '/how-quality-tyres-improve-safety-and-driving-performance/',
-                '/why-tyre-safety-is-more-important-than-most-drivers-realize.html': '/why-tyre-safety-is-more-important-than-most-drivers-realize/',
-                '/professional-mobile-tyre-services-on-drivers-linlithgow.html': '/professional-mobile-tyre-services-on-drivers-linlithgow/',
-                '/your-guide-to-safe-tyre-services-in-harthill.html': '/your-guide-to-safe-tyre-services-in-harthill/',
-                '/the-best-tyres-for-edinburgh-west-lothian-roads.html': '/the-best-tyres-for-edinburgh-west-lothian-roads/',
-                '/the-best-tyres-for-your-ford-on-edinburghs-roads.html': '/the-best-tyres-for-your-ford-on-edinburghs-roads/',
-                '/puncture-repairs-whats-actually-being-done-to-your-tyre.html': '/puncture-repairs-whats-actually-being-done-to-your-tyre/',
-                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/',
-                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/',
-                '/emergency-tyre-replacement.html': '/emergency-tyre-replacement/',
-                '/locking-wheel-nut-removal.html': '/locking-wheel-nut-removal/',
-                '/better-tyres-better-drive.html': '/better-tyres-better-drive/',
-                '/how-to-change-a-tyre.html': '/how-to-change-a-tyre/',
-                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/',
-                '/mobile-tyre-repair-edinburgh-west-lothian.html': '/mobile-tyre-repair-edinburgh-west-lothian/',
-                '/tyre-puncture-repair-near-me-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
-                '/tyres-bathgate-guide/': '/van-tyre-replacement-services/',
                 '/tyres-bathgate-guide': '/van-tyre-replacement-services/',
-                '/expert-locking-wheel-nut-removal/': '/locking-wheel-nut-removal/',
                 '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/',
-                '/tyre-replacement-call-out-bathgate/': '/mobile-tyre-fitting-bathgate.html',
                 '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate.html',
-                '/best-emergency-locking-wheel-nut-removal-in-west-lothian/': '/locking-wheel-nut-removal/',
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
-                '/best-mobile-tyre-fitter-west-lothian/': '/mobile-tyre-fitting-west-lothian.html',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
-                '/mobile-tyre-fitting-bathgate-questions/': '/mobile-tyre-fitting-bathgate.html',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html'
             };
-            var rewrites = {
-                '/24-7-mobile-tyre-replacement/': '/emergency-tyre-change.html',
-                '/24-7-mobile-tyre-replacement': '/emergency-tyre-change.html',
-                '/about-us/': '/about.html',
-                '/about-us': '/about.html',
-                '/contact-us/': '/contact.html',
-                '/contact-us': '/contact.html',
-                '/broxburn/': '/broxburn.html',
-                '/broxburn': '/broxburn.html',
-                '/mobile-trailer-and-caravan-tyre-fitting/': '/caravan-trailer-tyre-fitting.html',
-                '/mobile-trailer-and-caravan-tyre-fitting': '/caravan-trailer-tyre-fitting.html',
-                '/mobile-tyre-puncture-repair/': '/mobile-puncture-repair.html',
-                '/mobile-tyre-puncture-repair': '/mobile-puncture-repair.html',
-                '/tyre-pressure-monitoring-system/': '/tpms-services.html',
-                '/tyre-pressure-monitoring-system': '/tpms-services.html',
-                '/van-tyre-replacement-services/': '/van-tyre-replacement.html',
-                '/van-tyre-replacement-services': '/van-tyre-replacement.html',
-                '/how-much-does-mobile-tyre-fitting-cost/': '/how-much-does-mobile-tyre-fitting-cost.html',
-                '/how-much-does-mobile-tyre-fitting-cost': '/how-much-does-mobile-tyre-fitting-cost.html',
-                '/7-warning-signs-your-tyres-need-immediate-professional-attention/': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
-                '/7-warning-signs-your-tyres-need-immediate-professional-attention': '/7-warning-signs-your-tyres-need-immediate-professional-attention.html',
-                '/blog/': '/blog.html',
-                '/blog': '/blog.html',
-                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html',
-                '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road': '/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html',
-                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html',
-                '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns': '/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html',
-                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html',
-                '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html',
-                '/tyre-size-calculator/': '/tyre-size-calculator.html',
-                '/tyre-size-calculator': '/tyre-size-calculator.html',
-                '/tyre-care-and-flat-tyre-help-in-linlithgow/': '/tyre-care-and-flat-tyre-help-in-linlithgow.html',
-                '/tyre-care-and-flat-tyre-help-in-linlithgow': '/tyre-care-and-flat-tyre-help-in-linlithgow.html',
-                '/preparing-your-car-tyres-for-winter-driving-in-livingston/': '/preparing-your-car-tyres-for-winter-driving-in-livingston.html',
-                '/preparing-your-car-tyres-for-winter-driving-in-livingston': '/preparing-your-car-tyres-for-winter-driving-in-livingston.html',
-                '/how-quality-tyres-improve-safety-and-driving-performance/': '/how-quality-tyres-improve-safety-and-driving-performance.html',
-                '/how-quality-tyres-improve-safety-and-driving-performance': '/how-quality-tyres-improve-safety-and-driving-performance.html',
-                '/why-tyre-safety-is-more-important-than-most-drivers-realize/': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
-                '/why-tyre-safety-is-more-important-than-most-drivers-realize': '/why-tyre-safety-is-more-important-than-most-drivers-realize.html',
-                '/professional-mobile-tyre-services-on-drivers-linlithgow/': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
-                '/professional-mobile-tyre-services-on-drivers-linlithgow': '/professional-mobile-tyre-services-on-drivers-linlithgow.html',
-                '/your-guide-to-safe-tyre-services-in-harthill/': '/your-guide-to-safe-tyre-services-in-harthill.html',
-                '/your-guide-to-safe-tyre-services-in-harthill': '/your-guide-to-safe-tyre-services-in-harthill.html',
-                '/the-best-tyres-for-edinburgh-west-lothian-roads/': '/the-best-tyres-for-edinburgh-west-lothian-roads.html',
-                '/the-best-tyres-for-edinburgh-west-lothian-roads': '/the-best-tyres-for-edinburgh-west-lothian-roads.html',
-                '/the-best-tyres-for-your-ford-on-edinburghs-roads/': '/the-best-tyres-for-your-ford-on-edinburghs-roads.html',
-                '/the-best-tyres-for-your-ford-on-edinburghs-roads': '/the-best-tyres-for-your-ford-on-edinburghs-roads.html',
-                '/puncture-repairs-whats-actually-being-done-to-your-tyre/': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html',
-                '/puncture-repairs-whats-actually-being-done-to-your-tyre': '/puncture-repairs-whats-actually-being-done-to-your-tyre.html',
-                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html',
-                '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill': '/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html',
-                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html',
-                '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk': '/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html',
-                '/emergency-tyre-replacement/': '/emergency-tyre-replacement.html',
-                '/emergency-tyre-replacement': '/emergency-tyre-replacement.html',
-                '/locking-wheel-nut-removal/': '/locking-wheel-nut-removal.html',
-                '/locking-wheel-nut-removal': '/locking-wheel-nut-removal.html',
-                '/better-tyres-better-drive/': '/better-tyres-better-drive.html',
-                '/better-tyres-better-drive': '/better-tyres-better-drive.html',
-                '/how-to-change-a-tyre/': '/how-to-change-a-tyre.html',
-                '/how-to-change-a-tyre': '/how-to-change-a-tyre.html',
-                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html',
-                '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation': '/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html',
-                '/mobile-tyre-repair-edinburgh-west-lothian/': '/mobile-tyre-repair-edinburgh-west-lothian.html',
-                '/mobile-tyre-repair-edinburgh-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian.html'
-            };
-            if (Object.prototype.hasOwnProperty.call(redirects, uri)) {
+
+            var bare = uri.length > 1 && uri.charAt(uri.length - 1) === '/' ? uri.slice(0, -1) : uri;
+            var slug = bare.slice(1);
+            var target = null;
+            var file = null;
+
+            if (has.call(legacy, bare)) {
+                target = legacy[bare];
+            } else if (uri.slice(-5) === '.html') {
+                // /<file>.html -> 301 -> /<slug>/ (the pretty path is the one primary URL)
+                var base = uri.slice(1, -5);
+                for (var s in special) {
+                    if (has.call(special, s) && special[s] === base) target = '/' + s + '/';
+                }
+                if (target === null && same.indexOf(base) !== -1) target = '/' + base + '/';
+            } else if (has.call(special, slug)) {
+                file = special[slug];
+            } else if (slug !== '' && same.indexOf(slug) !== -1) {
+                file = slug;
+            }
+
+            if (host.indexOf('www.') === 0) {
+                // www -> apex in a single hop, keeping the path (already remapped if legacy) and query string
+                var qs = '';
+                for (var k in request.querystring) {
+                    var v = request.querystring[k];
+                    var vals = v.multiValue ? v.multiValue.map(function (m) { return m.value; }) : [v.value];
+                    for (var i = 0; i < vals.length; i++) {
+                        qs += (qs ? '&' : '?') + k + (vals[i] ? '=' + vals[i] : '');
+                    }
+                }
                 return {
                     statusCode: 301,
                     statusDescription: 'Moved Permanently',
-                    headers: {
-                        location: { value: redirects[uri] }
-                    }
+                    headers: { location: { value: 'https://' + host.slice(4) + (target !== null ? target : uri) + qs } }
                 };
             }
-            if (Object.prototype.hasOwnProperty.call(rewrites, uri)) {
-                request.uri = rewrites[uri];
-                return request;
+            if (target !== null) {
+                return {
+                    statusCode: 301,
+                    statusDescription: 'Moved Permanently',
+                    headers: { location: { value: target } }
+                };
             }
+            if (file !== null) request.uri = '/' + file + '.html';
             return request;
         }
 
@@ -534,7 +514,7 @@ Resources:
         Enabled: true
         HttpVersion: http2and3
         DefaultRootObject: index.html
-        Aliases: [!Ref DomainName]
+        Aliases: !If [ServeWww, [!Ref DomainName, !Sub "www.${DomainName}"], [!Ref DomainName]]
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn
           SslSupportMethod: sni-only
@@ -566,15 +546,17 @@ Resources:
           # A private OAC bucket without s3:ListBucket returns 403 for a
           # missing object, not 404, so that's the one that actually fires
           # in practice — 404 is covered too in case that ever changes.
-          # Both serve index.html's content but keep the real 404 status,
-          # so broken links show a friendly page without being indexed as
-          # a duplicate of the homepage.
+          # Both serve site/404.html with the real 404 status. It is a dedicated
+          # page (noindex, root-relative assets and links) because serving
+          # index.html here rendered the homepage UNSTYLED for any missing URL
+          # that ends in "/" or sits in a sub-folder (its assets/ links are
+          # document-relative), and it looked like a duplicate homepage.
           - ErrorCode: 403
             ResponseCode: 404
-            ResponsePagePath: /index.html
+            ResponsePagePath: /404.html
           - ErrorCode: 404
             ResponseCode: 404
-            ResponsePagePath: /index.html
+            ResponsePagePath: /404.html
 
 Outputs:
   BucketName:

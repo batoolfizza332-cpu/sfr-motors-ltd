@@ -126,9 +126,15 @@ a { text-underline-offset: 2px; }
     background: #070707; border-bottom: 1px solid #2b2b2b;
     flex-direction: column; gap: 0;
     max-height: 0; overflow: hidden; opacity: 0;
-    transition: max-height .18s ease, opacity .15s ease;
+    /* visibility (switched off only after the collapse finishes) keeps the closed menu's links out of the
+       keyboard tab order and the accessibility tree — without it they stay focusable while invisible */
+    visibility: hidden;
+    transition: max-height .18s ease, opacity .15s ease, visibility 0s linear .18s;
   }
-  .sfr-nav[data-open="true"] .sfr-nav__links { max-height: 420px; opacity: 1; }
+  .sfr-nav[data-open="true"] .sfr-nav__links {
+    max-height: 420px; opacity: 1; visibility: visible;
+    transition: max-height .18s ease, opacity .15s ease, visibility 0s;
+  }
   .sfr-nav__links a {
     display: flex; align-items: center; min-height: 48px; /* touch-friendly row */
     padding: 0 20px; border-bottom: 1px solid #2b2b2b;
@@ -1837,7 +1843,7 @@ a { text-underline-offset: 2px; }
 }
 .sfr-breadcrumb li{display:flex;align-items:center;gap:6px;}
 .sfr-breadcrumb li:not(:last-child)::after{content:"/";color:#2b2b2b;}
-.sfr-breadcrumb a{color:#bfbfbf;text-decoration:none;}
+.sfr-breadcrumb a{color:#bfbfbf;text-decoration:none;display:inline-block;padding:5px 0;} /* >=24px tall target (WCAG 2.5.8) */
 .sfr-breadcrumb a:hover{color:#ffffff;}
 .sfr-breadcrumb li[aria-current="page"]{color:#ffffff;font-weight:600;}
 

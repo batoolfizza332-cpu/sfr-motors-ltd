@@ -24,8 +24,15 @@ echo "Deploying $DIST_DIR to s3://$BUCKET ..."
 # cached copy is simply never requested again. assets/img is unhashed but
 # effectively immutable in practice (filenames are the fixed, sharp-generated
 # responsive set) and gets the same long cache.
+#
+# Deliberately NO --delete here: pages are cached for up to 5 minutes (CloudFront
+# and browsers), and a cached page still references the PREVIOUS main.<hash>.css /
+# .js / image files. Deleting them during the deploy would show those visitors an
+# unstyled page until their cache expires. Superseded assets are harmless (the
+# bucket is versioned and they are small); prune them by hand once the new pages
+# have been live for at least an hour, previewing first:
+#   aws s3 sync "$DIST_DIR/assets" "s3://$BUCKET/assets" --delete --dryrun
 aws s3 sync "$DIST_DIR/assets" "s3://$BUCKET/assets" \
-  --delete \
   --cache-control "public, max-age=31536000, immutable"
 
 # HTML and the two crawler files: short cache so edits show up quickly.
