@@ -4,6 +4,7 @@
   "description": "Build-only tooling that turns site/ into a minified, cache-fingerprinted dist/ ready for S3 + CloudFront. Nothing here ships to the browser.",
   "scripts": {
     "build": "node scripts/build.js",
+    "build:hostinger": "node scripts/build.js && node scripts/htaccess-config.js --profile staging --out dist/.htaccess",
     "verify": "node scripts/verify.js",
     "test:browser": "node scripts/browser-tests/run-all.js"
   },

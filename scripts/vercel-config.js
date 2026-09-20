@@ -115,7 +115,7 @@ function simulateVercel(config, pathname, hasFile) {
   return { notFound: true };
 }
 
-module.exports = { buildConfig, loadRouting, simulateVercel, VERCEL_JSON, REVIEW_COPY_ROBOTS_HEADER };
+module.exports = { buildConfig, loadRouting, loadSecurityHeaders, simulateVercel, VERCEL_JSON, REVIEW_COPY_ROBOTS_HEADER };
 
 if (require.main === module) {
   const generated = JSON.stringify(buildConfig(), null, 2) + "\n";

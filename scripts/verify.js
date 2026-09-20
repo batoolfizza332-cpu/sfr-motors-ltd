@@ -1024,9 +1024,85 @@ function checkGitDiff() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 22: Hostinger .htaccess routes exactly like the CloudFront Function
+// ---------------------------------------------------------------------------
+// The Apache/LiteSpeed rules for Hostinger are generated from infra/template.yaml (scripts/htaccess-config.js). For every
+// pretty path, .html URL, legacy WordPress URL, the Home page and unknown URLs, over https, http and www, a model of
+// mod_rewrite (including the internal re-run after a rewrite, which is what causes redirect loops) must give the same
+// result as the approved CloudFront routing. The real Apache behaviour is checked separately against a running server.
+function checkHostingerHtaccess() {
+  const check = "22. Hostinger .htaccess";
+  const { buildHtaccess, simulateApache } = require("./htaccess-config");
+  const { loadRouting, loadSecurityHeaders } = require("./vercel-config");
+  const distDir = path.join(ROOT, "dist");
+  let staging, production, routing, security;
+  try {
+    staging = buildHtaccess("staging");
+    production = buildHtaccess("production");
+    routing = loadRouting();
+    security = loadSecurityHeaders();
+  } catch (e) {
+    fail(check, `Could not build the Hostinger .htaccess: ${e.message}`, "scripts/htaccess-config.js", "Fix the generator or infra/template.yaml.");
+    return;
+  }
+  const headerLine = (h) => `Header always set ${h.key} "${h.value}"`;
+  // production = the approved security headers verbatim and indexable; staging = the same plus noindex and a short HSTS only.
+  for (const h of security) {
+    if (!production.includes(headerLine(h))) fail(check, `The production profile is missing or changed the ${h.key} header from infra/template.yaml.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+    if (h.key !== "Strict-Transport-Security" && !staging.includes(headerLine(h))) fail(check, `The staging profile is missing or changed the ${h.key} header from infra/template.yaml.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+  }
+  if (/x-robots-tag/i.test(production)) fail(check, "The production profile carries X-Robots-Tag; the real website must stay indexable.", "scripts/htaccess-config.js", "Keep noindex staging-only.");
+  if (!staging.includes('Header always set X-Robots-Tag "noindex, nofollow"')) fail(check, "The staging profile must send X-Robots-Tag noindex, nofollow.", "scripts/htaccess-config.js", "Restore the staging noindex header.");
+  if (!staging.includes('Header always set Strict-Transport-Security "max-age=300"') || /preload|includeSubDomains/i.test(staging)) {
+    fail(check, "The staging profile must use a short HSTS (max-age=300) without includeSubDomains/preload.", "scripts/htaccess-config.js", "Keep the long HSTS production-only.");
+  }
+  if (/https:\/\/sfrmotors\.co\.uk/.test(staging)) {
+    fail(check, "The staging .htaccess hardcodes the production domain; it could send staging visitors to the live site.", "scripts/htaccess-config.js", "Redirect to the request's own host.");
+  }
+  // .htaccess must reach dist/ only through `npm run build:hostinger`; the plain build (Vercel, S3 sync) never contains it.
+  if (fs.existsSync(path.join(distDir, ".htaccess"))) fail(check, "dist/.htaccess exists after `npm run build`; only `npm run build:hostinger` may create it.", "scripts/build.js", "Do not copy .htaccess in the plain build.");
+
+  const hasFile = (p) => { const f = path.join(distDir, p); return !!p && !p.includes("..") && fs.existsSync(f) && fs.statSync(f).isFile(); };
+  const isDir = (p) => { const f = path.join(distDir, p); return !p.includes("..") && fs.existsSync(f) && fs.statSync(f).isDirectory(); };
+  const { special, same, legacy, edgeFunction } = routing;
+  const urls = ["/", "/index.html", "/services.html", "/privacy-policy.html", "/404.html", "/robots.txt", "/sitemap.xml", "/favicon.ico", "/no-such-page", "/no-such-page/", "/assets/img/none.webp", "/about-us/x", "/BLOG/"];
+  for (const [slug, file] of [...Object.entries(special), ...same.map((s) => [s, s])]) urls.push(`/${slug}`, `/${slug}/`, `/${file}.html`);
+  for (const from of Object.keys(legacy)) urls.push(from, `${from}/`);
+  const HOST = "example.test";
+  const cases = [
+    { label: "https", req: { host: HOST, https: true }, oneHop: false },
+    { label: "https via proxy header", req: { host: HOST, https: false, forwardedProto: "https" }, oneHop: false },
+    { label: "http", req: { host: HOST, https: false }, oneHop: true },
+    { label: "www https", req: { host: `www.${HOST}`, https: true }, oneHop: true },
+    { label: "www http", req: { host: `www.${HOST}`, https: false }, oneHop: true },
+  ];
+  for (const url of [...new Set(urls)]) {
+    const edgeOut = edgeFunction({ request: { uri: url, method: "GET", headers: {}, querystring: {}, cookies: {} } });
+    let edge;
+    if (edgeOut.statusCode) edge = { redirect: edgeOut.headers.location.value };
+    else { const f = edgeOut.uri === "/" ? "/index.html" : edgeOut.uri; edge = hasFile(f.slice(1)) ? { file: f } : { notFound: true }; }
+    for (const c of cases) {
+      const got = simulateApache(staging, { ...c.req, uri: url, query: "" }, { hasFile, isDir });
+      // http and www hosts are redirected straight to the final https apex URL: the same target CloudFront ends up at, in one hop.
+      const expected = c.oneHop ? { redirect: edge.redirect || url } : edge;
+      const normalised = got.redirect && got.redirect.startsWith(`https://${HOST}/`) ? { redirect: got.redirect.slice(`https://${HOST}`.length) } : got;
+      if (JSON.stringify(normalised) !== JSON.stringify(expected)) {
+        // A directory (such as /assets/) is 403 (shown as the 404 page) here and 404 on CloudFront; every other URL must match.
+        if (c.oneHop || !(got.forbidden && expected.notFound)) fail(check, `${c.label} ${url}: CloudFront gives ${JSON.stringify(expected)} but .htaccess gives ${JSON.stringify(normalised)}.`, "scripts/htaccess-config.js", "Fix the generator so the rules match infra/template.yaml.");
+      }
+    }
+  }
+  // The query string survives a redirect, and a real directory is refused (403 -> 404 page), never listed.
+  const q = simulateApache(staging, { host: HOST, https: true, uri: "/about.html", query: "utm=1" }, { hasFile, isDir });
+  if (q.redirect !== `https://${HOST}/about-us/?utm=1`) fail(check, `/about.html?utm=1 gives ${JSON.stringify(q)}; expected a 301 to /about-us/?utm=1.`, "scripts/htaccess-config.js", "Keep the query string on redirects.");
+  const d = simulateApache(staging, { host: HOST, https: true, uri: "/assets/", query: "" }, { hasFile, isDir });
+  if (!d.forbidden) fail(check, `/assets/ gives ${JSON.stringify(d)}; a directory must not be served or listed.`, "scripts/htaccess-config.js", "Keep Options -Indexes.");
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 21;
+const TOTAL_CHECKS = 22;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1047,6 +1123,7 @@ async function main() {
   checkStructuredDataUrls(pages);
   checkOwnerApprovedCorrections(pages);
   checkVercelConfig();
+  checkHostingerHtaccess();
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();

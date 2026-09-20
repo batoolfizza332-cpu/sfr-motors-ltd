@@ -218,6 +218,17 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 > authorised yet). Never create a bypass secret, shareable link or protection exception without
 > explicit owner approval. Never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview
 > project and never create a Production deployment from it.
+>
+> **Hostinger staging (Apache/LiteSpeed `.htaccess`).** `node scripts/htaccess-config.js` generates the
+> Hostinger routing from `infra/template.yaml`, the same source as `vercel.json`: the 15 legacy WordPress
+> 301s, `.html` to pretty-URL 301s, `/index.html` to `/`, pretty-path serving, `www` to apex, HTTP to
+> HTTPS, the 404 page for 403/404, the security headers and the caching policy. `npm run build:hostinger`
+> builds `dist/` and adds `dist/.htaccess` (staging profile: `X-Robots-Tag: noindex, nofollow` and a
+> short HSTS, `max-age=300`); the plain `npm run build` never contains it. `npm run verify` (check 22)
+> proves the rules route every URL like the CloudFront Function. The `production` profile (exact
+> template headers, indexable) exists for the later launch and is not deployed. Upload `dist/` only to the
+> document root of an isolated, owner-approved staging (sub)domain; never to a folder that holds another
+> site. The behaviour on Hostinger's real server is unverified until that staging test is run.
 
 **Read `infra/CUTOVER-RUNBOOK.md` first** — it holds the backup, cutover and
 rollback plan (the live site is WordPress on Hostinger, and its e-mail is
