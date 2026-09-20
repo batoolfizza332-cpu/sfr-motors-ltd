@@ -942,6 +942,18 @@ function checkVercelConfig() {
   if (config.cleanUrls || config.trailingSlash !== undefined) {
     fail(check, "vercel.json sets cleanUrls/trailingSlash, which would change the approved URLs (.html 301s, pretty-path trailing slashes).", "vercel.json", "Remove cleanUrls / trailingSlash.");
   }
+  // The review copy must never be indexed; that noindex must stay Vercel-only (never in the spec for the real hosting).
+  const globalRule = (config.headers || []).find((rule) => rule.source === "/(.*)");
+  const robotsHeaders = ((globalRule && globalRule.headers) || []).filter((h) => h.key.toLowerCase() === "x-robots-tag");
+  if (robotsHeaders.length !== 1 || robotsHeaders[0].value !== "noindex, nofollow") {
+    fail(check, 'vercel.json must send "X-Robots-Tag: noindex, nofollow" on every response (source "/(.*)") so the Vercel review copy is kept out of search engines.', "vercel.json", "Regenerate it with `node scripts/vercel-config.js`; the header is added in scripts/vercel-config.js.");
+  }
+  if ((config.headers || []).some((rule) => rule !== globalRule && rule.headers.some((h) => h.key.toLowerCase() === "x-robots-tag"))) {
+    fail(check, "A second vercel.json rule sets X-Robots-Tag and could override the review-copy noindex.", "vercel.json", "Keep a single X-Robots-Tag in the global rule.");
+  }
+  if (/x-robots-tag/i.test(fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8"))) {
+    fail(check, "infra/template.yaml (the spec for the real hosting) carries X-Robots-Tag; noindex belongs only to the Vercel review copy.", "infra/template.yaml", "Remove it; the real website must stay indexable.");
+  }
   if (config.outputDirectory !== "dist" || config.buildCommand !== "npm run build") {
     fail(check, "vercel.json must build with `npm run build` and publish dist/.", "vercel.json", 'Set "buildCommand": "npm run build" and "outputDirectory": "dist".');
   }
@@ -981,6 +993,18 @@ function checkHostGuards() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 21: the deployed-headers checker behaves (mock tests, no network)
+// ---------------------------------------------------------------------------
+// scripts/check-vercel-deployment.js may only verify publicly reachable *.vercel.app responses: it must pass complete headers, fail a missing or
+// weakened noindex, report a protected (login-redirect) deployment as "unverified" rather than pass/fail, never follow redirects or send
+// credentials, and refuse the real domain. Its tests use a fake fetch, so nothing is sent to Vercel.
+async function checkDeploymentChecker() {
+  for (const message of await require("./check-vercel-deployment.test").runAll()) {
+    fail("21. Deployment checker", message, "scripts/check-vercel-deployment.js", "Fix the checker or its mock tests (scripts/check-vercel-deployment.test.js).");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -999,9 +1023,9 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 20;
+const TOTAL_CHECKS = 21;
 
-function main() {
+async function main() {
   const buildOk = checkBuild();
 
   const pages = loadPages();
@@ -1021,6 +1045,7 @@ function main() {
   checkOwnerApprovedCorrections(pages);
   checkVercelConfig();
   checkHostGuards();
+  await checkDeploymentChecker();
   checkGitDiff();
 
   if (failures.length === 0) {
@@ -1040,4 +1065,4 @@ function main() {
   process.exit(1);
 }
 
-main();
+main().catch((err) => { console.error(err); process.exit(2); });

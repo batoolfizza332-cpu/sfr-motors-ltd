@@ -147,8 +147,9 @@ and then inspects `site/` for the things that are easy to break by hand:
 - every URL inside the JSON-LD is absolute and on the production domain (check 17)
 - no image file in `site/assets/img` is unreferenced (check 7)
 - the owner-approved corrections (check 18: self-hosted font, click-to-load Map, robots, no street address, ...)
-- `vercel.json` is up to date and routes every URL exactly like the CloudFront Function (check 19)
+- `vercel.json` is up to date and routes every URL exactly like the CloudFront Function, and sends the Vercel-only noindex header (check 19)
 - Analytics and the WhatsApp form work only on the production hostnames (check 20, `scripts/host-guard-tests.js`)
+- the deployed-headers checker (`scripts/check-vercel-deployment.js`) passes, fails and refuses as designed, using a fake fetch (check 21)
 
 It's read-only — it never edits `site/` or git state, it only builds
 (gitignored `dist/`) and reports. Run it before committing changes to `site/`:
@@ -187,7 +188,28 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 > **Vercel Preview.** `vercel.json` is generated from `infra/template.yaml` by
 > `node scripts/vercel-config.js` (redirects, pretty-path rewrites, the exact security
 > headers and CSP, asset caching) and `npm run verify` (check 19) fails if it drifts.
-> Vercel builds with `npm run build` and publishes `dist/`. Never attach
+> Vercel builds with `npm run build` and publishes `dist/`. Every response also carries
+> `X-Robots-Tag: noindex, nofollow` (Vercel review copy only; never in `infra/template.yaml`
+> or on the real hosting).
+>
+> **Deployments so far.** (1) `https://sfr-motors-preview.vercel.app`, `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR`:
+> Vercel target **production** (assigned automatically to the project's first deployment), **public**,
+> built before the noindex header existed, no `X-Robots-Tag` seen on it — treat it as an **indexing
+> risk**. (2) `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`,
+> `dpl_6YRuZrLQC7pcahxbZJT8dSeespys`: target **preview**, behind **Vercel Authentication**; its login
+> response carries Vercel's own `X-Robots-Tag: noindex`, but the **application response headers are
+> still unverified**.
+>
+> `node scripts/check-vercel-deployment.js https://<name>.vercel.app` verifies the application headers
+> of a **publicly reachable** `*.vercel.app` copy only (plain GETs, redirects not followed, nothing
+> sent but the request). On a protected deployment it prints "Deployment is protected; application
+> headers remain unverified." (exit 3): neither a pass nor a failure.
+>
+> **Warning: `npx vercel curl` is not read-only.** On a protected deployment it can create a
+> project-level *Protection Bypass for Automation* secret (it did once; the owner removed it in the
+> Dashboard). Such a value may remain in already-built deployments until a redeploy (none is
+> authorised yet). Never create a bypass secret, shareable link or protection exception without
+> explicit owner approval. Never attach
 > `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview project and never create a
 > Production deployment from it.
 

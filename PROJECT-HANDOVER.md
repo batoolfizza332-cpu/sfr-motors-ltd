@@ -16,7 +16,7 @@ Companion documents: [`README.md`](README.md) (build, verify, hosting, analytics
 |---|---|
 | Project | Static replacement website for **SFR Motors Ltd**, a mobile tyre-fitting business (service-area business, Bathgate, West Lothian) |
 | Live site today | `https://sfrmotors.co.uk` — **WordPress on Hostinger** (unchanged, still live) |
-| Hosting plan (current, owner decision) | **Vercel Preview** (private, shareable, for visual review only) and **Hostinger** (the owner's existing hosting) as the intended **Production** host. See section 2A. |
+| Hosting plan (current, owner decision) | **Vercel** review deployments (for visual review only; their real access/indexing state is in section 2A) and **Hostinger** (the owner's existing hosting) as the intended **Production** host. See section 2A. |
 | Previous plan (reference only) | Static site on **AWS S3 + CloudFront**, DNS on **AWS Route 53**. No usable AWS account exists; nothing was created. The AWS files stay in the repository as reference and must not be deleted without a later, explicit task. |
 | Local path (Windows) | `C:\Users\batoo\Desktop\SFR Motors Website` |
 | Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (**Private** repository; confirmed by the owner and by `gh repo view`) |
@@ -40,18 +40,32 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 
 ## 2A. Current hosting plan: Vercel Preview + Hostinger Production
 
-* **Vercel Preview (review only).** A separate, clearly named Vercel project (`sfr-motors-preview`, personal/Hobby team) hosts a private, shareable **Preview**
-  deployment of this branch so the owner and trusted reviewers can look at the site. It is **not** the launch. The project has **no custom domain**:
-  `sfrmotors.co.uk` and `www.sfrmotors.co.uk` must never be attached to it, and no Production deployment (`vercel --prod`) may be created from it.
-  Vercel Deployment Protection stays on; share the preview through Vercel's own shareable link or by inviting reviewers (a Vercel setting, not a repo change).
+* **Vercel Preview (review only).** A separate, clearly named Vercel project (`sfr-motors-preview`, personal/Hobby team) hosts review deployments of this branch so the owner and trusted reviewers can look at the site (access differs per deployment; see below). It is **not** the launch. The project has **no custom domain**:
+  `sfrmotors.co.uk` and `www.sfrmotors.co.uk` must never be attached to it, and no further Production deployment (`vercel --prod`) may be created from it (none was ever requested; see deployment 1).
+  **Deployments so far (2026-09-20):**
+  1. **First public deployment — Vercel target `production`:** `https://sfr-motors-preview.vercel.app`, Deployment ID `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR`. Vercel assigns a project's first deployment to Production automatically
+     (it was not requested with `--prod`); it is on Vercel's own `*.vercel.app` names only — no custom domain. It is **public** (opens without a Vercel login; owner-confirmed in an Incognito window). It was built before
+     the noindex header existed and **no `X-Robots-Tag` was seen on its responses** when checked; that header is **not confirmed** there. **Treat it as an indexing risk** until it is replaced or protected (owner decision; it has not been deleted, promoted or changed).
+  2. **New protected Preview — Vercel target `preview`:** `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`, Deployment ID `dpl_6YRuZrLQC7pcahxbZJT8dSeespys` (target confirmed with `vercel inspect`). It sits behind
+     **Vercel Authentication**: unauthenticated requests get a 302 to the Vercel login, and that login response carries Vercel's own `X-Robots-Tag: noindex`. The **application response headers of this deployment (CSP, security headers,
+     `X-Robots-Tag: noindex, nofollow`) are still UNVERIFIED** — they have never been read, because reading them needs an authenticated request.
+  Later deployments made without `--prod` are Previews.
+  **Warning — `npx vercel curl` is NOT a read-only check.** On a protected deployment it calls `PATCH /v1/projects/<id>/protection-bypass` and generates a project-level *Protection Bypass for Automation* secret. This happened once
+  (2026-09-20) for `sfr-motors-preview`; the owner then **removed that secret in the Vercel Dashboard** (the section is empty again). Vercel may expose such a secret to deployments as the system environment value
+  `VERCEL_AUTOMATION_BYPASS_SECRET`; whether either existing deployment holds a value is **unverified**, and any such value could remain until a redeploy replaces those deployments. **No redeploy is authorised yet.**
+  **Never create a protection-bypass secret, a shareable link or any protection exception without explicit owner approval**, and never use `vercel curl` (or `--protection-bypass`) to get around Vercel Authentication.
 * **Configuration:** `vercel.json` is **generated** from `infra/template.yaml` by `node scripts/vercel-config.js` (never edit it by hand): 301 redirects for every
   `/<file>.html` of a pretty page, the 15 legacy WordPress URLs (with/without trailing slash) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
   the exact security headers and CSP of the CloudFront policy; 1-year immutable caching for `assets/` css/img/fonts and the hashed scripts, 1 hour for `robots.txt`,
   `sitemap.xml`, `favicon.ico`; `dist/404.html` for missing URLs (Vercel serves it with status 404). Vercel builds with `npm run build` and publishes `dist/`.
   `npm run verify` check 19 fails if `vercel.json` drifts from the template or routes any URL differently from the CloudFront Function. `www` -> apex does not apply
   on a `*.vercel.app` Preview (there is no domain), so it is not modelled.
-* **The Preview is not indexable and never talks to production services:** Google Analytics loads only on `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, and the quote form
-  opens WhatsApp only there (sections 6 and 8A). Canonical URLs and the sitemap keep pointing at `https://sfrmotors.co.uk/`.
+* **The review copy is kept out of search engines and never talks to production services.** `vercel.json` sends `X-Robots-Tag: noindex, nofollow` on every response; it is added only in
+  `scripts/vercel-config.js`, and `infra/template.yaml` / the real hosting must **never** carry it (verify check 19 enforces both). For a **publicly reachable** review copy,
+  `node scripts/check-vercel-deployment.js https://<name>.vercel.app` (plain GETs on 10 URLs, redirects not followed, no cookies/tokens/secrets; refuses everything that is not an https `*.vercel.app` address) verifies the
+  application response headers. On a **protected** deployment it prints "Deployment is protected; application headers remain unverified." and exits 3 — that is neither a pass nor a failure, and it must not be worked
+  around with a bypass. The first deployment predates the noindex header, so it lacks it until a new public deployment replaces it. Google Analytics loads only on `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, and the quote form
+  opens WhatsApp only there (sections 6 and 8A). Canonical URLs, the sitemap and `robots.txt` are unchanged and keep pointing at `https://sfrmotors.co.uk/`.
 * **Hostinger (intended Production).** The Hostinger deployment steps (how the static `dist/` replaces WordPress, how redirects/rewrites/headers/404 are reproduced there,
   what happens to `www`, e-mail and rollback) are **not written yet** and no Hostinger detail may be assumed or invented. That is a separate task; the redirect/route/header tables in
   `infra/template.yaml` and `vercel.json` are the specification to reproduce. **Do not touch DNS, Hostinger or WordPress without separate explicit owner permission.**
@@ -98,17 +112,19 @@ Requires Node 18+ (developed on Node 26). Do not install new dependencies withou
 ```bash
 npm install                          # only if node_modules is missing
 npm run build                        # site/ -> dist/ (minified, content-hashed CSS/JS)
-npm run verify                       # build + 20 quality checks; must print QUALITY GATE: PASSED
+npm run verify                       # build + 21 quality checks; must print QUALITY GATE: PASSED
 git diff --check                     # whitespace / conflict markers
 node scripts/preview-edge.js 4174    # local production preview that models CloudFront redirects, 404, compression and the exact CSP
 node scripts/vercel-config.js        # regenerate vercel.json from infra/template.yaml (--check verifies it is in sync)
+node scripts/check-vercel-deployment.js https://<name>.vercel.app   # plain GETs, publicly reachable *.vercel.app only; a protected deployment reports "unverified" (exit 3), never a pass
 npm run test:browser                 # real-browser suite (Chrome/Edge, Node 22+): all pages at 1280x720 + 375x812, consent/Analytics, Map, forms, 404, redirects
 ```
 
 `npm run verify` (see `scripts/verify.js`) covers: build; internal links/anchors (and no `/index.html` links, no `href="#"`, no orphan pages); one H1;
 titles/descriptions; canonicals; images (alt, size, no unreferenced files); sitemap; placeholder text; pretty-path asset paths; favicon;
 consent + Analytics (15); CloudFront Function limits/routing/404 (16); JSON-LD URLs (17); the owner-approved corrections (18); `vercel.json` in sync and routing-equivalent to CloudFront (19);
-production-hostname guards for Analytics and the WhatsApp form, run in a sandbox on production, localhost, `*.vercel.app` and look-alike hosts (20, `scripts/host-guard-tests.js`).
+production-hostname guards for Analytics and the WhatsApp form, run in a sandbox on production, localhost, `*.vercel.app` and look-alike hosts (20, `scripts/host-guard-tests.js`); the deployed-headers checker's mock tests
+(21, `scripts/check-vercel-deployment.test.js`: complete headers pass, missing/weakened noindex fail, a login redirect is "protected/unverified", non-`*.vercel.app` hosts are refused; no network).
 Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a zero-dependency Chrome DevTools-Protocol harness; it is **not** part of `verify`. Google is stubbed/blocked inside the browser and
 `https://sfrmotors.co.uk` is answered from the local server, so nothing reaches Google, WhatsApp or the live domain. Last full run: sweep 57/57 pages x 2 viewports, consent 156/156, functional 57/57, approved 76/76.
 
@@ -209,7 +225,7 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 3. No destructive git operations (`reset`, `clean`, force-push, rebase, amend) unless explicitly authorised. Do not open a Pull Request unless asked.
 4. Never request or store credentials, tokens, customer IDs or personal data in the repository or in chat.
 5. Preserve approved URLs, content, business details, SEO structure and structured data; do not redesign.
-6. Vercel: Preview deployments only. Never `vercel --prod`, never a Production target, never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, never change Deployment Protection to public without the owner, never link the Preview project to GitHub without the owner.
+6. Vercel: Preview deployments only. Never `vercel --prod`, never a Production target, never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, never change Deployment Protection to public without the owner, never link the Preview project to GitHub without the owner, never create a protection-bypass secret / shareable link / protection exception without explicit owner approval, and never run `vercel curl` against a protected deployment (it creates a bypass secret).
 
 ## 13. Known limitations and open items
 
@@ -246,10 +262,11 @@ site/                     the website source (edit here)
   assets/fonts/           roboto-latin-var.woff2 + OFL.txt
   assets/img/             AVIF/WebP images; robots.txt, sitemap.xml, favicon.ico
 scripts/build.js          site/ -> dist/ (minify, content-hash CSS/JS)
-scripts/verify.js         the 20-check quality gate
+scripts/verify.js         the 21-check quality gate
 scripts/preview-edge.js   local CloudFront/CSP-modelling preview of dist/ (also exports start() for the browser tests)
 scripts/vercel-config.js  generates vercel.json from infra/template.yaml (+ a model of Vercel's routing order used by verify check 19)
 scripts/host-guard-tests.js  sandbox tests for the production-hostname guards (verify check 20)
+scripts/check-vercel-deployment.js (+ .test.js)  headers checker for a PUBLIC *.vercel.app copy; mock tests are verify check 21
 scripts/browser-tests/    real-browser suite (npm run test:browser): cdp.js driver + sweep / consent / functional / approved tests
 vercel.json               GENERATED Vercel Preview config (do not hand-edit; run scripts/vercel-config.js)
 infra/template.yaml       previous AWS plan: S3 + CloudFront + function + headers (CloudFormation); still the source of the routing tables, CSP and headers

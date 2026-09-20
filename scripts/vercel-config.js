@@ -20,6 +20,9 @@ const ROOT = path.join(__dirname, "..");
 const TEMPLATE = path.join(ROOT, "infra", "template.yaml");
 const VERCEL_JSON = path.join(ROOT, "vercel.json");
 
+// A Vercel deployment is a review copy: keep it out of search engines. Not used by any real (Hostinger/AWS) hosting.
+const REVIEW_COPY_ROBOTS_HEADER = { key: "X-Robots-Tag", value: "noindex, nofollow" };
+
 const readTemplate = () => fs.readFileSync(TEMPLATE, "utf8").replace(/\r/g, "");
 
 // The CloudFront Function source and its three routing tables (special / same / legacy).
@@ -76,7 +79,9 @@ function buildConfig() {
 
   const cache = (source, value) => ({ source, headers: [{ key: "Cache-Control", value }] });
   const headers = [
-    { source: "/(.*)", headers: loadSecurityHeaders(template) },
+    // Security headers (identical to CloudFront's) plus the review-copy noindex. The noindex exists ONLY here: infra/template.yaml
+    // (the spec for the real hosting) must never carry it, and verify check 19 enforces both sides.
+    { source: "/(.*)", headers: [...loadSecurityHeaders(template), REVIEW_COPY_ROBOTS_HEADER] },
     // The same policy infra/deploy-site.sh applies on S3: css/img/fonts and the content-hashed scripts never change
     // under the same name; assets/js/tyre-calculator.js is not hashed, so it keeps Vercel's revalidating default.
     cache("/assets/(css|img|fonts)/(.*)", "public, max-age=31536000, immutable"),
@@ -110,7 +115,7 @@ function simulateVercel(config, pathname, hasFile) {
   return { notFound: true };
 }
 
-module.exports = { buildConfig, loadRouting, simulateVercel, VERCEL_JSON };
+module.exports = { buildConfig, loadRouting, simulateVercel, VERCEL_JSON, REVIEW_COPY_ROBOTS_HEADER };
 
 if (require.main === module) {
   const generated = JSON.stringify(buildConfig(), null, 2) + "\n";
