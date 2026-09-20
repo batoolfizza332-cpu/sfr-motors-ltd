@@ -87,6 +87,13 @@ server in this flow:
   submission arriving under 1.5 seconds later is treated the same way as
   the honeypot (silently shown a fake success, WhatsApp never opens).
 
+**Only the real website opens WhatsApp.** The form opens the enquiry only on
+`sfrmotors.co.uk` / `www.sfrmotors.co.uk`. On any other hostname (a Vercel
+Preview, `localhost`, a temporary or staging address) it validates the form
+but shows "Preview copy: nothing was sent and WhatsApp was not opened", keeps
+the visitor's entries and fires no analytics event, so a reviewer can never
+send a test enquiry to a real customer channel.
+
 ### `backend/` (currently unused by the live site)
 
 A Lambda + API Gateway + SES setup for emailing form submissions still
@@ -139,6 +146,9 @@ and then inspects `site/` for the things that are easy to break by hand:
   CloudFront serves the dedicated `404.html` for missing URLs (check 16)
 - every URL inside the JSON-LD is absolute and on the production domain (check 17)
 - no image file in `site/assets/img` is unreferenced (check 7)
+- the owner-approved corrections (check 18: self-hosted font, click-to-load Map, robots, no street address, ...)
+- `vercel.json` is up to date and routes every URL exactly like the CloudFront Function (check 19)
+- Analytics and the WhatsApp form work only on the production hostnames (check 20, `scripts/host-guard-tests.js`)
 
 It's read-only — it never edits `site/` or git state, it only builds
 (gitignored `dist/`) and reports. Run it before committing changes to `site/`:
@@ -147,11 +157,39 @@ It's read-only — it never edits `site/` or git state, it only builds
 npm run verify
 ```
 
+A real-browser test suite (Chrome or Edge over the DevTools protocol, Node 22+, no
+new dependencies) lives in `scripts/browser-tests/`: every page at 1280x720 and
+375x812, cookie consent + Analytics, the Map click-to-load, the 404 page,
+redirects, the calculator and the quote form. It is not part of `verify` because
+it needs a browser and takes several minutes:
+
+```bash
+npm run build && npm run test:browser
+```
+
+Nothing is sent to Google, WhatsApp or the live domain (Google requests are
+stubbed/blocked inside the browser; `https://sfrmotors.co.uk` is answered from
+the local server).
+
 Prints `QUALITY GATE: PASSED` with a check count on success, or
 `QUALITY GATE: FAILED` with one `Error` / `Affected file` / `Suggested fix`
 block per issue found, and exits non-zero — safe to wire into CI as-is.
 
 ## Deploying the site (hosting)
+
+> **Current hosting plan (owner decision).** A **Vercel Preview** is used only so the owner
+> and trusted reviewers can look at the site; the intended **Production** host is the
+> owner's existing **Hostinger** hosting. The AWS S3 + CloudFront + Route 53 material in
+> this section, `infra/` and the runbook is the **previous plan, kept as reference** (no
+> AWS account or resource exists). The Hostinger deployment documentation is still to be
+> written; see `PROJECT-HANDOVER.md`.
+>
+> **Vercel Preview.** `vercel.json` is generated from `infra/template.yaml` by
+> `node scripts/vercel-config.js` (redirects, pretty-path rewrites, the exact security
+> headers and CSP, asset caching) and `npm run verify` (check 19) fails if it drifts.
+> Vercel builds with `npm run build` and publishes `dist/`. Never attach
+> `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview project and never create a
+> Production deployment from it.
 
 **Read `infra/CUTOVER-RUNBOOK.md` first** — it holds the backup, cutover and
 rollback plan (the live site is WordPress on Hostinger, and its e-mail is
@@ -298,9 +336,15 @@ and the Consent Mode default denies `ad_storage`, `ad_user_data` and
 involved. GA4's "Enhanced measurement" (scroll, outbound-click, etc.) is a
 property-side setting in the Analytics admin, not controlled by this code.
 
-**Local previews never reach Google.** On `localhost` / `127.0.0.1` the
-banner and the stored choice work, but Google Analytics is deliberately not
-loaded, so testing the preview cannot pollute the live GA4 property.
+**Only the production hostnames reach Google.** Google Analytics loads only on
+`sfrmotors.co.uk` and `www.sfrmotors.co.uk`. On every other host (`localhost`,
+any `*.vercel.app` Preview, a temporary or staging address) the banner and the
+stored choice work, but Google Analytics is deliberately not loaded even after
+"Accept analytics", so reviewing a preview cannot pollute the live GA4
+property. The hostname pattern lives in `assets/js/analytics.js` and
+`assets/js/main.js` (identical in both) and `scripts/host-guard-tests.js` runs
+both scripts on production, `localhost`, `*.vercel.app` and look-alike
+hostnames as part of `npm run verify` (check 20).
 
 **CSP** (`infra/template.yaml`): `script-src` allows `www.googletagmanager.com`;
 `connect-src` and `img-src` allow exactly `www.google-analytics.com` and

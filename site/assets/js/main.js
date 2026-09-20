@@ -55,6 +55,13 @@
   // link either opens or it doesn't, and the user can see which happened.
   var WHATSAPP_NUMBER = "447448427154";
 
+  // Only the real website may open a WhatsApp enquiry to the business. Review
+  // copies (*.vercel.app previews, localhost, any temporary or staging host)
+  // show the form but never open WhatsApp, so a test enquiry cannot reach a
+  // real customer channel. Keep this pattern identical to IS_PRODUCTION_HOST in
+  // assets/js/analytics.js (scripts/verify.js checks that they match).
+  var PRODUCTION_HOST = /^(www\.)?sfrmotors\.co\.uk$/.test(window.location.hostname);
+
   var form = document.getElementById("quote-form-el");
   if (!form) return;
 
@@ -123,6 +130,14 @@
 
     if (!data.name || !data.phone || !data.service || !data.location) {
       setStatus("error", "Please fill in your name, phone number, service and current location.");
+      return;
+    }
+
+    if (!PRODUCTION_HOST) {
+      setStatus(
+        "error",
+        "Preview copy: nothing was sent and WhatsApp was not opened. On the live website this form opens WhatsApp with your enquiry filled in."
+      );
       return;
     }
 

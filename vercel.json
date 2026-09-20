@@ -1,4 +1,657 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "framework": null,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-change.html",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about-us/",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact-us/",
+      "statusCode": 301
+    },
+    {
+      "source": "/caravan-trailer-tyre-fitting.html",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-puncture-repair.html",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tpms-services.html",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/van-tyre-replacement.html",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/broxburn.html",
+      "destination": "/broxburn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-much-does-mobile-tyre-fitting-cost.html",
+      "destination": "/how-much-does-mobile-tyre-fitting-cost/",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-warning-signs-your-tyres-need-immediate-professional-attention.html",
+      "destination": "/7-warning-signs-your-tyres-need-immediate-professional-attention/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html",
+      "destination": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html",
+      "destination": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-size-calculator.html",
+      "destination": "/tyre-size-calculator/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-care-and-flat-tyre-help-in-linlithgow.html",
+      "destination": "/tyre-care-and-flat-tyre-help-in-linlithgow/",
+      "statusCode": 301
+    },
+    {
+      "source": "/preparing-your-car-tyres-for-winter-driving-in-livingston.html",
+      "destination": "/preparing-your-car-tyres-for-winter-driving-in-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-quality-tyres-improve-safety-and-driving-performance.html",
+      "destination": "/how-quality-tyres-improve-safety-and-driving-performance/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-tyre-safety-is-more-important-than-most-drivers-realize.html",
+      "destination": "/why-tyre-safety-is-more-important-than-most-drivers-realize/",
+      "statusCode": 301
+    },
+    {
+      "source": "/professional-mobile-tyre-services-on-drivers-linlithgow.html",
+      "destination": "/professional-mobile-tyre-services-on-drivers-linlithgow/",
+      "statusCode": 301
+    },
+    {
+      "source": "/your-guide-to-safe-tyre-services-in-harthill.html",
+      "destination": "/your-guide-to-safe-tyre-services-in-harthill/",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-best-tyres-for-edinburgh-west-lothian-roads.html",
+      "destination": "/the-best-tyres-for-edinburgh-west-lothian-roads/",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-best-tyres-for-your-ford-on-edinburghs-roads.html",
+      "destination": "/the-best-tyres-for-your-ford-on-edinburghs-roads/",
+      "statusCode": 301
+    },
+    {
+      "source": "/puncture-repairs-whats-actually-being-done-to-your-tyre.html",
+      "destination": "/puncture-repairs-whats-actually-being-done-to-your-tyre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html",
+      "destination": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html",
+      "destination": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-replacement.html",
+      "destination": "/emergency-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal.html",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/better-tyres-better-drive.html",
+      "destination": "/better-tyres-better-drive/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-change-a-tyre.html",
+      "destination": "/how-to-change-a-tyre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html",
+      "destination": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-repair-edinburgh-west-lothian.html",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal-bathgate",
+      "destination": "/mobile-locking-wheel-nut-removal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal-bathgate/",
+      "destination": "/mobile-locking-wheel-nut-removal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/24-7-mobile-tyre-replacement-in-edinburgh",
+      "destination": "/mobile-tyre-fitting-edinburgh.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/24-7-mobile-tyre-replacement-in-edinburgh/",
+      "destination": "/mobile-tyre-fitting-edinburgh.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-fitter-edinburgh-falkirk",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-tyre-fitter-edinburgh-falkirk/",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/caravan-trailer-tyre-fitting",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/caravan-trailer-tyre-fitting/",
+      "destination": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-puncture-repair",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-puncture-repair/",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tpms-services",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tpms-services/",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/van-tyre-replacement",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/van-tyre-replacement/",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-information-to-all-drivers",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-information-to-all-drivers/",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-puncture-repair-near-me-west-lothian",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-puncture-repair-near-me-west-lothian/",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyres-bathgate-guide",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyres-bathgate-guide/",
+      "destination": "/van-tyre-replacement-services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/expert-locking-wheel-nut-removal",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/expert-locking-wheel-nut-removal/",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-replacement-call-out-bathgate",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-replacement-call-out-bathgate/",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
+      "destination": "/locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-mobile-tyre-fitter-west-lothian",
+      "destination": "/mobile-tyre-fitting-west-lothian.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-mobile-tyre-fitter-west-lothian/",
+      "destination": "/mobile-tyre-fitting-west-lothian.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-questions",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-questions/",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/24-7-mobile-tyre-replacement",
+      "destination": "/emergency-tyre-change.html"
+    },
+    {
+      "source": "/24-7-mobile-tyre-replacement/",
+      "destination": "/emergency-tyre-change.html"
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/about-us/",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/contact-us/",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/mobile-trailer-and-caravan-tyre-fitting",
+      "destination": "/caravan-trailer-tyre-fitting.html"
+    },
+    {
+      "source": "/mobile-trailer-and-caravan-tyre-fitting/",
+      "destination": "/caravan-trailer-tyre-fitting.html"
+    },
+    {
+      "source": "/mobile-tyre-puncture-repair",
+      "destination": "/mobile-puncture-repair.html"
+    },
+    {
+      "source": "/mobile-tyre-puncture-repair/",
+      "destination": "/mobile-puncture-repair.html"
+    },
+    {
+      "source": "/tyre-pressure-monitoring-system",
+      "destination": "/tpms-services.html"
+    },
+    {
+      "source": "/tyre-pressure-monitoring-system/",
+      "destination": "/tpms-services.html"
+    },
+    {
+      "source": "/van-tyre-replacement-services",
+      "destination": "/van-tyre-replacement.html"
+    },
+    {
+      "source": "/van-tyre-replacement-services/",
+      "destination": "/van-tyre-replacement.html"
+    },
+    {
+      "source": "/broxburn",
+      "destination": "/broxburn.html"
+    },
+    {
+      "source": "/broxburn/",
+      "destination": "/broxburn.html"
+    },
+    {
+      "source": "/how-much-does-mobile-tyre-fitting-cost",
+      "destination": "/how-much-does-mobile-tyre-fitting-cost.html"
+    },
+    {
+      "source": "/how-much-does-mobile-tyre-fitting-cost/",
+      "destination": "/how-much-does-mobile-tyre-fitting-cost.html"
+    },
+    {
+      "source": "/7-warning-signs-your-tyres-need-immediate-professional-attention",
+      "destination": "/7-warning-signs-your-tyres-need-immediate-professional-attention.html"
+    },
+    {
+      "source": "/7-warning-signs-your-tyres-need-immediate-professional-attention/",
+      "destination": "/7-warning-signs-your-tyres-need-immediate-professional-attention.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road",
+      "destination": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html"
+    },
+    {
+      "source": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road/",
+      "destination": "/how-to-avoid-common-tyre-problems-and-stay-safe-on-the-road.html"
+    },
+    {
+      "source": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns",
+      "destination": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html"
+    },
+    {
+      "source": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns/",
+      "destination": "/how-to-extend-tyre-life-and-avoid-unexpected-roadside-breakdowns.html"
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html"
+    },
+    {
+      "source": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/",
+      "destination": "/why-professional-mobile-tyre-services-are-essential-for-modern-drivers.html"
+    },
+    {
+      "source": "/tyre-size-calculator",
+      "destination": "/tyre-size-calculator.html"
+    },
+    {
+      "source": "/tyre-size-calculator/",
+      "destination": "/tyre-size-calculator.html"
+    },
+    {
+      "source": "/tyre-care-and-flat-tyre-help-in-linlithgow",
+      "destination": "/tyre-care-and-flat-tyre-help-in-linlithgow.html"
+    },
+    {
+      "source": "/tyre-care-and-flat-tyre-help-in-linlithgow/",
+      "destination": "/tyre-care-and-flat-tyre-help-in-linlithgow.html"
+    },
+    {
+      "source": "/preparing-your-car-tyres-for-winter-driving-in-livingston",
+      "destination": "/preparing-your-car-tyres-for-winter-driving-in-livingston.html"
+    },
+    {
+      "source": "/preparing-your-car-tyres-for-winter-driving-in-livingston/",
+      "destination": "/preparing-your-car-tyres-for-winter-driving-in-livingston.html"
+    },
+    {
+      "source": "/how-quality-tyres-improve-safety-and-driving-performance",
+      "destination": "/how-quality-tyres-improve-safety-and-driving-performance.html"
+    },
+    {
+      "source": "/how-quality-tyres-improve-safety-and-driving-performance/",
+      "destination": "/how-quality-tyres-improve-safety-and-driving-performance.html"
+    },
+    {
+      "source": "/why-tyre-safety-is-more-important-than-most-drivers-realize",
+      "destination": "/why-tyre-safety-is-more-important-than-most-drivers-realize.html"
+    },
+    {
+      "source": "/why-tyre-safety-is-more-important-than-most-drivers-realize/",
+      "destination": "/why-tyre-safety-is-more-important-than-most-drivers-realize.html"
+    },
+    {
+      "source": "/professional-mobile-tyre-services-on-drivers-linlithgow",
+      "destination": "/professional-mobile-tyre-services-on-drivers-linlithgow.html"
+    },
+    {
+      "source": "/professional-mobile-tyre-services-on-drivers-linlithgow/",
+      "destination": "/professional-mobile-tyre-services-on-drivers-linlithgow.html"
+    },
+    {
+      "source": "/your-guide-to-safe-tyre-services-in-harthill",
+      "destination": "/your-guide-to-safe-tyre-services-in-harthill.html"
+    },
+    {
+      "source": "/your-guide-to-safe-tyre-services-in-harthill/",
+      "destination": "/your-guide-to-safe-tyre-services-in-harthill.html"
+    },
+    {
+      "source": "/the-best-tyres-for-edinburgh-west-lothian-roads",
+      "destination": "/the-best-tyres-for-edinburgh-west-lothian-roads.html"
+    },
+    {
+      "source": "/the-best-tyres-for-edinburgh-west-lothian-roads/",
+      "destination": "/the-best-tyres-for-edinburgh-west-lothian-roads.html"
+    },
+    {
+      "source": "/the-best-tyres-for-your-ford-on-edinburghs-roads",
+      "destination": "/the-best-tyres-for-your-ford-on-edinburghs-roads.html"
+    },
+    {
+      "source": "/the-best-tyres-for-your-ford-on-edinburghs-roads/",
+      "destination": "/the-best-tyres-for-your-ford-on-edinburghs-roads.html"
+    },
+    {
+      "source": "/puncture-repairs-whats-actually-being-done-to-your-tyre",
+      "destination": "/puncture-repairs-whats-actually-being-done-to-your-tyre.html"
+    },
+    {
+      "source": "/puncture-repairs-whats-actually-being-done-to-your-tyre/",
+      "destination": "/puncture-repairs-whats-actually-being-done-to-your-tyre.html"
+    },
+    {
+      "source": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill",
+      "destination": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html"
+    },
+    {
+      "source": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
+      "destination": "/what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html"
+    },
+    {
+      "source": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk",
+      "destination": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html"
+    },
+    {
+      "source": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
+      "destination": "/locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html"
+    },
+    {
+      "source": "/emergency-tyre-replacement",
+      "destination": "/emergency-tyre-replacement.html"
+    },
+    {
+      "source": "/emergency-tyre-replacement/",
+      "destination": "/emergency-tyre-replacement.html"
+    },
+    {
+      "source": "/locking-wheel-nut-removal",
+      "destination": "/locking-wheel-nut-removal.html"
+    },
+    {
+      "source": "/locking-wheel-nut-removal/",
+      "destination": "/locking-wheel-nut-removal.html"
+    },
+    {
+      "source": "/better-tyres-better-drive",
+      "destination": "/better-tyres-better-drive.html"
+    },
+    {
+      "source": "/better-tyres-better-drive/",
+      "destination": "/better-tyres-better-drive.html"
+    },
+    {
+      "source": "/how-to-change-a-tyre",
+      "destination": "/how-to-change-a-tyre.html"
+    },
+    {
+      "source": "/how-to-change-a-tyre/",
+      "destination": "/how-to-change-a-tyre.html"
+    },
+    {
+      "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation",
+      "destination": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html"
+    },
+    {
+      "source": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
+      "destination": "/mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html"
+    },
+    {
+      "source": "/mobile-tyre-repair-edinburgh-west-lothian",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian.html"
+    },
+    {
+      "source": "/mobile-tyre-repair-edinburgh-west-lothian/",
+      "destination": "/mobile-tyre-repair-edinburgh-west-lothian.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; font-src 'self'; img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(css|img|fonts)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/js/(main|analytics)\\.([0-9a-f]+)\\.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ]
 }

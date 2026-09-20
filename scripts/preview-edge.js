@@ -8,10 +8,11 @@
 //   - the ResponseHeadersPolicy security headers, including the exact Content-Security-Policy
 //   - brotli/gzip compression of text files (CloudFront "Compress: true")
 //   - CloudFront's custom error response: any missing URL returns /404.html with status 404
-// Zero dependencies, read-only, binds to 127.0.0.1 only. It never talks to AWS.
+// Zero dependencies, read-only, binds to 127.0.0.1 only. It never talks to AWS. Also exports start({ port, quiet }) for the
+// browser tests in scripts/browser-tests/.
 //
-// Notes: Google Analytics is never loaded on localhost / 127.0.0.1 (see assets/js/analytics.js), so pressing "Accept analytics"
-// here cannot send data to the live GA4 property.
+// Notes: Google Analytics and the WhatsApp quote form only work on sfrmotors.co.uk / www.sfrmotors.co.uk (see assets/js/analytics.js
+// and main.js), so pressing "Accept analytics" or submitting the form here cannot reach the live GA4 property or WhatsApp.
 
 "use strict";
 
@@ -23,7 +24,7 @@ const zlib = require("zlib");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
-const PORT = Number(process.argv[2] || process.env.PORT || 4174);
+const DEFAULT_PORT = Number(process.argv[2] || process.env.PORT || 4174);
 
 const template = fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8").replace(/\r/g, "");
 const fnCode = template
@@ -59,8 +60,8 @@ function s3Object(uri) {
   return fs.existsSync(file) && fs.statSync(file).isFile() ? file : null;
 }
 
-http
-  .createServer((req, res) => {
+function start({ port = DEFAULT_PORT, quiet = false } = {}) {
+  const server = http.createServer((req, res) => {
     const pathname = new URL(req.url, "http://x").pathname;
     const host = (req.headers.host || "").replace(/:\d+$/, "");
     const send = (status, type, body, extra = {}) => {
@@ -70,7 +71,8 @@ http
       for (const [k, v] of Object.entries({ ...SECURITY_HEADERS, ...extra })) res.setHeader(k, v);
       const accept = req.headers["accept-encoding"] || "";
       if (/^(text\/|application\/(javascript|xml)|image\/svg)/.test(type) && body.length >= 1000) {
-        if (/\bbr\b/.test(accept)) { body = zlib.brotliCompressSync(body); res.setHeader("content-encoding", "br"); }
+        // Brotli level 5 keeps the local preview fast; the default level 11 is slow enough to change the browser's request timing in tests.
+        if (/\bbr\b/.test(accept)) { body = zlib.brotliCompressSync(body, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 5 } }); res.setHeader("content-encoding", "br"); }
         else if (/gzip/.test(accept)) { body = zlib.gzipSync(body); res.setHeader("content-encoding", "gzip"); }
         res.setHeader("vary", "Accept-Encoding");
       }
@@ -87,5 +89,12 @@ http
     if (file) return send(200, TYPES[path.extname(file)] || "application/octet-stream", fs.readFileSync(file));
     const notFound = path.join(DIST, "404.html"); // CustomErrorResponses: 403/404 -> /404.html with status 404
     return send(404, TYPES[".html"], fs.readFileSync(fs.existsSync(notFound) ? notFound : path.join(DIST, "index.html")));
-  })
-  .listen(PORT, "127.0.0.1", () => console.log(`CloudFront/CSP preview of dist/ on http://127.0.0.1:${PORT}/`));
+  });
+  return new Promise((resolve) => server.listen(port, "127.0.0.1", () => {
+    if (!quiet) console.log(`CloudFront/CSP preview of dist/ on http://127.0.0.1:${port}/`);
+    resolve(server);
+  }));
+}
+
+module.exports = { start };
+if (require.main === module) start();

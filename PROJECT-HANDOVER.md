@@ -3,7 +3,7 @@
 This document lets a new developer (or a new AI assistant) continue the project **without any chat history**. It contains no
 passwords, tokens or credentials, and none must ever be added to the repository.
 
-**Merging this branch and deploying it each need the owner's separate, explicit approval. Nothing has been merged or deployed.**
+**Merging this branch and deploying it to the live domain each need the owner's separate, explicit approval. Nothing has been merged or deployed to the live domain.** (A Vercel *Preview* for review exists; see section 2A.)
 
 Companion documents: [`README.md`](README.md) (build, verify, hosting, analytics detail) and
 [`infra/CUTOVER-RUNBOOK.md`](infra/CUTOVER-RUNBOOK.md) (backup, Route 53 cutover, rollback, post-deployment checks).
@@ -16,14 +16,14 @@ Companion documents: [`README.md`](README.md) (build, verify, hosting, analytics
 |---|---|
 | Project | Static replacement website for **SFR Motors Ltd**, a mobile tyre-fitting business (service-area business, Bathgate, West Lothian) |
 | Live site today | `https://sfrmotors.co.uk` — **WordPress on Hostinger** (unchanged, still live) |
-| Target | Static site on **AWS S3 + CloudFront** (not Cloudflare, not Vercel), DNS on **AWS Route 53** |
+| Hosting plan (current, owner decision) | **Vercel Preview** (private, shareable, for visual review only) and **Hostinger** (the owner's existing hosting) as the intended **Production** host. See section 2A. |
+| Previous plan (reference only) | Static site on **AWS S3 + CloudFront**, DNS on **AWS Route 53**. No usable AWS account exists; nothing was created. The AWS files stay in the repository as reference and must not be deleted without a later, explicit task. |
 | Local path (Windows) | `C:\Users\batoo\Desktop\SFR Motors Website` |
-| Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (**public** repository) |
+| Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (**Private** repository; confirmed by the owner and by `gh repo view`) |
 | Working branch | `feature/seo-safe-migration` (not merged into `main`) |
-| Baseline before this checkpoint | `27bf898` |
-| Checkpoint content commit | **`4412584`** — all owner-approved corrections and this document. The commit right after it only records this hash; the branch tip (`git rev-parse HEAD`) is the final commit of this checkpoint. |
+| Checkpoint history | `27bf898` baseline -> `4412584` owner-approved corrections + this document -> `45107ba` records that hash -> the Vercel Preview checkpoint (branch tip; `git rev-parse HEAD` is authoritative) |
 | GA4 Measurement ID | `G-B9TY4GMXYT` (public by design; confirmed active by the owner) |
-| Migration status | **Build finished and audited; NOT merged; NOT deployed; no DNS or AWS resource changed.** |
+| Migration status | **Build finished and audited; NOT merged; NOT deployed to the live domain; no DNS, Hostinger or AWS change.** A Vercel **Preview** deployment is created for review only (section 2A; its URL is given in the task report, not stored here). |
 
 ## 2. Architecture: live WordPress vs future static site
 
@@ -31,12 +31,32 @@ Companion documents: [`README.md`](README.md) (build, verify, hosting, analytics
 (`pixel.dns-parking.com`, `byte.dns-parking.com`). **E-mail (`info@sfrmotors.co.uk`) is hosted at Hostinger** (MX
 `mx1.hostinger.com`, `mx2.hostinger.com`). `www` is a CNAME to the apex and 301s to the apex.
 
-**Future:** visitors -> Route 53 (Alias) -> CloudFront (HTTPS, compression, security headers, edge redirect function) -> private S3
+**Previous plan (AWS, reference only — see 2A for the current plan):** visitors -> Route 53 (Alias) -> CloudFront (HTTPS, compression, security headers, edge redirect function) -> private S3
 bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy with an OIDC role (no stored keys).
 
 > **HOSTINGER E-MAIL WARNING.** Moving DNS to Route 53 will silently break company e-mail if any MX / SPF / DKIM / DMARC / TXT
 > record is missed. Export and copy **every** record first, prove them identical with `dig` against both zones, and test e-mail before and
 > after every change. Never edit the Hostinger DNS zone or cancel Hostinger hosting/e-mail. See the runbook, sections A, C, D, G.
+
+## 2A. Current hosting plan: Vercel Preview + Hostinger Production
+
+* **Vercel Preview (review only).** A separate, clearly named Vercel project (`sfr-motors-preview`, personal/Hobby team) hosts a private, shareable **Preview**
+  deployment of this branch so the owner and trusted reviewers can look at the site. It is **not** the launch. The project has **no custom domain**:
+  `sfrmotors.co.uk` and `www.sfrmotors.co.uk` must never be attached to it, and no Production deployment (`vercel --prod`) may be created from it.
+  Vercel Deployment Protection stays on; share the preview through Vercel's own shareable link or by inviting reviewers (a Vercel setting, not a repo change).
+* **Configuration:** `vercel.json` is **generated** from `infra/template.yaml` by `node scripts/vercel-config.js` (never edit it by hand): 301 redirects for every
+  `/<file>.html` of a pretty page, the 15 legacy WordPress URLs (with/without trailing slash) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
+  the exact security headers and CSP of the CloudFront policy; 1-year immutable caching for `assets/` css/img/fonts and the hashed scripts, 1 hour for `robots.txt`,
+  `sitemap.xml`, `favicon.ico`; `dist/404.html` for missing URLs (Vercel serves it with status 404). Vercel builds with `npm run build` and publishes `dist/`.
+  `npm run verify` check 19 fails if `vercel.json` drifts from the template or routes any URL differently from the CloudFront Function. `www` -> apex does not apply
+  on a `*.vercel.app` Preview (there is no domain), so it is not modelled.
+* **The Preview is not indexable and never talks to production services:** Google Analytics loads only on `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, and the quote form
+  opens WhatsApp only there (sections 6 and 8A). Canonical URLs and the sitemap keep pointing at `https://sfrmotors.co.uk/`.
+* **Hostinger (intended Production).** The Hostinger deployment steps (how the static `dist/` replaces WordPress, how redirects/rewrites/headers/404 are reproduced there,
+  what happens to `www`, e-mail and rollback) are **not written yet** and no Hostinger detail may be assumed or invented. That is a separate task; the redirect/route/header tables in
+  `infra/template.yaml` and `vercel.json` are the specification to reproduce. **Do not touch DNS, Hostinger or WordPress without separate explicit owner permission.**
+* **Git pushes and Vercel:** the Preview project is **not** linked to GitHub (linking would make every push deploy, and a later merge to `main` would create a Production deployment on
+  the `*.vercel.app` address). Preview deployments are created deliberately from a pushed commit.
 
 ## 3. What has been done (summary)
 
@@ -50,7 +70,9 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 * Pre-deployment audit fixes: CloudFront Function shrunk under the AWS 10 KB / 128-character limits, real `404.html`, `www` -> apex, watermark removed
   from seven pages' van photo, JSON-LD URLs made absolute, deploy script no longer deletes old assets mid-deploy, unused API origin removed from CSP.
 * `priceRange` removed from structured data (no price classification is approved). `aggregateRating` 4.9 / 282 is kept.
-* **Owner-approved corrections (this checkpoint):** placeholder Facebook/Instagram links removed; click-to-load Google Map; self-hosted Roboto;
+* **Vercel Preview checkpoint:** generated `vercel.json` (section 2A); Analytics and the WhatsApp form restricted to the production hostnames (sections 6 and 8A); browser test suite
+  brought into the repo (`scripts/browser-tests/`) with the stale Map/robots expectations corrected; documentation drift fixed (Private repository, current hosting plan).
+* **Owner-approved corrections (earlier checkpoint):** placeholder Facebook/Instagram links removed; click-to-load Google Map; self-hosted Roboto;
   `robots.txt` (OAI-SearchBot allowed, GPTBot disallowed); `/index.html` -> `/` 301; `/broxburn/` linked from Areas We Cover; service-area address
   policy (no street address anywhere); company disclosure in the footer; WhatsApp 07448 427154 as a contact channel; rewritten Privacy Policy; Route 53 runbook.
 
@@ -76,15 +98,19 @@ Requires Node 18+ (developed on Node 26). Do not install new dependencies withou
 ```bash
 npm install                          # only if node_modules is missing
 npm run build                        # site/ -> dist/ (minified, content-hashed CSS/JS)
-npm run verify                       # build + 18 quality checks; must print QUALITY GATE: PASSED
+npm run verify                       # build + 20 quality checks; must print QUALITY GATE: PASSED
 git diff --check                     # whitespace / conflict markers
 node scripts/preview-edge.js 4174    # local production preview that models CloudFront redirects, 404, compression and the exact CSP
+node scripts/vercel-config.js        # regenerate vercel.json from infra/template.yaml (--check verifies it is in sync)
+npm run test:browser                 # real-browser suite (Chrome/Edge, Node 22+): all pages at 1280x720 + 375x812, consent/Analytics, Map, forms, 404, redirects
 ```
 
 `npm run verify` (see `scripts/verify.js`) covers: build; internal links/anchors (and no `/index.html` links, no `href="#"`, no orphan pages); one H1;
 titles/descriptions; canonicals; images (alt, size, no unreferenced files); sitemap; placeholder text; pretty-path asset paths; favicon;
-consent + Analytics (15); CloudFront Function limits/routing/404 (16); JSON-LD URLs (17); the owner-approved corrections (18).
-Browser-level testing was done in a Chrome DevTools-Protocol harness kept **outside** the repo (session scratchpad); it is not part of the project.
+consent + Analytics (15); CloudFront Function limits/routing/404 (16); JSON-LD URLs (17); the owner-approved corrections (18); `vercel.json` in sync and routing-equivalent to CloudFront (19);
+production-hostname guards for Analytics and the WhatsApp form, run in a sandbox on production, localhost, `*.vercel.app` and look-alike hosts (20, `scripts/host-guard-tests.js`).
+Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a zero-dependency Chrome DevTools-Protocol harness; it is **not** part of `verify`. Google is stubbed/blocked inside the browser and
+`https://sfrmotors.co.uk` is answered from the local server, so nothing reaches Google, WhatsApp or the live domain. Last full run: sweep 57/57 pages x 2 viewports, consent 156/156, functional 57/57, approved 76/76.
 
 ## 6. Analytics and cookie consent
 
@@ -98,7 +124,8 @@ Browser-level testing was done in a Chrome DevTools-Protocol harness kept **outs
   phone/WhatsApp events carry only `page_path`, `page_type`, `link_location` (never the number, text or URL).
 * GA4 "Enhanced measurement" is enabled in the property; its automatic outbound-click `click` event is a **separate** event from `whatsapp_click`
   (the Privacy Policy says so).
-* On `localhost` / `127.0.0.1` Google Analytics is never loaded, so local testing cannot pollute the live property.
+* **Google Analytics loads only on `sfrmotors.co.uk` and `www.sfrmotors.co.uk`** (`IS_PRODUCTION_HOST` in `analytics.js`). On `localhost`, every `*.vercel.app` Preview and any other host it is never loaded, **even after the
+  visitor presses Accept**; the consent banner, the stored `sfr_consent` choice and withdrawal still work there, so the consent UI can be reviewed on a Preview without touching the live GA4 property.
 * CSP for analytics: `script-src https://www.googletagmanager.com`; `connect-src`/`img-src` `https://www.google-analytics.com` and
   `https://region1.google-analytics.com` (exact hosts, no wildcards). If data from another region is missing after launch, look for a CSP
   violation naming another regional `*.google-analytics.com` host.
@@ -119,7 +146,7 @@ Browser-level testing was done in a Chrome DevTools-Protocol harness kept **outs
 
 * **Service-area business.** The only public location is **Bathgate, West Lothian**. **No street address, postcode or Plus Code appears anywhere**
   in `site/`, `backend/` or the info file (check 18). The address `39 S Loch Park` was removed on the owner's instruction — **do not add it back.**
-  (It still exists in old git history of this public repository — see section 13.)
+  (It still exists in old git history of this Private repository — see section 13.)
 * **Contact channels:** phone **0131 202 0289**; WhatsApp **07448 427154** (`https://wa.me/447448427154`); email **info@sfrmotors.co.uk**.
 * **Company disclosure** (footer, every page): SFR Motors Ltd, registered in England and Wales, company number **15819240**, **Registered office:
   143 Beverley Drive, Edgware, England, HA8 5NH** — shown only in the footer legal line and the Privacy Policy, never as a service location, in
@@ -129,6 +156,15 @@ Browser-level testing was done in a Chrome DevTools-Protocol harness kept **outs
   `priceRange` must stay absent. Home `aggregateRating` stays **ratingValue 4.9 / reviewCount 282** (owner-verified); change only with a new owner-verified figure.
 * Structured data: `AutomotiveBusiness` with `address` limited to locality/region/country (no street), `areaServed` list, 24/7 hours as already approved;
   the Contact page also lists the phone and WhatsApp `ContactPoint`s. Every URL in JSON-LD must be absolute and on `https://sfrmotors.co.uk/` (check 17).
+
+## 8A. Forms
+
+* There are only two forms: the **tyre-size calculator** (client-side arithmetic, nothing is sent) and the **quote / contact form** (`#quote-form-el`, on Home and Contact). There is **no backend, API, e-mail or database
+  endpoint**: a valid quote form builds a message and opens `https://wa.me/447448427154?text=...` in a new tab, and the visitor must still press Send in WhatsApp.
+* **Only the production hostnames open WhatsApp** (`PRODUCTION_HOST` in `main.js`, identical to the Analytics pattern; `verify` check 20 enforces the match). On a Vercel Preview, `localhost` or any other host the form validates as usual
+  but shows "Preview copy: nothing was sent and WhatsApp was not opened...", keeps the entries, does not open WhatsApp and fires no analytics event. Limitation: reviewers cannot see the WhatsApp hand-off on a Preview;
+  it behaves as designed only on the live hostnames.
+* The honeypot / 1.5-second bot check is unchanged. `mailto:` and `tel:` links are ordinary user-initiated links.
 
 ## 9. Images and privacy
 
@@ -149,9 +185,9 @@ Browser-level testing was done in a Chrome DevTools-Protocol harness kept **outs
 * Important information is plain HTML (not JavaScript dependent). Do not add fake reviews, keyword stuffing or "AI optimisation" copy.
 * `/broxburn/` and `mobile-tyre-fitting-broxburn.html` are two different approved pages; both are linked from Home -> Areas We Cover and both are in the sitemap.
 
-## 11. AWS design (nothing has been created)
+## 11. AWS design (previous plan, reference only — nothing has been created)
 
-Defined in `infra/template.yaml` (CloudFormation); deploy script `infra/deploy-site.sh`; OIDC role `infra/github-oidc.yaml`; workflow `.github/workflows/deploy.yml`.
+This is the earlier plan, superseded by section 2A; it is kept so the redirect/route/header specification is not lost (`vercel.json` is generated from it). Do **not** delete these files without a later, explicit task. Defined in `infra/template.yaml` (CloudFormation); deploy script `infra/deploy-site.sh`; OIDC role `infra/github-oidc.yaml`; workflow `.github/workflows/deploy.yml`.
 
 * **S3:** private, Block Public Access on, SSE-S3, **versioning on** (90-day noncurrent expiry), Origin Access Control only.
 * **CloudFront:** HTTPS only (TLS 1.2+), HTTP/2 + 3, `Compress: true`, `DefaultRootObject index.html`, viewer-request **LegacyRedirectFunction**
@@ -173,11 +209,12 @@ Defined in `infra/template.yaml` (CloudFormation); deploy script `infra/deploy-s
 3. No destructive git operations (`reset`, `clean`, force-push, rebase, amend) unless explicitly authorised. Do not open a Pull Request unless asked.
 4. Never request or store credentials, tokens, customer IDs or personal data in the repository or in chat.
 5. Preserve approved URLs, content, business details, SEO structure and structured data; do not redesign.
+6. Vercel: Preview deployments only. Never `vercel --prod`, never a Production target, never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk`, never change Deployment Protection to public without the owner, never link the Preview project to GitHub without the owner.
 
 ## 13. Known limitations and open items
 
-* **The public repository's git history still contains the removed street address** (`39 S Loch Park`, `EH48 2QZ`, Plus Code) in earlier commits and in
-  `SFR_Website_Info.txt` history. Removing it from history requires a history rewrite, which is destructive and needs the owner's decision.
+* **The repository is Private, but its git history still contains the removed street address** (`39 S Loch Park`, `EH48 2QZ`, Plus Code) in earlier commits and in
+  `SFR_Website_Info.txt` history. Anyone with repository access (and any Vercel/GitHub integration given access) can read it. Removing it from history requires a history rewrite, which is destructive and needs the owner's decision.
 * **Google Business Profile** may still show the address if it is configured that way; that is outside this repository (set it as a service-area business / hide the address there).
 * Two Broxburn pages have the same H1 ("Mobile Tyre Fitting Broxburn") and near-identical purpose — a duplicate-content risk (owner decision).
 * `aggregateRating` 4.9 / 282 is owner-supplied and not verified by the code; keep it truthful and current (Google may not show self-served review rich results).
@@ -193,10 +230,11 @@ Defined in `infra/template.yaml` (CloudFormation); deploy script `infra/deploy-s
 
 - [ ] Owner decisions: history rewrite yes/no; duplicate Broxburn page; whether to apply the Home photo-frame style to the seven other `about` frames.
 - [ ] Google Business Profile set as service-area business (outside the repo).
-- [ ] Prepare AWS: ACM certificate (apex + www, us-east-1), stacks, repo variables, Route 53 zone with **all** records copied and verified (runbook C).
-- [ ] Take the backups in runbook section A (WordPress, DNS export, e-mail baseline, Search Console verification method, DNSSEC check).
-- [ ] Rehearse on the real hostname with `curl --resolve` (runbook B.4) and run the section F checks.
-- [ ] Owner approval to merge; then separate owner approval to deploy; then Route 53 nameserver change; then website cutover (separate approval each).
+- [ ] Review the two Broxburn pages (duplicate H1 / content risk) and the history-rewrite question (owner decisions above).
+- [ ] Owner review of the Vercel Preview (visual check on desktop and phone).
+- [ ] Write the **Hostinger** deployment documentation (how `dist/` replaces WordPress; redirects, rewrites, headers/CSP and 404 on Hostinger; `www`; e-mail; backup and rollback). Do not assume Hostinger capabilities: verify them with the owner first.
+- [ ] Take the backups in runbook section A (WordPress, e-mail baseline, Search Console verification method); the AWS/Route 53 steps in the runbook are the previous plan.
+- [ ] Owner approval to merge; then separate owner approval to deploy to the live domain (each separately).
 - [ ] After go-live: post-deployment checks, Search Console sitemap submission, GA4 Realtime check, keep WordPress + Hostinger e-mail for at least 30 days.
 
 ## 15. Repository map
@@ -208,16 +246,20 @@ site/                     the website source (edit here)
   assets/fonts/           roboto-latin-var.woff2 + OFL.txt
   assets/img/             AVIF/WebP images; robots.txt, sitemap.xml, favicon.ico
 scripts/build.js          site/ -> dist/ (minify, content-hash CSS/JS)
-scripts/verify.js         the 18-check quality gate
-scripts/preview-edge.js   local CloudFront/CSP-modelling preview of dist/
-infra/template.yaml       S3 + CloudFront + function + headers (CloudFormation)
+scripts/verify.js         the 20-check quality gate
+scripts/preview-edge.js   local CloudFront/CSP-modelling preview of dist/ (also exports start() for the browser tests)
+scripts/vercel-config.js  generates vercel.json from infra/template.yaml (+ a model of Vercel's routing order used by verify check 19)
+scripts/host-guard-tests.js  sandbox tests for the production-hostname guards (verify check 20)
+scripts/browser-tests/    real-browser suite (npm run test:browser): cdp.js driver + sweep / consent / functional / approved tests
+vercel.json               GENERATED Vercel Preview config (do not hand-edit; run scripts/vercel-config.js)
+infra/template.yaml       previous AWS plan: S3 + CloudFront + function + headers (CloudFormation); still the source of the routing tables, CSP and headers
 infra/github-oidc.yaml    GitHub Actions deploy role;  infra/deploy-site.sh  manual/CI deploy script
 infra/CUTOVER-RUNBOOK.md  backup / Route 53 cutover / rollback / post-deploy checks
 .github/workflows/        deploy.yml (auto-deploys on push to main), quality-gate.yml (runs verify on push)
-backend/, *-section.html, vercel.json, SFR_Website_Info.txt   legacy / reference material (not deployed)
+backend/, *-section.html, SFR_Website_Info.txt   legacy / reference material (not deployed)
 dist/                     generated by the build (gitignored)
 ```
 
 ---
 
-Checkpoint reference: content commit `4412584` on `feature/seo-safe-migration` (baseline `27bf898`). Nothing merged, deployed or changed in DNS.
+Checkpoint reference: `feature/seo-safe-migration`; earlier checkpoint content commit `4412584`, Vercel Preview checkpoint on top of `45107ba`. Nothing merged, nothing deployed to the live domain, no DNS change.

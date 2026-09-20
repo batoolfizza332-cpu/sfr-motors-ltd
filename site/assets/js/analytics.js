@@ -26,9 +26,13 @@
 
   var PRIVACY_URL = "/privacy-policy.html";
 
-  // Local previews must never feed the live GA4 property. The banner and the
-  // stored choice still work there; only the Google request is skipped.
-  var IS_LOOPBACK = /^(localhost|127\.0\.0\.1|\[?::1\]?)$/.test(window.location.hostname);
+  // Google Analytics may run ONLY on the two production hostnames. Every other
+  // host (localhost, *.vercel.app previews, any staging or temporary hostname)
+  // must never feed the live GA4 property, even after "Accept analytics". The
+  // banner and the stored choice still work there; only the Google request is
+  // skipped. Keep this pattern identical to PRODUCTION_HOST in assets/js/main.js
+  // (scripts/verify.js checks that they match).
+  var IS_PRODUCTION_HOST = /^(www\.)?sfrmotors\.co\.uk$/.test(window.location.hostname);
 
   var analyticsLoaded = false;
   var memoryChoice = null; // used only if the browser refuses to store the cookie
@@ -200,8 +204,8 @@
       window["ga-disable-" + GA_MEASUREMENT_ID] = false;
       return;
     }
-    if (IS_LOOPBACK) {
-      if (window.console && console.info) console.info("[SFR Motors] Local preview: Google Analytics is not loaded on localhost.");
+    if (!IS_PRODUCTION_HOST) {
+      if (window.console && console.info) console.info("[SFR Motors] Preview or local copy: Google Analytics is only loaded on sfrmotors.co.uk.");
       return;
     }
     if (document.querySelector('script[src^="' + GTAG_URL.split("?")[0] + '"]')) return;

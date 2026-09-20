@@ -5,6 +5,10 @@ below needs the owner's separate, explicit approval at the time it is run. Writt
 branch `feature/seo-safe-migration` and updated with the owner-approved decisions. Items marked **UNKNOWN** could not
 be verified from the repository and need the owner.
 
+> **Previous plan, kept as reference.** The owner has since decided on a **Vercel Preview** for review and **Hostinger** as the intended Production host
+> (see `../PROJECT-HANDOVER.md` section 2A). This runbook describes the earlier AWS S3 + CloudFront + Route 53 plan; no AWS account exists. Its backup,
+> e-mail-baseline and rollback thinking is still useful, but the AWS/Route 53 steps must not be run, and a Hostinger runbook is still to be written.
+
 Related documents: [`../PROJECT-HANDOVER.md`](../PROJECT-HANDOVER.md) (full project state) and
 [`../README.md`](../README.md) (build, verify, hosting, analytics).
 

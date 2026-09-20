@@ -919,6 +919,68 @@ function checkOwnerApprovedCorrections(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 19: Vercel Preview configuration routes exactly like the CloudFront Function
+// ---------------------------------------------------------------------------
+// vercel.json is generated from infra/template.yaml (scripts/vercel-config.js). This proves it is up to date and
+// that, for every pretty path, .html URL, legacy WordPress URL, the Home page and unknown URLs, Vercel's
+// order (redirects, files, rewrites, 404.html) gives the same result as the approved CloudFront routing.
+function checkVercelConfig() {
+  const check = "19. Vercel Preview config";
+  const { buildConfig, loadRouting, simulateVercel, VERCEL_JSON } = require("./vercel-config");
+  let expected, routing, config;
+  try {
+    expected = buildConfig();
+    routing = loadRouting();
+    config = JSON.parse(fs.readFileSync(VERCEL_JSON, "utf8"));
+  } catch (e) {
+    fail(check, `Could not build or read the Vercel configuration: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js` to regenerate vercel.json.");
+    return;
+  }
+  if (JSON.stringify(config) !== JSON.stringify(expected)) {
+    fail(check, "vercel.json is out of date with infra/template.yaml (routing tables, CSP or security headers).", "vercel.json", "Run `node scripts/vercel-config.js` and commit the result.");
+  }
+  if (config.cleanUrls || config.trailingSlash !== undefined) {
+    fail(check, "vercel.json sets cleanUrls/trailingSlash, which would change the approved URLs (.html 301s, pretty-path trailing slashes).", "vercel.json", "Remove cleanUrls / trailingSlash.");
+  }
+  if (config.outputDirectory !== "dist" || config.buildCommand !== "npm run build") {
+    fail(check, "vercel.json must build with `npm run build` and publish dist/.", "vercel.json", 'Set "buildCommand": "npm run build" and "outputDirectory": "dist".');
+  }
+  const distDir = path.join(ROOT, "dist");
+  if (!fs.existsSync(path.join(distDir, "404.html"))) fail(check, "dist/404.html is missing; Vercel serves it (status 404) for unknown URLs.", "site/404.html", "Restore site/404.html.");
+  const hasFile = (p) => { const f = path.join(distDir, p.replace(/^\//, "")); return !p.endsWith("/") && !p.includes("..") && fs.existsSync(f) && fs.statSync(f).isFile(); };
+
+  const { special, same, legacy, edgeFunction } = routing;
+  const slugs = [...Object.keys(special), ...same];
+  const urls = ["/", "/index.html", "/services.html", "/privacy-policy.html", "/404.html", "/robots.txt", "/sitemap.xml", "/favicon.ico", "/no-such-page", "/no-such-page/", "/assets/img/none.webp"];
+  for (const [slug, file] of [...Object.entries(special), ...same.map((s) => [s, s])]) urls.push(`/${slug}`, `/${slug}/`, `/${file}.html`);
+  for (const from of Object.keys(legacy)) urls.push(from, `${from}/`);
+  for (const url of [...new Set(urls)]) {
+    let edge;
+    const out = edgeFunction({ request: { uri: url, method: "GET", headers: {}, querystring: {}, cookies: {} } });
+    if (out.statusCode) edge = { redirect: out.headers.location.value };
+    else { const f = out.uri === "/" ? "/index.html" : out.uri; edge = hasFile(f) ? { file: f } : { notFound: true }; }
+    const vercel = simulateVercel(config, url, hasFile);
+    if (JSON.stringify(edge) !== JSON.stringify(vercel)) {
+      fail(check, `${url}: CloudFront gives ${JSON.stringify(edge)} but vercel.json gives ${JSON.stringify(vercel)}.`, "vercel.json", "Regenerate vercel.json (node scripts/vercel-config.js) or fix the routing tables.");
+    }
+    if (edge.file && !hasFile(edge.file)) fail(check, `${url} resolves to ${edge.file}, which is not in dist/.`, "infra/template.yaml", "Point the route at a page that exists.");
+  }
+  if (slugs.length === 0) fail(check, "No pretty-path routes were found.", "infra/template.yaml", "Restore the routing tables.");
+}
+
+// ---------------------------------------------------------------------------
+// Check 20: production-hostname guards (Analytics and the WhatsApp form)
+// ---------------------------------------------------------------------------
+// Runs analytics.js and main.js in a sandbox on production, localhost, *.vercel.app and look-alike hostnames
+// (scripts/host-guard-tests.js): Google Analytics and the WhatsApp enquiry work only on sfrmotors.co.uk /
+// www.sfrmotors.co.uk, while the consent banner works everywhere.
+function checkHostGuards() {
+  for (const message of require("./host-guard-tests").runAll()) {
+    fail("20. Hostname guards", message, "site/assets/js/analytics.js, site/assets/js/main.js", "Keep the production-hostname guard in both scripts (see scripts/host-guard-tests.js).");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Check 12: git diff --check
 // ---------------------------------------------------------------------------
 function checkGitDiff() {
@@ -937,7 +999,7 @@ function checkGitDiff() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 18;
+const TOTAL_CHECKS = 20;
 
 function main() {
   const buildOk = checkBuild();
@@ -957,6 +1019,8 @@ function main() {
   checkCloudFrontRouting(pages);
   checkStructuredDataUrls(pages);
   checkOwnerApprovedCorrections(pages);
+  checkVercelConfig();
+  checkHostGuards();
   checkGitDiff();
 
   if (failures.length === 0) {
