@@ -83,18 +83,18 @@ a { text-underline-offset: 2px; }
 .sfr-header__inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 7px 20px; /* logo box grew 6px; 3px less padding top and bottom keeps the header height unchanged */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
 /* Brand lockup (logo + name + motto), sized in tiers so it stays readable without crowding the nav:
-   desktop 64px logo / 22px name, then smaller steps for narrower screens (see the media queries below). */
+   desktop 70px logo / 22px name, then smaller steps for narrower screens (see the media queries below). */
 .sfr-header__brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: #ffffff; }
 .sfr-header__brand picture {
-  display: block; flex: none; width: 64px; height: 64px; border-radius: 12px;
-  background: #fff; padding: 3px; box-sizing: border-box;
+  display: block; flex: none; width: 70px; height: 70px; border-radius: 12px;
+  background: #fff; padding: 2px; box-sizing: border-box;
   border: 1px solid #2b2b2b;
 }
 .sfr-header__brand img { width: 100%; height: 100%; border-radius: 5px; display: block; }
@@ -130,14 +130,14 @@ a { text-underline-offset: 2px; }
 @media (max-width: 1100px) {
   /* Nav links and the Call Now button take more of the row here, so the lockup steps down one size. */
   .sfr-header__brand { gap: 10px; }
-  .sfr-header__brand picture { width: 56px; height: 56px; border-radius: 10px; }
+  .sfr-header__brand picture { width: 62px; height: 62px; border-radius: 10px; }
   .sfr-header__brand-name { font-size: 18px; }
   .sfr-header__brand-motto { font-size: 10.5px; }
 }
 @media (max-width: 1000px) {
   /* Below 1000px the seven nav links plus the larger lockup no longer fit on one row, so the menu collapses to a
      button (it used to collapse at 860px, which left 861-1000px cramped and wrapped the business name). */
-  .sfr-header__brand picture { width: 54px; height: 54px; }
+  .sfr-header__brand picture { width: 60px; height: 60px; }
   .sfr-header__brand-name { font-size: 19px; }
   .sfr-nav__toggle {
     display: inline-flex;
@@ -165,7 +165,7 @@ a { text-underline-offset: 2px; }
 }
 @media (max-width: 480px) {
   /* Phones: the lockup keeps one row beside the two 44px buttons (a little header spacing is given back for it). */
-  .sfr-header__brand picture { width: 48px; height: 48px; }
+  .sfr-header__brand picture { width: 54px; height: 54px; }
   .sfr-header__brand-name { font-size: 16px; }
   .sfr-header__inner { gap: 12px; }
   /* Icon-only Call Now button on the smallest phones: keep it a real,
@@ -178,6 +178,12 @@ a { text-underline-offset: 2px; }
   }
   .sfr-header__call span { display: none; }
   .sfr-header__call svg { width: 18px; height: 18px; }
+}
+@media (max-width: 340px) {
+  /* Very narrow phones: a slightly smaller logo box (still larger than before) keeps the business name on one line. */
+  .sfr-header__brand { gap: 8px; }
+  .sfr-header__brand picture { width: 50px; height: 50px; }
+  .sfr-header__inner { padding-block: 9px; }
 }
 
 /* ===== Hero ===== */
