@@ -400,6 +400,13 @@ Resources:
   #   /mobile-tyre-fitting-broxburn.html -> 301 -> /broxburn/ (owner decision: /broxburn/,
   #   the original WordPress URL, is the only indexable Broxburn page; the duplicate
   #   .html location page was removed; one hop, also from www).
+  #   Historical WordPress URLs that the migration audit marks "Keep / Recreate at exact URL" but whose page lives at a flat .html URL on this
+  #   branch (its canonical): /mobile-tyre-fitting-<town> (airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston,
+  #   shotts, west-calder, west-lothian, whitburn, wishaw), /mobile-tyre-fitting-in-addiewell (the Addiewell page, whose WordPress slug had
+  #   "in-"), /mobile-locking-wheel-nut-removal, /privacy-policy and /trade-fleet-tyre-services -> 301 -> the same page's .html canonical (one
+  #   hop, also from www). Same treatment as the earlier /best-mobile-tyre-fitter-west-lothian and /mobile-tyre-fitting-bathgate-questions
+  #   redirects, whose audit destination had no clean-URL rewrite either. /our-tyre-range/ has no page on this branch and is NOT redirected
+  #   (owner decision pending); nor are the audit's blog URLs that were never built here.
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
   #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
@@ -470,6 +477,23 @@ Resources:
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html',
                 '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
+                '/mobile-tyre-fitting-airdrie': '/mobile-tyre-fitting-airdrie.html',
+                '/mobile-tyre-fitting-bathgate': '/mobile-tyre-fitting-bathgate.html',
+                '/mobile-tyre-fitting-boness': '/mobile-tyre-fitting-boness.html',
+                '/mobile-tyre-fitting-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
+                '/mobile-tyre-fitting-falkirk': '/mobile-tyre-fitting-falkirk.html',
+                '/mobile-tyre-fitting-harthill': '/mobile-tyre-fitting-harthill.html',
+                '/mobile-tyre-fitting-linlithgow': '/mobile-tyre-fitting-linlithgow.html',
+                '/mobile-tyre-fitting-livingston': '/mobile-tyre-fitting-livingston.html',
+                '/mobile-tyre-fitting-shotts': '/mobile-tyre-fitting-shotts.html',
+                '/mobile-tyre-fitting-west-calder': '/mobile-tyre-fitting-west-calder.html',
+                '/mobile-tyre-fitting-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
+                '/mobile-tyre-fitting-whitburn': '/mobile-tyre-fitting-whitburn.html',
+                '/mobile-tyre-fitting-wishaw': '/mobile-tyre-fitting-wishaw.html',
+                '/mobile-tyre-fitting-in-addiewell': '/mobile-tyre-fitting-addiewell.html',
+                '/mobile-locking-wheel-nut-removal': '/mobile-locking-wheel-nut-removal.html',
+                '/privacy-policy': '/privacy-policy.html',
+                '/trade-fleet-tyre-services': '/trade-fleet-tyre-services.html',
                 '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
             };
 

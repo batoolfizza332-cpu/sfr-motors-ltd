@@ -1312,9 +1312,89 @@ function checkLocationLinks() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 26: historical WordPress URLs that the migration audit keeps ("Keep / Recreate at exact URL") must not 404
+// ---------------------------------------------------------------------------
+// These pages live at a flat .html URL on this branch (that is their canonical). Their old WordPress URL (no extension, trailing slash)
+// must 301 straight to it: one hop on CloudFront, Vercel and Hostinger alike, also from www and http. /our-tyre-range/ and the audit's
+// blog URLs that were never built here are deliberately absent: they have no page to redirect to and the destination is an owner decision.
+const HISTORICAL_URL_MAP = {
+  "/mobile-tyre-fitting-airdrie/": "/mobile-tyre-fitting-airdrie.html",
+  "/mobile-tyre-fitting-bathgate/": "/mobile-tyre-fitting-bathgate.html",
+  "/mobile-tyre-fitting-boness/": "/mobile-tyre-fitting-boness.html",
+  "/mobile-tyre-fitting-edinburgh/": "/mobile-tyre-fitting-edinburgh.html",
+  "/mobile-tyre-fitting-falkirk/": "/mobile-tyre-fitting-falkirk.html",
+  "/mobile-tyre-fitting-harthill/": "/mobile-tyre-fitting-harthill.html",
+  "/mobile-tyre-fitting-in-addiewell/": "/mobile-tyre-fitting-addiewell.html",
+  "/mobile-tyre-fitting-linlithgow/": "/mobile-tyre-fitting-linlithgow.html",
+  "/mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston.html",
+  "/mobile-tyre-fitting-shotts/": "/mobile-tyre-fitting-shotts.html",
+  "/mobile-tyre-fitting-west-calder/": "/mobile-tyre-fitting-west-calder.html",
+  "/mobile-tyre-fitting-west-lothian/": "/mobile-tyre-fitting-west-lothian.html",
+  "/mobile-tyre-fitting-whitburn/": "/mobile-tyre-fitting-whitburn.html",
+  "/mobile-tyre-fitting-wishaw/": "/mobile-tyre-fitting-wishaw.html",
+  "/mobile-locking-wheel-nut-removal/": "/mobile-locking-wheel-nut-removal.html",
+  "/privacy-policy/": "/privacy-policy.html",
+  "/trade-fleet-tyre-services/": "/trade-fleet-tyre-services.html",
+};
+
+function checkHistoricalUrls(pages) {
+  const check = "26. Historical URLs";
+  const { edgeFunction } = require("./vercel-config").loadRouting();
+  const { buildHtaccess, simulateApache } = require("./htaccess-config");
+  const distDir = path.join(ROOT, "dist");
+  const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
+  const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
+  const sitemapLocs = new Set([...readFile("sitemap.xml").matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]));
+  const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
+  let vercel = null;
+  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); }
+  const HOST = "example.test";
+  const htaccess = { staging: buildHtaccess("staging"), production: buildHtaccess("production") };
+
+  for (const [oldUrl, finalPath] of Object.entries(HISTORICAL_URL_MAP)) {
+    const file = finalPath.slice(1);
+    const finalUrl = `${PROD_DOMAIN}${finalPath}`;
+    // The destination is a real, indexable page whose canonical is exactly that URL, listed in the sitemap, and it is served (never redirected).
+    const page = pages[file];
+    if (!page) { fail(check, `${oldUrl} redirects to ${finalPath}, but site/${file} does not exist.`, "infra/template.yaml", "Point the redirect at an existing page."); continue; }
+    const canonical = (page.html.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
+    if (canonical !== finalUrl) fail(check, `${file} canonical is ${canonical}; the historical URL ${oldUrl} redirects to ${finalPath}.`, `site/${file}`, "The redirect target must be the page's own canonical.");
+    if (!sitemapLocs.has(finalUrl)) fail(check, `${finalUrl} (target of the historical URL ${oldUrl}) is not in sitemap.xml.`, "site/sitemap.xml", "List the canonical URL.");
+    if (sitemapLocs.has(`${PROD_DOMAIN}${oldUrl}`)) fail(check, `sitemap.xml lists the historical URL ${oldUrl}.`, "site/sitemap.xml", "List only the canonical URL.");
+    if (edge(finalPath).statusCode) fail(check, `CloudFront Function redirects ${finalPath} itself.`, "infra/template.yaml", "The target must be served with a 200.");
+
+    // CloudFront Function: with and without the trailing slash, and from www, always one hop to the target.
+    for (const uri of [oldUrl, oldUrl.slice(0, -1)]) {
+      const out = edge(uri);
+      if (out.statusCode !== 301 || out.headers.location.value !== finalPath) fail(check, `CloudFront Function: ${uri} gives ${out.statusCode || "no redirect"} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${finalPath}.`, "infra/template.yaml", "Add it to the legacy table.");
+      const www = edge(uri, `www.${HOST}`);
+      if (www.statusCode !== 301 || www.headers.location.value !== `https://${HOST}${finalPath}`) fail(check, `CloudFront Function: www ${uri} does not reach https://${HOST}${finalPath} in one hop.`, "infra/template.yaml", "Fix the legacy table / www rule.");
+    }
+    // Hostinger .htaccess, both profiles, http/https and apex/www: one 301 to https://apex/<target>.
+    for (const profile of ["staging", "production"]) {
+      for (const req of [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }]) {
+        const got = simulateApache(htaccess[profile], { ...req, uri: oldUrl, query: "" }, { hasFile, isDir });
+        if (got.redirect !== `https://${HOST}${finalPath}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${oldUrl}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${finalPath}.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+      }
+    }
+    // Vercel: both slash variants.
+    if (vercel) {
+      for (const source of [oldUrl, oldUrl.slice(0, -1)]) {
+        const rule = (vercel.redirects || []).find((r) => r.source === source);
+        if (!rule || rule.destination !== finalPath || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${finalPath}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
+      }
+    }
+    // Nothing on the site links to the old URL (links must use the canonical).
+    for (const [f, p] of Object.entries(pages)) {
+      if (p.html.includes(`href="${oldUrl}"`) || p.html.includes(`href="${oldUrl.slice(1)}"`) || p.html.includes(`href="${oldUrl.slice(0, -1)}"`)) fail(check, `${f} links to the historical URL ${oldUrl}.`, `site/${f}`, `Link to ${finalPath} instead.`);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 25;
+const TOTAL_CHECKS = 26;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1339,6 +1419,7 @@ async function main() {
   checkMobileTyreFittingUrl();
   checkBroxburnUrl(pages);
   checkLocationLinks();
+  checkHistoricalUrls(pages);
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();

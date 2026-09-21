@@ -330,6 +330,176 @@
       "statusCode": 301
     },
     {
+      "source": "/mobile-tyre-fitting-airdrie",
+      "destination": "/mobile-tyre-fitting-airdrie.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-airdrie/",
+      "destination": "/mobile-tyre-fitting-airdrie.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate/",
+      "destination": "/mobile-tyre-fitting-bathgate.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-boness",
+      "destination": "/mobile-tyre-fitting-boness.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-boness/",
+      "destination": "/mobile-tyre-fitting-boness.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-edinburgh",
+      "destination": "/mobile-tyre-fitting-edinburgh.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-edinburgh/",
+      "destination": "/mobile-tyre-fitting-edinburgh.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-falkirk",
+      "destination": "/mobile-tyre-fitting-falkirk.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-falkirk/",
+      "destination": "/mobile-tyre-fitting-falkirk.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-harthill",
+      "destination": "/mobile-tyre-fitting-harthill.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-harthill/",
+      "destination": "/mobile-tyre-fitting-harthill.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-linlithgow",
+      "destination": "/mobile-tyre-fitting-linlithgow.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-linlithgow/",
+      "destination": "/mobile-tyre-fitting-linlithgow.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston",
+      "destination": "/mobile-tyre-fitting-livingston.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-shotts",
+      "destination": "/mobile-tyre-fitting-shotts.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-shotts/",
+      "destination": "/mobile-tyre-fitting-shotts.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-west-calder",
+      "destination": "/mobile-tyre-fitting-west-calder.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-west-calder/",
+      "destination": "/mobile-tyre-fitting-west-calder.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-west-lothian",
+      "destination": "/mobile-tyre-fitting-west-lothian.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-west-lothian/",
+      "destination": "/mobile-tyre-fitting-west-lothian.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-whitburn",
+      "destination": "/mobile-tyre-fitting-whitburn.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-whitburn/",
+      "destination": "/mobile-tyre-fitting-whitburn.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-wishaw",
+      "destination": "/mobile-tyre-fitting-wishaw.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-wishaw/",
+      "destination": "/mobile-tyre-fitting-wishaw.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-in-addiewell",
+      "destination": "/mobile-tyre-fitting-addiewell.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-in-addiewell/",
+      "destination": "/mobile-tyre-fitting-addiewell.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-locking-wheel-nut-removal",
+      "destination": "/mobile-locking-wheel-nut-removal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy/",
+      "destination": "/privacy-policy.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/trade-fleet-tyre-services",
+      "destination": "/trade-fleet-tyre-services.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/trade-fleet-tyre-services/",
+      "destination": "/trade-fleet-tyre-services.html",
+      "statusCode": 301
+    },
+    {
       "source": "/mobile-tyre-fitting",
       "destination": "/mobile-tyre-fitting.html",
       "statusCode": 301
