@@ -390,7 +390,7 @@ Resources:
   #   /mobile-tyre-fitting-<town>/ (airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston, shotts, west-calder,
   #   west-lothian, whitburn, wishaw), /mobile-tyre-fitting-in-addiewell/ (the Addiewell page keeps its WordPress slug; file
   #   mobile-tyre-fitting-addiewell.html), /mobile-locking-wheel-nut-removal/, /privacy-policy/ and /trade-fleet-tyre-services/.
-  #   /our-tyre-range/ has no page on this branch and is NOT redirected (owner decision pending).
+  #   /our-tyre-range/ and the 17 restored audit articles are served directly at their exact URL too (files named after the slug).
   #   Audit Batch C / B2 consolidations (weaker duplicate -> survivor, one hop): /tyre-lifespan-mobile-tyre-repair-guide/ -> /tyre-lifespan/ and
   #   /behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/ -> /what-tools-do-mobile-tyre-fitters-use/ (both survivors are served pages).
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
@@ -453,6 +453,10 @@ Resources:
                 'emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key mobile-tyre-fitting-livingston-tyre-problems ' +
                 'tyre-blowout-causes-prevention tyre-services-west-lothian tyres-bathgate-technical-breakdown ' +
                 'what-is-mobile-tyre-fitting why-tyres-fail-mobile-tyre-fitter-falkirk ' +
+                'asymmetric-and-directional-tyres-difference premium-or-budget-which-tyres-keep-you-safer ' +
+                'pirelli-silent-tyres-uk michelin-radial-tire-history-innovation ' +
+                'how-to-choose-the-best-tyres-for-my-car-expert-buying-guide mobile-tyre-fitter-near-me-myths ' +
+                'which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk our-tyre-range ' +
                 'mobile-tyre-repair-edinburgh-west-lothian'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination

@@ -101,6 +101,14 @@ const CANONICAL_URL_OVERRIDES = {
   "tyres-bathgate-technical-breakdown.html": "tyres-bathgate-technical-breakdown/",
   "what-is-mobile-tyre-fitting.html": "what-is-mobile-tyre-fitting/",
   "why-tyres-fail-mobile-tyre-fitter-falkirk.html": "why-tyres-fail-mobile-tyre-fitter-falkirk/",
+  "asymmetric-and-directional-tyres-difference.html": "asymmetric-and-directional-tyres-difference/",
+  "premium-or-budget-which-tyres-keep-you-safer.html": "premium-or-budget-which-tyres-keep-you-safer/",
+  "pirelli-silent-tyres-uk.html": "pirelli-silent-tyres-uk/",
+  "michelin-radial-tire-history-innovation.html": "michelin-radial-tire-history-innovation/",
+  "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide.html": "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+  "mobile-tyre-fitter-near-me-myths.html": "mobile-tyre-fitter-near-me-myths/",
+  "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html": "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+  "our-tyre-range.html": "our-tyre-range/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -1355,8 +1363,8 @@ function checkLocationLinks() {
 // ---------------------------------------------------------------------------
 // The migration audit says "Keep / Recreate at exact URL" for these pages, so each historical URL serves its page directly (status 200, no
 // redirect) and is its canonical; the page's old /<file>.html URL 301s to it in one hop. This holds on CloudFront, Vercel and Hostinger, with
-// and without the trailing slash. CONSOLIDATED_URLS are the audit's approved one-to-one 301s (weaker duplicate -> survivor). /our-tyre-range/
-// and the audit's other unbuilt URLs are deliberately absent: they have no approved page yet (owner decisions pending).
+// and without the trailing slash. CONSOLIDATED_URLS are the audit's approved one-to-one 301s (weaker duplicate -> survivor). The restored articles and /our-tyre-range/ are listed too: they are served
+// at their exact URL like the location pages.
 const EXACT_URL_PAGES = {
   "/mobile-tyre-fitting-airdrie/": "mobile-tyre-fitting-airdrie.html",
   "/mobile-tyre-fitting-bathgate/": "mobile-tyre-fitting-bathgate.html",
@@ -1375,6 +1383,24 @@ const EXACT_URL_PAGES = {
   "/mobile-locking-wheel-nut-removal/": "mobile-locking-wheel-nut-removal.html",
   "/privacy-policy/": "privacy-policy.html",
   "/trade-fleet-tyre-services/": "trade-fleet-tyre-services.html",
+  "/tyre-lifespan/": "tyre-lifespan.html",
+  "/what-tools-do-mobile-tyre-fitters-use/": "what-tools-do-mobile-tyre-fitters-use.html",
+  "/11-benefits-of-emergency-mobile-tyre-fitting/": "11-benefits-of-emergency-mobile-tyre-fitting.html",
+  "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/": "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key.html",
+  "/mobile-tyre-fitting-livingston-tyre-problems/": "mobile-tyre-fitting-livingston-tyre-problems.html",
+  "/tyre-blowout-causes-prevention/": "tyre-blowout-causes-prevention.html",
+  "/tyre-services-west-lothian/": "tyre-services-west-lothian.html",
+  "/tyres-bathgate-technical-breakdown/": "tyres-bathgate-technical-breakdown.html",
+  "/what-is-mobile-tyre-fitting/": "what-is-mobile-tyre-fitting.html",
+  "/why-tyres-fail-mobile-tyre-fitter-falkirk/": "why-tyres-fail-mobile-tyre-fitter-falkirk.html",
+  "/asymmetric-and-directional-tyres-difference/": "asymmetric-and-directional-tyres-difference.html",
+  "/premium-or-budget-which-tyres-keep-you-safer/": "premium-or-budget-which-tyres-keep-you-safer.html",
+  "/pirelli-silent-tyres-uk/": "pirelli-silent-tyres-uk.html",
+  "/michelin-radial-tire-history-innovation/": "michelin-radial-tire-history-innovation.html",
+  "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/": "how-to-choose-the-best-tyres-for-my-car-expert-buying-guide.html",
+  "/mobile-tyre-fitter-near-me-myths/": "mobile-tyre-fitter-near-me-myths.html",
+  "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/": "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html",
+  "/our-tyre-range/": "our-tyre-range.html",
 };
 const CONSOLIDATED_URLS = {
   "/tyre-lifespan-mobile-tyre-repair-guide/": "/tyre-lifespan/",

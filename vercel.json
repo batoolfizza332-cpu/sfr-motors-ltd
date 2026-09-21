@@ -300,6 +300,46 @@
       "statusCode": 301
     },
     {
+      "source": "/asymmetric-and-directional-tyres-difference.html",
+      "destination": "/asymmetric-and-directional-tyres-difference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/premium-or-budget-which-tyres-keep-you-safer.html",
+      "destination": "/premium-or-budget-which-tyres-keep-you-safer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pirelli-silent-tyres-uk.html",
+      "destination": "/pirelli-silent-tyres-uk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/michelin-radial-tire-history-innovation.html",
+      "destination": "/michelin-radial-tire-history-innovation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide.html",
+      "destination": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitter-near-me-myths.html",
+      "destination": "/mobile-tyre-fitter-near-me-myths/",
+      "statusCode": 301
+    },
+    {
+      "source": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html",
+      "destination": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+      "statusCode": 301
+    },
+    {
+      "source": "/our-tyre-range.html",
+      "destination": "/our-tyre-range/",
+      "statusCode": 301
+    },
+    {
       "source": "/mobile-tyre-repair-edinburgh-west-lothian.html",
       "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
       "statusCode": 301
@@ -959,6 +999,70 @@
     {
       "source": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
       "destination": "/why-tyres-fail-mobile-tyre-fitter-falkirk.html"
+    },
+    {
+      "source": "/asymmetric-and-directional-tyres-difference",
+      "destination": "/asymmetric-and-directional-tyres-difference.html"
+    },
+    {
+      "source": "/asymmetric-and-directional-tyres-difference/",
+      "destination": "/asymmetric-and-directional-tyres-difference.html"
+    },
+    {
+      "source": "/premium-or-budget-which-tyres-keep-you-safer",
+      "destination": "/premium-or-budget-which-tyres-keep-you-safer.html"
+    },
+    {
+      "source": "/premium-or-budget-which-tyres-keep-you-safer/",
+      "destination": "/premium-or-budget-which-tyres-keep-you-safer.html"
+    },
+    {
+      "source": "/pirelli-silent-tyres-uk",
+      "destination": "/pirelli-silent-tyres-uk.html"
+    },
+    {
+      "source": "/pirelli-silent-tyres-uk/",
+      "destination": "/pirelli-silent-tyres-uk.html"
+    },
+    {
+      "source": "/michelin-radial-tire-history-innovation",
+      "destination": "/michelin-radial-tire-history-innovation.html"
+    },
+    {
+      "source": "/michelin-radial-tire-history-innovation/",
+      "destination": "/michelin-radial-tire-history-innovation.html"
+    },
+    {
+      "source": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide",
+      "destination": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide.html"
+    },
+    {
+      "source": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide/",
+      "destination": "/how-to-choose-the-best-tyres-for-my-car-expert-buying-guide.html"
+    },
+    {
+      "source": "/mobile-tyre-fitter-near-me-myths",
+      "destination": "/mobile-tyre-fitter-near-me-myths.html"
+    },
+    {
+      "source": "/mobile-tyre-fitter-near-me-myths/",
+      "destination": "/mobile-tyre-fitter-near-me-myths.html"
+    },
+    {
+      "source": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk",
+      "destination": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html"
+    },
+    {
+      "source": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
+      "destination": "/which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html"
+    },
+    {
+      "source": "/our-tyre-range",
+      "destination": "/our-tyre-range.html"
+    },
+    {
+      "source": "/our-tyre-range/",
+      "destination": "/our-tyre-range.html"
     },
     {
       "source": "/mobile-tyre-repair-edinburgh-west-lothian",
