@@ -394,6 +394,9 @@ Resources:
   #   In each rewrite/redirect pair, the rewritten path is the one
   #   primary, indexable URL. All other requests pass through
   #   unchanged.
+  #   /mobile-tyre-fitting and /mobile-tyre-fitting/ -> 301 -> the page's one
+  #   canonical URL, /mobile-tyre-fitting.html (owner decision: .html is the only
+  #   indexable URL; both extension-less forms redirect straight to it, one hop).
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
   #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
@@ -462,7 +465,8 @@ Resources:
                 '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate.html',
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
-                '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html'
+                '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html',
+                '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
             };
 
             var bare = uri.length > 1 && uri.charAt(uri.length - 1) === '/' ? uri.slice(0, -1) : uri;

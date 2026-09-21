@@ -221,7 +221,7 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 >
 > **Hostinger staging (Apache/LiteSpeed `.htaccess`).** `node scripts/htaccess-config.js` generates the
 > Hostinger routing from `infra/template.yaml`, the same source as `vercel.json`: the 15 legacy WordPress
-> 301s, `.html` to pretty-URL 301s, `/index.html` to `/`, pretty-path serving, `www` to apex, HTTP to
+> 301s, `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` to `/mobile-tyre-fitting.html` (its only indexable URL, one hop), `.html` to pretty-URL 301s, `/index.html` to `/`, pretty-path serving, `www` to apex, HTTP to
 > HTTPS, the 404 page for 403/404, the security headers and the caching policy. `npm run build:hostinger`
 > builds `dist/` and adds `dist/.htaccess` (staging profile: `X-Robots-Tag: noindex, nofollow` and a
 > short HSTS, `max-age=300`); the plain `npm run build` never contains it. `npm run verify` (check 22)

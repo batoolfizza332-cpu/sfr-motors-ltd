@@ -112,8 +112,6 @@ function buildHtaccess(profile = "staging") {
   );
   for (const [slug, file] of Object.entries(special)) add(`RewriteRule ^${esc(slug)}/?$ ${file}.html [L]`);
   add(`RewriteRule ^${alt(same)}/?$ $1.html [L]`);
-  // /mobile-tyre-fitting: owner-approved live fix. With a trailing slash it 301s to the slash-less URL, which serves mobile-tyre-fitting.html.
-  add("RewriteRule ^mobile-tyre-fitting/$ /mobile-tyre-fitting [R=301,L]", "RewriteRule ^mobile-tyre-fitting/?$ mobile-tyre-fitting.html [L]");
 
   add("", "<IfModule mod_headers.c>");
   add("  # Security headers, from the ResponseHeadersPolicy in infra/template.yaml (\"always\" = also on redirects and the 404 page).");

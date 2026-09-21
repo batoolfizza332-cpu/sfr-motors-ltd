@@ -1106,9 +1106,81 @@ function checkHostingerHtaccess() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 23: Mobile Tyre Fitting has ONE indexable URL, /mobile-tyre-fitting.html
+// ---------------------------------------------------------------------------
+// Owner decision: https://sfrmotors.co.uk/mobile-tyre-fitting.html is the only 200 URL of this page. The extension-less forms
+// /mobile-tyre-fitting and /mobile-tyre-fitting/ must 301 straight to it (one hop, on CloudFront, Vercel and Hostinger alike), and
+// nothing on the site may link to, canonicalise to, list or mark up any other form.
+function checkMobileTyreFittingUrl() {
+  const check = "23. Mobile Tyre Fitting URL";
+  const FINAL = "/mobile-tyre-fitting.html";
+  const finalUrl = `${PROD_DOMAIN}${FINAL}`;
+
+  // 1. No reference anywhere in the source pages or the sitemap to /mobile-tyre-fitting, /mobile-tyre-fitting/ or a full URL without .html
+  //    (links, canonical, Open Graph, JSON-LD, breadcrumbs and navigation all live in these files). Location pages such as
+  //    /mobile-tyre-fitting-bathgate.html and the .html URL itself are not matched.
+  const bare = /mobile-tyre-fitting(?![-\w.])/g;
+  for (const file of [...listHtmlFiles(), "sitemap.xml"]) {
+    const hits = readFile(file).match(bare);
+    if (hits) fail(check, `${file} refers to the extension-less mobile-tyre-fitting URL ${hits.length} time(s); only ${FINAL} is allowed.`, `site/${file}`, `Use ${FINAL} everywhere.`);
+  }
+
+  // 2. The page itself: canonical and og:url are the .html URL, it is indexable and listed once in the sitemap.
+  const page = readFile("mobile-tyre-fitting.html");
+  const canonical = (page.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
+  const ogUrl = (page.match(/<meta\s+property="og:url"\s+content="([^"]*)"/) || [])[1];
+  if (canonical !== finalUrl) fail(check, `mobile-tyre-fitting.html canonical is ${canonical}; expected ${finalUrl}.`, "site/mobile-tyre-fitting.html", `Set the canonical to ${finalUrl}.`);
+  if (ogUrl !== finalUrl) fail(check, `mobile-tyre-fitting.html og:url is ${ogUrl}; expected ${finalUrl}.`, "site/mobile-tyre-fitting.html", `Set og:url to ${finalUrl}.`);
+  if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(page)) fail(check, "mobile-tyre-fitting.html is noindex; it must be the one indexable URL.", "site/mobile-tyre-fitting.html", "Remove noindex.");
+  const locs = [...readFile("sitemap.xml").matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]).filter((u) => /\/mobile-tyre-fitting(\.html|\/)?$/.test(u));
+  if (locs.length !== 1 || locs[0] !== finalUrl) fail(check, `sitemap.xml lists ${JSON.stringify(locs)} for this page; expected exactly ["${finalUrl}"].`, "site/sitemap.xml", `List only ${finalUrl}.`);
+
+  // 3. Routing: the page is never served from a pretty path, and both extension-less forms 301 directly to the .html URL, whatever the
+  //    protocol or host (CloudFront Function, then the generated Hostinger .htaccess in both profiles, then vercel.json).
+  const { special, same, legacy, edgeFunction } = require("./vercel-config").loadRouting();
+  if (Object.keys(special).includes("mobile-tyre-fitting") || Object.values(special).includes("mobile-tyre-fitting") || same.includes("mobile-tyre-fitting")) {
+    fail(check, "mobile-tyre-fitting is registered as a pretty-path page, which would serve it with a 200 at an extension-less URL.", "infra/template.yaml", "Remove it from the special / same tables; keep it in the legacy table.");
+  }
+  if (legacy["/mobile-tyre-fitting"] !== FINAL) fail(check, `The legacy redirect table maps /mobile-tyre-fitting to ${legacy["/mobile-tyre-fitting"]}; expected ${FINAL}.`, "infra/template.yaml", `Add '/mobile-tyre-fitting': '${FINAL}' to the legacy table.`);
+  const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
+  for (const uri of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
+    const out = edge(uri);
+    if (out.statusCode !== 301 || out.headers.location.value !== FINAL) fail(check, `CloudFront Function: ${uri} gives ${JSON.stringify(out.statusCode || out.uri)} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Fix the legacy table.");
+    const www = edge(uri, "www.example.test");
+    if (www.statusCode !== 301 || www.headers.location.value !== `https://example.test${FINAL}`) fail(check, `CloudFront Function: www ${uri} does not reach https://example.test${FINAL} in one hop.`, "infra/template.yaml", "Fix the www rule / legacy table.");
+  }
+  if (edge(FINAL).statusCode) fail(check, `CloudFront Function redirects ${FINAL} itself.`, "infra/template.yaml", `${FINAL} must be served with a 200.`);
+
+  const { buildHtaccess, simulateApache } = require("./htaccess-config");
+  const distDir = path.join(ROOT, "dist");
+  const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
+  const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
+  const HOST = "example.test";
+  for (const profile of ["staging", "production"]) {
+    const ht = buildHtaccess(profile);
+    for (const req of [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }]) {
+      for (const uri of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
+        const got = simulateApache(ht, { ...req, uri, query: "" }, { hasFile, isDir });
+        if (got.redirect !== `https://${HOST}${FINAL}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${uri}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${FINAL}.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+      }
+    }
+    const final = simulateApache(ht, { host: HOST, https: true, uri: FINAL, query: "" }, { hasFile, isDir });
+    if (final.file !== FINAL) fail(check, `.htaccess (${profile}): ${FINAL} gives ${JSON.stringify(final)}; expected the page to be served (200).`, "scripts/htaccess-config.js", `${FINAL} must be served, never redirected.`);
+    if (/^RewriteRule \^mobile-tyre-fitting[^ ]* mobile-tyre-fitting\.html \[L\]/m.test(ht)) fail(check, `.htaccess (${profile}) serves mobile-tyre-fitting.html at an extension-less URL.`, "scripts/htaccess-config.js", "Only the 301 is allowed.");
+  }
+  let vercel;
+  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
+  for (const source of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
+    const rule = (vercel.redirects || []).find((r) => r.source === source);
+    if (!rule || rule.destination !== FINAL || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${FINAL}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
+  }
+  if ((vercel.rewrites || []).some((r) => /^\/mobile-tyre-fitting\/?$/.test(r.source))) fail(check, "vercel.json rewrites an extension-less mobile-tyre-fitting URL to the page.", "vercel.json", "Only the 301 is allowed.");
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 22;
+const TOTAL_CHECKS = 23;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1130,6 +1202,7 @@ async function main() {
   checkOwnerApprovedCorrections(pages);
   checkVercelConfig();
   checkHostingerHtaccess();
+  checkMobileTyreFittingUrl();
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();

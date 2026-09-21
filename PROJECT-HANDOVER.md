@@ -61,7 +61,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
   `VERCEL_AUTOMATION_BYPASS_SECRET`; whether the remaining Preview holds a value is **unverified**, and any such value could remain until a redeploy replaces that deployment. **No redeploy is authorised yet.**
   **Never create a protection-bypass secret, a shareable link or any protection exception without explicit owner approval**, and never use `vercel curl` (or `--protection-bypass`) to get around Vercel Authentication.
 * **Configuration:** `vercel.json` is **generated** from `infra/template.yaml` by `node scripts/vercel-config.js` (never edit it by hand): 301 redirects for every
-  `/<file>.html` of a pretty page, the 15 legacy WordPress URLs (with/without trailing slash) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
+  `/<file>.html` of a pretty page, the 15 legacy WordPress URLs and `/mobile-tyre-fitting` (with/without trailing slash, the latter -> `/mobile-tyre-fitting.html`, its only indexable URL) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
   the exact security headers and CSP of the CloudFront policy; 1-year immutable caching for `assets/` css/img/fonts and the hashed scripts, 1 hour for `robots.txt`,
   `sitemap.xml`, `favicon.ico`; `dist/404.html` for missing URLs (Vercel serves it with status 404). Vercel builds with `npm run build` and publishes `dist/`.
   `npm run verify` check 19 fails if `vercel.json` drifts from the template or routes any URL differently from the CloudFront Function. `www` -> apex does not apply
@@ -108,7 +108,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
   and mirrored by `CANONICAL_URL_OVERRIDES` in `scripts/verify.js`. Check 16 keeps them in sync.
   Examples: `/about-us/` -> `about.html`, `/contact-us/` -> `contact.html`, `/24-7-mobile-tyre-replacement/` -> `emergency-tyre-change.html`,
   `/broxburn/` -> `broxburn.html`, and 25 pages where slug = file name (`/blog/`, `/how-to-change-a-tyre/`, ...).
-* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages;
+* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages; `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` -> `/mobile-tyre-fitting.html` (one hop; verify check 23);
   **`/index.html` -> `/`**; `www.<domain>` -> apex (single hop, path and query kept). Four internal links to blog `.html` posts intentionally still
   redirect (safe; could be normalised later).
 * **Home is `/`.** Nothing may link to `/index.html` (verify check 2). Flat pages (e.g. `/services.html`, `/privacy-policy.html`) keep their `.html` URL.

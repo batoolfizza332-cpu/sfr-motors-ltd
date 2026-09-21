@@ -318,6 +318,16 @@
       "source": "/mobile-tyre-fitting-bathgate-questions/",
       "destination": "/mobile-tyre-fitting-bathgate.html",
       "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting",
+      "destination": "/mobile-tyre-fitting.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting/",
+      "destination": "/mobile-tyre-fitting.html",
+      "statusCode": 301
     }
   ],
   "rewrites": [
