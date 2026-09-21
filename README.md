@@ -182,8 +182,9 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 > and trusted reviewers can look at the site; the intended **Production** host is the
 > owner's existing **Hostinger** hosting. The AWS S3 + CloudFront + Route 53 material in
 > this section, `infra/` and the runbook is the **previous plan, kept as reference** (no
-> AWS account or resource exists). The Hostinger deployment documentation is still to be
-> written; see `PROJECT-HANDOVER.md`.
+> AWS account or resource exists). The Hostinger release and rollback procedure is written for owner
+> review in `infra/HOSTINGER-RELEASE-RUNBOOK.md` (a plan only; nothing in it has been run). A read-only check on 2026-09-21 found
+> `sfrmotors.co.uk` already served by Hostinger/LiteSpeed with an earlier static build of this branch; see the runbook, section 1.
 >
 > **Vercel Preview.** `vercel.json` is generated from `infra/template.yaml` by
 > `node scripts/vercel-config.js` (redirects, pretty-path rewrites, the exact security
