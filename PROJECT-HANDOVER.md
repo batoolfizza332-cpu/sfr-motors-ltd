@@ -252,6 +252,7 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 * Privacy Policy "Effective Date" is a manual date; it does not state fixed retention periods (none were confirmed) and does not name a Data Protection Officer.
 * Lab performance numbers only (no Lighthouse installed, no field data). Real-user Core Web Vitals exist only after live traffic.
 * Page titles over 60 characters on some blog posts were left as approved.
+* **Article dates are deferred (owner decision).** The 22 Article JSON-LD entries carry no `datePublished` / `dateModified` and the pages show no dates. The WordPress export does hold dates for all 22, but they belong to the original WordPress text, which has been substantially rewritten (only 0-4% of the current wording is shared with it), and 20 of the WordPress `post_modified` values are one bulk save on 2026-08-25. Git commit dates are migration dates, not publication dates. Add Article dates only once reliable dates for the current content exist; do not use WordPress or Git dates as a substitute.
 * Sitemap `lastmod` dates are not automatically updated.
 
 ## 14. Tasks remaining before merge and deployment
