@@ -320,6 +320,16 @@
       "statusCode": 301
     },
     {
+      "source": "/mobile-tyre-fitting-broxburn.html",
+      "destination": "/broxburn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-broxburn.html/",
+      "destination": "/broxburn/",
+      "statusCode": 301
+    },
+    {
       "source": "/mobile-tyre-fitting",
       "destination": "/mobile-tyre-fitting.html",
       "statusCode": 301

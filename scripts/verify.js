@@ -1178,9 +1178,86 @@ function checkMobileTyreFittingUrl() {
 }
 
 // ---------------------------------------------------------------------------
+// Check 24: Broxburn has ONE indexable URL, /broxburn/
+// ---------------------------------------------------------------------------
+// Owner decision: https://sfrmotors.co.uk/broxburn/ (the original WordPress URL) is the only indexable Broxburn page. The duplicate
+// location page /mobile-tyre-fitting-broxburn.html was removed and must 301 straight to /broxburn/ (one hop, on CloudFront, Vercel and
+// Hostinger alike); nothing on the site may link to, list or canonicalise to it, and Home lists Broxburn once.
+function checkBroxburnUrl(pages) {
+  const check = "24. Broxburn URL";
+  const OLD_FILE = "mobile-tyre-fitting-broxburn.html";
+  const OLD_URL = `/${OLD_FILE}`;
+  const FINAL = "/broxburn/";
+  const finalUrl = `${PROD_DOMAIN}${FINAL}`;
+
+  // 1. The duplicate page is gone and nothing (pages, sitemap) refers to it any more.
+  if (fs.existsSync(path.join(SITE_DIR, OLD_FILE))) fail(check, `site/${OLD_FILE} exists again; /broxburn/ must be the only Broxburn page.`, `site/${OLD_FILE}`, "Delete it; the .html URL is a 301 to /broxburn/.");
+  for (const file of [...listHtmlFiles(), "sitemap.xml"]) {
+    if (readFile(file).includes("mobile-tyre-fitting-broxburn")) fail(check, `${file} refers to the removed ${OLD_URL}.`, `site/${file}`, `Link to ${FINAL} instead.`);
+  }
+
+  // 2. /broxburn/ itself: canonical and og:url, indexable, listed exactly once and nothing else Broxburn is in the sitemap.
+  const page = readFile("broxburn.html");
+  const canonical = (page.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
+  const ogUrl = (page.match(/<meta\s+property="og:url"\s+content="([^"]*)"/) || [])[1];
+  if (canonical !== finalUrl) fail(check, `broxburn.html canonical is ${canonical}; expected ${finalUrl}.`, "site/broxburn.html", `Set the canonical to ${finalUrl}.`);
+  if (ogUrl !== finalUrl) fail(check, `broxburn.html og:url is ${ogUrl}; expected ${finalUrl}.`, "site/broxburn.html", `Set og:url to ${finalUrl}.`);
+  if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(page)) fail(check, "broxburn.html is noindex; it must be the one indexable Broxburn URL.", "site/broxburn.html", "Remove noindex.");
+  const locs = [...readFile("sitemap.xml").matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]).filter((u) => /broxburn/i.test(u));
+  if (locs.length !== 1 || locs[0] !== finalUrl) fail(check, `sitemap.xml lists ${JSON.stringify(locs)} for Broxburn; expected exactly ["${finalUrl}"].`, "site/sitemap.xml", `List only ${finalUrl}.`);
+
+  // 3. Home's Areas We Cover lists Broxburn once, linking to /broxburn/.
+  const home = pages["index.html"] ? pages["index.html"].html : "";
+  const pins = [...home.matchAll(/<a class="sfr-areas__pin" href="([^"]*)"[^>]*>/g)].map((m) => m[1]).filter((h) => /broxburn/i.test(h));
+  if (pins.length !== 1 || pins[0] !== "broxburn/") fail(check, `Home lists Broxburn ${pins.length} time(s) (${JSON.stringify(pins)}); expected exactly one pin linking to broxburn/.`, "site/index.html", "Keep a single Broxburn pin linking to broxburn/.");
+
+  // 4. Routing: /broxburn/ is served (200) and never redirected; the removed .html URL 301s directly to it, whatever the protocol or host
+  //    (CloudFront Function, then the generated Hostinger .htaccess in both profiles, then vercel.json).
+  const { legacy, edgeFunction } = require("./vercel-config").loadRouting();
+  if (legacy[OLD_URL] !== FINAL) fail(check, `The legacy redirect table maps ${OLD_URL} to ${legacy[OLD_URL]}; expected ${FINAL}.`, "infra/template.yaml", `Add '${OLD_URL}': '${FINAL}' to the legacy table.`);
+  const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
+  for (const uri of [OLD_URL, `${OLD_URL}/`]) {
+    const out = edge(uri);
+    if (out.statusCode !== 301 || out.headers.location.value !== FINAL) fail(check, `CloudFront Function: ${uri} gives ${JSON.stringify(out.statusCode || out.uri)} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Fix the legacy table.");
+    const www = edge(uri, "www.example.test");
+    if (www.statusCode !== 301 || www.headers.location.value !== `https://example.test${FINAL}`) fail(check, `CloudFront Function: www ${uri} does not reach https://example.test${FINAL} in one hop.`, "infra/template.yaml", "Fix the www rule / legacy table.");
+  }
+  const served = edge(FINAL);
+  if (served.statusCode || served.uri !== "/broxburn.html") fail(check, `CloudFront Function: ${FINAL} gives ${JSON.stringify(served.statusCode || served.uri)}; expected an internal rewrite to /broxburn.html (200).`, "infra/template.yaml", `${FINAL} must be served, never redirected.`);
+  const viaFile = edge("/broxburn.html");
+  if (viaFile.statusCode !== 301 || viaFile.headers.location.value !== FINAL) fail(check, `CloudFront Function: /broxburn.html gives ${JSON.stringify(viaFile.statusCode || viaFile.uri)}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Keep broxburn in the same table.");
+
+  const { buildHtaccess, simulateApache } = require("./htaccess-config");
+  const distDir = path.join(ROOT, "dist");
+  const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
+  const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
+  const HOST = "example.test";
+  for (const profile of ["staging", "production"]) {
+    const ht = buildHtaccess(profile);
+    for (const req of [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }]) {
+      for (const uri of [OLD_URL, `${OLD_URL}/`]) {
+        const got = simulateApache(ht, { ...req, uri, query: "" }, { hasFile, isDir });
+        if (got.redirect !== `https://${HOST}${FINAL}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${uri}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${FINAL}.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+      }
+    }
+    const q = simulateApache(ht, { host: HOST, https: true, uri: OLD_URL, query: "utm=1" }, { hasFile, isDir });
+    if (q.redirect !== `https://${HOST}${FINAL}?utm=1`) fail(check, `.htaccess (${profile}): ${OLD_URL}?utm=1 gives ${JSON.stringify(q)}; expected a 301 to ${FINAL}?utm=1.`, "scripts/htaccess-config.js", "Keep the query string on redirects.");
+    const final = simulateApache(ht, { host: HOST, https: true, uri: FINAL, query: "" }, { hasFile, isDir });
+    if (final.file !== "/broxburn.html") fail(check, `.htaccess (${profile}): ${FINAL} gives ${JSON.stringify(final)}; expected the page to be served (200).`, "scripts/htaccess-config.js", `${FINAL} must be served, never redirected.`);
+  }
+  let vercel;
+  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
+  for (const source of [OLD_URL, `${OLD_URL}/`]) {
+    const rule = (vercel.redirects || []).find((r) => r.source === source);
+    if (!rule || rule.destination !== FINAL || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${FINAL}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
+  }
+  if ((vercel.redirects || []).some((r) => r.source === FINAL || r.source === FINAL.slice(0, -1))) fail(check, `vercel.json redirects ${FINAL} itself; it must be served with a 200.`, "vercel.json", "Only the .html sources may redirect.");
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 23;
+const TOTAL_CHECKS = 24;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1203,6 +1280,7 @@ async function main() {
   checkVercelConfig();
   checkHostingerHtaccess();
   checkMobileTyreFittingUrl();
+  checkBroxburnUrl(pages);
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();

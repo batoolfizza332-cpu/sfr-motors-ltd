@@ -397,6 +397,9 @@ Resources:
   #   /mobile-tyre-fitting and /mobile-tyre-fitting/ -> 301 -> the page's one
   #   canonical URL, /mobile-tyre-fitting.html (owner decision: .html is the only
   #   indexable URL; both extension-less forms redirect straight to it, one hop).
+  #   /mobile-tyre-fitting-broxburn.html -> 301 -> /broxburn/ (owner decision: /broxburn/,
+  #   the original WordPress URL, is the only indexable Broxburn page; the duplicate
+  #   .html location page was removed; one hop, also from www).
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
   #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
@@ -466,6 +469,7 @@ Resources:
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html',
+                '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
                 '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
             };
 

@@ -80,7 +80,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 
 ## 3. What has been done (summary)
 
-* Static site built from the approved WordPress audit: **57 sitemap pages** (32 on pretty paths) + a dedicated `404.html`.
+* Static site built from the approved WordPress audit: **56 sitemap pages** (32 on pretty paths) + a dedicated `404.html`.
 * All pretty-path pages use root-relative assets; all 1,817 internal links resolve; no local asset 404s; no nested asset paths.
 * Root `/favicon.ico` from the approved logo; multi-size ICO.
 * Accessibility: contrast fixes, keyboard focus, closed mobile menu no longer focusable, 44 px mobile targets, breadcrumb targets.
@@ -108,13 +108,13 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
   and mirrored by `CANONICAL_URL_OVERRIDES` in `scripts/verify.js`. Check 16 keeps them in sync.
   Examples: `/about-us/` -> `about.html`, `/contact-us/` -> `contact.html`, `/24-7-mobile-tyre-replacement/` -> `emergency-tyre-change.html`,
   `/broxburn/` -> `broxburn.html`, and 25 pages where slug = file name (`/blog/`, `/how-to-change-a-tyre/`, ...).
-* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages; `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` -> `/mobile-tyre-fitting.html` (one hop; verify check 23);
+* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages; `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` -> `/mobile-tyre-fitting.html` (one hop; verify check 23); `/mobile-tyre-fitting-broxburn.html` -> `/broxburn/` (owner decision: `/broxburn/` is the only Broxburn page; the duplicate `.html` location page was deleted; one hop, also from `www`; verify check 24);
   **`/index.html` -> `/`**; `www.<domain>` -> apex (single hop, path and query kept). Four internal links to blog `.html` posts intentionally still
   redirect (safe; could be normalised later).
 * **Home is `/`.** Nothing may link to `/index.html` (verify check 2). Flat pages (e.g. `/services.html`, `/privacy-policy.html`) keep their `.html` URL.
 * **404:** CloudFront serves `/404.html` with status 404 for any missing URL (it is `noindex`, has no canonical, uses root-relative assets).
 * The CloudFront Function must stay **under 10,240 bytes** and its comment **under 128 characters** (AWS hard limits) — check 16 enforces this.
-* Sitemap: `site/sitemap.xml` lists the 57 indexable pages using canonical URLs.
+* Sitemap: `site/sitemap.xml` lists the 56 indexable pages using canonical URLs.
 
 ## 5. Commands
 
@@ -123,7 +123,7 @@ Requires Node 18+ (developed on Node 26). Do not install new dependencies withou
 ```bash
 npm install                          # only if node_modules is missing
 npm run build                        # site/ -> dist/ (minified, content-hashed CSS/JS)
-npm run verify                       # build + 21 quality checks; must print QUALITY GATE: PASSED
+npm run verify                       # build + 24 quality checks; must print QUALITY GATE: PASSED
 git diff --check                     # whitespace / conflict markers
 node scripts/preview-edge.js 4174    # local production preview that models CloudFront redirects, 404, compression and the exact CSP
 node scripts/vercel-config.js        # regenerate vercel.json from infra/template.yaml (--check verifies it is in sync)
@@ -137,7 +137,7 @@ consent + Analytics (15); CloudFront Function limits/routing/404 (16); JSON-LD U
 production-hostname guards for Analytics and the WhatsApp form, run in a sandbox on production, localhost, `*.vercel.app` and look-alike hosts (20, `scripts/host-guard-tests.js`); the deployed-headers checker's mock tests
 (21, `scripts/check-vercel-deployment.test.js`: complete headers pass, missing/weakened noindex fail, a login redirect is "protected/unverified", non-`*.vercel.app` hosts are refused; no network).
 Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a zero-dependency Chrome DevTools-Protocol harness; it is **not** part of `verify`. Google is stubbed/blocked inside the browser and
-`https://sfrmotors.co.uk` is answered from the local server, so nothing reaches Google, WhatsApp or the live domain. Last full run: sweep 57/57 pages x 2 viewports, consent 156/156, functional 57/57, approved 76/76.
+`https://sfrmotors.co.uk` is answered from the local server, so nothing reaches Google, WhatsApp or the live domain. Last full run (before the Broxburn consolidation, when the sitemap had 57 pages): sweep 57/57 pages x 2 viewports, consent 156/156, functional 57/57, approved 76/76.
 
 ## 6. Analytics and cookie consent
 
@@ -211,7 +211,7 @@ Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a ze
 * `robots.txt`: `User-agent: *` **Allow: /** (normal search crawling and rendering assets allowed); **`OAI-SearchBot` explicitly allowed** (ChatGPT Search
   discovery); **`GPTBot` explicitly `Disallow: /`** (model training; independent of ChatGPT Search). CloudFront has no WAF/bot rule that blocks crawlers.
 * Important information is plain HTML (not JavaScript dependent). Do not add fake reviews, keyword stuffing or "AI optimisation" copy.
-* `/broxburn/` and `mobile-tyre-fitting-broxburn.html` are two different approved pages; both are linked from Home -> Areas We Cover and both are in the sitemap.
+* `/broxburn/` is the only Broxburn page (owner decision): the original WordPress URL, linked once from Home -> Areas We Cover and listed once in the sitemap. The duplicate `mobile-tyre-fitting-broxburn.html` was deleted and 301-redirects to it (verify check 24).
 
 ## 11. AWS design (previous plan, reference only — nothing has been created)
 
@@ -244,7 +244,6 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 * **The repository is Private, but its git history still contains the removed street address** (`39 S Loch Park`, `EH48 2QZ`, Plus Code) in earlier commits and in
   `SFR_Website_Info.txt` history. Anyone with repository access (and any Vercel/GitHub integration given access) can read it. Removing it from history requires a history rewrite, which is destructive and needs the owner's decision.
 * **Google Business Profile** may still show the address if it is configured that way; that is outside this repository (set it as a service-area business / hide the address there).
-* Two Broxburn pages have the same H1 ("Mobile Tyre Fitting Broxburn") and near-identical purpose — a duplicate-content risk (owner decision).
 * `aggregateRating` 4.9 / 282 is owner-supplied and not verified by the code; keep it truthful and current (Google may not show self-served review rich results).
 * The "See More Google Reviews" link on Home searches the business name in Google Maps; the Google listing itself controls what address (if any) it shows.
 * The CTA background photo is 1,920 px wide; it is upscaled about 1.33x on screens wider than about 2,500 px.
@@ -256,9 +255,9 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 
 ## 14. Tasks remaining before merge and deployment
 
-- [ ] Owner decisions: history rewrite yes/no; duplicate Broxburn page; whether to apply the Home photo-frame style to the seven other `about` frames.
+- [ ] Owner decisions: history rewrite yes/no; whether to apply the Home photo-frame style to the seven other `about` frames.
 - [ ] Google Business Profile set as service-area business (outside the repo).
-- [ ] Review the two Broxburn pages (duplicate H1 / content risk) and the history-rewrite question (owner decisions above).
+- [ ] Review the history-rewrite question (owner decision above).
 - [ ] Owner review of the protected Vercel Preview (visual check on desktop and phone). The next Preview deployment is not yet authorised; its application headers are still unverified.
 - [ ] Write the **Hostinger** deployment documentation (how `dist/` replaces WordPress; redirects, rewrites, headers/CSP and 404 on Hostinger; `www`; e-mail; backup and rollback). Do not assume Hostinger capabilities: verify them with the owner first.
 - [ ] Take the backups in runbook section A (WordPress, e-mail baseline, Search Console verification method); the AWS/Route 53 steps in the runbook are the previous plan.
@@ -269,7 +268,7 @@ This is the earlier plan, superseded by section 2A; it is kept so the redirect/r
 
 ```
 site/                     the website source (edit here)
-  *.html                  57 pages + 404.html (identical header/footer blocks; footer holds the company disclosure and Cookie settings button)
+  *.html                  56 pages + 404.html (identical header/footer blocks; footer holds the company disclosure and Cookie settings button)
   assets/css/main.css     one stylesheet; assets/js/main.js (nav, click-to-load map, quote form), analytics.js (consent + GA4), tyre-calculator.js
   assets/fonts/           roboto-latin-var.woff2 + OFL.txt
   assets/img/             AVIF/WebP images; robots.txt, sitemap.xml, favicon.ico
