@@ -1363,7 +1363,7 @@ function checkLocationLinks() {
 // ---------------------------------------------------------------------------
 // The migration audit says "Keep / Recreate at exact URL" for these pages, so each historical URL serves its page directly (status 200, no
 // redirect) and is its canonical; the page's old /<file>.html URL 301s to it in one hop. This holds on CloudFront, Vercel and Hostinger, with
-// and without the trailing slash. CONSOLIDATED_URLS are the audit's approved one-to-one 301s (weaker duplicate -> survivor). The restored articles and /our-tyre-range/ are listed too: they are served
+// and without the trailing slash. CONSOLIDATED_URLS are one-to-one 301s (weaker duplicate -> survivor): the audit's approved pairs and the two owner-directed ones. The restored articles and /our-tyre-range/ are listed too: they are served
 // at their exact URL like the location pages.
 const EXACT_URL_PAGES = {
   "/mobile-tyre-fitting-airdrie/": "mobile-tyre-fitting-airdrie.html",
@@ -1405,6 +1405,9 @@ const EXACT_URL_PAGES = {
 const CONSOLIDATED_URLS = {
   "/tyre-lifespan-mobile-tyre-repair-guide/": "/tyre-lifespan/",
   "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/": "/what-tools-do-mobile-tyre-fitters-use/",
+  // Owner-directed on 2026-09-18 (after the audit's "Keep at exact URL"): the finished text duplicates the survivor, see PROJECT-HANDOVER.md.
+  "/tyre-puncture-repair-near-me-west-lothian/": "/mobile-tyre-repair-edinburgh-west-lothian/",
+  "/tyres-bathgate-guide/": "/van-tyre-replacement-services/",
 };
 
 function checkHistoricalUrls(pages) {
