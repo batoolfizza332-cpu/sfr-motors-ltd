@@ -56,7 +56,7 @@ a { text-underline-offset: 2px; }
   justify-content: space-between;
   gap: 16px;
 }
-.sfr-topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+.sfr-topbar a { color: #fff; text-decoration: none; font-weight: 600; padding: 4px 0; margin: -4px 0; }
 .sfr-topbar a:hover { color: #ff9f40; text-decoration: underline; }
 .sfr-topbar__open {
   display: inline-flex;
@@ -132,7 +132,7 @@ a { text-underline-offset: 2px; }
   .sfr-header__brand { gap: 10px; }
   .sfr-header__brand picture { width: 62px; height: 62px; border-radius: 10px; }
   .sfr-header__brand-name { font-size: 18px; }
-  .sfr-header__brand-motto { font-size: 10.5px; }
+  .sfr-header__brand-motto { font-size: 11.5px; letter-spacing: .03em; }
 }
 @media (max-width: 1000px) {
   /* Below 1000px the seven nav links plus the larger lockup no longer fit on one row, so the menu collapses to a
@@ -520,7 +520,8 @@ a { text-underline-offset: 2px; }
     color:var(--sfr-ink);
     text-decoration:none;
     border-bottom:1.5px solid var(--sfr-orange);
-    padding-bottom:2px;
+    padding:5px 0 2px;
+    margin-top:-5px;
     width:fit-content;
   }
   .sfr-services__link svg{width:14px;height:14px;stroke:var(--sfr-orange);transition:transform .2s ease;}
@@ -1387,7 +1388,7 @@ a { text-underline-offset: 2px; }
   }
   .sfr-final__contact svg{width:20px;height:20px;}
   .sfr-final__contact-label{
-    font-size:11.5px;
+    font-size:12px;
     font-weight:700;
     letter-spacing:.06em;
     text-transform:uppercase;
@@ -1568,6 +1569,9 @@ a { text-underline-offset: 2px; }
 
   .sfr-footer__links{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
   .sfr-footer__links a{
+    display:inline-block;
+    padding:4px 0;
+    margin:-4px 0;
     font-size:14px;
     color:var(--sfr-body);
     text-decoration:none;
@@ -1775,9 +1779,9 @@ a { text-underline-offset: 2px; }
 .sfr-map__load:focus-visible,.sfr-map__consent-text a:focus-visible{outline:3px solid var(--sfr-ink);outline-offset:3px;}
 .sfr-map__note{margin:14px 0 0;font-size:13px;color:var(--sfr-sub);}
 .sfr-map__directions{
-  display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+  display:inline-flex;align-items:center;gap:8px;margin-top:13px;
   font-size:14px;font-weight:700;color:var(--sfr-ink);text-decoration:none;
-  border-bottom:1.5px solid var(--sfr-orange);padding-bottom:2px;
+  border-bottom:1.5px solid var(--sfr-orange);padding:5px 0 2px;
 }
 .sfr-map__directions:hover{color:#ff7f00;}
 .sfr-map__directions svg{width:14px;height:14px;}
@@ -1856,7 +1860,7 @@ a { text-underline-offset: 2px; }
 .sfr-operate__link{
   display:inline-flex;align-items:center;gap:7px;
   font-size:14px;font-weight:700;color:var(--sfr-ink);text-decoration:none;
-  border-bottom:1.5px solid var(--sfr-orange);padding-bottom:2px;
+  border-bottom:1.5px solid var(--sfr-orange);padding:5px 0 2px;margin-top:-5px;
 }
 .sfr-operate__link:hover{color:#ff7f00;}
 .sfr-operate__link svg{width:14px;height:14px;}
@@ -1994,7 +1998,7 @@ a { text-underline-offset: 2px; }
 }
 .sfr-calc__field input:focus{outline:none;border-color:var(--sfr-orange);box-shadow:0 0 0 3px rgba(255,127,0,.2);}
 .sfr-calc__field input[aria-invalid="true"]{border-color:#e05c50;}
-.sfr-calc__hint{font-size:11.5px;color:var(--sfr-sub);}
+.sfr-calc__hint{font-size:12px;color:var(--sfr-sub);}
 .sfr-calc__error{font-size:12.5px;font-weight:600;color:#ff8a80;min-height:15px;display:block;}
 .sfr-calc__actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
 .sfr-calc__btn{
