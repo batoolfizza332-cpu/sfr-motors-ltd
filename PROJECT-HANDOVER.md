@@ -123,7 +123,7 @@ Requires Node 18+ (developed on Node 26). Do not install new dependencies withou
 ```bash
 npm install                          # only if node_modules is missing
 npm run build                        # site/ -> dist/ (minified, content-hashed CSS/JS)
-npm run verify                       # build + 24 quality checks; must print QUALITY GATE: PASSED
+npm run verify                       # build + 25 quality checks; must print QUALITY GATE: PASSED
 git diff --check                     # whitespace / conflict markers
 node scripts/preview-edge.js 4174    # local production preview that models CloudFront redirects, 404, compression and the exact CSP
 node scripts/vercel-config.js        # regenerate vercel.json from infra/template.yaml (--check verifies it is in sync)
@@ -212,6 +212,7 @@ Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a ze
   discovery); **`GPTBot` explicitly `Disallow: /`** (model training; independent of ChatGPT Search). CloudFront has no WAF/bot rule that blocks crawlers.
 * Important information is plain HTML (not JavaScript dependent). Do not add fake reviews, keyword stuffing or "AI optimisation" copy.
 * `/broxburn/` is the only Broxburn page (owner decision): the original WordPress URL, linked once from Home -> Areas We Cover and listed once in the sitemap. The duplicate `mobile-tyre-fitting-broxburn.html` was deleted and 301-redirects to it (verify check 24).
+* **Location-to-location links (owner-approved, Medium Issue #3):** 22 plain-town-name links inside the "Across <town> And The Surrounding Area" paragraph (`sfr-loc-areas-heading`) of the West Lothian hub, Bathgate, Whitburn, Armadale, Blackburn, Harthill, Shotts, Wishaw, West Calder, Addiewell and Kirkliston, each on a neighbouring town that the existing copy already names. No wording was changed; Broxburn is only ever linked as `/broxburn/`. Airdrie, Bo'ness and Kirkliston still have only the Home link as an inbound body link (no honest existing sentence; new wording needs owner approval). Verify check 25 protects the link map and rejects keyword-phrase anchors.
 
 ## 11. AWS design (previous plan, reference only — nothing has been created)
 

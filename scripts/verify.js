@@ -1255,9 +1255,66 @@ function checkBroxburnUrl(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 25: approved location-to-location links (Medium Issue #3)
+// ---------------------------------------------------------------------------
+// Owner-approved link map: inside the "Across <town> And The Surrounding Area" paragraph (section sfr-loc-areas-heading, the
+// <p class="sfr-band__text">) of these location pages, the neighbouring towns the existing copy already names are links to their
+// pages. Only that paragraph is protected here. Each entry is [visible town name, href]; the anchor text is always the plain town
+// name, never a keyword phrase, and Broxburn is only ever linked as /broxburn/.
+const LOCATION_LINK_MAP = {
+  "mobile-tyre-fitting-west-lothian.html": [["Bathgate", "mobile-tyre-fitting-bathgate.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"], ["Blackburn", "mobile-tyre-fitting-blackburn.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"], ["Broxburn", "/broxburn/"], ["Linlithgow", "mobile-tyre-fitting-linlithgow.html"], ["West Calder", "mobile-tyre-fitting-west-calder.html"], ["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
+  "mobile-tyre-fitting-bathgate.html": [["Livingston", "mobile-tyre-fitting-livingston.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"], ["Blackburn", "mobile-tyre-fitting-blackburn.html"]],
+  "mobile-tyre-fitting-whitburn.html": [["Blackburn", "mobile-tyre-fitting-blackburn.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"]],
+  "mobile-tyre-fitting-armadale.html": [["Whitburn", "mobile-tyre-fitting-whitburn.html"]],
+  "mobile-tyre-fitting-blackburn.html": [["Whitburn", "mobile-tyre-fitting-whitburn.html"]],
+  "mobile-tyre-fitting-harthill.html": [["Armadale", "mobile-tyre-fitting-armadale.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"]],
+  "mobile-tyre-fitting-shotts.html": [["Harthill", "mobile-tyre-fitting-harthill.html"], ["Wishaw", "mobile-tyre-fitting-wishaw.html"]],
+  "mobile-tyre-fitting-wishaw.html": [["Shotts", "mobile-tyre-fitting-shotts.html"]],
+  "mobile-tyre-fitting-west-calder.html": [["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
+  "mobile-tyre-fitting-addiewell.html": [["West Calder", "mobile-tyre-fitting-west-calder.html"]],
+  "mobile-tyre-fitting-kirkliston.html": [["Broxburn", "/broxburn/"]],
+};
+// Every location page; an anchor in the paragraph above may only be one of these plain town names.
+const LOCATION_PAGE_FILES = ["broxburn.html", "mobile-tyre-fitting-addiewell.html", "mobile-tyre-fitting-airdrie.html", "mobile-tyre-fitting-armadale.html", "mobile-tyre-fitting-bathgate.html", "mobile-tyre-fitting-blackburn.html", "mobile-tyre-fitting-boness.html", "mobile-tyre-fitting-edinburgh.html", "mobile-tyre-fitting-falkirk.html", "mobile-tyre-fitting-harthill.html", "mobile-tyre-fitting-kirkliston.html", "mobile-tyre-fitting-linlithgow.html", "mobile-tyre-fitting-livingston.html", "mobile-tyre-fitting-shotts.html", "mobile-tyre-fitting-west-calder.html", "mobile-tyre-fitting-west-lothian.html", "mobile-tyre-fitting-whitburn.html", "mobile-tyre-fitting-wishaw.html"];
+const LOCATION_TOWN_NAMES = new Set(["Addiewell", "Airdrie", "Armadale", "Bathgate", "Blackburn", "Bo’ness", "Broxburn", "Edinburgh", "Falkirk", "Harthill", "Kirkliston", "Linlithgow", "Livingston", "Shotts", "West Calder", "West Lothian", "Whitburn", "Wishaw"]);
+
+function checkLocationLinks() {
+  const check = "25. Location links";
+  // The one paragraph that names the neighbouring towns on a location page.
+  const areasParagraph = (file) => {
+    const section = (readFile(file).match(/<section\b[^>]*aria-labelledby="sfr-loc-areas-heading"[\s\S]*?<\/section>/) || [""])[0];
+    return (section.match(/<p class="sfr-band__text">([\s\S]*?)<\/p>/) || [null, null])[1];
+  };
+  const anchorsOf = (paragraph) => [...paragraph.matchAll(/<a\b[^>]*\shref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)]
+    .map((m) => [m[2].replace(/<[^>]+>/g, "").replace(/&rsquo;/g, "’").replace(/\s+/g, " ").trim(), m[1]]);
+
+  // 1. The approved map is present exactly: same anchors, same hrefs, nothing extra in that paragraph.
+  for (const [file, expected] of Object.entries(LOCATION_LINK_MAP)) {
+    const paragraph = areasParagraph(file);
+    if (paragraph === null) { fail(check, `${file} has no sfr-loc-areas-heading paragraph.`, `site/${file}`, "Restore the neighbouring-towns paragraph."); continue; }
+    const got = anchorsOf(paragraph).map((a) => a.join(" -> ")).sort();
+    const want = expected.map((a) => a.join(" -> ")).sort();
+    if (JSON.stringify(got) !== JSON.stringify(want)) fail(check, `${file}: the neighbouring-towns paragraph links ${JSON.stringify(got)}; the approved map is ${JSON.stringify(want)}.`, `site/${file}`, "Restore the approved links (plain town name as the anchor text) or update LOCATION_LINK_MAP in scripts/verify.js with the owner's approval.");
+    for (const [, href] of expected) {
+      const target = href === "/broxburn/" ? "broxburn.html" : href;
+      if (!fs.existsSync(path.join(SITE_DIR, target))) fail(check, `${file} links to ${href}, but site/${target} does not exist.`, `site/${file}`, "Point the link at an existing page.");
+    }
+  }
+
+  // 2. No keyword-stuffed anchors: on any location page, a link in that paragraph must be a plain town name, never a phrase.
+  for (const file of LOCATION_PAGE_FILES) {
+    const paragraph = areasParagraph(file);
+    if (paragraph === null) continue;
+    for (const [text] of anchorsOf(paragraph)) {
+      if (!LOCATION_TOWN_NAMES.has(text)) fail(check, `${file}: the anchor text "${text}" is not a plain town name.`, `site/${file}`, "Use only the town name (for example Whitburn) as the anchor text; no keyword phrases.");
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 24;
+const TOTAL_CHECKS = 25;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1281,6 +1338,7 @@ async function main() {
   checkHostingerHtaccess();
   checkMobileTyreFittingUrl();
   checkBroxburnUrl(pages);
+  checkLocationLinks();
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();
