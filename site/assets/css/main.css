@@ -1613,7 +1613,7 @@ a { text-underline-offset: 2px; }
   @media (max-width:560px){
     .sfr-footer__top{grid-template-columns:1fr;}
     .sfr-footer__call{min-height:48px;}
-    .sfr-footer__contact a{display:inline-block;padding:8px 0;margin:-8px 0;} /* bigger tap area, same visual spacing */
+    .sfr-footer__contact a{display:inline-block;padding:5px 0;margin:-5px 0;} /* bigger tap area, same visual spacing */
   }
   @media (prefers-reduced-motion:reduce){
     .sfr-footer__call,.sfr-footer__links a,.sfr-footer__contact a{transition:none;}
