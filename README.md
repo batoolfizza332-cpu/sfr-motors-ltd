@@ -225,8 +225,9 @@ block per issue found, and exits non-zero — safe to wire into CI as-is.
 > HTTPS, the 404 page for 403/404, the security headers and the caching policy. `npm run build:hostinger`
 > builds `dist/` and adds `dist/.htaccess` (staging profile: `X-Robots-Tag: noindex, nofollow` and a
 > short HSTS, `max-age=300`); the plain `npm run build` never contains it. `npm run verify` (check 22)
-> proves the rules route every URL like the CloudFront Function. The `production` profile (exact
-> template headers, indexable) exists for the later launch and is not deployed. Upload `dist/` only to the
+> proves the rules route every URL like the CloudFront Function. The `production` profile (the template
+> headers, indexable, with HSTS `max-age=31536000` only: no `includeSubDomains`, no `preload`) is for
+> the launch. Upload `dist/` only to the
 > document root of an isolated, owner-approved staging (sub)domain; never to a folder that holds another
 > site. The behaviour on Hostinger's real server is unverified until that staging test is run.
 

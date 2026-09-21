@@ -1046,10 +1046,16 @@ function checkHostingerHtaccess() {
     return;
   }
   const headerLine = (h) => `Header always set ${h.key} "${h.value}"`;
-  // production = the approved security headers verbatim and indexable; staging = the same plus noindex and a short HSTS only.
+  // The approved security headers verbatim in both profiles, except HSTS: staging uses a short one, production a plain one-year one
+  // (owner decision: no includeSubDomains/preload, so other subdomains of the domain are never forced onto HTTPS).
   for (const h of security) {
+    if (h.key === "Strict-Transport-Security") continue;
     if (!production.includes(headerLine(h))) fail(check, `The production profile is missing or changed the ${h.key} header from infra/template.yaml.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
-    if (h.key !== "Strict-Transport-Security" && !staging.includes(headerLine(h))) fail(check, `The staging profile is missing or changed the ${h.key} header from infra/template.yaml.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+    if (!staging.includes(headerLine(h))) fail(check, `The staging profile is missing or changed the ${h.key} header from infra/template.yaml.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+  }
+  const hstsLines = production.split("\n").filter((line) => /Strict-Transport-Security/.test(line));
+  if (hstsLines.length !== 1 || hstsLines[0].trim() !== 'Header always set Strict-Transport-Security "max-age=31536000"' || /preload|includeSubDomains/i.test(production)) {
+    fail(check, "The production HSTS must be exactly max-age=31536000 (no includeSubDomains, no preload).", "scripts/htaccess-config.js", "Set PRODUCTION_HSTS to max-age=31536000 and keep includeSubDomains/preload out.");
   }
   if (/x-robots-tag/i.test(production)) fail(check, "The production profile carries X-Robots-Tag; the real website must stay indexable.", "scripts/htaccess-config.js", "Keep noindex staging-only.");
   if (!staging.includes('Header always set X-Robots-Tag "noindex, nofollow"')) fail(check, "The staging profile must send X-Robots-Tag noindex, nofollow.", "scripts/htaccess-config.js", "Restore the staging noindex header.");

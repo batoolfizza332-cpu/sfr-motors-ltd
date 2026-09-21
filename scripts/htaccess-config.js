@@ -9,7 +9,9 @@
 //   staging     a review copy on a temporary Hostinger host. Adds "X-Robots-Tag: noindex, nofollow" and uses a SHORT
 //               HSTS (max-age=300, no includeSubDomains/preload): a 2-year preload HSTS on an unknown throw-away
 //               domain could lock browsers out of sibling sites on the same Hostinger account.
-//   production  exactly the security headers of infra/template.yaml, indexable. Only for the future launch.
+//   production  the security headers of infra/template.yaml, indexable, with ONE owner-approved difference: HSTS is
+//               max-age=31536000 only (no includeSubDomains/preload), so it cannot force HTTPS onto other subdomains
+//               of the domain (e.g. inventory.) or become hard to undo. infra/template.yaml itself is unchanged.
 //
 // The file is written into dist/ ONLY by `npm run build:hostinger`. The normal `npm run build` (used by Vercel and the
 // S3 sync) never contains it, so a public S3 bucket or Vercel deployment can never end up serving an .htaccess.
@@ -27,6 +29,7 @@ const { loadRouting, loadSecurityHeaders } = require("./vercel-config");
 
 const PROFILES = ["staging", "production"];
 const STAGING_HSTS = "max-age=300";
+const PRODUCTION_HSTS = "max-age=31536000";
 const NOINDEX = "noindex, nofollow";
 
 // Only the client's ORIGINAL request line contains ".html" in its path. Apache re-runs .htaccess after an internal
@@ -40,7 +43,7 @@ function buildHtaccess(profile = "staging") {
   if (!PROFILES.includes(profile)) throw new Error(`Unknown profile "${profile}" (use ${PROFILES.join(" or ")})`);
   const { special, same, legacy } = loadRouting();
   const headers = loadSecurityHeaders().map((h) =>
-    h.key === "Strict-Transport-Security" && profile === "staging" ? { key: h.key, value: STAGING_HSTS } : h
+    h.key === "Strict-Transport-Security" ? { key: h.key, value: profile === "staging" ? STAGING_HSTS : PRODUCTION_HSTS } : h
   );
   if (profile === "staging") headers.push({ key: "X-Robots-Tag", value: NOINDEX });
 
