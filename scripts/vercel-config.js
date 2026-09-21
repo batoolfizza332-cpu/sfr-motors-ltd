@@ -83,9 +83,9 @@ function buildConfig() {
     // (the spec for the real hosting) must never carry it, and verify check 19 enforces both sides.
     { source: "/(.*)", headers: [...loadSecurityHeaders(template), REVIEW_COPY_ROBOTS_HEADER] },
     // The same policy infra/deploy-site.sh applies on S3: css/img/fonts and the content-hashed scripts never change
-    // under the same name; assets/js/tyre-calculator.js is not hashed, so it keeps Vercel's revalidating default.
+    // under the same name (the calculator script is content-hashed like main and analytics).
     cache("/assets/(css|img|fonts)/(.*)", "public, max-age=31536000, immutable"),
-    cache("/assets/js/(main|analytics)\\.([0-9a-f]+)\\.js", "public, max-age=31536000, immutable"),
+    cache("/assets/js/(main|analytics|tyre-calculator)\\.([0-9a-f]+)\\.js", "public, max-age=31536000, immutable"),
     cache("/robots.txt", "public, max-age=3600"),
     cache("/sitemap.xml", "public, max-age=3600"),
     cache("/favicon.ico", "public, max-age=3600"),

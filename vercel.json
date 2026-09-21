@@ -812,7 +812,7 @@
       ]
     },
     {
-      "source": "/assets/js/(main|analytics)\\.([0-9a-f]+)\\.js",
+      "source": "/assets/js/(main|analytics|tyre-calculator)\\.([0-9a-f]+)\\.js",
       "headers": [
         {
           "key": "Cache-Control",

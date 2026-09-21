@@ -1397,9 +1397,61 @@ function checkHistoricalUrls(pages) {
 }
 
 // ---------------------------------------------------------------------------
+// Check 27: every script is content-hashed, cached as immutable, and served with the modern JavaScript MIME type
+// ---------------------------------------------------------------------------
+// Each site/assets/js/<name>.js is built to a single dist/assets/js/<name>.<hash>.js (so an edit gets a new URL) and only that name is shipped
+// and referenced. The generated Hostinger .htaccess and vercel.json cache every hashed file for a year (an unhashed script would otherwise be
+// left to the host's default, or, on the old S3 plan, cached for a year under a name that never changes) and the .htaccess maps .js to
+// text/javascript instead of the legacy application/x-javascript some hosts default to.
+function checkScriptCachingAndMime() {
+  const check = "27. Script caching & MIME";
+  const distAssets = path.join(ROOT, "dist", "assets");
+  const jsDir = path.join(distAssets, "js");
+  if (!fs.existsSync(jsDir)) { fail(check, "dist/assets/js does not exist (build first).", "scripts/build.js", "Run the build."); return; }
+  const distJs = fs.readdirSync(jsDir);
+  const srcJs = fs.readdirSync(path.join(SITE_DIR, "assets", "js")).filter((f) => f.endsWith(".js"));
+
+  // 1. One hashed build per script, no unhashed copy, and every built page references only hashed, existing scripts.
+  for (const f of srcJs) {
+    const base = f.slice(0, -3);
+    const hashed = distJs.filter((d) => new RegExp(`^${base}\\.[0-9a-f]{8}\\.js$`).test(d));
+    if (hashed.length !== 1) fail(check, `assets/js/${f} produced ${hashed.length} hashed files in dist (expected 1).`, "scripts/build.js", "Build it with buildJs() and list it in the asset map.");
+    if (distJs.includes(f)) fail(check, `dist/assets/js/${f} is shipped un-hashed.`, "scripts/build.js", "Add it to buildJs() and to the skip list in copyStaticFiles().");
+  }
+  for (const page of fs.readdirSync(path.join(ROOT, "dist")).filter((f) => f.endsWith(".html"))) {
+    const html = fs.readFileSync(path.join(ROOT, "dist", page), "utf8");
+    for (const m of html.matchAll(/<script\b[^>]*\ssrc="(\/?assets\/js\/[^"]+)"/g)) {
+      if (!/\.[0-9a-f]{8}\.js$/.test(m[1])) fail(check, `dist/${page} loads the un-hashed script ${m[1]}.`, "scripts/build.js", "Rewrite the reference to the hashed file.");
+      else if (!distJs.includes(m[1].split("/").pop())) fail(check, `dist/${page} loads ${m[1]}, which is not in dist.`, "scripts/build.js", "Fix the asset map.");
+    }
+  }
+
+  // 2. Hostinger .htaccess (both profiles): immutable rule matches every hashed css/js file; .js is text/javascript.
+  const hashedFiles = [...distJs, ...(fs.existsSync(path.join(distAssets, "css")) ? fs.readdirSync(path.join(distAssets, "css")) : [])].filter((f) => /\.[0-9a-f]{8}\.(css|js)$/.test(f));
+  const { buildHtaccess } = require("./htaccess-config");
+  for (const profile of ["staging", "production"]) {
+    const ht = buildHtaccess(profile);
+    const rule = (ht.match(/<FilesMatch "(\^\([^"]*\[0-9a-f\]\{8\}[^"]*)">\s*\n\s*Header set Cache-Control "public, max-age=31536000, immutable"/) || [])[1];
+    if (!rule) { fail(check, `.htaccess (${profile}) has no immutable cache rule for the hashed css/js files.`, "scripts/htaccess-config.js", "Restore the FilesMatch rule."); continue; }
+    const rx = new RegExp(rule);
+    for (const f of hashedFiles) if (!rx.test(f)) fail(check, `.htaccess (${profile}) does not cache ${f} as immutable (rule ${rule}).`, "scripts/htaccess-config.js", "Add its name to the hashed-asset FilesMatch.");
+    if (!/^\s*AddType text\/javascript \.js\s*$/m.test(ht)) fail(check, `.htaccess (${profile}) does not map .js to text/javascript.`, "scripts/htaccess-config.js", "Add AddType text/javascript .js.");
+    if (/x-javascript/.test(ht)) fail(check, `.htaccess (${profile}) uses the legacy application/x-javascript type.`, "scripts/htaccess-config.js", "Use text/javascript.");
+  }
+
+  // 3. vercel.json: an immutable cache rule matches every hashed script.
+  let vercel;
+  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
+  const rules = (vercel.headers || []).filter((h) => (h.headers || []).some((x) => x.key === "Cache-Control" && /immutable/.test(x.value)));
+  for (const f of distJs.filter((d) => /\.[0-9a-f]{8}\.js$/.test(d))) {
+    if (!rules.some((r) => new RegExp(`^${r.source}$`).test(`/assets/js/${f}`))) fail(check, `vercel.json does not cache /assets/js/${f} as immutable.`, "scripts/vercel-config.js", "Add its name to the hashed-script cache rule and regenerate vercel.json.");
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 26;
+const TOTAL_CHECKS = 27;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1425,6 +1477,7 @@ async function main() {
   checkBroxburnUrl(pages);
   checkLocationLinks();
   checkHistoricalUrls(pages);
+  checkScriptCachingAndMime();
   checkHostGuards();
   await checkDeploymentChecker();
   checkGitDiff();
