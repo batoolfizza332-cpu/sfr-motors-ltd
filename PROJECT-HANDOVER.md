@@ -61,7 +61,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
   `VERCEL_AUTOMATION_BYPASS_SECRET`; whether the remaining Preview holds a value is **unverified**, and any such value could remain until a redeploy replaces that deployment. **No redeploy is authorised yet.**
   **Never create a protection-bypass secret, a shareable link or any protection exception without explicit owner approval**, and never use `vercel curl` (or `--protection-bypass`) to get around Vercel Authentication.
 * **Configuration:** `vercel.json` is **generated** from `infra/template.yaml` by `node scripts/vercel-config.js` (never edit it by hand): 301 redirects for every
-  `/<file>.html` of a pretty page, the legacy WordPress URLs (15 original plus 17 historical location/page URLs, below) and `/mobile-tyre-fitting` (with/without trailing slash, the latter -> `/mobile-tyre-fitting.html`, its only indexable URL) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
+  `/<file>.html` of a pretty page, the legacy WordPress URLs (below) and `/mobile-tyre-fitting` (with/without trailing slash, the latter -> `/mobile-tyre-fitting.html`, its only indexable URL) and `/index.html` -> `/`; internal rewrites for the 32 pretty paths;
   the exact security headers and CSP of the CloudFront policy; 1-year immutable caching for `assets/` css/img/fonts and the hashed scripts, 1 hour for `robots.txt`,
   `sitemap.xml`, `favicon.ico`; `dist/404.html` for missing URLs (Vercel serves it with status 404). Vercel builds with `npm run build` and publishes `dist/`.
   `npm run verify` check 19 fails if `vercel.json` drifts from the template or routes any URL differently from the CloudFront Function. `www` -> apex does not apply
@@ -80,7 +80,7 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 
 ## 3. What has been done (summary)
 
-* Static site built from the approved WordPress audit: **56 sitemap pages** (32 on pretty paths) + a dedicated `404.html`.
+* Static site built from the approved WordPress audit: **56 sitemap pages** (49 on pretty paths) + a dedicated `404.html`.
 * All pretty-path pages use root-relative assets; all 1,817 internal links resolve; no local asset 404s; no nested asset paths.
 * Root `/favicon.ico` from the approved logo; multi-size ICO.
 * Accessibility: contrast fixes, keyboard focus, closed mobile menu no longer focusable, 44 px mobile targets, breadcrumb targets.
@@ -103,14 +103,14 @@ bucket (Origin Access Control, Block Public Access). GitHub Actions can deploy w
 
 ## 4. URLs and routing rules (do not change without the owner)
 
-* **Pretty paths** (32 pages, served from differently named or same-named `.html` files) and their canonicals are defined once in the CloudFront
+* **Pretty paths** (49 pages, served from differently named or same-named `.html` files) and their canonicals are defined once in the CloudFront
   Function tables in `infra/template.yaml` (`special` = slug -> file where names differ, `same` = slug equals file name, `legacy` = old WordPress URLs),
   and mirrored by `CANONICAL_URL_OVERRIDES` in `scripts/verify.js`. Check 16 keeps them in sync.
   Examples: `/about-us/` -> `about.html`, `/contact-us/` -> `contact.html`, `/24-7-mobile-tyre-replacement/` -> `emergency-tyre-change.html`,
-  `/broxburn/` -> `broxburn.html`, and 25 pages where slug = file name (`/blog/`, `/how-to-change-a-tyre/`, ...).
-* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages; 17 historical WordPress URLs that the migration audit keeps ("Keep / Recreate at exact URL") but whose page is a flat `.html` here -> 301 -> that page's `.html` canonical: `/mobile-tyre-fitting-<town>/` for airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston, shotts, west-calder, west-lothian, whitburn, wishaw, plus `/mobile-tyre-fitting-in-addiewell/` -> `/mobile-tyre-fitting-addiewell.html`, `/mobile-locking-wheel-nut-removal/`, `/privacy-policy/`, `/trade-fleet-tyre-services/` (one hop, also from `www`; verify check 26). **Not redirected, owner decision needed:** `/our-tyre-range/` (no page on this branch) and the audit's blog URLs that were never built here; `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` -> `/mobile-tyre-fitting.html` (one hop; verify check 23); `/mobile-tyre-fitting-broxburn.html` -> `/broxburn/` (owner decision: `/broxburn/` is the only Broxburn page; the duplicate `.html` location page was deleted; one hop, also from `www`; verify check 24);
+  `/broxburn/` -> `broxburn.html`, and 41 pages where slug = file name (`/blog/`, `/how-to-change-a-tyre/`, `/mobile-tyre-fitting-whitburn/`, `/privacy-policy/`, ...); `/mobile-tyre-fitting-in-addiewell/` -> `mobile-tyre-fitting-addiewell.html`.
+* **Redirects (301):** every `/<file>.html` of a pretty page -> its pretty URL; 15 legacy WordPress URLs (with/without trailing slash) -> their new pages; the 17 audit-kept WordPress URLs are **served directly (200) at their exact URL** and their old `/<file>.html` 301s to them (`/mobile-tyre-fitting-<town>/` for airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston, shotts, west-calder, west-lothian, whitburn, wishaw; `/mobile-tyre-fitting-in-addiewell/` (file `mobile-tyre-fitting-addiewell.html`); `/mobile-locking-wheel-nut-removal/`; `/privacy-policy/`; `/trade-fleet-tyre-services/`; both with and without the trailing slash; verify check 26). **Not built, owner decision needed:** `/our-tyre-range/` and the audit's other unbuilt URLs (see section 14); `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` -> `/mobile-tyre-fitting.html` (one hop; verify check 23); `/mobile-tyre-fitting-broxburn.html` -> `/broxburn/` (owner decision: `/broxburn/` is the only Broxburn page; the duplicate `.html` location page was deleted; one hop, also from `www`; verify check 24);
   **`/index.html` -> `/`**; `www.<domain>` -> apex (single hop, path and query kept). No internal link points at a redirecting URL (the four links to blog `.html` posts were normalised to their canonical pretty URLs; verify check 2 now fails on a link to a pretty page's `.html` form).
-* **Home is `/`.** Nothing may link to `/index.html` (verify check 2). Flat pages (e.g. `/services.html`, `/privacy-policy.html`) keep their `.html` URL.
+* **Home is `/`.** Nothing may link to `/index.html` (verify check 2). Flat pages (e.g. `/services.html`, `/mobile-tyre-fitting.html`) keep their `.html` URL.
 * **Scripts:** `main.js`, `analytics.js` and `tyre-calculator.js` are all content-hashed by the build (`tyre-calculator.<hash>.js`) and cached as immutable for a year by the generated Hostinger `.htaccess` and `vercel.json`; the `.htaccess` also serves `.js` as `text/javascript` (some hosts default to the legacy `application/x-javascript`). Whether Hostinger honours that `AddType` is unverified until a real deployment. Verify check 27 protects all of this.
 * **404:** CloudFront serves `/404.html` with status 404 for any missing URL (it is `noindex`, has no canonical, uses root-relative assets).
 * The CloudFront Function must stay **under 10,240 bytes** and its comment **under 128 characters** (AWS hard limits) — check 16 enforces this.

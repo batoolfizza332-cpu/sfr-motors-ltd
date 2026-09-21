@@ -114,7 +114,7 @@ async function suite(label, viewport) {
   p.reset(); await p.goto(HOST + "/"); await noNav(p); await sleep(900);
   check("persists across reload: banner not shown", !(await visible(p, ".sfr-consent__card")));
   check("Cookie settings control visible in footer", await visible(p, ".sfr-footer [data-sfr-cookie-settings]"));
-  for (const pth of ["/services.html", "/about-us/", "/mobile-tyre-fitting-bathgate.html"]) {
+  for (const pth of ["/services.html", "/about-us/", "/mobile-tyre-fitting-bathgate/"]) {
     p.reset(); await p.goto(HOST + pth); await noNav(p); await sleep(700);
     check(`persists on ${pth}: no banner, no gtag, no collect`, !(await visible(p, ".sfr-consent__card")) && gtagLoads(p) === 0 && collects(p).length === 0);
   }

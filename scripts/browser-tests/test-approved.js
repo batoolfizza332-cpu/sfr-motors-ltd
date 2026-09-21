@@ -61,7 +61,7 @@ function robotsAllows(txt, agent, p) {
     await p.close();
   }
   // layout shift with the self-hosted font (baseline before: desktop Home 0.010, About 0.015, Privacy 0.016; mobile 0.000)
-  for (const [w, h, mob] of [[375, 812, true], [1280, 720, false]]) for (const u of ["/", "/about-us/", "/contact-us/", "/privacy-policy.html", "/mobile-tyre-fitting-bathgate.html"]) {
+  for (const [w, h, mob] of [[375, 812, true], [1280, 720, false]]) for (const u of ["/", "/about-us/", "/contact-us/", "/privacy-policy/", "/mobile-tyre-fitting-bathgate/"]) {
     const p = await mk(w, h, mob); await p.S("Page.addScriptToEvaluateOnNewDocument", { source: `window.__cls=0;new PerformanceObserver(l=>{for(const e of l.getEntries())if(!e.hadRecentInput)window.__cls+=e.value}).observe({type:"layout-shift",buffered:true})` });
     await p.goto(H + u); await sleep(1500); const cls = await p.eval("window.__cls"); t(cls < 0.05, `CLS ${cls.toFixed(4)} at ${w}px on ${u} (< 0.05, no regression from self-hosting)`, cls); await p.close();
   }
@@ -109,7 +109,7 @@ function robotsAllows(txt, agent, p) {
 
   // ================= shared footer / layout on representative pages =================
   for (const [w, h, mob] of [[375, 812, true], [1280, 720, false]]) {
-    for (const [name, u] of [["home", "/"], ["contact", "/contact-us/"], ["privacy", "/privacy-policy.html"], ["location", "/mobile-tyre-fitting-bathgate.html"], ["service", "/mobile-tyre-fitting.html"], ["notfound", "/no/such/page/"]]) {
+    for (const [name, u] of [["home", "/"], ["contact", "/contact-us/"], ["privacy", "/privacy-policy/"], ["location", "/mobile-tyre-fitting-bathgate/"], ["service", "/mobile-tyre-fitting.html"], ["notfound", "/no/such/page/"]]) {
       const p = await mk(w, h, mob); await p.goto(H + u); await sleep(400);
       const r = await p.eval(`(()=>{const f=document.querySelector(".sfr-footer");const l=document.querySelector(".sfr-footer__legal");const lr=l.getBoundingClientRect();const cols=[...document.querySelectorAll(".sfr-footer__top > *")].map(e=>e.getBoundingClientRect());return {overflow:document.documentElement.scrollWidth>innerWidth,legalInside:lr.left>=0&&lr.right<=innerWidth,legalFont:getComputedStyle(l).fontSize,social:document.querySelectorAll(".sfr-footer__social,[aria-label*=Facebook],[aria-label*=Instagram]").length,cookieBtn:!!document.querySelector(".sfr-footer [data-sfr-cookie-settings]:not([hidden])"),wa:!!document.querySelector('.sfr-footer a[href="https://wa.me/447448427154"]'),tel:!!document.querySelector('.sfr-footer a[href="tel:+441312020289"]'),mail:!!document.querySelector('.sfr-footer a[href="mailto:info@sfrmotors.co.uk"]'),loc:document.querySelector(".sfr-footer__contact li:last-child").textContent.trim(),locIsLink:!!document.querySelector(".sfr-footer__contact li:last-child a"),col1:Math.round(cols[0].height)}})()`);
       t(!r.overflow && r.legalInside && r.social === 0 && r.cookieBtn && r.wa && r.tel && r.mail && r.loc === "Bathgate, West Lothian" && !r.locIsLink, `footer @${w} ${name}: no overflow, disclosure fits, no social icons, tel/WhatsApp/email intact, location is plain text`, r);

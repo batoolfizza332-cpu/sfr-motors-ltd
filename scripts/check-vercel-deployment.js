@@ -20,7 +20,7 @@
 const { buildConfig } = require("./vercel-config");
 
 const PROTECTED_MESSAGE = "Deployment is protected; application headers remain unverified.";
-const FIXED_PATHS = ["/", "/about-us/", "/contact-us/", "/services.html", "/privacy-policy.html", "/robots.txt", "/sitemap.xml", "/favicon.ico", "/does-not-exist/"];
+const FIXED_PATHS = ["/", "/about-us/", "/contact-us/", "/services.html", "/privacy-policy/", "/robots.txt", "/sitemap.xml", "/favicon.ico", "/does-not-exist/"];
 // The tenth URL is the content-hashed stylesheet named in the Home page.
 const CSS_PATTERN = /href="?\/?(assets\/css\/main\.[0-9a-f]+\.css)/;
 

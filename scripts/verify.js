@@ -74,6 +74,23 @@ const CANONICAL_URL_OVERRIDES = {
   "how-to-change-a-tyre.html": "how-to-change-a-tyre/",
   "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html": "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
   "mobile-tyre-repair-edinburgh-west-lothian.html": "mobile-tyre-repair-edinburgh-west-lothian/",
+  "mobile-tyre-fitting-airdrie.html": "mobile-tyre-fitting-airdrie/",
+  "mobile-tyre-fitting-bathgate.html": "mobile-tyre-fitting-bathgate/",
+  "mobile-tyre-fitting-boness.html": "mobile-tyre-fitting-boness/",
+  "mobile-tyre-fitting-edinburgh.html": "mobile-tyre-fitting-edinburgh/",
+  "mobile-tyre-fitting-falkirk.html": "mobile-tyre-fitting-falkirk/",
+  "mobile-tyre-fitting-harthill.html": "mobile-tyre-fitting-harthill/",
+  "mobile-tyre-fitting-linlithgow.html": "mobile-tyre-fitting-linlithgow/",
+  "mobile-tyre-fitting-livingston.html": "mobile-tyre-fitting-livingston/",
+  "mobile-tyre-fitting-shotts.html": "mobile-tyre-fitting-shotts/",
+  "mobile-tyre-fitting-west-calder.html": "mobile-tyre-fitting-west-calder/",
+  "mobile-tyre-fitting-west-lothian.html": "mobile-tyre-fitting-west-lothian/",
+  "mobile-tyre-fitting-whitburn.html": "mobile-tyre-fitting-whitburn/",
+  "mobile-tyre-fitting-wishaw.html": "mobile-tyre-fitting-wishaw/",
+  "mobile-tyre-fitting-addiewell.html": "mobile-tyre-fitting-in-addiewell/",
+  "mobile-locking-wheel-nut-removal.html": "mobile-locking-wheel-nut-removal/",
+  "privacy-policy.html": "privacy-policy/",
+  "trade-fleet-tyre-services.html": "trade-fleet-tyre-services/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -1273,7 +1290,7 @@ function checkBroxburnUrl(pages) {
 // pages. Only that paragraph is protected here. Each entry is [visible town name, href]; the anchor text is always the plain town
 // name, never a keyword phrase, and Broxburn is only ever linked as /broxburn/.
 const LOCATION_LINK_MAP = {
-  "mobile-tyre-fitting-west-lothian.html": [["Bathgate", "mobile-tyre-fitting-bathgate.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"], ["Blackburn", "mobile-tyre-fitting-blackburn.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"], ["Broxburn", "/broxburn/"], ["Linlithgow", "mobile-tyre-fitting-linlithgow.html"], ["West Calder", "mobile-tyre-fitting-west-calder.html"], ["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
+  "mobile-tyre-fitting-west-lothian.html": [["Bathgate", "mobile-tyre-fitting-bathgate.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"], ["Blackburn", "mobile-tyre-fitting-blackburn.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"], ["Broxburn", "broxburn.html"], ["Linlithgow", "mobile-tyre-fitting-linlithgow.html"], ["West Calder", "mobile-tyre-fitting-west-calder.html"], ["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
   "mobile-tyre-fitting-bathgate.html": [["Livingston", "mobile-tyre-fitting-livingston.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"], ["Blackburn", "mobile-tyre-fitting-blackburn.html"]],
   "mobile-tyre-fitting-whitburn.html": [["Blackburn", "mobile-tyre-fitting-blackburn.html"], ["Armadale", "mobile-tyre-fitting-armadale.html"]],
   "mobile-tyre-fitting-armadale.html": [["Whitburn", "mobile-tyre-fitting-whitburn.html"]],
@@ -1283,7 +1300,7 @@ const LOCATION_LINK_MAP = {
   "mobile-tyre-fitting-wishaw.html": [["Shotts", "mobile-tyre-fitting-shotts.html"]],
   "mobile-tyre-fitting-west-calder.html": [["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
   "mobile-tyre-fitting-addiewell.html": [["West Calder", "mobile-tyre-fitting-west-calder.html"]],
-  "mobile-tyre-fitting-kirkliston.html": [["Broxburn", "/broxburn/"]],
+  "mobile-tyre-fitting-kirkliston.html": [["Broxburn", "broxburn.html"]],
 };
 // Every location page; an anchor in the paragraph above may only be one of these plain town names.
 const LOCATION_PAGE_FILES = ["broxburn.html", "mobile-tyre-fitting-addiewell.html", "mobile-tyre-fitting-airdrie.html", "mobile-tyre-fitting-armadale.html", "mobile-tyre-fitting-bathgate.html", "mobile-tyre-fitting-blackburn.html", "mobile-tyre-fitting-boness.html", "mobile-tyre-fitting-edinburgh.html", "mobile-tyre-fitting-falkirk.html", "mobile-tyre-fitting-harthill.html", "mobile-tyre-fitting-kirkliston.html", "mobile-tyre-fitting-linlithgow.html", "mobile-tyre-fitting-livingston.html", "mobile-tyre-fitting-shotts.html", "mobile-tyre-fitting-west-calder.html", "mobile-tyre-fitting-west-lothian.html", "mobile-tyre-fitting-whitburn.html", "mobile-tyre-fitting-wishaw.html"];
@@ -1296,8 +1313,10 @@ function checkLocationLinks() {
     const section = (readFile(file).match(/<section\b[^>]*aria-labelledby="sfr-loc-areas-heading"[\s\S]*?<\/section>/) || [""])[0];
     return (section.match(/<p class="sfr-band__text">([\s\S]*?)<\/p>/) || [null, null])[1];
   };
+  // An href is compared by the page file it resolves to (pretty URLs map back through the routing overrides).
+  const fileOf = (href) => { const p = href.replace(/^\//, "").split("#")[0]; return ROUTE_ALIAS_TO_FILE[p] || p; };
   const anchorsOf = (paragraph) => [...paragraph.matchAll(/<a\b[^>]*\shref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)]
-    .map((m) => [m[2].replace(/<[^>]+>/g, "").replace(/&rsquo;/g, "’").replace(/\s+/g, " ").trim(), m[1]]);
+    .map((m) => [m[2].replace(/<[^>]+>/g, "").replace(/&rsquo;/g, "’").replace(/\s+/g, " ").trim(), fileOf(m[1])]);
 
   // 1. The approved map is present exactly: same anchors, same hrefs, nothing extra in that paragraph.
   for (const [file, expected] of Object.entries(LOCATION_LINK_MAP)) {
@@ -1306,9 +1325,8 @@ function checkLocationLinks() {
     const got = anchorsOf(paragraph).map((a) => a.join(" -> ")).sort();
     const want = expected.map((a) => a.join(" -> ")).sort();
     if (JSON.stringify(got) !== JSON.stringify(want)) fail(check, `${file}: the neighbouring-towns paragraph links ${JSON.stringify(got)}; the approved map is ${JSON.stringify(want)}.`, `site/${file}`, "Restore the approved links (plain town name as the anchor text) or update LOCATION_LINK_MAP in scripts/verify.js with the owner's approval.");
-    for (const [, href] of expected) {
-      const target = href === "/broxburn/" ? "broxburn.html" : href;
-      if (!fs.existsSync(path.join(SITE_DIR, target))) fail(check, `${file} links to ${href}, but site/${target} does not exist.`, `site/${file}`, "Point the link at an existing page.");
+    for (const [, target] of expected) {
+      if (!fs.existsSync(path.join(SITE_DIR, target))) fail(check, `${file} links to ${target}, but site/${target} does not exist.`, `site/${file}`, "Point the link at an existing page.");
     }
   }
 
@@ -1323,30 +1341,32 @@ function checkLocationLinks() {
 }
 
 // ---------------------------------------------------------------------------
-// Check 26: historical WordPress URLs that the migration audit keeps ("Keep / Recreate at exact URL") must not 404
+// Check 26: audit-kept WordPress URLs are served at their exact URL; consolidated URLs 301 straight into their survivor
 // ---------------------------------------------------------------------------
-// These pages live at a flat .html URL on this branch (that is their canonical). Their old WordPress URL (no extension, trailing slash)
-// must 301 straight to it: one hop on CloudFront, Vercel and Hostinger alike, also from www and http. /our-tyre-range/ and the audit's
-// blog URLs that were never built here are deliberately absent: they have no page to redirect to and the destination is an owner decision.
-const HISTORICAL_URL_MAP = {
-  "/mobile-tyre-fitting-airdrie/": "/mobile-tyre-fitting-airdrie.html",
-  "/mobile-tyre-fitting-bathgate/": "/mobile-tyre-fitting-bathgate.html",
-  "/mobile-tyre-fitting-boness/": "/mobile-tyre-fitting-boness.html",
-  "/mobile-tyre-fitting-edinburgh/": "/mobile-tyre-fitting-edinburgh.html",
-  "/mobile-tyre-fitting-falkirk/": "/mobile-tyre-fitting-falkirk.html",
-  "/mobile-tyre-fitting-harthill/": "/mobile-tyre-fitting-harthill.html",
-  "/mobile-tyre-fitting-in-addiewell/": "/mobile-tyre-fitting-addiewell.html",
-  "/mobile-tyre-fitting-linlithgow/": "/mobile-tyre-fitting-linlithgow.html",
-  "/mobile-tyre-fitting-livingston/": "/mobile-tyre-fitting-livingston.html",
-  "/mobile-tyre-fitting-shotts/": "/mobile-tyre-fitting-shotts.html",
-  "/mobile-tyre-fitting-west-calder/": "/mobile-tyre-fitting-west-calder.html",
-  "/mobile-tyre-fitting-west-lothian/": "/mobile-tyre-fitting-west-lothian.html",
-  "/mobile-tyre-fitting-whitburn/": "/mobile-tyre-fitting-whitburn.html",
-  "/mobile-tyre-fitting-wishaw/": "/mobile-tyre-fitting-wishaw.html",
-  "/mobile-locking-wheel-nut-removal/": "/mobile-locking-wheel-nut-removal.html",
-  "/privacy-policy/": "/privacy-policy.html",
-  "/trade-fleet-tyre-services/": "/trade-fleet-tyre-services.html",
+// The migration audit says "Keep / Recreate at exact URL" for these pages, so each historical URL serves its page directly (status 200, no
+// redirect) and is its canonical; the page's old /<file>.html URL 301s to it in one hop. This holds on CloudFront, Vercel and Hostinger, with
+// and without the trailing slash. CONSOLIDATED_URLS are the audit's approved one-to-one 301s (weaker duplicate -> survivor). /our-tyre-range/
+// and the audit's other unbuilt URLs are deliberately absent: they have no approved page yet (owner decisions pending).
+const EXACT_URL_PAGES = {
+  "/mobile-tyre-fitting-airdrie/": "mobile-tyre-fitting-airdrie.html",
+  "/mobile-tyre-fitting-bathgate/": "mobile-tyre-fitting-bathgate.html",
+  "/mobile-tyre-fitting-boness/": "mobile-tyre-fitting-boness.html",
+  "/mobile-tyre-fitting-edinburgh/": "mobile-tyre-fitting-edinburgh.html",
+  "/mobile-tyre-fitting-falkirk/": "mobile-tyre-fitting-falkirk.html",
+  "/mobile-tyre-fitting-harthill/": "mobile-tyre-fitting-harthill.html",
+  "/mobile-tyre-fitting-in-addiewell/": "mobile-tyre-fitting-addiewell.html",
+  "/mobile-tyre-fitting-linlithgow/": "mobile-tyre-fitting-linlithgow.html",
+  "/mobile-tyre-fitting-livingston/": "mobile-tyre-fitting-livingston.html",
+  "/mobile-tyre-fitting-shotts/": "mobile-tyre-fitting-shotts.html",
+  "/mobile-tyre-fitting-west-calder/": "mobile-tyre-fitting-west-calder.html",
+  "/mobile-tyre-fitting-west-lothian/": "mobile-tyre-fitting-west-lothian.html",
+  "/mobile-tyre-fitting-whitburn/": "mobile-tyre-fitting-whitburn.html",
+  "/mobile-tyre-fitting-wishaw/": "mobile-tyre-fitting-wishaw.html",
+  "/mobile-locking-wheel-nut-removal/": "mobile-locking-wheel-nut-removal.html",
+  "/privacy-policy/": "privacy-policy.html",
+  "/trade-fleet-tyre-services/": "trade-fleet-tyre-services.html",
 };
+const CONSOLIDATED_URLS = {};
 
 function checkHistoricalUrls(pages) {
   const check = "26. Historical URLs";
@@ -1355,50 +1375,71 @@ function checkHistoricalUrls(pages) {
   const distDir = path.join(ROOT, "dist");
   const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
   const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
-  const sitemapLocs = new Set([...readFile("sitemap.xml").matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]));
+  const sitemapLocs = readFile("sitemap.xml").match(/<loc>\s*[^<\s]+\s*<\/loc>/g).map((m) => m.replace(/<\/?loc>|\s/g, ""));
   const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
   let vercel = null;
   try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); }
   const HOST = "example.test";
   const htaccess = { staging: buildHtaccess("staging"), production: buildHtaccess("production") };
-
-  for (const [oldUrl, finalPath] of Object.entries(HISTORICAL_URL_MAP)) {
-    const file = finalPath.slice(1);
-    const finalUrl = `${PROD_DOMAIN}${finalPath}`;
-    // The destination is a real, indexable page whose canonical is exactly that URL, listed in the sitemap, and it is served (never redirected).
-    const page = pages[file];
-    if (!page) { fail(check, `${oldUrl} redirects to ${finalPath}, but site/${file} does not exist.`, "infra/template.yaml", "Point the redirect at an existing page."); continue; }
-    const canonical = (page.html.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
-    if (canonical !== finalUrl) fail(check, `${file} canonical is ${canonical}; the historical URL ${oldUrl} redirects to ${finalPath}.`, `site/${file}`, "The redirect target must be the page's own canonical.");
-    if (!sitemapLocs.has(finalUrl)) fail(check, `${finalUrl} (target of the historical URL ${oldUrl}) is not in sitemap.xml.`, "site/sitemap.xml", "List the canonical URL.");
-    if (sitemapLocs.has(`${PROD_DOMAIN}${oldUrl}`)) fail(check, `sitemap.xml lists the historical URL ${oldUrl}.`, "site/sitemap.xml", "List only the canonical URL.");
-    if (edge(finalPath).statusCode) fail(check, `CloudFront Function redirects ${finalPath} itself.`, "infra/template.yaml", "The target must be served with a 200.");
-
-    // CloudFront Function: with and without the trailing slash, and from www, always one hop to the target.
-    for (const uri of [oldUrl, oldUrl.slice(0, -1)]) {
-      const out = edge(uri);
-      if (out.statusCode !== 301 || out.headers.location.value !== finalPath) fail(check, `CloudFront Function: ${uri} gives ${out.statusCode || "no redirect"} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${finalPath}.`, "infra/template.yaml", "Add it to the legacy table.");
-      const www = edge(uri, `www.${HOST}`);
-      if (www.statusCode !== 301 || www.headers.location.value !== `https://${HOST}${finalPath}`) fail(check, `CloudFront Function: www ${uri} does not reach https://${HOST}${finalPath} in one hop.`, "infra/template.yaml", "Fix the legacy table / www rule.");
-    }
-    // Hostinger .htaccess, both profiles, http/https and apex/www: one 301 to https://apex/<target>.
-    for (const profile of ["staging", "production"]) {
-      for (const req of [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }]) {
-        const got = simulateApache(htaccess[profile], { ...req, uri: oldUrl, query: "" }, { hasFile, isDir });
-        if (got.redirect !== `https://${HOST}${finalPath}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${oldUrl}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${finalPath}.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
+  const combos = [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }];
+  const noSlash = (u) => u.slice(0, -1);
+  const oneHop = (from, to, label) => {
+    // CloudFront function (apex and www)
+    const out = edge(from);
+    if (out.statusCode !== 301 || out.headers.location.value !== to) fail(check, `CloudFront Function: ${from} gives ${out.statusCode || "no redirect"} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${to} (${label}).`, "infra/template.yaml", "Fix the routing tables.");
+    const www = edge(from, `www.${HOST}`);
+    if (www.statusCode !== 301 || www.headers.location.value !== `https://${HOST}${to}`) fail(check, `CloudFront Function: www ${from} does not reach https://${HOST}${to} in one hop (${label}).`, "infra/template.yaml", "Fix the routing tables.");
+    // Hostinger .htaccess, both profiles, every protocol/host combination
+    for (const [profile, ht] of Object.entries(htaccess)) {
+      for (const req of combos) {
+        const got = simulateApache(ht, { ...req, uri: from, query: "" }, { hasFile, isDir });
+        if (got.redirect !== `https://${HOST}${to}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${from}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${to} (${label}).`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
       }
     }
-    // Vercel: both slash variants.
+    // Vercel
     if (vercel) {
-      for (const source of [oldUrl, oldUrl.slice(0, -1)]) {
-        const rule = (vercel.redirects || []).find((r) => r.source === source);
-        if (!rule || rule.destination !== finalPath || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${finalPath}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
-      }
+      const rule = (vercel.redirects || []).find((r) => r.source === from);
+      if (!rule || rule.destination !== to || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${from} to ${to} (${label}).`, "vercel.json", "Run `node scripts/vercel-config.js`.");
     }
-    // Nothing on the site links to the old URL (links must use the canonical).
-    for (const [f, p] of Object.entries(pages)) {
-      if (p.html.includes(`href="${oldUrl}"`) || p.html.includes(`href="${oldUrl.slice(1)}"`) || p.html.includes(`href="${oldUrl.slice(0, -1)}"`)) fail(check, `${f} links to the historical URL ${oldUrl}.`, `site/${f}`, `Link to ${finalPath} instead.`);
+  };
+  const served = (from, file, label) => {
+    const out = edge(from);
+    if (out.statusCode || out.uri !== `/${file}`) fail(check, `CloudFront Function: ${from} gives ${JSON.stringify(out.statusCode || out.uri)}; expected an internal rewrite to /${file} (200) (${label}).`, "infra/template.yaml", "The exact URL must be served, never redirected.");
+    for (const [profile, ht] of Object.entries(htaccess)) {
+      const got = simulateApache(ht, { host: HOST, https: true, uri: from, query: "" }, { hasFile, isDir });
+      if (got.file !== `/${file}`) fail(check, `.htaccess (${profile}) https ${HOST}${from}: ${JSON.stringify(got)}; expected /${file} served (200) (${label}).`, "scripts/htaccess-config.js", "The exact URL must be served, never redirected.");
     }
+    if (vercel) {
+      if ((vercel.redirects || []).some((r) => r.source === from)) fail(check, `vercel.json redirects ${from}; it must be served with a 200 (${label}).`, "vercel.json", "Only the .html source may redirect.");
+      const rw = (vercel.rewrites || []).find((r) => r.source === from);
+      if (!rw || rw.destination !== `/${file}`) fail(check, `vercel.json has no rewrite from ${from} to /${file} (${label}).`, "vercel.json", "Run `node scripts/vercel-config.js`.");
+    }
+  };
+
+  for (const [url, file] of Object.entries(EXACT_URL_PAGES)) {
+    const finalUrl = `${PROD_DOMAIN}${url}`;
+    const page = pages[file];
+    if (!page) { fail(check, `${url} is served from site/${file}, which does not exist.`, "infra/template.yaml", "Restore the page."); continue; }
+    const canonical = (page.html.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
+    const ogUrl = (page.html.match(/<meta\s+property="og:url"\s+content="([^"]*)"/) || [])[1];
+    if (canonical !== finalUrl) fail(check, `${file} canonical is ${canonical}; the audit-kept URL is ${finalUrl}.`, `site/${file}`, "Point the canonical at the exact URL.");
+    if (ogUrl !== finalUrl) fail(check, `${file} og:url is ${ogUrl}; expected ${finalUrl}.`, `site/${file}`, "Point og:url at the exact URL.");
+    if (page.html.includes(`${PROD_DOMAIN}/${file}`)) fail(check, `${file} still names its old ${PROD_DOMAIN}/${file} URL (structured data, canonical or Open Graph).`, `site/${file}`, `Use ${finalUrl}.`);
+    if (!sitemapLocs.includes(finalUrl)) fail(check, `${finalUrl} is not in sitemap.xml.`, "site/sitemap.xml", "List the exact URL.");
+    if (sitemapLocs.includes(`${PROD_DOMAIN}/${file}`)) fail(check, `sitemap.xml lists the old ${PROD_DOMAIN}/${file}.`, "site/sitemap.xml", "List only the exact URL.");
+    served(url, file, "exact URL, with slash");
+    served(noSlash(url), file, "exact URL, without slash");
+    oneHop(`/${file}`, url, "old .html URL");
+  }
+
+  for (const [old, survivor] of Object.entries(CONSOLIDATED_URLS)) {
+    const file = ROUTE_ALIAS_TO_FILE[survivor.slice(1)];
+    if (!file || !pages[file]) { fail(check, `${old} redirects to ${survivor}, which is not a served page.`, "infra/template.yaml", "Restore the survivor page before redirecting into it."); continue; }
+    if (!sitemapLocs.includes(`${PROD_DOMAIN}${survivor}`)) fail(check, `${PROD_DOMAIN}${survivor} is not in sitemap.xml.`, "site/sitemap.xml", "List the survivor.");
+    if (sitemapLocs.includes(`${PROD_DOMAIN}${old}`)) fail(check, `sitemap.xml lists the consolidated URL ${old}.`, "site/sitemap.xml", "List only the survivor.");
+    oneHop(old, survivor, "consolidated URL");
+    oneHop(noSlash(old), survivor, "consolidated URL, without slash");
+    served(survivor, file, "survivor");
   }
 }
 

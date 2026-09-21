@@ -182,9 +182,9 @@ Resources:
   #   Legacy WordPress URL handling (with or without trailing slash on
   #   the old path):
   #   /locking-wheel-nut-removal-bathgate/ -> 301 ->
-  #   /mobile-locking-wheel-nut-removal.html;
+  #   /mobile-locking-wheel-nut-removal/;
   #   /24-7-mobile-tyre-replacement-in-edinburgh/ -> 301 ->
-  #   /mobile-tyre-fitting-edinburgh.html;
+  #   /mobile-tyre-fitting-edinburgh/;
   #   /emergency-tyre-fitter-edinburgh-falkirk/ -> 301 (dual-location
   #   emergency content, consolidated) -> /24-7-mobile-tyre-replacement/;
   #   /24-7-mobile-tyre-replacement/ -> internal rewrite (URL shown to
@@ -366,31 +366,17 @@ Resources:
   #   /locking-wheel-nut-removal/;
   #   /tyre-replacement-call-out-bathgate/ -> 301 (same transactional
   #   intent as the Bathgate location page, per the WordPress
-  #   migration audit; the audit recorded the destination as
-  #   /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
-  #   rewrite on this branch, so the redirect targets its actual
-  #   canonical, /mobile-tyre-fitting-bathgate.html, instead) ->
-  #   /mobile-tyre-fitting-bathgate.html;
+  #   migration audit) -> /mobile-tyre-fitting-bathgate/;
   #   /best-emergency-locking-wheel-nut-removal-in-west-lothian/ -> 301
   #   (near-duplicate informational locking-wheel-nut article per the
   #   WordPress migration audit, consolidated into the recreated
   #   article) -> /locking-wheel-nut-removal/;
   #   /best-mobile-tyre-fitter-west-lothian/ -> 301 (per the WordPress
-  #   migration audit; the audit recorded the destination as
-  #   /mobile-tyre-fitting-west-lothian/, but that page has no
-  #   clean-URL rewrite on this branch — its own canonical tag and
-  #   every internal link site-wide use the .html path — so the
-  #   redirect targets its actual canonical,
-  #   /mobile-tyre-fitting-west-lothian.html, instead) ->
-  #   /mobile-tyre-fitting-west-lothian.html;
+  #   migration audit) -> /mobile-tyre-fitting-west-lothian/;
   #   /mobile-tyre-fitting-bathgate-questions/ -> 301 (same transactional
   #   intent as the Bathgate location page, per the WordPress migration
-  #   audit; the audit recorded the destination as
-  #   /mobile-tyre-fitting-bathgate/, but that page has no clean-URL
-  #   rewrite on this branch, so the redirect targets its actual
-  #   canonical, /mobile-tyre-fitting-bathgate.html, instead — same
-  #   destination already used for /tyre-replacement-call-out-bathgate/)
-  #   -> /mobile-tyre-fitting-bathgate.html.
+  #   audit) -> /mobile-tyre-fitting-bathgate/ (same destination as
+  #   /tyre-replacement-call-out-bathgate/).
   #   In each rewrite/redirect pair, the rewritten path is the one
   #   primary, indexable URL. All other requests pass through
   #   unchanged.
@@ -400,13 +386,11 @@ Resources:
   #   /mobile-tyre-fitting-broxburn.html -> 301 -> /broxburn/ (owner decision: /broxburn/,
   #   the original WordPress URL, is the only indexable Broxburn page; the duplicate
   #   .html location page was removed; one hop, also from www).
-  #   Historical WordPress URLs that the migration audit marks "Keep / Recreate at exact URL" but whose page lives at a flat .html URL on this
-  #   branch (its canonical): /mobile-tyre-fitting-<town> (airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston,
-  #   shotts, west-calder, west-lothian, whitburn, wishaw), /mobile-tyre-fitting-in-addiewell (the Addiewell page, whose WordPress slug had
-  #   "in-"), /mobile-locking-wheel-nut-removal, /privacy-policy and /trade-fleet-tyre-services -> 301 -> the same page's .html canonical (one
-  #   hop, also from www). Same treatment as the earlier /best-mobile-tyre-fitter-west-lothian and /mobile-tyre-fitting-bathgate-questions
-  #   redirects, whose audit destination had no clean-URL rewrite either. /our-tyre-range/ has no page on this branch and is NOT redirected
-  #   (owner decision pending); nor are the audit's blog URLs that were never built here.
+  #   Audit-kept WordPress URLs served at their exact URL (rewrite, canonical = that URL, /<file>.html 301s to it in one hop):
+  #   /mobile-tyre-fitting-<town>/ (airdrie, bathgate, boness, edinburgh, falkirk, harthill, linlithgow, livingston, shotts, west-calder,
+  #   west-lothian, whitburn, wishaw), /mobile-tyre-fitting-in-addiewell/ (the Addiewell page keeps its WordPress slug; file
+  #   mobile-tyre-fitting-addiewell.html), /mobile-locking-wheel-nut-removal/, /privacy-policy/ and /trade-fleet-tyre-services/.
+  #   /our-tyre-range/ has no page on this branch and is NOT redirected (owner decision pending).
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
   #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
@@ -436,7 +420,8 @@ Resources:
                 'mobile-trailer-and-caravan-tyre-fitting': 'caravan-trailer-tyre-fitting',
                 'mobile-tyre-puncture-repair': 'mobile-puncture-repair',
                 'tyre-pressure-monitoring-system': 'tpms-services',
-                'van-tyre-replacement-services': 'van-tyre-replacement'
+                'van-tyre-replacement-services': 'van-tyre-replacement',
+                'mobile-tyre-fitting-in-addiewell': 'mobile-tyre-fitting-addiewell'
             };
             // Pretty-path pages whose file name equals the slug
             var same = (
@@ -457,12 +442,17 @@ Resources:
                 'locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk ' +
                 'emergency-tyre-replacement locking-wheel-nut-removal better-tyres-better-drive ' +
                 'how-to-change-a-tyre mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation ' +
+                'mobile-tyre-fitting-airdrie mobile-tyre-fitting-bathgate mobile-tyre-fitting-boness mobile-tyre-fitting-edinburgh ' +
+                'mobile-tyre-fitting-falkirk mobile-tyre-fitting-harthill mobile-tyre-fitting-linlithgow ' +
+                'mobile-tyre-fitting-livingston mobile-tyre-fitting-shotts mobile-tyre-fitting-west-calder ' +
+                'mobile-tyre-fitting-west-lothian mobile-tyre-fitting-whitburn mobile-tyre-fitting-wishaw ' +
+                'mobile-locking-wheel-nut-removal privacy-policy trade-fleet-tyre-services ' +
                 'mobile-tyre-repair-edinburgh-west-lothian'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {
-                '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal.html',
-                '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
+                '/locking-wheel-nut-removal-bathgate': '/mobile-locking-wheel-nut-removal/',
+                '/24-7-mobile-tyre-replacement-in-edinburgh': '/mobile-tyre-fitting-edinburgh/',
                 '/emergency-tyre-fitter-edinburgh-falkirk': '/24-7-mobile-tyre-replacement/',
                 '/caravan-trailer-tyre-fitting': '/mobile-trailer-and-caravan-tyre-fitting/',
                 '/mobile-puncture-repair': '/mobile-tyre-puncture-repair/',
@@ -472,28 +462,11 @@ Resources:
                 '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyres-bathgate-guide': '/van-tyre-replacement-services/',
                 '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/',
-                '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate.html',
+                '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate/',
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
-                '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
-                '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate.html',
+                '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian/',
+                '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
                 '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
-                '/mobile-tyre-fitting-airdrie': '/mobile-tyre-fitting-airdrie.html',
-                '/mobile-tyre-fitting-bathgate': '/mobile-tyre-fitting-bathgate.html',
-                '/mobile-tyre-fitting-boness': '/mobile-tyre-fitting-boness.html',
-                '/mobile-tyre-fitting-edinburgh': '/mobile-tyre-fitting-edinburgh.html',
-                '/mobile-tyre-fitting-falkirk': '/mobile-tyre-fitting-falkirk.html',
-                '/mobile-tyre-fitting-harthill': '/mobile-tyre-fitting-harthill.html',
-                '/mobile-tyre-fitting-linlithgow': '/mobile-tyre-fitting-linlithgow.html',
-                '/mobile-tyre-fitting-livingston': '/mobile-tyre-fitting-livingston.html',
-                '/mobile-tyre-fitting-shotts': '/mobile-tyre-fitting-shotts.html',
-                '/mobile-tyre-fitting-west-calder': '/mobile-tyre-fitting-west-calder.html',
-                '/mobile-tyre-fitting-west-lothian': '/mobile-tyre-fitting-west-lothian.html',
-                '/mobile-tyre-fitting-whitburn': '/mobile-tyre-fitting-whitburn.html',
-                '/mobile-tyre-fitting-wishaw': '/mobile-tyre-fitting-wishaw.html',
-                '/mobile-tyre-fitting-in-addiewell': '/mobile-tyre-fitting-addiewell.html',
-                '/mobile-locking-wheel-nut-removal': '/mobile-locking-wheel-nut-removal.html',
-                '/privacy-policy': '/privacy-policy.html',
-                '/trade-fleet-tyre-services': '/trade-fleet-tyre-services.html',
                 '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
             };
 
