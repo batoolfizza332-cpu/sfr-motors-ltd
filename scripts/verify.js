@@ -833,6 +833,12 @@ function checkStructuredDataUrls(pages) {
         if (typeof node === "string" && ["url", "item", "@id", "logo", "image", "contentUrl"].includes(key) && !node.startsWith(`${PROD_DOMAIN}/`) && !node.startsWith("#")) {
           fail(check, `JSON-LD "${key}" is not an absolute ${PROD_DOMAIN}/ URL: "${node}".`, `site/${file}`, `Use the page's full canonical URL under ${PROD_DOMAIN}/.`);
         }
+        // A fragment in structured data (the breadcrumb "Areas We Cover" item is /#sfr-areas-heading) must name a real id on the page it points at.
+        if (typeof node === "string" && node.startsWith(`${PROD_DOMAIN}/`) && node.includes("#")) {
+          const [urlPath, fragment] = node.slice(PROD_DOMAIN.length + 1).split("#");
+          const target = urlPath === "" ? "index.html" : ROUTE_ALIAS_TO_FILE[urlPath] || urlPath;
+          if (!pages[target] || !pages[target].ids.has(fragment)) fail(check, `JSON-LD "${key}" "${node}" points at #${fragment}, which does not exist on ${target}.`, `site/${file}`, "Use a URL whose fragment matches a real id, or drop the fragment.");
+        }
       };
       walk(data, "");
     }
