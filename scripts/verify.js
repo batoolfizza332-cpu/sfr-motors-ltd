@@ -91,6 +91,16 @@ const CANONICAL_URL_OVERRIDES = {
   "mobile-locking-wheel-nut-removal.html": "mobile-locking-wheel-nut-removal/",
   "privacy-policy.html": "privacy-policy/",
   "trade-fleet-tyre-services.html": "trade-fleet-tyre-services/",
+  "tyre-lifespan.html": "tyre-lifespan/",
+  "what-tools-do-mobile-tyre-fitters-use.html": "what-tools-do-mobile-tyre-fitters-use/",
+  "11-benefits-of-emergency-mobile-tyre-fitting.html": "11-benefits-of-emergency-mobile-tyre-fitting/",
+  "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key.html": "emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+  "mobile-tyre-fitting-livingston-tyre-problems.html": "mobile-tyre-fitting-livingston-tyre-problems/",
+  "tyre-blowout-causes-prevention.html": "tyre-blowout-causes-prevention/",
+  "tyre-services-west-lothian.html": "tyre-services-west-lothian/",
+  "tyres-bathgate-technical-breakdown.html": "tyres-bathgate-technical-breakdown/",
+  "what-is-mobile-tyre-fitting.html": "what-is-mobile-tyre-fitting/",
+  "why-tyres-fail-mobile-tyre-fitter-falkirk.html": "why-tyres-fail-mobile-tyre-fitter-falkirk/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -1146,8 +1156,8 @@ function checkMobileTyreFittingUrl() {
 
   // 1. No reference anywhere in the source pages or the sitemap to /mobile-tyre-fitting, /mobile-tyre-fitting/ or a full URL without .html
   //    (links, canonical, Open Graph, JSON-LD, breadcrumbs and navigation all live in these files). Location pages such as
-  //    /mobile-tyre-fitting-bathgate.html and the .html URL itself are not matched.
-  const bare = /mobile-tyre-fitting(?![-\w.])/g;
+  //    /mobile-tyre-fitting-bathgate/ and the .html URL itself are not matched (nor slugs that merely end in it, like /what-is-mobile-tyre-fitting/).
+  const bare = /(?<![-\w])mobile-tyre-fitting(?![-\w.])/g;
   for (const file of [...listHtmlFiles(), "sitemap.xml"]) {
     const hits = readFile(file).match(bare);
     if (hits) fail(check, `${file} refers to the extension-less mobile-tyre-fitting URL ${hits.length} time(s); only ${FINAL} is allowed.`, `site/${file}`, `Use ${FINAL} everywhere.`);
@@ -1366,7 +1376,10 @@ const EXACT_URL_PAGES = {
   "/privacy-policy/": "privacy-policy.html",
   "/trade-fleet-tyre-services/": "trade-fleet-tyre-services.html",
 };
-const CONSOLIDATED_URLS = {};
+const CONSOLIDATED_URLS = {
+  "/tyre-lifespan-mobile-tyre-repair-guide/": "/tyre-lifespan/",
+  "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/": "/what-tools-do-mobile-tyre-fitters-use/",
+};
 
 function checkHistoricalUrls(pages) {
   const check = "26. Historical URLs";

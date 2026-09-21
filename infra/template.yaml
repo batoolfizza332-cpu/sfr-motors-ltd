@@ -391,6 +391,8 @@ Resources:
   #   west-lothian, whitburn, wishaw), /mobile-tyre-fitting-in-addiewell/ (the Addiewell page keeps its WordPress slug; file
   #   mobile-tyre-fitting-addiewell.html), /mobile-locking-wheel-nut-removal/, /privacy-policy/ and /trade-fleet-tyre-services/.
   #   /our-tyre-range/ has no page on this branch and is NOT redirected (owner decision pending).
+  #   Audit Batch C / B2 consolidations (weaker duplicate -> survivor, one hop): /tyre-lifespan-mobile-tyre-repair-guide/ -> /tyre-lifespan/ and
+  #   /behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/ -> /what-tools-do-mobile-tyre-fitters-use/ (both survivors are served pages).
   #   Added later: /index.html -> 301 -> / (Home has a single URL; every internal
   #   link points at "/").
   #   Added with the compaction: any request whose Host header starts with
@@ -447,6 +449,10 @@ Resources:
                 'mobile-tyre-fitting-livingston mobile-tyre-fitting-shotts mobile-tyre-fitting-west-calder ' +
                 'mobile-tyre-fitting-west-lothian mobile-tyre-fitting-whitburn mobile-tyre-fitting-wishaw ' +
                 'mobile-locking-wheel-nut-removal privacy-policy trade-fleet-tyre-services ' +
+                'tyre-lifespan what-tools-do-mobile-tyre-fitters-use 11-benefits-of-emergency-mobile-tyre-fitting ' +
+                'emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key mobile-tyre-fitting-livingston-tyre-problems ' +
+                'tyre-blowout-causes-prevention tyre-services-west-lothian tyres-bathgate-technical-breakdown ' +
+                'what-is-mobile-tyre-fitting why-tyres-fail-mobile-tyre-fitter-falkirk ' +
                 'mobile-tyre-repair-edinburgh-west-lothian'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
@@ -466,6 +472,8 @@ Resources:
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian/',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
+                '/tyre-lifespan-mobile-tyre-repair-guide': '/tyre-lifespan/',
+                '/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use': '/what-tools-do-mobile-tyre-fitters-use/',
                 '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
                 '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
             };

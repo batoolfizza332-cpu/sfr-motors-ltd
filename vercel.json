@@ -250,6 +250,56 @@
       "statusCode": 301
     },
     {
+      "source": "/tyre-lifespan.html",
+      "destination": "/tyre-lifespan/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-tools-do-mobile-tyre-fitters-use.html",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "statusCode": 301
+    },
+    {
+      "source": "/11-benefits-of-emergency-mobile-tyre-fitting.html",
+      "destination": "/11-benefits-of-emergency-mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key.html",
+      "destination": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston-tyre-problems.html",
+      "destination": "/mobile-tyre-fitting-livingston-tyre-problems/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-blowout-causes-prevention.html",
+      "destination": "/tyre-blowout-causes-prevention/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-services-west-lothian.html",
+      "destination": "/tyre-services-west-lothian/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyres-bathgate-technical-breakdown.html",
+      "destination": "/tyres-bathgate-technical-breakdown/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-mobile-tyre-fitting.html",
+      "destination": "/what-is-mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-tyres-fail-mobile-tyre-fitter-falkirk.html",
+      "destination": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
+      "statusCode": 301
+    },
+    {
       "source": "/mobile-tyre-repair-edinburgh-west-lothian.html",
       "destination": "/mobile-tyre-repair-edinburgh-west-lothian/",
       "statusCode": 301
@@ -402,6 +452,26 @@
     {
       "source": "/mobile-tyre-fitting-bathgate-questions/",
       "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-lifespan-mobile-tyre-repair-guide",
+      "destination": "/tyre-lifespan/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-lifespan-mobile-tyre-repair-guide/",
+      "destination": "/tyre-lifespan/",
+      "statusCode": 301
+    },
+    {
+      "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
+      "statusCode": 301
+    },
+    {
+      "source": "/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use/",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use/",
       "statusCode": 301
     },
     {
@@ -809,6 +879,86 @@
     {
       "source": "/trade-fleet-tyre-services/",
       "destination": "/trade-fleet-tyre-services.html"
+    },
+    {
+      "source": "/tyre-lifespan",
+      "destination": "/tyre-lifespan.html"
+    },
+    {
+      "source": "/tyre-lifespan/",
+      "destination": "/tyre-lifespan.html"
+    },
+    {
+      "source": "/what-tools-do-mobile-tyre-fitters-use",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use.html"
+    },
+    {
+      "source": "/what-tools-do-mobile-tyre-fitters-use/",
+      "destination": "/what-tools-do-mobile-tyre-fitters-use.html"
+    },
+    {
+      "source": "/11-benefits-of-emergency-mobile-tyre-fitting",
+      "destination": "/11-benefits-of-emergency-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/11-benefits-of-emergency-mobile-tyre-fitting/",
+      "destination": "/11-benefits-of-emergency-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key",
+      "destination": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key.html"
+    },
+    {
+      "source": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key/",
+      "destination": "/emergency-wheel-nut-removal-what-to-do-if-youve-lost-the-key.html"
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston-tyre-problems",
+      "destination": "/mobile-tyre-fitting-livingston-tyre-problems.html"
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston-tyre-problems/",
+      "destination": "/mobile-tyre-fitting-livingston-tyre-problems.html"
+    },
+    {
+      "source": "/tyre-blowout-causes-prevention",
+      "destination": "/tyre-blowout-causes-prevention.html"
+    },
+    {
+      "source": "/tyre-blowout-causes-prevention/",
+      "destination": "/tyre-blowout-causes-prevention.html"
+    },
+    {
+      "source": "/tyre-services-west-lothian",
+      "destination": "/tyre-services-west-lothian.html"
+    },
+    {
+      "source": "/tyre-services-west-lothian/",
+      "destination": "/tyre-services-west-lothian.html"
+    },
+    {
+      "source": "/tyres-bathgate-technical-breakdown",
+      "destination": "/tyres-bathgate-technical-breakdown.html"
+    },
+    {
+      "source": "/tyres-bathgate-technical-breakdown/",
+      "destination": "/tyres-bathgate-technical-breakdown.html"
+    },
+    {
+      "source": "/what-is-mobile-tyre-fitting",
+      "destination": "/what-is-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/what-is-mobile-tyre-fitting/",
+      "destination": "/what-is-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/why-tyres-fail-mobile-tyre-fitter-falkirk",
+      "destination": "/why-tyres-fail-mobile-tyre-fitter-falkirk.html"
+    },
+    {
+      "source": "/why-tyres-fail-mobile-tyre-fitter-falkirk/",
+      "destination": "/why-tyres-fail-mobile-tyre-fitter-falkirk.html"
     },
     {
       "source": "/mobile-tyre-repair-edinburgh-west-lothian",
