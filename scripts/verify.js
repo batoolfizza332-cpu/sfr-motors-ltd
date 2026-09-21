@@ -171,6 +171,11 @@ function checkLinksAndAnchors(pages) {
       if (targetFileRaw !== "" && targetFile === "") targetFile = "index.html";
 
       if (targetFileRaw !== "") {
+        // A page served at a pretty path must be linked at that path: its /<file>.html form 301s, so a link to it costs a redirect hop.
+        if (CANONICAL_URL_OVERRIDES[targetFile]) {
+          fail("2. Internal links", `Link to the redirecting /${targetFile}: href="${href}".`, `site/${file}`, `Link to its canonical URL, /${CANONICAL_URL_OVERRIDES[targetFile]}${fragment ? "#" + fragment : ""}.`);
+          continue;
+        }
         targetFile = ROUTE_ALIAS_TO_FILE[targetFile] || targetFile;
         if (!pages[targetFile]) {
           fail(
