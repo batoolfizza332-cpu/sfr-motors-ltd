@@ -79,6 +79,60 @@
     statusEl.textContent = message;
   }
 
+  // The four required fields, in the order they appear on the form: the wording used in the summary message under the
+  // button (`label`) and in the message shown beside the field itself (`hint`).
+  var REQUIRED_FIELDS = [
+    { name: "name", label: "your name", hint: "Please enter your name." },
+    { name: "phone", label: "your phone number", hint: "Please enter your phone number." },
+    { name: "service", label: "the service you need", hint: "Please choose the service you need." },
+    { name: "location", label: "your current location", hint: "Please enter your current location." }
+  ];
+  var PHONE_HINT = "Please enter a valid phone number, for example 07700 900123 or +44 7700 900123.";
+
+  // Digits with an optional leading +, and spaces, dots, dashes or brackets between them. 10-15 digits covers UK
+  // landline and mobile numbers with or without +44, and other international numbers, but not "1" or "abc".
+  function isValidPhone(value) {
+    var v = value.trim();
+    if (!/^\+?[0-9\s().-]+$/.test(v)) return false;
+    var digits = v.replace(/\D/g, "").length;
+    return digits >= 10 && digits <= 15;
+  }
+
+  function joinWithAnd(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  // Flag a field: aria-invalid, a red message directly beneath it (the summary under the button can be off-screen once
+  // the focus jumps to the field) and aria-describedby so screen readers read that message with the field.
+  function flagField(el, text) {
+    var note = document.createElement("p");
+    note.className = "sfr-quote__error";
+    note.id = "quote-error-" + el.name;
+    note.textContent = text;
+    el.parentNode.appendChild(note);
+    el.setAttribute("aria-invalid", "true");
+    el.setAttribute("aria-describedby", note.id);
+  }
+
+  function unflagField(el) {
+    el.removeAttribute("aria-invalid");
+    el.removeAttribute("aria-describedby");
+    var note = document.getElementById("quote-error-" + el.name);
+    if (note) note.parentNode.removeChild(note);
+  }
+
+  function clearInvalid() {
+    form.querySelectorAll('[aria-invalid="true"]').forEach(unflagField);
+  }
+
+  // A field stops being flagged as soon as the visitor edits it.
+  function onEdit(e) {
+    if (e.target.getAttribute && e.target.getAttribute("aria-invalid") === "true") unflagField(e.target);
+  }
+  form.addEventListener("input", onEdit);
+  form.addEventListener("change", onEdit);
+
   function fieldOrFallback(value) {
     return value && value.trim() ? value.trim() : "Not specified";
   }
@@ -128,8 +182,31 @@
       return;
     }
 
-    if (!data.name || !data.phone || !data.service || !data.location) {
-      setStatus("error", "Please fill in your name, phone number, service and current location.");
+    // Validate: name every empty required field and reject a phone number that is not a real number, then flag
+    // those fields and put the keyboard focus on the first one.
+    clearInvalid();
+    var problems = [];
+    var missing = [];
+    REQUIRED_FIELDS.forEach(function (f) {
+      if (!data[f.name] || !data[f.name].trim()) {
+        problems.push({ name: f.name, hint: f.hint });
+        missing.push(f.label);
+      }
+    });
+    var badPhone = data.phone && data.phone.trim() && !isValidPhone(data.phone);
+    if (badPhone) problems.push({ name: "phone", hint: PHONE_HINT });
+
+    if (problems.length) {
+      var parts = [];
+      if (missing.length) parts.push("Please fill in " + joinWithAnd(missing) + ".");
+      if (badPhone) parts.push(PHONE_HINT);
+      setStatus("error", parts.join(" "));
+      // in form order, so the first problem found is the first field on the page
+      var flagged = REQUIRED_FIELDS.map(function (f) {
+        return problems.filter(function (p) { return p.name === f.name; })[0];
+      }).filter(Boolean);
+      flagged.forEach(function (p) { flagField(form.elements[p.name], p.hint); });
+      form.elements[flagged[0].name].focus();
       return;
     }
 
