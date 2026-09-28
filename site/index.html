@@ -884,6 +884,28 @@
 
       <div class="sfr-quote__row">
         <div class="sfr-quote__field">
+          <label for="q-service">Service required *</label>
+          <select id="q-service" name="service" required>
+            <option value="">Select a service&hellip;</option>
+            <option value="Mobile Tyre Fitting">Mobile Tyre Fitting</option>
+            <option value="Tyre Replacement">Tyre Replacement</option>
+            <option value="Puncture Repair">Puncture Repair</option>
+            <option value="Emergency Tyre Change">Emergency Tyre Change</option>
+            <option value="Locking Wheel Nut Removal">Locking Wheel Nut Removal</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="sfr-quote__field">
+          <label for="q-location">Current location *</label>
+          <input type="text" id="q-location" name="location" autocomplete="off" placeholder="Address, postcode, or nearest landmark" required>
+        </div>
+      </div>
+
+      <details class="sfr-quote__more">
+        <summary>Add more details (optional)</summary>
+        <div class="sfr-quote__more-body">
+      <div class="sfr-quote__row">
+        <div class="sfr-quote__field">
           <label for="q-email">Email address (optional)</label>
           <input type="email" id="q-email" name="email" autocomplete="email">
         </div>
@@ -901,25 +923,6 @@
         <div class="sfr-quote__field">
           <label for="q-tyre-size">Tyre size (optional)</label>
           <input type="text" id="q-tyre-size" name="tyreSize" autocomplete="off" placeholder="e.g. 205/55 R16">
-        </div>
-      </div>
-
-      <div class="sfr-quote__row">
-        <div class="sfr-quote__field">
-          <label for="q-service">Service required *</label>
-          <select id="q-service" name="service" required>
-            <option value="">Select a service&hellip;</option>
-            <option value="Mobile Tyre Fitting">Mobile Tyre Fitting</option>
-            <option value="Tyre Replacement">Tyre Replacement</option>
-            <option value="Puncture Repair">Puncture Repair</option>
-            <option value="Emergency Tyre Change">Emergency Tyre Change</option>
-            <option value="Locking Wheel Nut Removal">Locking Wheel Nut Removal</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="sfr-quote__field">
-          <label for="q-location">Current location *</label>
-          <input type="text" id="q-location" name="location" autocomplete="off" placeholder="Address, postcode, or nearest landmark" required>
         </div>
       </div>
 
@@ -953,6 +956,8 @@
         <label for="q-message">Additional information (optional)</label>
         <textarea id="q-message" name="message" placeholder="Anything else that would help us, e.g. what's happened to the tyre"></textarea>
       </div>
+        </div>
+      </details>
 
       <!-- Honeypot field: hidden from real users via CSS, left blank by them.
            Bots that auto-fill every field will trip this and be silently dropped. -->

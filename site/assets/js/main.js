@@ -48,6 +48,17 @@
     });
   }
 
+  // ---- Mobile "Call Now" bar ----
+  // Cloned from the header call button so the number is only ever written in one place; CSS shows it on phones only.
+  var headerCall = document.querySelector("a.sfr-header__call");
+  if (headerCall) {
+    var callBar = headerCall.cloneNode(true);
+    callBar.className = "sfr-callbar";
+    callBar.removeAttribute("id");
+    document.body.appendChild(callBar);
+    document.body.classList.add("sfr-has-callbar");
+  }
+
   // ---- Quote / contact form ----
   // Enquiries go straight to SFR Motors' WhatsApp as a pre-filled message —
   // there's no backend to send them to instead. Do not add one back in

@@ -150,6 +150,7 @@
   // same top bar / header / footer landmarks.
   function linkLocation(link) {
     if (link.closest(".sfr-topbar")) return "top_bar";
+    if (link.closest(".sfr-callbar")) return "call_bar";
     if (link.closest(".sfr-header")) return "header";
     if (link.closest(".sfr-footer")) return "footer";
     return "page_content";
