@@ -251,14 +251,17 @@
     if (granted) installCallTracking();
   }
 
-  // PLACEHOLDER (owner request, 2026-09-29): Google Ads "website call conversion tracking"
-  // swaps the displayed phone number for a Google forwarding number so Google can count
-  // answered calls as conversions. The owner will provide Google's snippet for this
-  // separately. When that arrives, paste it inside this function, unchanged — do not call
-  // it from anywhere else, so it stays behind the "Advertising / Google Ads" consent
-  // category above, and never runs on a non-production host.
+  // Google Ads "website call conversion tracking" (owner request, 2026-09-29): swaps the
+  // displayed phone number for a Google forwarding number so Google can count answered
+  // calls to it as conversions. Conversion "Call (0131 202 0289)",
+  // AW-16776239836/l76yCKqPuYkdENy1xL8-. Only called from applyAdsConsent(true) above, so it
+  // stays behind the "Advertising / Google Ads" consent category and never runs on a
+  // non-production host.
+  var callTrackingInstalled = false;
   function installCallTracking() {
-    // (nothing yet)
+    if (callTrackingInstalled) return;
+    callTrackingInstalled = true;
+    window.gtag("config", "AW-16776239836/l76yCKqPuYkdENy1xL8-", { phone_conversion_number: "0131 202 0289" });
   }
 
   // ---------------------------------------------------------------------
