@@ -3,8 +3,12 @@
 //
 // Both scripts are executed unchanged inside a Node `vm` sandbox with a minimal fake browser, once per
 // hostname, and the tests assert what they would do there:
-//   - Google Analytics (gtag.js) may load only on sfrmotors.co.uk and www.sfrmotors.co.uk, even after the visitor
-//     accepts analytics; on localhost, *.vercel.app previews and look-alike hosts nothing is requested.
+//   - Google Analytics (gtag.js) may load only on sfrmotors.co.uk and www.sfrmotors.co.uk, and only once the
+//     visitor accepts the "Analytics" category; on localhost, *.vercel.app previews and look-alike hosts
+//     nothing is requested.
+//   - Google Tag Manager (gtm.js, which carries the Google Ads tags) loads on every visit to those same two
+//     hostnames under Consent Mode v2 — even before any choice is made, consent is declared "denied" first —
+//     but never loads on any other host.
 //   - The quote form may open WhatsApp only on those two hostnames; on any other host it shows a preview notice.
 // No network is used and nothing can reach Google or WhatsApp. It is run by `npm run verify` (check 20) and can be
 // run alone:  node scripts/host-guard-tests.js
@@ -107,35 +111,50 @@ function run(file, env) {
 }
 
 // -- analytics --------------------------------------------------------------------------------------------
+// GA4 (gtag/js) is the only thing gated purely on the visitor's own choice; GTM (gtm.js, which carries the
+// Google Ads tags) is expected to load on every visit to a production host under Consent Mode v2, even
+// before any choice is made — see the "advanced Consent Mode" comment at the top of analytics.js.
 function analyticsLoaded(env) {
-  return env.appendedToHead.some((s) => /googletagmanager\.com\/gtag\/js/.test(s.src || "")) || typeof env.window.dataLayer !== "undefined" || typeof env.window.gtag !== "undefined";
+  return env.appendedToHead.some((s) => /googletagmanager\.com\/gtag\/js/.test(s.src || ""));
+}
+function gtmLoaded(env) {
+  return env.appendedToHead.some((s) => /googletagmanager\.com\/gtm\.js/.test(s.src || ""));
 }
 
 function testAnalytics(failures) {
   for (const host of [...PRODUCTION_HOSTS, ...OTHER_HOSTS]) {
     const expected = PRODUCTION_HOSTS.includes(host);
 
-    // 1. Consent was granted earlier (cookie remembered): start-up path.
-    const remembered = makeBrowser(host, "sfr_consent=v1:analytics=granted");
+    // 1. Consent was granted earlier for both categories (cookie remembered): start-up path.
+    const remembered = makeBrowser(host, "sfr_consent=v2:analytics=granted|ads=granted");
     run("analytics.js", remembered);
     if (analyticsLoaded(remembered) !== expected) {
       failures.push(`analytics.js with a remembered "granted" choice on ${host}: gtag.js ${expected ? "should load" : "must NOT load"} but ${expected ? "did not" : "did"}.`);
     }
+    if (gtmLoaded(remembered) !== expected) {
+      failures.push(`analytics.js with a remembered choice on ${host}: GTM ${expected ? "should load" : "must NOT load"} but ${expected ? "did not" : "did"}.`);
+    }
 
-    // 2. First visit: the banner is shown and the visitor presses "Accept analytics".
+    // 2. First visit, no choice yet. GTM must load regardless on a production host (Consent Mode v2
+    // still declares every signal "denied" first); GA4 must not load until Analytics is accepted; nothing
+    // at all may load off the two production hosts.
     const fresh = makeBrowser(host);
     run("analytics.js", fresh);
-    if (analyticsLoaded(fresh)) failures.push(`analytics.js loaded Google before any choice on ${host}.`);
+    if (analyticsLoaded(fresh)) failures.push(`analytics.js loaded GA4 before any choice on ${host}.`);
+    if (gtmLoaded(fresh) !== expected) {
+      failures.push(`analytics.js before any choice on ${host}: GTM ${expected ? "should load under Consent Mode" : "must NOT load"} but ${expected ? "did not" : "did"}.`);
+    }
     const panel = fresh.document.body.inserted; // the banner is inserted first into <body>
     if (!panel) {
       failures.push(`analytics.js did not show the consent banner on ${host} (the consent UI must work on every host).`);
       continue;
     }
-    panel.listeners.click[0]({ target: { closest: () => ({ hasAttribute: (a) => a === "data-sfr-consent", getAttribute: () => "granted" }) } });
+    // Simulate pressing "Accept all".
+    panel.listeners.click[0]({ target: { closest: () => ({ hasAttribute: (a) => a === "data-sfr-consent-all", getAttribute: () => "granted" }) } });
     if (analyticsLoaded(fresh) !== expected) {
-      failures.push(`analytics.js after pressing "Accept analytics" on ${host}: gtag.js ${expected ? "should load" : "must NOT load"} but ${expected ? "did not" : "did"}.`);
+      failures.push(`analytics.js after pressing "Accept all" on ${host}: gtag.js ${expected ? "should load" : "must NOT load"} but ${expected ? "did not" : "did"}.`);
     }
-    if (!/sfr_consent=v1:analytics=granted/.test(fresh.document.cookie)) {
+    if (!/sfr_consent=v2:analytics=granted\|ads=granted/.test(fresh.document.cookie)) {
       failures.push(`analytics.js did not remember the accepted choice on ${host} (the consent UI must work on every host).`);
     }
   }

@@ -109,6 +109,9 @@ const CANONICAL_URL_OVERRIDES = {
   "mobile-tyre-fitter-near-me-myths.html": "mobile-tyre-fitter-near-me-myths/",
   "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk.html": "which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk/",
   "our-tyre-range.html": "our-tyre-range/",
+  "mobile-tyre-repair.html": "mobile-tyre-repair/",
+  "emergency-mobile-tyre-fitting.html": "emergency-mobile-tyre-fitting/",
+  "roadside-tyre-fitting.html": "roadside-tyre-fitting/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -624,6 +627,7 @@ function checkRootFavicon() {
 // checks are structural (function bodies, call sites, parsed CSP directives)
 // rather than exact-string matches, so harmless reformatting does not trip them.
 const APPROVED_GA_ID = "G-B9TY4GMXYT";
+const APPROVED_GTM_ID = "GTM-WZ6S5SHX";
 
 // Body of `function name(...) { ... }` by brace matching, or null.
 function functionBody(source, name) {
@@ -659,10 +663,14 @@ function checkConsentAndAnalytics(pages) {
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/(^|[^:"'\w])\/\/.*$/gm, "$1");
 
-  // -- Measurement ID: approved, configured once, in the central file only ------
+  // -- Measurement / container IDs: approved, configured once, in the central file only ------
   const ids = matchAll(/\bGA_MEASUREMENT_ID\s*=\s*["']([^"']*)["']/g, js).map((m) => m[1]);
   if (ids.length !== 1 || ids[0] !== APPROVED_GA_ID) {
     fail(check, `analytics.js must define GA_MEASUREMENT_ID exactly once as the approved ${APPROVED_GA_ID} (found: ${ids.join(", ") || "none"}).`, jsFile, `Set GA_MEASUREMENT_ID = "${APPROVED_GA_ID}".`);
+  }
+  const gtmIds = matchAll(/\bGTM_ID\s*=\s*["']([^"']*)["']/g, js).map((m) => m[1]);
+  if (gtmIds.length !== 1 || gtmIds[0] !== APPROVED_GTM_ID) {
+    fail(check, `analytics.js must define GTM_ID exactly once as the approved ${APPROVED_GTM_ID} (found: ${gtmIds.join(", ") || "none"}).`, jsFile, `Set GTM_ID = "${APPROVED_GTM_ID}".`);
   }
   // The old "not configured" placeholder path must be gone, not merely silenced.
   if (/Analytics not configured|G-X{6,}/.test(js)) {
@@ -670,8 +678,8 @@ function checkConsentAndAnalytics(pages) {
   }
   for (const rel of fs.readdirSync(path.join(SITE_DIR, "assets", "js"))) {
     if (rel === "analytics.js") continue;
-    if (/G-[A-Z0-9]{10}\b|googletagmanager\.com|google-analytics\.com/.test(fs.readFileSync(path.join(SITE_DIR, "assets", "js", rel), "utf8"))) {
-      fail(check, `site/assets/js/${rel} contains a GA ID or Google Analytics URL; analytics must live only in analytics.js.`, `site/assets/js/${rel}`, "Move it into analytics.js.");
+    if (/G-[A-Z0-9]{10}\b|GTM-[A-Z0-9]{4,}\b|googletagmanager\.com|google-analytics\.com/.test(fs.readFileSync(path.join(SITE_DIR, "assets", "js", rel), "utf8"))) {
+      fail(check, `site/assets/js/${rel} contains a GA/GTM ID or Google Analytics URL; analytics must live only in analytics.js.`, `site/assets/js/${rel}`, "Move it into analytics.js.");
     }
   }
 
@@ -691,39 +699,53 @@ function checkConsentAndAnalytics(pages) {
     }
   }
 
-  // -- gtag.js is requested only from acceptAnalytics(), and only after "granted" --
+  // -- gtag.js (GA4) is requested only from applyAnalyticsConsent(), and only after "granted" --
   const gtagRefs = matchAll(/googletagmanager\.com\/gtag\/js/g, js).length;
-  const accept = functionBody(js, "acceptAnalytics");
+  const accept = functionBody(js, "applyAnalyticsConsent");
   if (gtagRefs !== 1 || !accept || !/createElement\(\s*["']script["']\s*\)/.test(accept) || !/GTAG_URL/.test(accept)) {
-    fail(check, "gtag.js must be referenced once and injected only inside acceptAnalytics().", jsFile, "Keep a single GTAG_URL and create the <script> only in acceptAnalytics().");
+    fail(check, "gtag.js must be referenced once and injected only inside applyAnalyticsConsent().", jsFile, "Keep a single GTAG_URL and create the <script> only in applyAnalyticsConsent().");
   }
   if (accept && !/document\.querySelector\([^)]*gtag\/js/.test(accept) && !/analyticsLoaded/.test(accept)) {
-    fail(check, "acceptAnalytics() has no guard against inserting gtag.js twice.", jsFile, "Guard with an analyticsLoaded flag / existing-script check.");
+    fail(check, "applyAnalyticsConsent() has no guard against inserting gtag.js twice.", jsFile, "Guard with an analyticsLoaded flag / existing-script check.");
   }
   if (accept && matchAll(/gtag\(\s*["']config["']/g, accept).length !== 1) {
-    fail(check, 'acceptAnalytics() must call gtag("config", ...) exactly once (duplicate page_view otherwise).', jsFile, 'Keep one gtag("config") call.');
+    fail(check, 'applyAnalyticsConsent() must call gtag("config", ...) exactly once (duplicate page_view otherwise).', jsFile, 'Keep one gtag("config") call.');
   }
-  const callSites = matchAll(/\bacceptAnalytics\(\)/g, js).filter((m) => !/function\s+$/.test(js.slice(Math.max(0, m.index - 10), m.index)));
+  // gtm.js (GTM/Google Ads) must be requested only from loadGTM(), referenced once.
+  const gtmRefs = matchAll(/googletagmanager\.com\/gtm\.js/g, js).length;
+  const gtmBody = functionBody(js, "loadGTM");
+  if (gtmRefs !== 1 || !gtmBody || !/createElement\(\s*["']script["']\s*\)/.test(gtmBody) || !/GTM_URL/.test(gtmBody)) {
+    fail(check, "gtm.js must be referenced once and injected only inside loadGTM().", jsFile, "Keep a single GTM_URL and create the <script> only in loadGTM().");
+  }
+  if (gtmBody && !/document\.querySelector\([^)]*gtm\.js/.test(gtmBody) && !/gtmLoaded/.test(gtmBody)) {
+    fail(check, "loadGTM() has no guard against inserting gtm.js twice.", jsFile, "Guard with a gtmLoaded flag / existing-script check.");
+  }
+  const callSites = matchAll(/\bapplyAnalyticsConsent\(true\)/g, js).filter((m) => !/function\s+$/.test(js.slice(Math.max(0, m.index - 10), m.index)));
   for (const m of callSites) {
     if (!/["']granted["']/.test(js.slice(Math.max(0, m.index - 200), m.index))) {
-      fail(check, "acceptAnalytics() is called somewhere without an immediately preceding \"granted\" consent check.", jsFile, "Only call acceptAnalytics() when the stored/selected choice is granted.");
+      fail(check, "applyAnalyticsConsent(true) is called somewhere without an immediately preceding \"granted\" consent check.", jsFile, "Only call applyAnalyticsConsent(true) when the stored/selected Analytics choice is granted.");
     }
   }
   if (callSites.length < 2) {
-    fail(check, "Expected acceptAnalytics() to be called from both the accept action and the remembered-consent start-up path.", jsFile, "Restore the call sites.");
+    fail(check, "Expected applyAnalyticsConsent(true) to be called from both the accept action and the remembered-consent start-up path.", jsFile, "Restore the call sites.");
   }
   if (/localStorage|sessionStorage/.test(js)) {
     fail(check, "analytics.js uses web storage; the consent preference is meant to be a single first-party cookie.", jsFile, "Store only the sfr_consent cookie.");
   }
 
-  // -- Consent controls: equal Accept / Reject, withdrawal, cookie attributes ---
-  for (const [value, label] of [["granted", "Accept analytics"], ["denied", "Reject analytics"]]) {
-    if (!new RegExp(`data-sfr-consent=\\\\?["']${value}\\\\?["'][^<]*>${label}<`).test(js)) {
-      fail(check, `Consent panel is missing the "${label}" button (data-sfr-consent="${value}").`, jsFile, `Add a "${label}" button with the same prominence as its counterpart.`);
+  // -- Consent controls: equal Accept all / Reject all, two labelled categories, withdrawal ---
+  for (const [value, label] of [["granted", "Accept all"], ["denied", "Reject all"]]) {
+    if (!new RegExp(`data-sfr-consent-all=\\\\?["']${value}\\\\?["'][^<]*>${label}<`).test(js)) {
+      fail(check, `Consent panel is missing the "${label}" button (data-sfr-consent-all="${value}").`, jsFile, `Add a "${label}" button with the same prominence as its counterpart.`);
     }
   }
-  if (!/data-sfr-cookie-settings/.test(js) || !/clearAnalyticsCookies\(\)/.test(js) || !/ga-disable-/.test(js)) {
-    fail(check, "Withdrawal handling (Cookie settings opener, cookie clearing, ga-disable flag) is incomplete.", jsFile, "Restore reopen + clearAnalyticsCookies() + the ga-disable-<ID> flag.");
+  for (const cat of ["analytics", "ads"]) {
+    if (!new RegExp(`data-sfr-consent-cat=\\\\?["']${cat}\\\\?["']`).test(js)) {
+      fail(check, `Consent panel is missing the "${cat}" category checkbox (data-sfr-consent-cat="${cat}").`, jsFile, "Keep Analytics and Advertising / Google Ads as two separate, labelled categories.");
+    }
+  }
+  if (!/data-sfr-cookie-settings/.test(js) || !/clearGACookies\(\)/.test(js) || !/clearAdsCookies\(\)/.test(js) || !/ga-disable-/.test(js)) {
+    fail(check, "Withdrawal handling (Cookie settings opener, per-category cookie clearing, ga-disable flag) is incomplete.", jsFile, "Restore reopen + clearGACookies()/clearAdsCookies() + the ga-disable-<ID> flag.");
   }
   const maxAge = Number((js.match(/CONSENT_MAX_AGE\s*=\s*(\d+)/) || [])[1]);
   const cookieName = (js.match(/CONSENT_COOKIE\s*=\s*["']([^"']+)["']/) || [])[1];
@@ -742,27 +764,34 @@ function checkConsentAndAnalytics(pages) {
     ["the container cookie", gaCookie],
     ["Google Analytics 4", "Google Analytics 4"],
     ["the Cookie settings control", "Cookie settings"],
-    ["the Reject choice", "Reject analytics"],
+    ["the Reject choice", "Reject all"],
+    ["the Advertising / Google Ads category", "Advertising / Google Ads"],
+    ["Google Tag Manager", "Google Tag Manager"],
   ];
   for (const [what, needle] of required) {
     if (!needle || !text.includes(needle)) {
       fail(check, `privacy-policy.html does not mention ${what} (${needle}).`, "site/privacy-policy.html", "Keep the Cookie/Analytics sections in sync with analytics.js.");
     }
   }
-  if (/Google Ads (tracking|and)/i.test(text)) {
-    fail(check, "privacy-policy.html claims Google Ads tracking, which this site does not load.", "site/privacy-policy.html", "Describe only tags the site actually uses.");
-  }
 
   // -- CSP: exact Google origins, no wildcards or unsafe allowances -------------
   const csp = parseCsp();
+  // Owner decision, 2026-09-29: Google Ads conversion measurement via GTM is in scope, so these two exact
+  // Ads origins are expected (and required) alongside the GA4 ones — see the forbidden-origins check below,
+  // which still blocks any other google.com/doubleclick.net/googlesyndication.com origin (remarketing etc,
+  // which this set-up does not use: ad_personalization stays "denied").
+  const ADS_ORIGINS = ["https://googleads.g.doubleclick.net", "https://www.googleadservices.com"];
   if (!csp) {
     fail(check, "Could not parse the ContentSecurityPolicy in infra/template.yaml.", "infra/template.yaml", "Restore the ContentSecurityPolicy block.");
   } else {
     const has = (dir, origin) => (csp[dir] || []).includes(origin);
     for (const [dir, origin] of [
       ["script-src", "https://www.googletagmanager.com"],
+      ["script-src", ADS_ORIGINS[0]],
       ["connect-src", "https://www.google-analytics.com"],
       ["connect-src", "https://region1.google-analytics.com"],
+      ["connect-src", ADS_ORIGINS[0]],
+      ["connect-src", ADS_ORIGINS[1]],
       ["frame-src", "https://maps.google.com"],
       ["frame-src", "https://www.google.com"],
     ]) {
@@ -776,8 +805,9 @@ function checkConsentAndAnalytics(pages) {
     }
     for (const dir of ["script-src", "connect-src", "img-src"]) {
       for (const src of csp[dir] || []) {
+        if (ADS_ORIGINS.includes(src)) continue;
         if (/(^|\.)(google\.com|doubleclick\.net|googlesyndication\.com)$/.test(src.replace(/^https:\/\//, ""))) {
-          fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Google signals/ads are off; remove it.");
+          fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Google Ads here is conversion-measurement only (ad_personalization stays denied); remove any origin beyond the two approved Ads ones.");
         }
       }
     }
@@ -786,8 +816,12 @@ function checkConsentAndAnalytics(pages) {
   // -- Build output carries the same implementation ----------------------------
   const distJs = path.join(ROOT, "dist", "assets", "js");
   const built = fs.existsSync(distJs) ? fs.readdirSync(distJs).filter((f) => /^analytics\.[0-9a-f]{8}\.js$/.test(f)) : [];
-  if (built.length !== 1 || !fs.readFileSync(path.join(distJs, built[0]), "utf8").includes(APPROVED_GA_ID)) {
-    fail(check, "dist/ does not contain exactly one fingerprinted analytics.js carrying the approved Measurement ID.", "scripts/build.js", "Rebuild and make sure analytics.js is fingerprinted into dist/.");
+  if (built.length !== 1) {
+    fail(check, "dist/ does not contain exactly one fingerprinted analytics.js.", "scripts/build.js", "Rebuild and make sure analytics.js is fingerprinted into dist/.");
+  } else {
+    const builtJs = fs.readFileSync(path.join(distJs, built[0]), "utf8");
+    if (!builtJs.includes(APPROVED_GA_ID)) fail(check, "dist/'s analytics.js does not carry the approved GA4 Measurement ID.", "scripts/build.js", "Rebuild.");
+    if (!builtJs.includes(APPROVED_GTM_ID)) fail(check, "dist/'s analytics.js does not carry the approved GTM container ID.", "scripts/build.js", "Rebuild.");
   }
 }
 

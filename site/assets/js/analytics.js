@@ -1,39 +1,57 @@
-// SFR Motors Ltd — cookie consent + Google Analytics 4 (consent-gated).
+// SFR Motors Ltd — cookie consent (two categories) + Google Analytics 4 + Google Ads/Tag Manager,
+// implementing Google Consent Mode v2 ("advanced" mode).
 //
 // This one file is the whole implementation, loaded on every page:
-//   1. Consent: a small first-party banner (Accept / Reject, equal weight)
-//      and a "Cookie settings" footer control that reopens it on any page.
-//   2. Analytics: Google Analytics 4 (gtag.js) is NOT requested, initialised
-//      or given a cookie until the visitor presses "Accept analytics".
-//      Rejecting, closing, scrolling, or ignoring the banner never loads it.
-//   3. Events: phone/WhatsApp/quote actions are sent only while consent is
-//      granted, and never carry a phone number, message text or form data.
+//   1. Consent: a first-party banner with two separate, clearly labelled categories —
+//      "Analytics" and "Advertising / Google Ads" — each on by default OFF, plus an
+//      "Accept all" / "Reject all" pair and a "Cookie settings" footer control that
+//      reopens the same panel on any page so a choice can be changed at any time.
+//   2. Consent Mode v2 (advanced): on every visit to the production host, before anything
+//      else, we declare Google's four consent signals as "denied" and load Google Tag
+//      Manager anyway. GTM (and the Google Ads tags it carries) can then send Google a
+//      cookieless, consent-respecting ping on every page — enough for Google's own
+//      modelling of conversions — but it cannot set an identifying cookie or store
+//      personal data until the visitor actually accepts. Accepting "Advertising / Google
+//      Ads" updates the ad_storage/ad_user_data signals to "granted"; accepting
+//      "Analytics" updates analytics_storage to "granted" and loads Google Analytics 4
+//      (gtag.js) itself, which is NOT requested, initialised or given a cookie before then.
+//   3. Events: phone/WhatsApp/quote actions are sent to Google Analytics only while the
+//      Analytics category is granted, and never carry a phone number, message text or
+//      form data.
 //
-// The Measurement ID is public by design (it is visible in every GA4 site's
-// network tab). It lives here, once, so no page can drift onto another ID.
+// The Measurement ID and GTM container ID are public by design (visible in every such
+// site's network tab). They live here, once, so no page can drift onto a different ID.
 (function () {
   "use strict";
 
   var GA_MEASUREMENT_ID = "G-B9TY4GMXYT";
   var GTAG_URL = "https://www.googletagmanager.com/gtag/js?id=";
 
-  // Consent preference: one first-party cookie, essential to this feature.
-  // Value format "v1:analytics=granted" | "v1:analytics=denied". Anything
-  // else (missing, expired, wrong version) is treated as "no choice yet".
+  // Google Ads / Google Tag Manager (owner request, 2026-09-29): same container as
+  // sfrmotors.uk, so call/WhatsApp clicks can be measured as Google Ads conversions.
+  var GTM_ID = "GTM-WZ6S5SHX";
+  var GTM_URL = "https://www.googletagmanager.com/gtm.js?id=";
+
+  // Consent preference: one first-party cookie, essential to this feature. Value format
+  // "v2:analytics=granted|ads=denied" (any combination of granted/denied for each) — "|" is used
+  // between the two categories, not ";", because ";" is a cookie-attribute separator: a literal
+  // semicolon inside a cookie's own value truncates it (this shipped as a bug once, caught in testing).
+  // Anything else (missing, expired, wrong version) is treated as "no choice yet".
   var CONSENT_COOKIE = "sfr_consent";
   var CONSENT_MAX_AGE = 15552000; // 180 days, in seconds
-  var CONSENT_VALUE = /^v1:analytics=(granted|denied)$/;
+  var CONSENT_VALUE = /^v2:analytics=(granted|denied)\|ads=(granted|denied)$/;
 
   var PRIVACY_URL = "/privacy-policy.html";
 
-  // Google Analytics may run ONLY on the two production hostnames. Every other
-  // host (localhost, *.vercel.app previews, any staging or temporary hostname)
-  // must never feed the live GA4 property, even after "Accept analytics". The
-  // banner and the stored choice still work there; only the Google request is
-  // skipped. Keep this pattern identical to PRODUCTION_HOST in assets/js/main.js
-  // (scripts/verify.js checks that they match).
+  // Google may run ONLY on the two production hostnames. Every other host (localhost,
+  // *.vercel.app previews, any staging or temporary hostname) must never feed the live
+  // GA4/Google Ads accounts, even after accepting. The banner and the stored choice still
+  // work there; only the Google requests are skipped. Keep this pattern identical to
+  // PRODUCTION_HOST in assets/js/main.js (scripts/verify.js checks that they match).
   var IS_PRODUCTION_HOST = /^(www\.)?sfrmotors\.co\.uk$/.test(window.location.hostname);
 
+  var consentModeStarted = false;
+  var gtmLoaded = false;
   var analyticsLoaded = false;
   var memoryChoice = null; // used only if the browser refuses to store the cookie
   var panel = null;
@@ -52,21 +70,32 @@
     return null;
   }
 
+  // Returns { analytics: "granted"|"denied", ads: "granted"|"denied" } — both "denied"
+  // when no valid choice has been stored yet (nothing is granted until the visitor acts).
   function readChoice() {
     var match = CONSENT_VALUE.exec(readCookie(CONSENT_COOKIE) || "");
-    return match ? match[1] : memoryChoice;
+    if (match) return { analytics: match[1], ads: match[2] };
+    if (memoryChoice) return memoryChoice;
+    return { analytics: "denied", ads: "denied" };
   }
 
-  function writeChoice(choice) {
-    memoryChoice = choice;
+  // null means "no choice has ever been made" (used only to decide whether to show the
+  // first-visit banner); readChoice() above always returns concrete denied/granted values.
+  function hasStoredChoice() {
+    return CONSENT_VALUE.test(readCookie(CONSENT_COOKIE) || "") || !!memoryChoice;
+  }
+
+  function writeChoice(analytics, ads) {
+    memoryChoice = { analytics: analytics, ads: ads };
     document.cookie =
-      CONSENT_COOKIE + "=v1:analytics=" + choice +
+      CONSENT_COOKIE + "=v2:analytics=" + analytics + "|ads=" + ads +
       "; Max-Age=" + CONSENT_MAX_AGE + "; Path=/; SameSite=Lax" +
       (window.location.protocol === "https:" ? "; Secure" : "");
   }
 
   // ---------------------------------------------------------------------
-  // Analytics cookie removal (withdrawal / rejection)
+  // Cookie removal (withdrawal / rejection), split by category so rejecting one never
+  // touches the other's cookies.
   // ---------------------------------------------------------------------
   function expireCookie(name) {
     var host = window.location.hostname;
@@ -84,15 +113,26 @@
     }
   }
 
-  // "_ga" and "_ga_<container>" are the only cookies this GA4 set-up writes;
-  // "_gid"/"_gat*" are the older Universal Analytics names, cleared as well
-  // so a rejecting visitor is left with none of them.
-  function clearAnalyticsCookies() {
+  function expireMatching(pattern) {
     var pairs = document.cookie ? document.cookie.split("; ") : [];
     for (var i = 0; i < pairs.length; i++) {
       var name = pairs[i].split("=")[0];
-      if (/^_ga(_.+)?$/.test(name) || name === "_gid" || /^_gat/.test(name)) expireCookie(name);
+      if (pattern.test(name)) expireCookie(name);
     }
+  }
+
+  // "_ga" and "_ga_<container>" are the cookies GA4 writes; "_gid"/"_gat*" are the older
+  // Universal Analytics names, cleared as well.
+  function clearGACookies() {
+    expireMatching(/^_ga(_.+)?$/);
+    expireMatching(/^_gid$/);
+    expireMatching(/^_gat/);
+  }
+
+  // "_gcl_au"/"_gcl_aw"/"_gac_*" are Google Ads' own click-id cookies, written once GTM runs.
+  function clearAdsCookies() {
+    expireMatching(/^_gcl_/);
+    expireMatching(/^_gac_/);
   }
 
   // ---------------------------------------------------------------------
@@ -157,14 +197,75 @@
   }
 
   // ---------------------------------------------------------------------
-  // Google Analytics 4 — only ever started from acceptAnalytics()
+  // Google Consent Mode v2 + Google Tag Manager — started unconditionally from init()
   // ---------------------------------------------------------------------
   function gtag() {
     window.dataLayer.push(arguments); // gtag.js requires the `arguments` object itself
   }
 
+  // Runs once, on every page load, on the production host only — before any consent
+  // decision is known. Declares Google's four signals "denied" by default (nothing is
+  // granted until the visitor actually accepts a category) and loads GTM regardless, so
+  // Google Ads can model conversions from cookieless, consent-respecting pings even for a
+  // visitor who has not yet chosen or who rejects. See the file header for the full picture.
+  function startConsentMode() {
+    if (consentModeStarted || !IS_PRODUCTION_HOST) return;
+    consentModeStarted = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || gtag;
+
+    gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied"
+    });
+
+    loadGTM();
+  }
+
+  function loadGTM() {
+    if (gtmLoaded || !IS_PRODUCTION_HOST) return;
+    if (document.querySelector('script[src^="' + GTM_URL + '"]')) return;
+    gtmLoaded = true;
+    // Pushed as a plain object (not via gtag()'s arguments wrapper): GTM's own loader reads
+    // this exact shape from the front of dataLayer to time itself, same as Google's own snippet.
+    window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var gtmLoader = document.createElement("script");
+    gtmLoader.async = true;
+    gtmLoader.src = GTM_URL + encodeURIComponent(GTM_ID);
+    document.head.appendChild(gtmLoader);
+  }
+
+  // Updates the two advertising consent signals. ad_personalization stays "denied" even
+  // after accepting: this Google Ads set-up only measures which advert led to a call,
+  // WhatsApp message or quote request — it does not build advertising profiles or
+  // retarget visitors elsewhere.
+  function applyAdsConsent(granted) {
+    if (!IS_PRODUCTION_HOST || typeof window.gtag !== "function") return;
+    window.gtag("consent", "update", {
+      ad_storage: granted ? "granted" : "denied",
+      ad_user_data: granted ? "granted" : "denied"
+    });
+    if (granted) installCallTracking();
+  }
+
+  // PLACEHOLDER (owner request, 2026-09-29): Google Ads "website call conversion tracking"
+  // swaps the displayed phone number for a Google forwarding number so Google can count
+  // answered calls as conversions. The owner will provide Google's snippet for this
+  // separately. When that arrives, paste it inside this function, unchanged — do not call
+  // it from anywhere else, so it stays behind the "Advertising / Google Ads" consent
+  // category above, and never runs on a non-production host.
+  function installCallTracking() {
+    // (nothing yet)
+  }
+
+  // ---------------------------------------------------------------------
+  // Google Analytics 4 — only ever started once the "Analytics" category is granted
+  // ---------------------------------------------------------------------
   function analyticsActive() {
-    return analyticsLoaded && readChoice() === "granted";
+    return analyticsLoaded && readChoice().analytics === "granted";
   }
 
   function track(name, params) {
@@ -200,32 +301,29 @@
     if (isContactPage()) track("contact_form_submit", {});
   }
 
-  function acceptAnalytics() {
-    if (analyticsLoaded) {
-      window["ga-disable-" + GA_MEASUREMENT_ID] = false;
+  // Stops the already-loaded GA4 tag from sending anything more (including its own
+  // end-of-visit engagement ping) — the documented way to fully silence gtag.js mid-page,
+  // used when a visitor downgrades Analytics from granted to denied.
+  function disableAnalyticsTag() {
+    window["ga-disable-" + GA_MEASUREMENT_ID] = true;
+    if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "denied" });
+  }
+
+  function applyAnalyticsConsent(granted) {
+    if (!granted) {
+      if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "denied" });
       return;
     }
-    if (!IS_PRODUCTION_HOST) {
-      if (window.console && console.info) console.info("[SFR Motors] Preview or local copy: Google Analytics is only loaded on sfrmotors.co.uk.");
-      return;
-    }
+    if (!IS_PRODUCTION_HOST || typeof window.gtag !== "function") return;
+    window.gtag("consent", "update", { analytics_storage: "granted" });
+
+    if (analyticsLoaded) return;
     if (document.querySelector('script[src^="' + GTAG_URL.split("?")[0] + '"]')) return;
     analyticsLoaded = true;
 
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = gtag;
-
-    // Analytics only; advertising storage stays off, and Google signals /
-    // ad personalisation are switched off for this tag.
-    gtag("consent", "default", {
-      analytics_storage: "granted",
-      ad_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied"
-    });
-    gtag("js", new Date());
+    window.gtag("js", new Date());
     // "config" sends the single automatic page_view for this page.
-    gtag("config", GA_MEASUREMENT_ID, {
+    window.gtag("config", GA_MEASUREMENT_ID, {
       allow_google_signals: false,
       allow_ad_personalization_signals: false,
       page_type: pageType()
@@ -240,16 +338,10 @@
     document.addEventListener("sfr:quote-submitted", onQuoteSubmitted);
   }
 
-  // Stops the already-loaded tag from sending anything more (including its
-  // own end-of-visit engagement ping). Used before the withdrawal reload.
-  function disableAnalytics() {
-    window["ga-disable-" + GA_MEASUREMENT_ID] = true;
-    if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "denied" });
-  }
-
-  // Another tab may have withdrawn consent while this one stays open.
+  // Another tab may have changed consent while this one stays open.
   document.addEventListener("visibilitychange", function () {
-    if (analyticsLoaded && readChoice() !== "granted") disableAnalytics();
+    var choice = readChoice();
+    if (analyticsLoaded && choice.analytics !== "granted") disableAnalyticsTag();
   });
 
   // ---------------------------------------------------------------------
@@ -284,7 +376,7 @@
       return;
     }
     if (event.key !== "Tab") return;
-    var items = panel.querySelectorAll("a[href], button");
+    var items = panel.querySelectorAll("a[href], button, input");
     var card = panel.querySelector(".sfr-consent__card");
     var first = items[0];
     var last = items[items.length - 1];
@@ -297,29 +389,34 @@
     }
   }
 
-  function choose(choice) {
-    var previous = readChoice();
-    var wasLoaded = analyticsLoaded;
-    writeChoice(choice);
+  // Applies one saved choice for both categories, updates cookies/tags accordingly, closes
+  // the panel and tells screen-reader users what happened.
+  function save(analytics, ads) {
+    var wasAnalyticsLoaded = analyticsLoaded;
+    writeChoice(analytics, ads);
 
-    if (choice === "granted") {
-      acceptAnalytics();
+    applyAdsConsent(ads === "granted");
+    if (ads !== "granted") clearAdsCookies();
+
+    if (analytics === "granted") {
+      applyAnalyticsConsent(true);
       closePanel(true);
-      announce("Analytics cookies are on.");
+      announce(ads === "granted" ? "All cookies are on." : "Your cookie choices have been saved.");
       return;
     }
 
-    clearAnalyticsCookies();
-    if (previous === "granted" && wasLoaded) {
-      // gtag.js is already running in this page and cannot be unloaded, so
-      // stop it, clear its cookies, then reload for a guaranteed clean page.
-      disableAnalytics();
-      clearAnalyticsCookies();
+    clearGACookies();
+    if (wasAnalyticsLoaded) {
+      // GA4 is already running on this page and cannot be unloaded, so stop it, clear its
+      // cookies, then reload for a guaranteed clean page (GTM itself is unaffected and stays
+      // loaded — only its consent signals changed, which it applies live, no reload needed).
+      disableAnalyticsTag();
+      clearGACookies();
       window.location.reload();
       return;
     }
     closePanel(true);
-    announce("Analytics cookies are off.");
+    announce(ads === "granted" ? "Your cookie choices have been saved." : "All optional cookies are off.");
   }
 
   function showPanel(mode, opener) {
@@ -330,8 +427,6 @@
     }
     var settings = mode === "settings";
     var choice = readChoice();
-    var status = choice === "granted" ? "Analytics cookies are currently on." :
-      choice === "denied" ? "Analytics cookies are currently off." : "You have not made a choice yet, so analytics cookies are off.";
 
     panel = document.createElement("div");
     panel.id = "sfr-consent";
@@ -341,23 +436,47 @@
       (settings ? '<div class="sfr-consent__scrim" data-sfr-consent-close></div>' : "") +
       '<div class="sfr-consent__card" role="dialog" aria-modal="' + (settings ? "true" : "false") +
       '" aria-labelledby="sfr-consent-title" aria-describedby="sfr-consent-desc" tabindex="-1">' +
-        '<p class="sfr-consent__title" id="sfr-consent-title">' + (settings ? "Cookie settings" : "Analytics cookies") + "</p>" +
-        '<p class="sfr-consent__text" id="sfr-consent-desc">We would like to use optional Google Analytics cookies to understand how this website is used. ' +
-        "They stay off unless you accept, and you can change your choice at any time using &ldquo;Cookie settings&rdquo; in the footer. " +
+        '<p class="sfr-consent__title" id="sfr-consent-title">Cookie settings</p>' +
+        '<p class="sfr-consent__text" id="sfr-consent-desc">We use optional cookies to understand how this website is used and to measure which Google adverts bring visitors here. ' +
+        "Both stay off unless you choose to turn them on, and you can change your choice at any time using &ldquo;Cookie settings&rdquo; in the footer. " +
         '<a href="' + PRIVACY_URL + '">Privacy Policy</a></p>' +
-        (settings ? '<p class="sfr-consent__status">' + status + "</p>" : "") +
+        '<div class="sfr-consent__categories">' +
+          '<div class="sfr-consent__category">' +
+            '<label class="sfr-consent__toggle">' +
+              '<input type="checkbox" data-sfr-consent-cat="analytics"' + (choice.analytics === "granted" ? " checked" : "") + '>' +
+              '<span class="sfr-consent__cat-name">Analytics</span>' +
+            "</label>" +
+            '<p class="sfr-consent__cat-desc">Google Analytics: helps us understand how visitors use the site.</p>' +
+          "</div>" +
+          '<div class="sfr-consent__category">' +
+            '<label class="sfr-consent__toggle">' +
+              '<input type="checkbox" data-sfr-consent-cat="ads"' + (choice.ads === "granted" ? " checked" : "") + '>' +
+              '<span class="sfr-consent__cat-name">Advertising / Google Ads</span>' +
+            "</label>" +
+            '<p class="sfr-consent__cat-desc">Google Ads &amp; Tag Manager: measures which advert led to a call, WhatsApp message or quote request.</p>' +
+          "</div>" +
+        "</div>" +
         '<div class="sfr-consent__actions">' +
-          '<button type="button" class="sfr-consent__btn sfr-consent__btn--accept" data-sfr-consent="granted">Accept analytics</button>' +
-          '<button type="button" class="sfr-consent__btn sfr-consent__btn--reject" data-sfr-consent="denied">Reject analytics</button>' +
+          '<button type="button" class="sfr-consent__btn sfr-consent__btn--accept" data-sfr-consent-all="granted">Accept all</button>' +
+          '<button type="button" class="sfr-consent__btn sfr-consent__btn--reject" data-sfr-consent-all="denied">Reject all</button>' +
+          '<button type="button" class="sfr-consent__btn sfr-consent__btn--save" data-sfr-consent-save>Save my choices</button>' +
         "</div>" +
         (settings ? '<button type="button" class="sfr-consent__close" data-sfr-consent-close>Close</button>' : "") +
       "</div>";
 
     panel.addEventListener("click", function (event) {
-      var target = event.target.closest ? event.target.closest("[data-sfr-consent],[data-sfr-consent-close]") : null;
+      var target = event.target.closest ? event.target.closest("[data-sfr-consent-all],[data-sfr-consent-save],[data-sfr-consent-close]") : null;
       if (!target) return;
-      if (target.hasAttribute("data-sfr-consent")) choose(target.getAttribute("data-sfr-consent"));
-      else closePanel(true);
+      if (target.hasAttribute("data-sfr-consent-all")) {
+        var v = target.getAttribute("data-sfr-consent-all");
+        save(v, v);
+      } else if (target.hasAttribute("data-sfr-consent-save")) {
+        var analyticsBox = panel.querySelector('[data-sfr-consent-cat="analytics"]');
+        var adsBox = panel.querySelector('[data-sfr-consent-cat="ads"]');
+        save(analyticsBox && analyticsBox.checked ? "granted" : "denied", adsBox && adsBox.checked ? "granted" : "denied");
+      } else {
+        closePanel(true); // closing never changes the stored choice
+      }
     });
 
     // First in the DOM, so keyboard and screen-reader users reach the
@@ -375,10 +494,12 @@
   // Start-up
   // ---------------------------------------------------------------------
   function init() {
+    startConsentMode();
+
     var choice = readChoice();
-    if (choice === "granted") acceptAnalytics();
-    else if (choice === "denied") clearAnalyticsCookies();
-    else showPanel("first");
+    if (choice.analytics === "granted") applyAnalyticsConsent(true);
+    if (choice.ads === "granted") applyAdsConsent(true);
+    if (!hasStoredChoice()) showPanel("first");
 
     var openers = document.querySelectorAll("[data-sfr-cookie-settings]");
     for (var i = 0; i < openers.length; i++) {

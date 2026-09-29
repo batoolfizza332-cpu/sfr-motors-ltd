@@ -111,23 +111,26 @@ Resources:
             # any API (it opens a pre-filled WhatsApp message), so connect-src has
             # no first-party API origin. JSON-LD <script> blocks are inert and
             # aren't restricted by script-src in any current browser.
-            # Google Analytics origins are exact hosts, no wildcards, and were
-            # taken from a real gtag.js run (collection blocked locally):
-            #   script-src  www.googletagmanager.com    - gtag.js itself
-            #   connect-src www.google-analytics.com    - GA4 /g/collect, default endpoint
+            # Google Analytics / Google Ads / Tag Manager origins are exact hosts, no wildcards:
+            #   script-src  www.googletagmanager.com     - gtag.js and gtm.js themselves
+            #               googleads.g.doubleclick.net  - Google Ads conversion tag, loaded by GTM
+            #   connect-src www.google-analytics.com     - GA4 /g/collect, default endpoint
             #               region1.google-analytics.com - GA4 /g/collect, served to UK/EU visitors
-            #   img-src     same two hosts              - listed in Google's CSP guide for GA4 image beacons
-            # Google signals and ad personalisation are off in analytics.js, so
-            # no google.com / doubleclick.net origins are needed. If GA data from
-            # some visitors goes missing, check the console for CSP violations
-            # from another regional *.google-analytics.com host.
+            #               www.googleadservices.com     - Google Ads conversion pings
+            #               googleads.g.doubleclick.net  - Google Ads conversion pings
+            #   img-src     the four hosts above          - listed in Google's CSP guide for GA4/Ads image beacons
+            # Google signals and ad personalisation stay off in analytics.js (owner decision, 2026-09-29:
+            # the Google Ads set-up measures conversions only, it does not build remarketing audiences), so
+            # doubleclick's own remarketing pixel domains beyond the two above are not needed. If a Google
+            # tag configured inside GTM later needs another origin, it will show as a CSP violation in the
+            # browser console — add that exact origin here, do not widen with a wildcard.
             ContentSecurityPolicy: >-
               default-src 'self';
-              script-src 'self' https://www.googletagmanager.com;
+              script-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net;
               style-src 'self';
               font-src 'self';
-              img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
-              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
+              img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
+              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
@@ -399,6 +402,8 @@ Resources:
   #   'www.' is 301-redirected in one hop to the apex domain (path and query
   #   string kept; legacy/.html URLs are remapped in the same hop), matching
   #   what the WordPress site does today.
+  #   Added 2026-09-29 (Google Ads landing pages, owner request): /mobile-tyre-repair/,
+  #   /emergency-mobile-tyre-fitting/ and /roadside-tyre-fitting/ (files named after their slug).
   LegacyRedirectFunction:
     Type: AWS::CloudFront::Function
     Properties:
@@ -457,7 +462,8 @@ Resources:
                 'pirelli-silent-tyres-uk michelin-radial-tire-history-innovation ' +
                 'how-to-choose-the-best-tyres-for-my-car-expert-buying-guide mobile-tyre-fitter-near-me-myths ' +
                 'which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk our-tyre-range ' +
-                'mobile-tyre-repair-edinburgh-west-lothian'
+                'mobile-tyre-repair-edinburgh-west-lothian ' +
+                'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {

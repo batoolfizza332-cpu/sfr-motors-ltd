@@ -345,6 +345,21 @@
       "statusCode": 301
     },
     {
+      "source": "/mobile-tyre-repair.html",
+      "destination": "/mobile-tyre-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/emergency-mobile-tyre-fitting.html",
+      "destination": "/emergency-mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/roadside-tyre-fitting.html",
+      "destination": "/roadside-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
       "source": "/locking-wheel-nut-removal-bathgate",
       "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
@@ -1071,6 +1086,30 @@
     {
       "source": "/mobile-tyre-repair-edinburgh-west-lothian/",
       "destination": "/mobile-tyre-repair-edinburgh-west-lothian.html"
+    },
+    {
+      "source": "/mobile-tyre-repair",
+      "destination": "/mobile-tyre-repair.html"
+    },
+    {
+      "source": "/mobile-tyre-repair/",
+      "destination": "/mobile-tyre-repair.html"
+    },
+    {
+      "source": "/emergency-mobile-tyre-fitting",
+      "destination": "/emergency-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/emergency-mobile-tyre-fitting/",
+      "destination": "/emergency-mobile-tyre-fitting.html"
+    },
+    {
+      "source": "/roadside-tyre-fitting",
+      "destination": "/roadside-tyre-fitting.html"
+    },
+    {
+      "source": "/roadside-tyre-fitting/",
+      "destination": "/roadside-tyre-fitting.html"
     }
   ],
   "headers": [
@@ -1079,7 +1118,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; font-src 'self'; img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net; style-src 'self'; font-src 'self'; img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         },
         {
           "key": "Strict-Transport-Security",
