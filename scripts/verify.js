@@ -798,6 +798,7 @@ function checkConsentAndAnalytics(pages) {
     for (const [dir, origin] of [
       ["script-src", "https://www.googletagmanager.com"],
       ["script-src", "https://googleads.g.doubleclick.net"],
+      ["script-src", "https://www.gstatic.com"],
       ["connect-src", "https://www.google-analytics.com"],
       ["connect-src", "https://region1.google-analytics.com"],
       ["connect-src", "https://googleads.g.doubleclick.net"],

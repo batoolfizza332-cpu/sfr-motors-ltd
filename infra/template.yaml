@@ -122,6 +122,9 @@ Resources:
             #               pagead2.googlesyndication.com - Google Ads tags configured inside GTM (owner request, 2026-09-29)
             #               www.google.com                - Google Ads tags configured inside GTM (owner request, 2026-09-29)
             #   img-src     the four Analytics/Ads hosts above, plus www.googletagmanager.com (owner request, 2026-09-29)
+            #   script-src  also www.gstatic.com (found live, 2026-09-29: gstatic.com/wcm/loader.js was blocked by
+            #               CSP on every page; owner is mid-way through setting up a Google Ads AI agent/campaign,
+            #               so this is very likely one of its components)
             # Google signals and ad personalisation stay off in analytics.js (this Google Ads set-up
             # measures conversions only, it does not build remarketing audiences on our side), but GTM's own
             # tags still need these origins to actually load/report. If a Google tag configured inside GTM
@@ -129,7 +132,7 @@ Resources:
             # exact origin here, do not widen with a wildcard.
             ContentSecurityPolicy: >-
               default-src 'self';
-              script-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net;
+              script-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.gstatic.com;
               style-src 'self';
               font-src 'self';
               img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.googletagmanager.com;
