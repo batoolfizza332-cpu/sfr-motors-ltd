@@ -112,6 +112,10 @@ const CANONICAL_URL_OVERRIDES = {
   "mobile-tyre-repair.html": "mobile-tyre-repair/",
   "emergency-mobile-tyre-fitting.html": "emergency-mobile-tyre-fitting/",
   "roadside-tyre-fitting.html": "roadside-tyre-fitting/",
+  "mobile-tyre-fitting.html": "mobile-tyre-fitting/",
+  "mobile-tyre-fitting-armadale.html": "mobile-tyre-fitting-armadale/",
+  "mobile-tyre-fitting-kirkliston.html": "mobile-tyre-fitting-kirkliston/",
+  "mobile-tyre-fitting-blackburn.html": "mobile-tyre-fitting-blackburn/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -776,22 +780,32 @@ function checkConsentAndAnalytics(pages) {
 
   // -- CSP: exact Google origins, no wildcards or unsafe allowances -------------
   const csp = parseCsp();
-  // Owner decision, 2026-09-29: Google Ads conversion measurement via GTM is in scope, so these two exact
-  // Ads origins are expected (and required) alongside the GA4 ones — see the forbidden-origins check below,
-  // which still blocks any other google.com/doubleclick.net/googlesyndication.com origin (remarketing etc,
-  // which this set-up does not use: ad_personalization stays "denied").
-  const ADS_ORIGINS = ["https://googleads.g.doubleclick.net", "https://www.googleadservices.com"];
+  // Owner decisions 2026-09-29: Google Ads conversion measurement via GTM is in scope, so these exact Ads
+  // origins are expected (and required) alongside the GA4 ones — see the forbidden-origins check below,
+  // which still blocks any other google.com/doubleclick.net/googlesyndication.com origin (this set-up does
+  // not build remarketing audiences on our own side, even though GTM's own tags need these to load).
+  const ADS_ORIGINS = [
+    "https://googleads.g.doubleclick.net",
+    "https://www.googleadservices.com",
+    "https://ad.doubleclick.net",
+    "https://pagead2.googlesyndication.com",
+    "https://www.google.com",
+  ];
   if (!csp) {
     fail(check, "Could not parse the ContentSecurityPolicy in infra/template.yaml.", "infra/template.yaml", "Restore the ContentSecurityPolicy block.");
   } else {
     const has = (dir, origin) => (csp[dir] || []).includes(origin);
     for (const [dir, origin] of [
       ["script-src", "https://www.googletagmanager.com"],
-      ["script-src", ADS_ORIGINS[0]],
+      ["script-src", "https://googleads.g.doubleclick.net"],
       ["connect-src", "https://www.google-analytics.com"],
       ["connect-src", "https://region1.google-analytics.com"],
-      ["connect-src", ADS_ORIGINS[0]],
-      ["connect-src", ADS_ORIGINS[1]],
+      ["connect-src", "https://googleads.g.doubleclick.net"],
+      ["connect-src", "https://www.googleadservices.com"],
+      ["connect-src", "https://ad.doubleclick.net"],
+      ["connect-src", "https://pagead2.googlesyndication.com"],
+      ["connect-src", "https://www.google.com"],
+      ["img-src", "https://www.googletagmanager.com"],
       ["frame-src", "https://maps.google.com"],
       ["frame-src", "https://www.google.com"],
     ]) {
@@ -805,9 +819,9 @@ function checkConsentAndAnalytics(pages) {
     }
     for (const dir of ["script-src", "connect-src", "img-src"]) {
       for (const src of csp[dir] || []) {
-        if (ADS_ORIGINS.includes(src)) continue;
+        if (ADS_ORIGINS.includes(src) || src === "https://www.googletagmanager.com") continue;
         if (/(^|\.)(google\.com|doubleclick\.net|googlesyndication\.com)$/.test(src.replace(/^https:\/\//, ""))) {
-          fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Google Ads here is conversion-measurement only (ad_personalization stays denied); remove any origin beyond the two approved Ads ones.");
+          fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Remove any Google Ads-family origin beyond the approved list in ADS_ORIGINS.");
         }
       }
     }
@@ -1186,76 +1200,14 @@ function checkHostingerHtaccess() {
 }
 
 // ---------------------------------------------------------------------------
-// Check 23: Mobile Tyre Fitting has ONE indexable URL, /mobile-tyre-fitting.html
+// Check 23 (removed 2026-09-29): Mobile Tyre Fitting used to be the one page whose sole
+// indexable URL was required to be /mobile-tyre-fitting.html, unlike every other
+// mobile-tyre-fitting-<town> page. Owner decision, 2026-09-29 (ranking protection): reversed
+// — /mobile-tyre-fitting/, /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
+// /mobile-tyre-fitting-blackburn/ are now pretty-path pages like all the others, covered by the
+// general routing/canonical/sitemap checks (16, CANONICAL_URL_OVERRIDES) instead of a dedicated
+// check. The numbering below keeps its historical gap rather than renumbering every later check.
 // ---------------------------------------------------------------------------
-// Owner decision: https://sfrmotors.co.uk/mobile-tyre-fitting.html is the only 200 URL of this page. The extension-less forms
-// /mobile-tyre-fitting and /mobile-tyre-fitting/ must 301 straight to it (one hop, on CloudFront, Vercel and Hostinger alike), and
-// nothing on the site may link to, canonicalise to, list or mark up any other form.
-function checkMobileTyreFittingUrl() {
-  const check = "23. Mobile Tyre Fitting URL";
-  const FINAL = "/mobile-tyre-fitting.html";
-  const finalUrl = `${PROD_DOMAIN}${FINAL}`;
-
-  // 1. No reference anywhere in the source pages or the sitemap to /mobile-tyre-fitting, /mobile-tyre-fitting/ or a full URL without .html
-  //    (links, canonical, Open Graph, JSON-LD, breadcrumbs and navigation all live in these files). Location pages such as
-  //    /mobile-tyre-fitting-bathgate/ and the .html URL itself are not matched (nor slugs that merely end in it, like /what-is-mobile-tyre-fitting/).
-  const bare = /(?<![-\w])mobile-tyre-fitting(?![-\w.])/g;
-  for (const file of [...listHtmlFiles(), "sitemap.xml"]) {
-    const hits = readFile(file).match(bare);
-    if (hits) fail(check, `${file} refers to the extension-less mobile-tyre-fitting URL ${hits.length} time(s); only ${FINAL} is allowed.`, `site/${file}`, `Use ${FINAL} everywhere.`);
-  }
-
-  // 2. The page itself: canonical and og:url are the .html URL, it is indexable and listed once in the sitemap.
-  const page = readFile("mobile-tyre-fitting.html");
-  const canonical = (page.match(/<link\s+rel="canonical"\s+href="([^"]*)"/) || [])[1];
-  const ogUrl = (page.match(/<meta\s+property="og:url"\s+content="([^"]*)"/) || [])[1];
-  if (canonical !== finalUrl) fail(check, `mobile-tyre-fitting.html canonical is ${canonical}; expected ${finalUrl}.`, "site/mobile-tyre-fitting.html", `Set the canonical to ${finalUrl}.`);
-  if (ogUrl !== finalUrl) fail(check, `mobile-tyre-fitting.html og:url is ${ogUrl}; expected ${finalUrl}.`, "site/mobile-tyre-fitting.html", `Set og:url to ${finalUrl}.`);
-  if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(page)) fail(check, "mobile-tyre-fitting.html is noindex; it must be the one indexable URL.", "site/mobile-tyre-fitting.html", "Remove noindex.");
-  const locs = [...readFile("sitemap.xml").matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]).filter((u) => /\/mobile-tyre-fitting(\.html|\/)?$/.test(u));
-  if (locs.length !== 1 || locs[0] !== finalUrl) fail(check, `sitemap.xml lists ${JSON.stringify(locs)} for this page; expected exactly ["${finalUrl}"].`, "site/sitemap.xml", `List only ${finalUrl}.`);
-
-  // 3. Routing: the page is never served from a pretty path, and both extension-less forms 301 directly to the .html URL, whatever the
-  //    protocol or host (CloudFront Function, then the generated Hostinger .htaccess in both profiles, then vercel.json).
-  const { special, same, legacy, edgeFunction } = require("./vercel-config").loadRouting();
-  if (Object.keys(special).includes("mobile-tyre-fitting") || Object.values(special).includes("mobile-tyre-fitting") || same.includes("mobile-tyre-fitting")) {
-    fail(check, "mobile-tyre-fitting is registered as a pretty-path page, which would serve it with a 200 at an extension-less URL.", "infra/template.yaml", "Remove it from the special / same tables; keep it in the legacy table.");
-  }
-  if (legacy["/mobile-tyre-fitting"] !== FINAL) fail(check, `The legacy redirect table maps /mobile-tyre-fitting to ${legacy["/mobile-tyre-fitting"]}; expected ${FINAL}.`, "infra/template.yaml", `Add '/mobile-tyre-fitting': '${FINAL}' to the legacy table.`);
-  const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
-  for (const uri of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
-    const out = edge(uri);
-    if (out.statusCode !== 301 || out.headers.location.value !== FINAL) fail(check, `CloudFront Function: ${uri} gives ${JSON.stringify(out.statusCode || out.uri)} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Fix the legacy table.");
-    const www = edge(uri, "www.example.test");
-    if (www.statusCode !== 301 || www.headers.location.value !== `https://example.test${FINAL}`) fail(check, `CloudFront Function: www ${uri} does not reach https://example.test${FINAL} in one hop.`, "infra/template.yaml", "Fix the www rule / legacy table.");
-  }
-  if (edge(FINAL).statusCode) fail(check, `CloudFront Function redirects ${FINAL} itself.`, "infra/template.yaml", `${FINAL} must be served with a 200.`);
-
-  const { buildHtaccess, simulateApache } = require("./htaccess-config");
-  const distDir = path.join(ROOT, "dist");
-  const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
-  const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
-  const HOST = "example.test";
-  for (const profile of ["staging", "production"]) {
-    const ht = buildHtaccess(profile);
-    for (const req of [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }]) {
-      for (const uri of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
-        const got = simulateApache(ht, { ...req, uri, query: "" }, { hasFile, isDir });
-        if (got.redirect !== `https://${HOST}${FINAL}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${uri}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${FINAL}.`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
-      }
-    }
-    const final = simulateApache(ht, { host: HOST, https: true, uri: FINAL, query: "" }, { hasFile, isDir });
-    if (final.file !== FINAL) fail(check, `.htaccess (${profile}): ${FINAL} gives ${JSON.stringify(final)}; expected the page to be served (200).`, "scripts/htaccess-config.js", `${FINAL} must be served, never redirected.`);
-    if (/^RewriteRule \^mobile-tyre-fitting[^ ]* mobile-tyre-fitting\.html \[L\]/m.test(ht)) fail(check, `.htaccess (${profile}) serves mobile-tyre-fitting.html at an extension-less URL.`, "scripts/htaccess-config.js", "Only the 301 is allowed.");
-  }
-  let vercel;
-  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
-  for (const source of ["/mobile-tyre-fitting", "/mobile-tyre-fitting/"]) {
-    const rule = (vercel.redirects || []).find((r) => r.source === source);
-    if (!rule || rule.destination !== FINAL || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${FINAL}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
-  }
-  if ((vercel.rewrites || []).some((r) => /^\/mobile-tyre-fitting\/?$/.test(r.source))) fail(check, "vercel.json rewrites an extension-less mobile-tyre-fitting URL to the page.", "vercel.json", "Only the 301 is allowed.");
-}
 
 // ---------------------------------------------------------------------------
 // Check 24: Broxburn has ONE indexable URL, /broxburn/
@@ -1574,7 +1526,7 @@ function checkScriptCachingAndMime() {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 27;
+const TOTAL_CHECKS = 26;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1596,7 +1548,6 @@ async function main() {
   checkOwnerApprovedCorrections(pages);
   checkVercelConfig();
   checkHostingerHtaccess();
-  checkMobileTyreFittingUrl();
   checkBroxburnUrl(pages);
   checkLocationLinks();
   checkHistoricalUrls(pages);

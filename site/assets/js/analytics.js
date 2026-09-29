@@ -146,7 +146,6 @@
     "mobile-tyre-fitting-falkirk.html"
   ];
   var SERVICE_PAGES = [
-    "mobile-tyre-fitting.html",
     "mobile-tyre-replacement.html",
     "mobile-puncture-repair.html",
     "emergency-tyre-change.html",
@@ -159,6 +158,8 @@
   // Service pages whose canonical URL is a CloudFront pretty path, so the
   // last "/"-segment is empty and the filename lookup above cannot match.
   var SERVICE_PRETTY_PATHS = [
+    "/mobile-tyre-fitting/",
+    "/mobile-tyre-fitting",
     "/mobile-trailer-and-caravan-tyre-fitting/",
     "/mobile-trailer-and-caravan-tyre-fitting",
     "/mobile-tyre-puncture-repair/",

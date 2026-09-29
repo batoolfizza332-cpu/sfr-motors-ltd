@@ -118,19 +118,22 @@ Resources:
             #               region1.google-analytics.com - GA4 /g/collect, served to UK/EU visitors
             #               www.googleadservices.com     - Google Ads conversion pings
             #               googleads.g.doubleclick.net  - Google Ads conversion pings
-            #   img-src     the four hosts above          - listed in Google's CSP guide for GA4/Ads image beacons
-            # Google signals and ad personalisation stay off in analytics.js (owner decision, 2026-09-29:
-            # the Google Ads set-up measures conversions only, it does not build remarketing audiences), so
-            # doubleclick's own remarketing pixel domains beyond the two above are not needed. If a Google
-            # tag configured inside GTM later needs another origin, it will show as a CSP violation in the
-            # browser console — add that exact origin here, do not widen with a wildcard.
+            #               ad.doubleclick.net            - Google Ads tags configured inside GTM (owner request, 2026-09-29)
+            #               pagead2.googlesyndication.com - Google Ads tags configured inside GTM (owner request, 2026-09-29)
+            #               www.google.com                - Google Ads tags configured inside GTM (owner request, 2026-09-29)
+            #   img-src     the four Analytics/Ads hosts above, plus www.googletagmanager.com (owner request, 2026-09-29)
+            # Google signals and ad personalisation stay off in analytics.js (this Google Ads set-up
+            # measures conversions only, it does not build remarketing audiences on our side), but GTM's own
+            # tags still need these origins to actually load/report. If a Google tag configured inside GTM
+            # later needs another origin, it will show as a CSP violation in the browser console — add that
+            # exact origin here, do not widen with a wildcard.
             ContentSecurityPolicy: >-
               default-src 'self';
               script-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net;
               style-src 'self';
               font-src 'self';
-              img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
-              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net;
+              img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.googletagmanager.com;
+              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com https://www.google.com;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
@@ -383,9 +386,6 @@ Resources:
   #   In each rewrite/redirect pair, the rewritten path is the one
   #   primary, indexable URL. All other requests pass through
   #   unchanged.
-  #   /mobile-tyre-fitting and /mobile-tyre-fitting/ -> 301 -> the page's one
-  #   canonical URL, /mobile-tyre-fitting.html (owner decision: .html is the only
-  #   indexable URL; both extension-less forms redirect straight to it, one hop).
   #   /mobile-tyre-fitting-broxburn.html -> 301 -> /broxburn/ (owner decision: /broxburn/,
   #   the original WordPress URL, is the only indexable Broxburn page; the duplicate
   #   .html location page was removed; one hop, also from www).
@@ -404,6 +404,12 @@ Resources:
   #   what the WordPress site does today.
   #   Added 2026-09-29 (Google Ads landing pages, owner request): /mobile-tyre-repair/,
   #   /emergency-mobile-tyre-fitting/ and /roadside-tyre-fitting/ (files named after their slug).
+  #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
+  #   /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
+  #   /mobile-tyre-fitting-blackburn/ are now the indexable URLs (previously .html was the
+  #   canonical for these four only, unlike every other mobile-tyre-fitting-<town> page); the old
+  #   legacy '/mobile-tyre-fitting' -> '/mobile-tyre-fitting.html' redirect is removed, and the
+  #   general '/<file>.html -> 301 -> /<slug>/' rule (below) now covers all four in one hop.
   LegacyRedirectFunction:
     Type: AWS::CloudFront::Function
     Properties:
@@ -463,7 +469,8 @@ Resources:
                 'how-to-choose-the-best-tyres-for-my-car-expert-buying-guide mobile-tyre-fitter-near-me-myths ' +
                 'which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk our-tyre-range ' +
                 'mobile-tyre-repair-edinburgh-west-lothian ' +
-                'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting'
+                'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting ' +
+                'mobile-tyre-fitting mobile-tyre-fitting-armadale mobile-tyre-fitting-kirkliston mobile-tyre-fitting-blackburn'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {
@@ -484,8 +491,7 @@ Resources:
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
                 '/tyre-lifespan-mobile-tyre-repair-guide': '/tyre-lifespan/',
                 '/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use': '/what-tools-do-mobile-tyre-fitters-use/',
-                '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
-                '/mobile-tyre-fitting': '/mobile-tyre-fitting.html'
+                '/mobile-tyre-fitting-broxburn.html': '/broxburn/'
             };
 
             var bare = uri.length > 1 && uri.charAt(uri.length - 1) === '/' ? uri.slice(0, -1) : uri;
