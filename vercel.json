@@ -150,11 +150,6 @@
       "statusCode": 301
     },
     {
-      "source": "/locking-wheel-nut-removal.html",
-      "destination": "/locking-wheel-nut-removal/",
-      "statusCode": 301
-    },
-    {
       "source": "/better-tyres-better-drive.html",
       "destination": "/better-tyres-better-drive/",
       "statusCode": 301
@@ -481,12 +476,12 @@
     },
     {
       "source": "/expert-locking-wheel-nut-removal",
-      "destination": "/locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
     },
     {
       "source": "/expert-locking-wheel-nut-removal/",
-      "destination": "/locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
     },
     {
@@ -501,12 +496,32 @@
     },
     {
       "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian",
-      "destination": "/locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
     },
     {
       "source": "/best-emergency-locking-wheel-nut-removal-in-west-lothian/",
-      "destination": "/locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal.html",
+      "destination": "/mobile-locking-wheel-nut-removal/",
+      "statusCode": 301
+    },
+    {
+      "source": "/locking-wheel-nut-removal.html/",
+      "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
     },
     {
@@ -784,14 +799,6 @@
     {
       "source": "/emergency-tyre-replacement/",
       "destination": "/emergency-tyre-replacement.html"
-    },
-    {
-      "source": "/locking-wheel-nut-removal",
-      "destination": "/locking-wheel-nut-removal.html"
-    },
-    {
-      "source": "/locking-wheel-nut-removal/",
-      "destination": "/locking-wheel-nut-removal.html"
     },
     {
       "source": "/better-tyres-better-drive",

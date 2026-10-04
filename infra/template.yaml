@@ -372,14 +372,14 @@ Resources:
   #   /expert-locking-wheel-nut-removal/ -> 301 (near-duplicate
   #   informational locking-wheel-nut article per the WordPress
   #   migration audit, consolidated into the recreated article) ->
-  #   /locking-wheel-nut-removal/;
+  #   /mobile-locking-wheel-nut-removal/ (re-pointed 2026-10-04, see below);
   #   /tyre-replacement-call-out-bathgate/ -> 301 (same transactional
   #   intent as the Bathgate location page, per the WordPress
   #   migration audit) -> /mobile-tyre-fitting-bathgate/;
   #   /best-emergency-locking-wheel-nut-removal-in-west-lothian/ -> 301
   #   (near-duplicate informational locking-wheel-nut article per the
   #   WordPress migration audit, consolidated into the recreated
-  #   article) -> /locking-wheel-nut-removal/;
+  #   article) -> /mobile-locking-wheel-nut-removal/ (re-pointed 2026-10-04, see below);
   #   /best-mobile-tyre-fitter-west-lothian/ -> 301 (per the WordPress
   #   migration audit) -> /mobile-tyre-fitting-west-lothian/;
   #   /mobile-tyre-fitting-bathgate-questions/ -> 301 (same transactional
@@ -407,6 +407,10 @@ Resources:
   #   what the WordPress site does today.
   #   Added 2026-09-29 (Google Ads landing pages, owner request): /mobile-tyre-repair/,
   #   /emergency-mobile-tyre-fitting/ and /roadside-tyre-fitting/ (files named after their slug).
+  #   Retired 2026-10-04 (owner decision, Search Console cannibalisation): the short article
+  #   /locking-wheel-nut-removal/ (and its .html) -> 301 -> /mobile-locking-wheel-nut-removal/;
+  #   its useful points moved into that page's FAQ, and the two audit consolidations above now
+  #   point straight at it (single hop).
   #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
   #   /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
   #   /mobile-tyre-fitting-blackburn/ are now the indexable URLs (previously .html was the
@@ -456,7 +460,7 @@ Resources:
                 'puncture-repairs-whats-actually-being-done-to-your-tyre ' +
                 'what-mobile-fitters-check-before-changing-a-tyre-on-a-hill ' +
                 'locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk ' +
-                'emergency-tyre-replacement locking-wheel-nut-removal better-tyres-better-drive ' +
+                'emergency-tyre-replacement better-tyres-better-drive ' +
                 'how-to-change-a-tyre mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation ' +
                 'mobile-tyre-fitting-airdrie mobile-tyre-fitting-bathgate mobile-tyre-fitting-boness mobile-tyre-fitting-edinburgh ' +
                 'mobile-tyre-fitting-falkirk mobile-tyre-fitting-harthill mobile-tyre-fitting-linlithgow ' +
@@ -487,9 +491,11 @@ Resources:
                 '/why-professional-mobile-tyre-services-are-information-to-all-drivers': '/why-professional-mobile-tyre-services-are-essential-for-modern-drivers/',
                 '/tyre-puncture-repair-near-me-west-lothian': '/mobile-tyre-repair-edinburgh-west-lothian/',
                 '/tyres-bathgate-guide': '/van-tyre-replacement-services/',
-                '/expert-locking-wheel-nut-removal': '/locking-wheel-nut-removal/',
+                '/expert-locking-wheel-nut-removal': '/mobile-locking-wheel-nut-removal/',
                 '/tyre-replacement-call-out-bathgate': '/mobile-tyre-fitting-bathgate/',
-                '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/locking-wheel-nut-removal/',
+                '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/mobile-locking-wheel-nut-removal/',
+                '/locking-wheel-nut-removal': '/mobile-locking-wheel-nut-removal/',
+                '/locking-wheel-nut-removal.html': '/mobile-locking-wheel-nut-removal/',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian/',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
                 '/tyre-lifespan-mobile-tyre-repair-guide': '/tyre-lifespan/',

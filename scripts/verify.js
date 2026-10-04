@@ -69,7 +69,6 @@ const CANONICAL_URL_OVERRIDES = {
   "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill.html": "what-mobile-fitters-check-before-changing-a-tyre-on-a-hill/",
   "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk.html": "locking-wheel-nut-removal-industry-practice-disclaimer-requirements-and-wheel-damage-risk/",
   "emergency-tyre-replacement.html": "emergency-tyre-replacement/",
-  "locking-wheel-nut-removal.html": "locking-wheel-nut-removal/",
   "better-tyres-better-drive.html": "better-tyres-better-drive/",
   "how-to-change-a-tyre.html": "how-to-change-a-tyre/",
   "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation.html": "mobile-tyre-fitting-vs-recovery-whats-best-for-your-situation/",
