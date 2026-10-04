@@ -957,7 +957,8 @@ function checkOwnerApprovedCorrections(pages) {
   }
   if (!fs.existsSync(path.join(SITE_DIR, "assets", "fonts", "OFL.txt"))) fail(check, "The font licence (site/assets/fonts/OFL.txt) is missing.", "site/assets/fonts/OFL.txt", "Ship the SIL OFL text next to the font.");
   for (const [file, page] of Object.entries(pages)) {
-    const pre = matchAll(/<link\s+rel="preload"[^>]*>/g, page.html).map((m) => m[0]);
+    // Only font preloads count here; the homepage also preloads its phone hero image (as="image").
+    const pre = matchAll(/<link\s+rel="preload"[^>]*>/g, page.html).map((m) => m[0]).filter((tag) => !/as="image"/.test(tag));
     if (pre.length !== 1 || ![...fontFiles].some((u) => pre[0].includes(`href="${u}"`)) || !/crossorigin/.test(pre[0]) || !/as="font"/.test(pre[0])) {
       fail(check, "Page must preload the self-hosted font exactly once (as=font, crossorigin).", `site/${file}`, 'Add <link rel="preload" href="/assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>.');
     }

@@ -213,7 +213,7 @@ html { scroll-padding-top: 100px; }
   background: linear-gradient(100deg, rgba(6,6,7,.92) 0%, rgba(6,6,7,.86) 32%, rgba(6,6,7,.5) 50%, rgba(6,6,7,.22) 68%, rgba(6,6,7,.12) 100%);
 }
 @media (max-width: 700px) {
-  .sfr-hero__bg { object-position: 30% 50%; }
+  .sfr-hero__bg { object-position: 35% 50%; } /* phone crop: keep the van rear and the SFR logo in view */
   .sfr-hero__overlay { background: linear-gradient(180deg, rgba(6,6,7,.86) 0%, rgba(6,6,7,.74) 55%, rgba(6,6,7,.5) 100%); }
 }
 .sfr-hero__inner {
