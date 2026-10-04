@@ -805,6 +805,7 @@ function checkConsentAndAnalytics(pages) {
       ["connect-src", "https://ad.doubleclick.net"],
       ["connect-src", "https://pagead2.googlesyndication.com"],
       ["connect-src", "https://www.google.com"],
+      ["connect-src", "https://www.google.co.uk"],
       ["img-src", "https://www.googletagmanager.com"],
       ["frame-src", "https://maps.google.com"],
       ["frame-src", "https://www.google.com"],

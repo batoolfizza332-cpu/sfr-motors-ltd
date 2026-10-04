@@ -121,6 +121,10 @@ Resources:
             #               ad.doubleclick.net            - Google Ads tags configured inside GTM (owner request, 2026-09-29)
             #               pagead2.googlesyndication.com - Google Ads tags configured inside GTM (owner request, 2026-09-29)
             #               www.google.com                - Google Ads tags configured inside GTM (owner request, 2026-09-29)
+            #               www.google.co.uk              - GTM's Google Ads "calls from website" tag looks up the forwarding
+            #                                               number at /pagead/attribution/wcm (found blocked live, 2026-10-04).
+            #                                               Google's CSP guide lists www.google.<TLD> one country domain at a
+            #                                               time (no wildcards); only the UK domain is added.
             #   img-src     the four Analytics/Ads hosts above, plus www.googletagmanager.com (owner request, 2026-09-29)
             #   script-src  also www.gstatic.com (found live, 2026-09-29: gstatic.com/wcm/loader.js was blocked by
             #               CSP on every page; owner is mid-way through setting up a Google Ads AI agent/campaign,
@@ -136,7 +140,7 @@ Resources:
               style-src 'self';
               font-src 'self';
               img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.googletagmanager.com;
-              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com https://www.google.com;
+              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com https://www.google.com https://www.google.co.uk;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
