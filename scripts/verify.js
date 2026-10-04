@@ -800,6 +800,7 @@ function checkConsentAndAnalytics(pages) {
       ["script-src", "https://www.gstatic.com"],
       ["connect-src", "https://www.google-analytics.com"],
       ["connect-src", "https://region1.google-analytics.com"],
+      ["connect-src", "https://region1.analytics.google.com"],
       ["connect-src", "https://googleads.g.doubleclick.net"],
       ["connect-src", "https://www.googleadservices.com"],
       ["connect-src", "https://ad.doubleclick.net"],
@@ -821,6 +822,7 @@ function checkConsentAndAnalytics(pages) {
     for (const dir of ["script-src", "connect-src", "img-src"]) {
       for (const src of csp[dir] || []) {
         if (ADS_ORIGINS.includes(src) || src === "https://www.googletagmanager.com") continue;
+        if (dir === "connect-src" && src === "https://region1.analytics.google.com") continue; // GA4 collection, not Ads
         if (/(^|\.)(google\.com|doubleclick\.net|googlesyndication\.com)$/.test(src.replace(/^https:\/\//, ""))) {
           fail(check, `CSP ${dir} allows ${src}, which this analytics set-up does not need.`, "infra/template.yaml", "Remove any Google Ads-family origin beyond the approved list in ADS_ORIGINS.");
         }

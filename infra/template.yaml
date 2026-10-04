@@ -116,6 +116,10 @@ Resources:
             #               googleads.g.doubleclick.net  - Google Ads conversion tag, loaded by GTM
             #   connect-src www.google-analytics.com     - GA4 /g/collect, default endpoint
             #               region1.google-analytics.com - GA4 /g/collect, served to UK/EU visitors
+            #               region1.analytics.google.com - GA4 /g/collect, the host GA4 uses now (found blocked live,
+            #                                              2026-10-04; covered by *.google.com in Google's CSP guide).
+            #                                              stats.g.doubleclick.net and www.google.<TLD>/ads/ga-audiences
+            #                                              (Google signals / remarketing) stay blocked on purpose.
             #               www.googleadservices.com     - Google Ads conversion pings
             #               googleads.g.doubleclick.net  - Google Ads conversion pings
             #               ad.doubleclick.net            - Google Ads tags configured inside GTM (owner request, 2026-09-29)
@@ -140,7 +144,7 @@ Resources:
               style-src 'self';
               font-src 'self';
               img-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.googletagmanager.com;
-              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com https://www.google.com https://www.google.co.uk;
+              connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://region1.analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com https://www.google.com https://www.google.co.uk;
               frame-src https://maps.google.com https://www.google.com;
               object-src 'none';
               base-uri 'self';
