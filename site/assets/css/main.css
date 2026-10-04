@@ -2147,6 +2147,12 @@ html { scroll-padding-top: 100px; }
 .sfr-consent__btn--reject:hover{background:#e6e6e6;}
 .sfr-consent__btn--save{background:transparent;border-color:var(--sfr-line);color:var(--sfr-ink);}
 .sfr-consent__btn--save:hover{border-color:var(--sfr-orange);}
+.sfr-consent__card--compact .sfr-consent__text{margin-bottom:10px;}
+.sfr-consent__card--compact .sfr-consent__btn{flex:1 1 90px;}
+/* Phones: keep the compact bar above the fixed "Call Now" bar (56px + safe area) so calling stays one tap away. */
+@media (max-width:768px){
+  body.sfr-has-callbar .sfr-consent:not(.sfr-consent--settings){bottom:calc(56px + env(safe-area-inset-bottom));padding-bottom:8px;}
+}
 .sfr-consent__btn:focus-visible,
 .sfr-consent__close:focus-visible,
 .sfr-consent__text a:focus-visible{outline:3px solid var(--sfr-ink);outline-offset:3px;}

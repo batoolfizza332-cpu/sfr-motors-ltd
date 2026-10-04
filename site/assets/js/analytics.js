@@ -372,11 +372,19 @@
     panelOpener = null;
   }
 
+  // Closing without saving: if the visitor has still not chosen (they came from "Choose" on the
+  // first-visit bar), bring the compact bar back so the choice is not silently skipped.
+  function dismissPanel() {
+    var wasSettings = panel && panel.getAttribute("data-mode") === "settings";
+    closePanel(true);
+    if (wasSettings && !hasStoredChoice()) showPanel("first");
+  }
+
   function onPanelKeydown(event) {
     if (!panel) return;
     if (event.key === "Escape") {
       event.preventDefault();
-      closePanel(true); // closing never changes the stored choice
+      dismissPanel(); // closing never changes the stored choice
       return;
     }
     if (event.key !== "Tab") return;
@@ -436,7 +444,23 @@
     panel.id = "sfr-consent";
     panel.className = "sfr-consent" + (settings ? " sfr-consent--settings" : "");
     panel.setAttribute("data-mode", mode);
-    panel.innerHTML =
+    if (!settings) {
+      // First visit: a compact bar (short text + three equal choices) so it never covers most of a
+      // phone screen or the "Call Now" bar. The per-category toggles live behind "Choose", which
+      // opens the same full settings dialog as the footer's "Cookie settings" link.
+      panel.innerHTML =
+        '<div class="sfr-consent__card sfr-consent__card--compact" role="dialog" aria-modal="false"' +
+        ' aria-labelledby="sfr-consent-title" aria-describedby="sfr-consent-desc" tabindex="-1">' +
+          '<p class="sfr-consent__title" id="sfr-consent-title">Cookie settings</p>' +
+          '<p class="sfr-consent__text" id="sfr-consent-desc">Optional cookies help us see how the site is used and which Google adverts work. ' +
+          'They stay off unless you turn them on. <a href="' + PRIVACY_URL + '">Privacy Policy</a></p>' +
+          '<div class="sfr-consent__actions">' +
+            '<button type="button" class="sfr-consent__btn sfr-consent__btn--accept" data-sfr-consent-all="granted">Accept all</button>' +
+            '<button type="button" class="sfr-consent__btn sfr-consent__btn--reject" data-sfr-consent-all="denied">Reject all</button>' +
+            '<button type="button" class="sfr-consent__btn sfr-consent__btn--save" data-sfr-consent-choose>Choose</button>' +
+          "</div>" +
+        "</div>";
+    } else panel.innerHTML =
       (settings ? '<div class="sfr-consent__scrim" data-sfr-consent-close></div>' : "") +
       '<div class="sfr-consent__card" role="dialog" aria-modal="' + (settings ? "true" : "false") +
       '" aria-labelledby="sfr-consent-title" aria-describedby="sfr-consent-desc" tabindex="-1">' +
@@ -469,9 +493,12 @@
       "</div>";
 
     panel.addEventListener("click", function (event) {
-      var target = event.target.closest ? event.target.closest("[data-sfr-consent-all],[data-sfr-consent-save],[data-sfr-consent-close]") : null;
+      var target = event.target.closest ? event.target.closest("[data-sfr-consent-all],[data-sfr-consent-save],[data-sfr-consent-close],[data-sfr-consent-choose]") : null;
       if (!target) return;
-      if (target.hasAttribute("data-sfr-consent-all")) {
+      if (target.hasAttribute("data-sfr-consent-choose")) {
+        closePanel(false); // no choice stored yet; the settings dialog takes over
+        showPanel("settings", document.querySelector("[data-sfr-cookie-settings]"));
+      } else if (target.hasAttribute("data-sfr-consent-all")) {
         var v = target.getAttribute("data-sfr-consent-all");
         save(v, v);
       } else if (target.hasAttribute("data-sfr-consent-save")) {
@@ -479,7 +506,7 @@
         var adsBox = panel.querySelector('[data-sfr-consent-cat="ads"]');
         save(analyticsBox && analyticsBox.checked ? "granted" : "denied", adsBox && adsBox.checked ? "granted" : "denied");
       } else {
-        closePanel(true); // closing never changes the stored choice
+        dismissPanel(); // closing never changes the stored choice
       }
     });
 
