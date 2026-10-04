@@ -972,7 +972,9 @@ function checkOwnerApprovedCorrections(pages) {
   // -- Google Map: nothing from Google before a deliberate click ------------------
   for (const [file, page] of Object.entries(pages)) {
     if (/<iframe\b/i.test(page.html)) fail(check, "Page contains an <iframe> at load time; the map must be created only after the visitor clicks.", `site/${file}`, "Use the click-to-load placeholder (data-sfr-map).");
-    const stripped = page.html.replace(/<a\b[^>]*class="sfr-(?:map__directions|reviews__link)"[\s\S]*?<\/a>/g, "").replace(/data-src="[^"]*"/g, "");
+    // Allowed: the explicit directions / reviews / footer "Find us on Google Maps" links (nothing loads until clicked)
+    // and JSON-LD sameAs (structured data, never fetched by the browser).
+    const stripped = page.html.replace(/<a\b[^>]*class="sfr-(?:map__directions|reviews__link|footer__maps)"[\s\S]*?<\/a>/g, "").replace(/data-src="[^"]*"/g, "").replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, "");
     if (/google\.com\/maps|maps\.google\.com/.test(stripped)) fail(check, "Page references Google Maps outside the click-to-load button/link.", `site/${file}`, "Keep the map URL only in the button's data-src and the explicit 'View ... on Google Maps' / 'Read reviews' links.");
   }
   const contact = pages["contact.html"] ? pages["contact.html"].html : "";
@@ -1013,7 +1015,11 @@ function checkOwnerApprovedCorrections(pages) {
     if (/priceRange/.test(page.html)) fail(check, "priceRange must not be present in structured data.", `site/${file}`, "Remove it (the owner has not approved a price classification).");
   }
   const home = pages["index.html"] ? pages["index.html"].html : "";
-  if (!/"ratingValue": "4\.9"[\s\S]{0,60}"reviewCount": "282"/.test(home)) fail(check, "Home aggregateRating must stay 4.9 / 282.", "site/index.html", "Restore ratingValue 4.9 and reviewCount 282.");
+  // Owner decision 2026-10-04: no self-published review rating; Google shows stars from the Business Profile itself.
+  for (const [file, page] of Object.entries(pages)) {
+    if (/aggregateRating/i.test(page.html)) fail(check, "aggregateRating must not appear in structured data (owner decision 2026-10-04).", `site/${file}`, "Remove the aggregateRating block.");
+  }
+  if (!/"sameAs": \[[^\]]*maps\.google\.com\/\?cid=8397920344570077932/.test(home)) fail(check, "Home AutomotiveBusiness JSON-LD must list sameAs (Google Maps CID, Facebook, Trustpilot).", "site/index.html", "Restore the sameAs array.");
   if (!/<a class="sfr-areas__pin" href="broxburn\/"/.test(home)) fail(check, "The Areas We Cover list must link to the existing /broxburn/ page.", "site/index.html", 'Restore the <a class="sfr-areas__pin" href="broxburn/"> entry.');
   if (!/"telephone": "\+447448427154"/.test(contact)) fail(check, "The Contact page structured data must list the WhatsApp channel.", "site/contact.html", "Restore the WhatsApp ContactPoint.");
 }
