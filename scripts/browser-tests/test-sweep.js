@@ -25,14 +25,14 @@ const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[
       await page.goto(HOST + u); await sleep(250);
       const r = await page.eval(`(()=>{
         const vis=s=>{const e=document.querySelector(s);if(!e)return false;const b=e.getBoundingClientRect();return b.width>0&&b.height>0};
-        return { h1:document.querySelectorAll('h1').length, title:document.title, banner:vis('.sfr-consent__card'), accept:vis('[data-sfr-consent-all="granted"]'), reject:vis('[data-sfr-consent-all="denied"]'), save:vis('[data-sfr-consent-save]'),
+        return { h1:document.querySelectorAll('h1').length, title:document.title, banner:vis('.sfr-consent__card'), accept:vis('[data-sfr-consent-all="granted"]'), reject:vis('[data-sfr-consent-all="denied"]'), choose:vis('[data-sfr-consent-choose]'),
           footerBtn:vis('.sfr-footer [data-sfr-cookie-settings]'), overflow:document.documentElement.scrollWidth>innerWidth, first:document.body.firstElementChild.id,
           bannerBox:(()=>{const b=document.querySelector('.sfr-consent__card').getBoundingClientRect();return {b:b.bottom,r:b.right,h:b.height}})(), jsGtag:typeof window.gtag };})()`);
       const errs = page.state.console.filter((l) => /^(error|exception)/i.test(l) && !/BLOCKED_BY_CLIENT/.test(l));
       const bad = [];
       if (r.h1 !== 1) bad.push("h1=" + r.h1);
       if (!r.title) bad.push("no title");
-      if (!r.banner || !r.accept || !r.reject || !r.save) bad.push("banner controls not visible");
+      if (!r.banner || !r.accept || !r.reject || !r.choose) bad.push("banner controls not visible");
       if (!r.footerBtn) bad.push("footer Cookie settings not visible");
       if (r.overflow) bad.push("horizontal overflow");
       if (r.first !== "sfr-consent") bad.push("banner not first in DOM");

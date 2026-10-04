@@ -58,11 +58,12 @@ const COOKIE = (a, d) => `v2:analytics=${a}|ads=${d}`;
 const DL = `[...(window.dataLayer||[])].map(a=>a&&typeof a.length==="number"?Array.from(a):a)`;
 const consentCmds = (p, kind) => p.eval(`${DL}.filter(a=>Array.isArray(a)&&a[0]==="consent"&&a[1]===${JSON.stringify(kind)}).map(a=>a[2])`);
 const configs = (p) => p.eval(`${DL}.filter(a=>Array.isArray(a)&&a[0]==="config").map(a=>a[1])`);
-const SEL = { accept: '[data-sfr-consent-all="granted"]', reject: '[data-sfr-consent-all="denied"]', save: "[data-sfr-consent-save]", analytics: '[data-sfr-consent-cat="analytics"]', ads: '[data-sfr-consent-cat="ads"]' };
+const SEL = { accept: '[data-sfr-consent-all="granted"]', reject: '[data-sfr-consent-all="denied"]', save: "[data-sfr-consent-save]", choose: "[data-sfr-consent-choose]", analytics: '[data-sfr-consent-cat="analytics"]', ads: '[data-sfr-consent-cat="ads"]' };
 // Name of the focused element as a visitor would hear it: checkboxes by category, everything else by its text.
 const focused = (p) => p.eval(`(()=>{const e=document.activeElement;return e.tagName==="INPUT"?"["+e.getAttribute("data-sfr-consent-cat")+"]":e.textContent})()`);
 
 function lum(hex) { const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+const hex = (rgb) => "#" + rgb.match(/\d+/g).slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("");
 const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
 
 let browser;
@@ -90,10 +91,9 @@ async function suite(label, viewport) {
   let p = await fresh(viewport);
   await p.goto(HOST + "/"); await sleep(1500);
   check("banner (role=dialog) is shown on first visit", await visible(p, "#sfr-consent-title") && await p.eval(`document.querySelector('.sfr-consent__card').getAttribute('role')==="dialog"`));
-  check("Accept all, Reject all and Save my choices are all visible", await visible(p, SEL.accept) && await visible(p, SEL.reject) && await visible(p, SEL.save));
-  check("two labelled categories (Analytics, Advertising / Google Ads), both OFF by default", JSON.stringify(await checked(p)) === "[false,false]" && await p.eval(`[...document.querySelectorAll('.sfr-consent__cat-name')].map(e=>e.textContent).join("|")`) === "Analytics|Advertising / Google Ads");
-  const ra = await rect(p, SEL.accept), rr = await rect(p, SEL.reject);
-  check("Accept all and Reject all are the same size (equal prominence)", Math.abs(ra.w - rr.w) < 1 && Math.abs(ra.h - rr.h) < 1, { ra, rr });
+  check("compact first-visit bar: Accept all, Reject all and Choose visible; category toggles only behind Choose", await visible(p, SEL.accept) && await visible(p, SEL.reject) && await visible(p, SEL.choose) && !(await p.eval(`!!document.querySelector(${JSON.stringify(SEL.analytics)})`)));
+  const ra = await rect(p, SEL.accept), rr = await rect(p, SEL.reject), rc = await rect(p, SEL.choose);
+  check("Accept all, Reject all and Choose are the same size, on one row (equal prominence)", [rr, rc].every((x) => Math.abs(ra.w - x.w) < 1 && Math.abs(ra.h - x.h) < 1 && Math.abs(ra.y - x.y) < 1), { ra, rr, rc });
   const fs2 = await p.eval(`['granted','denied'].map(v=>{const s=getComputedStyle(document.querySelector('[data-sfr-consent-all="'+v+'"]'));return s.fontSize+"/"+s.fontWeight})`);
   check("same font size and weight on Accept all and Reject all", fs2[0] === fs2[1], fs2);
   check("no gtag.js (GA4) request before any choice", gtagLoads(p) === 0, gtagLoads(p));
@@ -115,9 +115,8 @@ async function suite(label, viewport) {
   check("no horizontal overflow with banner", await p.eval(`document.documentElement.scrollWidth<=innerWidth`));
   check("header / nav not covered by the banner (banner is bottom-anchored)", banner.y > 120, banner.y);
   await p.shot(path.join(SHOTS, `${label}-first-visit.png`));
-  const cs = await p.eval(`(()=>{const g=s=>getComputedStyle(document.querySelector(s));const card=g('.sfr-consent__card').backgroundColor;return {accept:[g('${SEL.accept}').color,g('${SEL.accept}').backgroundColor],reject:[g('${SEL.reject}').color,g('${SEL.reject}').backgroundColor],save:[g('${SEL.save}').color,card],text:[g('.sfr-consent__text').color,card],catDesc:[g('.sfr-consent__cat-desc').color,g('.sfr-consent__category').backgroundColor],link:[g('.sfr-consent__text a').color,card],trans:g('${SEL.accept}').transitionDuration}})()`);
-  const hex = (rgb) => "#" + rgb.match(/\d+/g).slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("");
-  const ratios = Object.fromEntries(["accept", "reject", "save", "text", "catDesc", "link"].map((k) => [k, +contrast(hex(cs[k][0]), hex(cs[k][1])).toFixed(2)]));
+  const cs = await p.eval(`(()=>{const g=s=>getComputedStyle(document.querySelector(s));const card=g('.sfr-consent__card').backgroundColor;return {accept:[g('${SEL.accept}').color,g('${SEL.accept}').backgroundColor],reject:[g('${SEL.reject}').color,g('${SEL.reject}').backgroundColor],choose:[g('${SEL.choose}').color,card],text:[g('.sfr-consent__text').color,card],link:[g('.sfr-consent__text a').color,card],trans:g('${SEL.accept}').transitionDuration}})()`);
+  const ratios = Object.fromEntries(["accept", "reject", "choose", "text", "link"].map((k) => [k, +contrast(hex(cs[k][0]), hex(cs[k][1])).toFixed(2)]));
   check("text/control contrast >= 4.5:1", Object.values(ratios).every((r) => r >= 4.5), ratios);
   check("no transitions on consent controls (reduced-motion safe)", cs.trans === "0s", cs.trans);
   await p.close();
@@ -199,6 +198,9 @@ async function suite(label, viewport) {
   await p.click(".sfr-footer [data-sfr-cookie-settings]"); await sleep(400);
   check("Cookie settings reopens the dialog (modal, labelled, both categories shown as ON)", await p.eval(`(()=>{const c=document.querySelector('.sfr-consent__card');return c&&c.getAttribute('aria-modal')==="true"&&document.getElementById(c.getAttribute('aria-labelledby')).textContent==="Cookie settings"})()`) && JSON.stringify(await checked(p)) === "[true,true]");
   check("focus moved into the dialog", await p.eval(`document.activeElement===document.querySelector('.sfr-consent__card')`));
+  const dcs = await p.eval(`(()=>{const g=s=>getComputedStyle(document.querySelector(s));return {save:[g('${SEL.save}').color,g('.sfr-consent__card').backgroundColor],catDesc:[g('.sfr-consent__cat-desc').color,g('.sfr-consent__category').backgroundColor]}})()`);
+  const dRatios = Object.fromEntries(Object.entries(dcs).map(([k, v]) => [k, +contrast(hex(v[0]), hex(v[1])).toFixed(2)]));
+  check("settings dialog: category text and Save my choices contrast >= 4.5:1", Object.values(dRatios).every((r) => r >= 4.5), dRatios);
   await p.shot(path.join(SHOTS, `${label}-settings-dialog.png`));
   const order = [];
   for (let i = 0; i < 8; i++) { await p.key("Tab"); order.push(await focused(p)); }
@@ -236,8 +238,8 @@ async function suite(label, viewport) {
   section = `${label} F keyboard`;
   p = await fresh(viewport); await p.goto(HOST + "/"); await noNav(p); await sleep(900);
   const tabs = [];
-  for (let i = 0; i < 5; i++) { await p.key("Tab"); tabs.push(await focused(p)); }
-  check("first Tab stops land in the banner: Privacy Policy, both categories, Accept all, Reject all", tabs.join("|") === "Privacy Policy|[analytics]|[ads]|Accept all|Reject all", tabs);
+  for (let i = 0; i < 3; i++) { await p.key("Tab"); tabs.push(await focused(p)); }
+  check("first Tab stops land in the banner: Privacy Policy, Accept all, Reject all", tabs.join("|") === "Privacy Policy|Accept all|Reject all", tabs);
   const r2 = await p.eval(`(()=>{const s=getComputedStyle(document.activeElement);return {style:s.outlineStyle,width:parseFloat(s.outlineWidth)}})()`);
   check("focus ring visible on the focused choice button", r2.style !== "none" && r2.width >= 2, r2);
   await p.key("Enter"); await sleep(600);
@@ -248,6 +250,11 @@ async function suite(label, viewport) {
   // ---------------------------------------------------------------- G. One category at a time ("Save my choices")
   section = `${label} G per category`;
   p = await fresh(viewport); await p.goto(HOST + "/"); await noNav(p); await sleep(800);
+  await p.click(SEL.choose); await sleep(300);
+  check("Choose opens the settings dialog (modal, focused) with both labelled categories OFF", await p.eval(`(()=>{const c=document.querySelector('.sfr-consent__card');return c.getAttribute('aria-modal')==="true"&&document.activeElement===c&&[...document.querySelectorAll('.sfr-consent__cat-name')].map(e=>e.textContent).join("|")==="Analytics|Advertising / Google Ads"})()`) && JSON.stringify(await checked(p)) === "[false,false]");
+  await p.key("Escape"); await sleep(300);
+  check("closing that dialog without saving brings the compact bar back and stores nothing", await visible(p, SEL.choose) && !(await consentCookie(p)) && gtagLoads(p) === 0 && (await consentCmds(p, "update")).length === 0);
+  await p.click(SEL.choose); await sleep(300);
   await p.click(SEL.analytics); await p.click(SEL.save); await sleep(1500);
   cl = collects(p);
   check("Analytics only: cookie v2:analytics=granted|ads=denied", (await consentCookie(p)).value === COOKIE("granted", "denied"));
@@ -256,7 +263,7 @@ async function suite(label, viewport) {
   await p.close();
 
   p = await fresh(viewport); await p.goto(HOST + "/"); await noNav(p); await sleep(800);
-  await p.click(SEL.ads); await p.click(SEL.save); await sleep(1500);
+  await p.click(SEL.choose); await sleep(300); await p.click(SEL.ads); await p.click(SEL.save); await sleep(1500);
   check("Ads only: cookie v2:analytics=denied|ads=granted", (await consentCookie(p)).value === COOKIE("denied", "granted"));
   check("Ads only: ad_storage + ad_user_data granted, Ads call tracking configured once", (await consentCmds(p, "update")).some((u) => u.ad_storage === "granted" && u.ad_user_data === "granted") && (await configs(p)).filter((c) => c === AW).length === 1, { u: await consentCmds(p, "update"), c: await configs(p) });
   check("Ads only: GA4 never loads, analytics_storage never granted, no _ga cookie", gtagLoads(p) === 0 && collects(p).length === 0 && (await gaCookies(p)).length === 0 && (await consentCmds(p, "update")).every((u) => u.analytics_storage !== "granted"));
