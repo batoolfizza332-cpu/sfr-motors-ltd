@@ -419,6 +419,8 @@ Resources:
   #   /locking-wheel-nut-removal/ (and its .html) -> 301 -> /mobile-locking-wheel-nut-removal/;
   #   its useful points moved into that page's FAQ, and the two audit consolidations above now
   #   point straight at it (single hop).
+  #   Added 2026-10-03 (owner-approved blog post, publish date 2026-10-08):
+  #   /pothole-damage-tyre-wheel-checks/ (file named after its slug).
   #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
   #   /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
   #   /mobile-tyre-fitting-blackburn/ are now the indexable URLs (previously .html was the
@@ -485,7 +487,8 @@ Resources:
                 'which-is-the-best-mobile-tyre-fitting-service-provider-in-the-uk our-tyre-range ' +
                 'mobile-tyre-repair-edinburgh-west-lothian ' +
                 'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting ' +
-                'mobile-tyre-fitting mobile-tyre-fitting-armadale mobile-tyre-fitting-kirkliston mobile-tyre-fitting-blackburn'
+                'mobile-tyre-fitting mobile-tyre-fitting-armadale mobile-tyre-fitting-kirkliston mobile-tyre-fitting-blackburn ' +
+                'pothole-damage-tyre-wheel-checks'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {

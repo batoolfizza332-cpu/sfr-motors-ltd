@@ -375,6 +375,11 @@
       "statusCode": 301
     },
     {
+      "source": "/pothole-damage-tyre-wheel-checks.html",
+      "destination": "/pothole-damage-tyre-wheel-checks/",
+      "statusCode": 301
+    },
+    {
       "source": "/locking-wheel-nut-removal-bathgate",
       "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
@@ -1159,6 +1164,14 @@
     {
       "source": "/mobile-tyre-fitting-blackburn/",
       "destination": "/mobile-tyre-fitting-blackburn.html"
+    },
+    {
+      "source": "/pothole-damage-tyre-wheel-checks",
+      "destination": "/pothole-damage-tyre-wheel-checks.html"
+    },
+    {
+      "source": "/pothole-damage-tyre-wheel-checks/",
+      "destination": "/pothole-damage-tyre-wheel-checks.html"
     }
   ],
   "headers": [

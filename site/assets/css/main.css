@@ -1982,11 +1982,11 @@ html { scroll-padding-top: 100px; }
 }
 .sfr-legal__section p{font-size:15px;line-height:1.75;color:var(--sfr-sub);margin:0 0 14px;}
 .sfr-legal__section p:last-child{margin-bottom:0;}
-.sfr-legal__section ul{
+.sfr-legal__section ul,.sfr-legal__section ol{
   margin:0 0 14px;padding-left:1.2em;
   font-size:15px;line-height:1.75;color:var(--sfr-sub);
 }
-.sfr-legal__section ul:last-child{margin-bottom:0;}
+.sfr-legal__section ul:last-child,.sfr-legal__section ol:last-child{margin-bottom:0;}
 .sfr-legal__section li{margin-bottom:8px;}
 .sfr-legal__section li:last-child{margin-bottom:0;}
 .sfr-legal__section li strong{color:var(--sfr-ink);font-weight:700;}
