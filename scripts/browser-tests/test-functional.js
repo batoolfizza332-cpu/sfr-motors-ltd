@@ -31,7 +31,7 @@ const req = (p, host) => new Promise((res) => http.get({ host: "127.0.0.1", port
   { const r = await req("/robots.txt"); t(/User-agent: \*\s+Allow: \/\s/.test(r.body) && /User-agent: OAI-SearchBot\s+Allow: \/\s/.test(r.body) && /User-agent: GPTBot\s+Disallow: \/\s/.test(r.body) && /^Sitemap: https:\/\/sfrmotors\.co\.uk\/sitemap\.xml\s*$/m.test(r.body), "robots.txt (owner-approved): everything allowed for normal crawlers, OAI-SearchBot explicitly allowed, GPTBot explicitly disallowed, Sitemap line kept", r.body.slice(0, 200)); }
 
   const browser = await launch(9380);
-  const mk = async (w, h, mobile, origin = H) => { const p = await newPage(browser, { width: w, height: h, mobile, onIntercept: async (r) => { const x = new URL(r.url); return x.hostname.endsWith("localhost") || x.hostname.endsWith("googleapis.com") || x.hostname.endsWith("gstatic.com") ? {} : { fail: true }; } }); await p.S("Network.setCookie", { name: "sfr_consent", value: "v1:analytics=denied", url: origin + "/" }); return p; };
+  const mk = async (w, h, mobile, origin = H) => { const p = await newPage(browser, { width: w, height: h, mobile, onIntercept: async (r) => { const x = new URL(r.url); return x.hostname.endsWith("localhost") || x.hostname.endsWith("googleapis.com") || x.hostname.endsWith("gstatic.com") ? {} : { fail: true }; } }); await p.S("Network.setCookie", { name: "sfr_consent", value: "v2:analytics=denied|ads=denied", url: origin + "/" }); return p; };
 
   // ---- 404 route ----
   for (const [w, h, mob] of [[375, 812, true], [1280, 720, false], [1920, 1080, false]]) {
