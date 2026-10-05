@@ -421,6 +421,8 @@ Resources:
   #   point straight at it (single hop).
   #   Added 2026-10-03 (owner-approved blog post, publish date 2026-10-08):
   #   /pothole-damage-tyre-wheel-checks/ (file named after its slug).
+  #   Added 2026-10-06 (owner decision, release 2026-10-08): /mobile-tyre-fitting-fauldhouse/ (never a page;
+  #   404 before) -> 301 -> /mobile-tyre-fitting-whitburn/, which now names Fauldhouse in its nearby-areas text.
   #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
   #   /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
   #   /mobile-tyre-fitting-blackburn/ are now the indexable URLs (previously .html was the
@@ -507,6 +509,7 @@ Resources:
                 '/best-emergency-locking-wheel-nut-removal-in-west-lothian': '/mobile-locking-wheel-nut-removal/',
                 '/locking-wheel-nut-removal': '/mobile-locking-wheel-nut-removal/',
                 '/locking-wheel-nut-removal.html': '/mobile-locking-wheel-nut-removal/',
+                '/mobile-tyre-fitting-fauldhouse': '/mobile-tyre-fitting-whitburn/',
                 '/best-mobile-tyre-fitter-west-lothian': '/mobile-tyre-fitting-west-lothian/',
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
                 '/tyre-lifespan-mobile-tyre-repair-guide': '/tyre-lifespan/',

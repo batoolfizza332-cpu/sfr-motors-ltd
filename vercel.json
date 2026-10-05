@@ -530,6 +530,16 @@
       "statusCode": 301
     },
     {
+      "source": "/mobile-tyre-fitting-fauldhouse",
+      "destination": "/mobile-tyre-fitting-whitburn/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-fauldhouse/",
+      "destination": "/mobile-tyre-fitting-whitburn/",
+      "statusCode": 301
+    },
+    {
       "source": "/best-mobile-tyre-fitter-west-lothian",
       "destination": "/mobile-tyre-fitting-west-lothian/",
       "statusCode": 301

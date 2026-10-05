@@ -1993,16 +1993,20 @@ html { scroll-padding-top: 100px; }
 /* Content links in article bodies and process-step text: the browser-default blue/purple was ~2:1 on
    this dark page. Brand orange, kept underlined (not colour-only); the global :focus-visible ring still applies. */
 .sfr-legal__section a,
-.sfr-how__step p a{
+.sfr-how__step p a,
+.sfr-operate__text a{
   --sfr-link-visited:#df9f60;--sfr-link-active:#ffb366;
   color:var(--sfr-orange);text-decoration:underline;
 }
 .sfr-legal__section a:visited,
-.sfr-how__step p a:visited{color:var(--sfr-link-visited);}
+.sfr-how__step p a:visited,
+.sfr-operate__text a:visited{color:var(--sfr-link-visited);}
 .sfr-legal__section a:hover,
-.sfr-how__step p a:hover{color:var(--sfr-orange-deep);text-decoration-thickness:2px;}
+.sfr-how__step p a:hover,
+.sfr-operate__text a:hover{color:var(--sfr-orange-deep);text-decoration-thickness:2px;}
 .sfr-legal__section a:active,
-.sfr-how__step p a:active{color:var(--sfr-link-active);}
+.sfr-how__step p a:active,
+.sfr-operate__text a:active{color:var(--sfr-link-active);}
 @media (max-width:640px){
   .sfr-legal__section h2{font-size:18px;}
   .sfr-legal__section p,.sfr-legal__section ul,.sfr-legal__lead{font-size:14.5px;}
