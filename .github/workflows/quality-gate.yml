@@ -3,7 +3,7 @@ name: Quality gate
 # Runs the local `npm run verify` checks (build, links, anchors, H1/title/
 # meta/canonical, images, sitemap, placeholder/preview URLs, git diff --check)
 # on every PR and every push to main or a feature branch, so a broken page
-# can't merge unnoticed. Read-only: no deployment, no secrets, no AWS.
+# can't merge unnoticed. Read-only: no deployment, no secrets.
 
 on:
   pull_request:

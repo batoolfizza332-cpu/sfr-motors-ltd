@@ -617,9 +617,9 @@ function checkRootFavicon() {
     fail(check, "dist/favicon.ico is missing or differs from site/favicon.ico after the build.", "scripts/build.js", "Make sure the build copies site/favicon.ico to dist/favicon.ico unchanged.");
   }
 
-  const deploy = fs.readFileSync(path.join(ROOT, "infra", "deploy-site.sh"), "utf8");
-  if (!deploy.includes('"$DIST_DIR/favicon.ico"')) {
-    fail(check, "infra/deploy-site.sh does not upload favicon.ico (only assets/, *.html, robots.txt and sitemap.xml are synced).", "infra/deploy-site.sh", "Add an `aws s3 cp \"$DIST_DIR/favicon.ico\" ...` step.");
+  const deploy = fs.readFileSync(path.join(ROOT, ".github", "workflows", "deploy-hostinger.yml"), "utf8");
+  if (!/dist\/favicon\.ico/.test(deploy)) {
+    fail(check, "The Deploy to Hostinger workflow does not upload favicon.ico.", ".github/workflows/deploy-hostinger.yml", "Upload dist/favicon.ico with robots.txt.");
   }
 }
 
@@ -997,7 +997,7 @@ function checkOwnerApprovedCorrections(pages) {
 
   // -- no street address; the London registered-office address is not shown anywhere (owner instruction) ------
   const walk = (p) => (fs.statSync(path.join(ROOT, p)).isDirectory() ? fs.readdirSync(path.join(ROOT, p)).flatMap((f) => (f === "node_modules" ? [] : walk(path.posix.join(p, f)))) : [p]);
-  for (const rel of ["site", "backend", "SFR_Website_Info.txt"].flatMap(walk)) {
+  for (const rel of ["site", "SFR_Website_Info.txt"].flatMap(walk)) {
     if (!/\.(html|js|css|txt|xml|yaml|json|md)$/.test(rel)) continue;
     if (/loch park|EH48|W932\+|streetAddress|postalCode/i.test(read(rel))) fail(check, "A street address / postcode / Plus Code for the working location appears in the source.", rel, "SFR Motors is a service-area business; the public location is Bathgate, West Lothian only.");
     if (/beverl(e)?y|edgware|HA8\s?5NH/i.test(read(rel))) fail(check, "The incorrect London registered-office address (Beverley Drive / Edgware / HA8 5NH) appears in the source.", rel, "The owner has asked for it not to be shown; remove it.");
@@ -1026,88 +1026,44 @@ function checkOwnerApprovedCorrections(pages) {
 }
 
 // ---------------------------------------------------------------------------
-// Check 19: Vercel Preview configuration routes exactly like the CloudFront Function
+// Check 19: every routed URL resolves, and the live site stays indexable
 // ---------------------------------------------------------------------------
-// vercel.json is generated from infra/template.yaml (scripts/vercel-config.js). This proves it is up to date and
-// that, for every pretty path, .html URL, legacy WordPress URL, the Home page and unknown URLs, Vercel's
-// order (redirects, files, rewrites, 404.html) gives the same result as the approved CloudFront routing.
-function checkVercelConfig() {
-  const check = "19. Vercel Preview config";
-  const { buildConfig, loadRouting, simulateVercel, VERCEL_JSON } = require("./vercel-config");
-  let expected, routing, config;
-  try {
-    expected = buildConfig();
-    routing = loadRouting();
-    config = JSON.parse(fs.readFileSync(VERCEL_JSON, "utf8"));
-  } catch (e) {
-    fail(check, `Could not build or read the Vercel configuration: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js` to regenerate vercel.json.");
-    return;
-  }
-  if (JSON.stringify(config) !== JSON.stringify(expected)) {
-    fail(check, "vercel.json is out of date with infra/template.yaml (routing tables, CSP or security headers).", "vercel.json", "Run `node scripts/vercel-config.js` and commit the result.");
-  }
-  if (config.cleanUrls || config.trailingSlash !== undefined) {
-    fail(check, "vercel.json sets cleanUrls/trailingSlash, which would change the approved URLs (.html 301s, pretty-path trailing slashes).", "vercel.json", "Remove cleanUrls / trailingSlash.");
-  }
-  // The review copy must never be indexed; that noindex must stay Vercel-only (never in the spec for the real hosting).
-  const globalRule = (config.headers || []).find((rule) => rule.source === "/(.*)");
-  const robotsHeaders = ((globalRule && globalRule.headers) || []).filter((h) => h.key.toLowerCase() === "x-robots-tag");
-  if (robotsHeaders.length !== 1 || robotsHeaders[0].value !== "noindex, nofollow") {
-    fail(check, 'vercel.json must send "X-Robots-Tag: noindex, nofollow" on every response (source "/(.*)") so the Vercel review copy is kept out of search engines.', "vercel.json", "Regenerate it with `node scripts/vercel-config.js`; the header is added in scripts/vercel-config.js.");
-  }
-  if ((config.headers || []).some((rule) => rule !== globalRule && rule.headers.some((h) => h.key.toLowerCase() === "x-robots-tag"))) {
-    fail(check, "A second vercel.json rule sets X-Robots-Tag and could override the review-copy noindex.", "vercel.json", "Keep a single X-Robots-Tag in the global rule.");
-  }
+// The routing function in infra/template.yaml is the source of the Hostinger .htaccess. Every pretty path, .html URL, legacy URL and
+// the Home page must end at a file that exists in dist/, and the template must never carry a noindex header.
+function checkRoutingSource() {
+  const check = "19. Routing source";
+  const { loadRouting } = require("./routing");
+  let routing;
+  try { routing = loadRouting(); } catch (e) { fail(check, e.message, "infra/template.yaml", "Restore the routing tables."); return; }
   if (/x-robots-tag/i.test(fs.readFileSync(path.join(ROOT, "infra", "template.yaml"), "utf8"))) {
-    fail(check, "infra/template.yaml (the spec for the real hosting) carries X-Robots-Tag; noindex belongs only to the Vercel review copy.", "infra/template.yaml", "Remove it; the real website must stay indexable.");
-  }
-  if (config.outputDirectory !== "dist" || config.buildCommand !== "npm run build") {
-    fail(check, "vercel.json must build with `npm run build` and publish dist/.", "vercel.json", 'Set "buildCommand": "npm run build" and "outputDirectory": "dist".');
+    fail(check, "infra/template.yaml carries X-Robots-Tag; the live website must stay indexable.", "infra/template.yaml", "Remove it.");
   }
   const distDir = path.join(ROOT, "dist");
-  if (!fs.existsSync(path.join(distDir, "404.html"))) fail(check, "dist/404.html is missing; Vercel serves it (status 404) for unknown URLs.", "site/404.html", "Restore site/404.html.");
+  if (!fs.existsSync(path.join(distDir, "404.html"))) fail(check, "dist/404.html is missing; it is served (status 404) for unknown URLs.", "site/404.html", "Restore site/404.html.");
   const hasFile = (p) => { const f = path.join(distDir, p.replace(/^\//, "")); return !p.endsWith("/") && !p.includes("..") && fs.existsSync(f) && fs.statSync(f).isFile(); };
 
   const { special, same, legacy, edgeFunction } = routing;
-  const slugs = [...Object.keys(special), ...same];
-  const urls = ["/", "/index.html", "/services.html", "/privacy-policy.html", "/404.html", "/robots.txt", "/sitemap.xml", "/favicon.ico", "/no-such-page", "/no-such-page/", "/assets/img/none.webp"];
+  const urls = ["/", "/index.html"];
   for (const [slug, file] of [...Object.entries(special), ...same.map((s) => [s, s])]) urls.push(`/${slug}`, `/${slug}/`, `/${file}.html`);
   for (const from of Object.keys(legacy)) urls.push(from, `${from}/`);
   for (const url of [...new Set(urls)]) {
-    let edge;
     const out = edgeFunction({ request: { uri: url, method: "GET", headers: {}, querystring: {}, cookies: {} } });
-    if (out.statusCode) edge = { redirect: out.headers.location.value };
-    else { const f = out.uri === "/" ? "/index.html" : out.uri; edge = hasFile(f) ? { file: f } : { notFound: true }; }
-    const vercel = simulateVercel(config, url, hasFile);
-    if (JSON.stringify(edge) !== JSON.stringify(vercel)) {
-      fail(check, `${url}: CloudFront gives ${JSON.stringify(edge)} but vercel.json gives ${JSON.stringify(vercel)}.`, "vercel.json", "Regenerate vercel.json (node scripts/vercel-config.js) or fix the routing tables.");
-    }
-    if (edge.file && !hasFile(edge.file)) fail(check, `${url} resolves to ${edge.file}, which is not in dist/.`, "infra/template.yaml", "Point the route at a page that exists.");
+    if (out.statusCode) continue;
+    const f = out.uri === "/" ? "/index.html" : out.uri;
+    if (!hasFile(f)) fail(check, `${url} resolves to ${f}, which is not in dist/.`, "infra/template.yaml", "Point the route at a page that exists.");
   }
-  if (slugs.length === 0) fail(check, "No pretty-path routes were found.", "infra/template.yaml", "Restore the routing tables.");
+  if (!special || !same.length) fail(check, "No pretty-path routes were found.", "infra/template.yaml", "Restore the routing tables.");
 }
 
 // ---------------------------------------------------------------------------
 // Check 20: production-hostname guards (Analytics and the WhatsApp form)
 // ---------------------------------------------------------------------------
-// Runs analytics.js and main.js in a sandbox on production, localhost, *.vercel.app and look-alike hostnames
+// Runs analytics.js and main.js in a sandbox on production, localhost, preview-style (*.vercel.app) and look-alike hostnames
 // (scripts/host-guard-tests.js): Google Analytics and the WhatsApp enquiry work only on sfrmotors.co.uk /
 // www.sfrmotors.co.uk, while the consent banner works everywhere.
 function checkHostGuards() {
   for (const message of require("./host-guard-tests").runAll()) {
     fail("20. Hostname guards", message, "site/assets/js/analytics.js, site/assets/js/main.js", "Keep the production-hostname guard in both scripts (see scripts/host-guard-tests.js).");
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Check 21: the deployed-headers checker behaves (mock tests, no network)
-// ---------------------------------------------------------------------------
-// scripts/check-vercel-deployment.js may only verify publicly reachable *.vercel.app responses: it must pass complete headers, fail a missing or
-// weakened noindex, report a protected (login-redirect) deployment as "unverified" rather than pass/fail, never follow redirects or send
-// credentials, and refuse the real domain. Its tests use a fake fetch, so nothing is sent to Vercel.
-async function checkDeploymentChecker() {
-  for (const message of await require("./check-vercel-deployment.test").runAll()) {
-    fail("21. Deployment checker", message, "scripts/check-vercel-deployment.js", "Fix the checker or its mock tests (scripts/check-vercel-deployment.test.js).");
   }
 }
 
@@ -1137,7 +1093,7 @@ function checkGitDiff() {
 function checkHostingerHtaccess() {
   const check = "22. Hostinger .htaccess";
   const { buildHtaccess, simulateApache } = require("./htaccess-config");
-  const { loadRouting, loadSecurityHeaders } = require("./vercel-config");
+  const { loadRouting, loadSecurityHeaders } = require("./routing");
   const distDir = path.join(ROOT, "dist");
   let staging, production, routing, security;
   try {
@@ -1169,7 +1125,7 @@ function checkHostingerHtaccess() {
   if (/https:\/\/sfrmotors\.co\.uk/.test(staging)) {
     fail(check, "The staging .htaccess hardcodes the production domain; it could send staging visitors to the live site.", "scripts/htaccess-config.js", "Redirect to the request's own host.");
   }
-  // .htaccess must reach dist/ only through `npm run build:hostinger`; the plain build (Vercel, S3 sync) never contains it.
+  // .htaccess must reach dist/ only through the htaccess generator; the plain `npm run build` never contains it.
   if (fs.existsSync(path.join(distDir, ".htaccess"))) fail(check, "dist/.htaccess exists after `npm run build`; only `npm run build:hostinger` may create it.", "scripts/build.js", "Do not copy .htaccess in the plain build.");
 
   const hasFile = (p) => { const f = path.join(distDir, p); return !!p && !p.includes("..") && fs.existsSync(f) && fs.statSync(f).isFile(); };
@@ -1223,8 +1179,8 @@ function checkHostingerHtaccess() {
 // Check 24: Broxburn has ONE indexable URL, /broxburn/
 // ---------------------------------------------------------------------------
 // Owner decision: https://sfrmotors.co.uk/broxburn/ (the original WordPress URL) is the only indexable Broxburn page. The duplicate
-// location page /mobile-tyre-fitting-broxburn.html was removed and must 301 straight to /broxburn/ (one hop, on CloudFront, Vercel and
-// Hostinger alike); nothing on the site may link to, list or canonicalise to it, and Home lists Broxburn once.
+// location page /mobile-tyre-fitting-broxburn.html was removed and must 301 straight to /broxburn/ (one hop on Hostinger, and in
+// the routing function it is generated from); nothing on the site may link to, list or canonicalise to it, and Home lists Broxburn once.
 function checkBroxburnUrl(pages) {
   const check = "24. Broxburn URL";
   const OLD_FILE = "mobile-tyre-fitting-broxburn.html";
@@ -1254,20 +1210,20 @@ function checkBroxburnUrl(pages) {
   if (pins.length !== 1 || pins[0] !== "broxburn/") fail(check, `Home lists Broxburn ${pins.length} time(s) (${JSON.stringify(pins)}); expected exactly one pin linking to broxburn/.`, "site/index.html", "Keep a single Broxburn pin linking to broxburn/.");
 
   // 4. Routing: /broxburn/ is served (200) and never redirected; the removed .html URL 301s directly to it, whatever the protocol or host
-  //    (CloudFront Function, then the generated Hostinger .htaccess in both profiles, then vercel.json).
-  const { legacy, edgeFunction } = require("./vercel-config").loadRouting();
+  //    (the routing function, then the generated Hostinger .htaccess in both profiles).
+  const { legacy, edgeFunction } = require("./routing").loadRouting();
   if (legacy[OLD_URL] !== FINAL) fail(check, `The legacy redirect table maps ${OLD_URL} to ${legacy[OLD_URL]}; expected ${FINAL}.`, "infra/template.yaml", `Add '${OLD_URL}': '${FINAL}' to the legacy table.`);
   const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
   for (const uri of [OLD_URL, `${OLD_URL}/`]) {
     const out = edge(uri);
-    if (out.statusCode !== 301 || out.headers.location.value !== FINAL) fail(check, `CloudFront Function: ${uri} gives ${JSON.stringify(out.statusCode || out.uri)} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Fix the legacy table.");
+    if (out.statusCode !== 301 || out.headers.location.value !== FINAL) fail(check, `Routing function: ${uri} gives ${JSON.stringify(out.statusCode || out.uri)} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Fix the legacy table.");
     const www = edge(uri, "www.example.test");
-    if (www.statusCode !== 301 || www.headers.location.value !== `https://example.test${FINAL}`) fail(check, `CloudFront Function: www ${uri} does not reach https://example.test${FINAL} in one hop.`, "infra/template.yaml", "Fix the www rule / legacy table.");
+    if (www.statusCode !== 301 || www.headers.location.value !== `https://example.test${FINAL}`) fail(check, `Routing function: www ${uri} does not reach https://example.test${FINAL} in one hop.`, "infra/template.yaml", "Fix the www rule / legacy table.");
   }
   const served = edge(FINAL);
-  if (served.statusCode || served.uri !== "/broxburn.html") fail(check, `CloudFront Function: ${FINAL} gives ${JSON.stringify(served.statusCode || served.uri)}; expected an internal rewrite to /broxburn.html (200).`, "infra/template.yaml", `${FINAL} must be served, never redirected.`);
+  if (served.statusCode || served.uri !== "/broxburn.html") fail(check, `Routing function: ${FINAL} gives ${JSON.stringify(served.statusCode || served.uri)}; expected an internal rewrite to /broxburn.html (200).`, "infra/template.yaml", `${FINAL} must be served, never redirected.`);
   const viaFile = edge("/broxburn.html");
-  if (viaFile.statusCode !== 301 || viaFile.headers.location.value !== FINAL) fail(check, `CloudFront Function: /broxburn.html gives ${JSON.stringify(viaFile.statusCode || viaFile.uri)}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Keep broxburn in the same table.");
+  if (viaFile.statusCode !== 301 || viaFile.headers.location.value !== FINAL) fail(check, `Routing function: /broxburn.html gives ${JSON.stringify(viaFile.statusCode || viaFile.uri)}; expected 301 -> ${FINAL}.`, "infra/template.yaml", "Keep broxburn in the same table.");
 
   const { buildHtaccess, simulateApache } = require("./htaccess-config");
   const distDir = path.join(ROOT, "dist");
@@ -1287,13 +1243,6 @@ function checkBroxburnUrl(pages) {
     const final = simulateApache(ht, { host: HOST, https: true, uri: FINAL, query: "" }, { hasFile, isDir });
     if (final.file !== "/broxburn.html") fail(check, `.htaccess (${profile}): ${FINAL} gives ${JSON.stringify(final)}; expected the page to be served (200).`, "scripts/htaccess-config.js", `${FINAL} must be served, never redirected.`);
   }
-  let vercel;
-  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
-  for (const source of [OLD_URL, `${OLD_URL}/`]) {
-    const rule = (vercel.redirects || []).find((r) => r.source === source);
-    if (!rule || rule.destination !== FINAL || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${source} to ${FINAL}.`, "vercel.json", "Run `node scripts/vercel-config.js`.");
-  }
-  if ((vercel.redirects || []).some((r) => r.source === FINAL || r.source === FINAL.slice(0, -1))) fail(check, `vercel.json redirects ${FINAL} itself; it must be served with a 200.`, "vercel.json", "Only the .html sources may redirect.");
 }
 
 // ---------------------------------------------------------------------------
@@ -1358,7 +1307,7 @@ function checkLocationLinks() {
 // Check 26: audit-kept WordPress URLs are served at their exact URL; consolidated URLs 301 straight into their survivor
 // ---------------------------------------------------------------------------
 // The migration audit says "Keep / Recreate at exact URL" for these pages, so each historical URL serves its page directly (status 200, no
-// redirect) and is its canonical; the page's old /<file>.html URL 301s to it in one hop. This holds on CloudFront, Vercel and Hostinger, with
+// redirect) and is its canonical; the page's old /<file>.html URL 301s to it in one hop. This holds in the routing function and the Hostinger .htaccess, with
 // and without the trailing slash. CONSOLIDATED_URLS are one-to-one 301s (weaker duplicate -> survivor): the audit's approved pairs and the two owner-directed ones. The restored articles and /our-tyre-range/ are listed too: they are served
 // at their exact URL like the location pages.
 const EXACT_URL_PAGES = {
@@ -1408,15 +1357,13 @@ const CONSOLIDATED_URLS = {
 
 function checkHistoricalUrls(pages) {
   const check = "26. Historical URLs";
-  const { edgeFunction } = require("./vercel-config").loadRouting();
+  const { edgeFunction } = require("./routing").loadRouting();
   const { buildHtaccess, simulateApache } = require("./htaccess-config");
   const distDir = path.join(ROOT, "dist");
   const hasFile = (p) => !!p && !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isFile();
   const isDir = (p) => !p.includes("..") && fs.existsSync(path.join(distDir, p)) && fs.statSync(path.join(distDir, p)).isDirectory();
   const sitemapLocs = readFile("sitemap.xml").match(/<loc>\s*[^<\s]+\s*<\/loc>/g).map((m) => m.replace(/<\/?loc>|\s/g, ""));
   const edge = (uri, host) => edgeFunction({ request: { uri, method: "GET", headers: host ? { host: { value: host } } : {}, querystring: {}, cookies: {} } });
-  let vercel = null;
-  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); }
   const HOST = "example.test";
   const htaccess = { staging: buildHtaccess("staging"), production: buildHtaccess("production") };
   const combos = [{ host: HOST, https: true }, { host: HOST, https: false }, { host: `www.${HOST}`, https: true }, { host: `www.${HOST}`, https: false }];
@@ -1424,9 +1371,9 @@ function checkHistoricalUrls(pages) {
   const oneHop = (from, to, label) => {
     // CloudFront function (apex and www)
     const out = edge(from);
-    if (out.statusCode !== 301 || out.headers.location.value !== to) fail(check, `CloudFront Function: ${from} gives ${out.statusCode || "no redirect"} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${to} (${label}).`, "infra/template.yaml", "Fix the routing tables.");
+    if (out.statusCode !== 301 || out.headers.location.value !== to) fail(check, `Routing function: ${from} gives ${out.statusCode || "no redirect"} -> ${out.headers && out.headers.location && out.headers.location.value}; expected 301 -> ${to} (${label}).`, "infra/template.yaml", "Fix the routing tables.");
     const www = edge(from, `www.${HOST}`);
-    if (www.statusCode !== 301 || www.headers.location.value !== `https://${HOST}${to}`) fail(check, `CloudFront Function: www ${from} does not reach https://${HOST}${to} in one hop (${label}).`, "infra/template.yaml", "Fix the routing tables.");
+    if (www.statusCode !== 301 || www.headers.location.value !== `https://${HOST}${to}`) fail(check, `Routing function: www ${from} does not reach https://${HOST}${to} in one hop (${label}).`, "infra/template.yaml", "Fix the routing tables.");
     // Hostinger .htaccess, both profiles, every protocol/host combination
     for (const [profile, ht] of Object.entries(htaccess)) {
       for (const req of combos) {
@@ -1434,23 +1381,13 @@ function checkHistoricalUrls(pages) {
         if (got.redirect !== `https://${HOST}${to}`) fail(check, `.htaccess (${profile}), ${req.https ? "https" : "http"} ${req.host}${from}: ${JSON.stringify(got)}; expected ONE 301 to https://${HOST}${to} (${label}).`, "scripts/htaccess-config.js", "Regenerate from infra/template.yaml.");
       }
     }
-    // Vercel
-    if (vercel) {
-      const rule = (vercel.redirects || []).find((r) => r.source === from);
-      if (!rule || rule.destination !== to || rule.statusCode !== 301) fail(check, `vercel.json has no 301 from ${from} to ${to} (${label}).`, "vercel.json", "Run `node scripts/vercel-config.js`.");
-    }
   };
   const served = (from, file, label) => {
     const out = edge(from);
-    if (out.statusCode || out.uri !== `/${file}`) fail(check, `CloudFront Function: ${from} gives ${JSON.stringify(out.statusCode || out.uri)}; expected an internal rewrite to /${file} (200) (${label}).`, "infra/template.yaml", "The exact URL must be served, never redirected.");
+    if (out.statusCode || out.uri !== `/${file}`) fail(check, `Routing function: ${from} gives ${JSON.stringify(out.statusCode || out.uri)}; expected an internal rewrite to /${file} (200) (${label}).`, "infra/template.yaml", "The exact URL must be served, never redirected.");
     for (const [profile, ht] of Object.entries(htaccess)) {
       const got = simulateApache(ht, { host: HOST, https: true, uri: from, query: "" }, { hasFile, isDir });
       if (got.file !== `/${file}`) fail(check, `.htaccess (${profile}) https ${HOST}${from}: ${JSON.stringify(got)}; expected /${file} served (200) (${label}).`, "scripts/htaccess-config.js", "The exact URL must be served, never redirected.");
-    }
-    if (vercel) {
-      if ((vercel.redirects || []).some((r) => r.source === from)) fail(check, `vercel.json redirects ${from}; it must be served with a 200 (${label}).`, "vercel.json", "Only the .html source may redirect.");
-      const rw = (vercel.rewrites || []).find((r) => r.source === from);
-      if (!rw || rw.destination !== `/${file}`) fail(check, `vercel.json has no rewrite from ${from} to /${file} (${label}).`, "vercel.json", "Run `node scripts/vercel-config.js`.");
     }
   };
 
@@ -1485,8 +1422,8 @@ function checkHistoricalUrls(pages) {
 // Check 27: every script is content-hashed, cached as immutable, and served with the modern JavaScript MIME type
 // ---------------------------------------------------------------------------
 // Each site/assets/js/<name>.js is built to a single dist/assets/js/<name>.<hash>.js (so an edit gets a new URL) and only that name is shipped
-// and referenced. The generated Hostinger .htaccess and vercel.json cache every hashed file for a year (an unhashed script would otherwise be
-// left to the host's default, or, on the old S3 plan, cached for a year under a name that never changes) and the .htaccess maps .js to
+// and referenced. The generated Hostinger .htaccess caches every hashed file for a year (an unhashed script would otherwise be
+// left to the host's default) and the .htaccess maps .js to
 // text/javascript instead of the legacy application/x-javascript some hosts default to.
 function checkScriptCachingAndMime() {
   const check = "27. Script caching & MIME";
@@ -1524,19 +1461,12 @@ function checkScriptCachingAndMime() {
     if (/x-javascript/.test(ht)) fail(check, `.htaccess (${profile}) uses the legacy application/x-javascript type.`, "scripts/htaccess-config.js", "Use text/javascript.");
   }
 
-  // 3. vercel.json: an immutable cache rule matches every hashed script.
-  let vercel;
-  try { vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")); } catch (e) { fail(check, `vercel.json could not be read: ${e.message}`, "vercel.json", "Run `node scripts/vercel-config.js`."); return; }
-  const rules = (vercel.headers || []).filter((h) => (h.headers || []).some((x) => x.key === "Cache-Control" && /immutable/.test(x.value)));
-  for (const f of distJs.filter((d) => /\.[0-9a-f]{8}\.js$/.test(d))) {
-    if (!rules.some((r) => new RegExp(`^${r.source}$`).test(`/assets/js/${f}`))) fail(check, `vercel.json does not cache /assets/js/${f} as immutable.`, "scripts/vercel-config.js", "Add its name to the hashed-script cache rule and regenerate vercel.json.");
-  }
 }
 
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
-const TOTAL_CHECKS = 26;
+const TOTAL_CHECKS = 25;
 
 async function main() {
   const buildOk = checkBuild();
@@ -1556,14 +1486,13 @@ async function main() {
   checkCloudFrontRouting(pages);
   checkStructuredDataUrls(pages);
   checkOwnerApprovedCorrections(pages);
-  checkVercelConfig();
+  checkRoutingSource();
   checkHostingerHtaccess();
   checkBroxburnUrl(pages);
   checkLocationLinks();
   checkHistoricalUrls(pages);
   checkScriptCachingAndMime();
   checkHostGuards();
-  await checkDeploymentChecker();
   checkGitDiff();
 
   if (failures.length === 0) {
