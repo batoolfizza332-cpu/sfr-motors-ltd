@@ -6,7 +6,8 @@
     "build": "node scripts/build.js",
     "build:hostinger": "node scripts/build.js && node scripts/htaccess-config.js --profile staging --out dist/.htaccess",
     "verify": "node scripts/verify.js",
-    "test:browser": "node scripts/browser-tests/run-all.js"
+    "test:browser": "node scripts/browser-tests/run-all.js",
+    "check:live": "node scripts/build.js && node scripts/live-compare.js"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",
