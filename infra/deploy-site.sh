@@ -24,8 +24,15 @@ echo "Deploying $DIST_DIR to s3://$BUCKET ..."
 # cached copy is simply never requested again. assets/img is unhashed but
 # effectively immutable in practice (filenames are the fixed, sharp-generated
 # responsive set) and gets the same long cache.
+#
+# Deliberately NO --delete here: pages are cached for up to 5 minutes (CloudFront
+# and browsers), and a cached page still references the PREVIOUS main.<hash>.css /
+# .js / image files. Deleting them during the deploy would show those visitors an
+# unstyled page until their cache expires. Superseded assets are harmless (the
+# bucket is versioned and they are small); prune them by hand once the new pages
+# have been live for at least an hour, previewing first:
+#   aws s3 sync "$DIST_DIR/assets" "s3://$BUCKET/assets" --delete --dryrun
 aws s3 sync "$DIST_DIR/assets" "s3://$BUCKET/assets" \
-  --delete \
   --cache-control "public, max-age=31536000, immutable"
 
 # HTML and the two crawler files: short cache so edits show up quickly.
@@ -43,6 +50,14 @@ aws s3 cp "$DIST_DIR/sitemap.xml" "s3://$BUCKET/sitemap.xml" \
   --cache-control "public, max-age=3600" \
   --content-type "application/xml; charset=utf-8"
 
+# Root favicon: some browsers, crawlers and feed readers request
+# /favicon.ico directly even when pages declare an icon. It lives outside
+# assets/, so it needs its own upload (unhashed, so same short cache as
+# robots/sitemap).
+aws s3 cp "$DIST_DIR/favicon.ico" "s3://$BUCKET/favicon.ico" \
+  --cache-control "public, max-age=3600" \
+  --content-type "image/vnd.microsoft.icon"
+
 echo "Invalidating CloudFront cache for pages ..."
 # Only HTML/robots.txt/sitemap.xml ever need invalidating — assets/ is
 # content-hashed, so a stale cached copy is simply never referenced again
@@ -51,6 +66,6 @@ echo "Invalidating CloudFront cache for pages ..."
 # its own key (via DefaultRootObject), so "/*.html" alone would miss it.
 aws cloudfront create-invalidation \
   --distribution-id "$DISTRIBUTION_ID" \
-  --paths "/" "/*.html" "/robots.txt" "/sitemap.xml"
+  --paths "/" "/*.html" "/robots.txt" "/sitemap.xml" "/favicon.ico"
 
 echo "Done."

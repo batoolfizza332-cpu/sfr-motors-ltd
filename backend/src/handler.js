@@ -170,7 +170,7 @@ exports.handler = async (event) => {
       ``,
       `SFR Motors Ltd`,
       `Secure. Fast. Reliable.`,
-      `39 S Loch Park, Bathgate, EH48 2QZ`,
+      `Bathgate, West Lothian`,
     ].join("\n");
 
     const confirmHtmlRows = detailLines
@@ -197,7 +197,7 @@ ${confirmHtmlRows}
 </table>
 <p style="margin:0 0 6px;color:#15161a;font-size:14.5px;font-weight:700;">Need urgent help right now?</p>
 <p style="margin:0 0 20px;color:#5c5955;font-size:14.5px;line-height:1.6;">Call us on <a href="tel:01312020289" style="color:#d94f00;font-weight:700;text-decoration:none;">0131 202 0289</a> — we're open 24/7 — or message us on <a href="https://wa.me/447448427154" style="color:#d94f00;font-weight:700;text-decoration:none;">WhatsApp</a>.</p>
-<p style="margin:0;color:#a9a6a0;font-size:12.5px;">SFR Motors Ltd &middot; 39 S Loch Park, Bathgate, EH48 2QZ</p>
+<p style="margin:0;color:#a9a6a0;font-size:12.5px;">SFR Motors Ltd &middot; Bathgate, West Lothian</p>
 </td></tr>
 </table>
 </td></tr>

@@ -31,8 +31,9 @@ site/
   sitemap.xml
   assets/
     css/main.css         one shared stylesheet, all pages
+    fonts/               self-hosted Roboto (latin, one variable WOFF2) + OFL.txt licence
     js/main.js            ~110 lines, vanilla JS: mobile nav toggle + quote form submit
-    js/analytics.js       GA4 conversion tracking (no-ops until a real measurement ID is set)
+    js/analytics.js       cookie-consent banner + consent-gated GA4 conversion tracking
     img/                  AVIF + WebP + JPEG for every photo, pre-generated
 ```
 
@@ -67,9 +68,9 @@ then open http://localhost:5500.
 | Strong Core Web Vitals | Single hero image is the only eager-loaded asset (LCP candidate), no layout-shifting web fonts (font-display: swap), no render-blocking JS |
 | Secure forms with spam protection | Quote form has a honeypot field + a submit-timing check (both checked client- and server-side) + real server-side validation in the Lambda handler + API Gateway rate limiting — see `backend/` |
 | Caching & compression | CloudFront `Compress: true` (gzip/brotli) on both cache behaviors; long `max-age=604800, immutable` on `/assets/*`, short cache on HTML so edits show up quickly — see `infra/deploy-site.sh` |
-| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + Google Fonts + Maps embed + the quote API), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
+| Content-Security-Policy & security headers | CloudFront response headers policy: CSP scoped to the site's actual resources (self + a click-to-load Google Maps embed + consent-gated Google Analytics; fonts are self-hosted, so no Google Fonts origins), HSTS with preload, X-Content-Type-Options, Referrer-Policy, X-Frame-Options DENY, Permissions-Policy — see `infra/template.yaml` |
 | Backup-friendly | S3 bucket versioning is on, with a lifecycle rule expiring old versions after 90 days so storage cost doesn't grow unbounded — full history in git either way |
-| Analytics without hurting Core Web Vitals | `gtag.js` is injected via JS with `async`, after the page's own `dataLayer`/`gtag()` are defined synchronously (so no early events are lost) — no render-blocking script tag, no impact on LCP/CLS/INP. See "Analytics & conversion tracking" below |
+| Analytics without hurting Core Web Vitals | `gtag.js` is not requested at all until a visitor accepts analytics; then it is injected via JS with `async` — no render-blocking script tag, no impact on LCP/CLS/INP. The consent banner is `position:fixed`, so it causes no layout shift. See "Analytics & conversion tracking" below |
 
 ## Quote/contact form: WhatsApp, not the backend
 
@@ -85,6 +86,13 @@ server in this flow:
 - Submit-timing check — the form records when it rendered, and a
   submission arriving under 1.5 seconds later is treated the same way as
   the honeypot (silently shown a fake success, WhatsApp never opens).
+
+**Only the real website opens WhatsApp.** The form opens the enquiry only on
+`sfrmotors.co.uk` / `www.sfrmotors.co.uk`. On any other hostname (a Vercel
+Preview, `localhost`, a temporary or staging address) it validates the form
+but shows "Preview copy: nothing was sent and WhatsApp was not opened", keeps
+the visitor's entries and fires no analytics event, so a reviewer can never
+send a test enquiry to a real customer channel.
 
 ### `backend/` (currently unused by the live site)
 
@@ -117,10 +125,123 @@ deployed. `npm run build` (Node 18+) turns one into the other:
 run it separately — `npm install && npm run build` locally is only useful
 for previewing the exact bundle that will ship (`npx http-server dist`).
 
+## Quality gate
+
+`npm run verify` (Node 18+, `npm install` first) runs the production build
+and then inspects `site/` for the things that are easy to break by hand:
+
+- the build itself completes without error
+- no broken internal `.html` links or `#anchor` targets
+- every indexable page has exactly one `<h1>`
+- every page has a non-empty, unique `<title>` and meta description
+- every page has a correct, unique canonical URL on `https://sfrmotors.co.uk/`
+- every local image reference actually exists
+- meaningful images have alt text; all `<img>` have explicit width/height
+- `sitemap.xml` is well-formed and lists every indexable page
+- no leftover placeholder text, `localhost`, or `*.vercel.app` URLs
+- `git diff --check` passes (no trailing whitespace / conflict markers)
+- cookie consent + consent-gated Google Analytics (check 15, see below)
+- the CloudFront Function stays within AWS's service limits (10,240-byte code,
+  128-character comment), its routing tables match the canonical URL map, and
+  CloudFront serves the dedicated `404.html` for missing URLs (check 16)
+- every URL inside the JSON-LD is absolute and on the production domain (check 17)
+- no image file in `site/assets/img` is unreferenced (check 7)
+- the owner-approved corrections (check 18: self-hosted font, click-to-load Map, robots, no street address, ...)
+- `vercel.json` is up to date and routes every URL exactly like the CloudFront Function, and sends the Vercel-only noindex header (check 19)
+- Analytics and the WhatsApp form work only on the production hostnames (check 20, `scripts/host-guard-tests.js`)
+- the deployed-headers checker (`scripts/check-vercel-deployment.js`) passes, fails and refuses as designed, using a fake fetch (check 21)
+
+It's read-only — it never edits `site/` or git state, it only builds
+(gitignored `dist/`) and reports. Run it before committing changes to `site/`:
+
+```bash
+npm run verify
+```
+
+A real-browser test suite (Chrome or Edge over the DevTools protocol, Node 22+, no
+new dependencies) lives in `scripts/browser-tests/`: every page at 1280x720 and
+375x812, cookie consent + Analytics, the Map click-to-load, the 404 page,
+redirects, the calculator and the quote form. It is not part of `verify` because
+it needs a browser and takes several minutes:
+
+```bash
+npm run build && npm run test:browser
+```
+
+Nothing is sent to Google, WhatsApp or the live domain (Google requests are
+stubbed/blocked inside the browser; `https://sfrmotors.co.uk` is answered from
+the local server).
+
+Prints `QUALITY GATE: PASSED` with a check count on success, or
+`QUALITY GATE: FAILED` with one `Error` / `Affected file` / `Suggested fix`
+block per issue found, and exits non-zero — safe to wire into CI as-is.
+
 ## Deploying the site (hosting)
 
-Requires an ACM certificate for your domain, issued in **us-east-1**
-(CloudFront requirement) — create and DNS-validate that first.
+> **Current hosting plan (owner decision).** A protected **Vercel Preview** is used only so the owner
+> and trusted reviewers can look at the site; the intended **Production** host is the
+> owner's existing **Hostinger** hosting. The AWS S3 + CloudFront + Route 53 material in
+> this section, `infra/` and the runbook is the **previous plan, kept as reference** (no
+> AWS account or resource exists). The Hostinger release and rollback procedure is written for owner
+> review in `infra/HOSTINGER-RELEASE-RUNBOOK.md` (a plan only; nothing in it has been run). A read-only check on 2026-09-21 found
+> `sfrmotors.co.uk` already served by Hostinger/LiteSpeed with an earlier static build of this branch; see the runbook, section 1.
+>
+> **Vercel Preview.** `vercel.json` is generated from `infra/template.yaml` by
+> `node scripts/vercel-config.js` (redirects, pretty-path rewrites, the exact security
+> headers and CSP, asset caching) and `npm run verify` (check 19) fails if it drifts.
+> Vercel builds with `npm run build` and publishes `dist/`. Every response also carries
+> `X-Robots-Tag: noindex, nofollow` (Vercel review copy only; never in `infra/template.yaml`
+> or on the real hosting).
+>
+> **Vercel state (owner-reported from the Vercel Dashboard, 2026-09-20).** One Vercel project remains,
+> `sfr-motors-preview` (Project ID `prj_GXRf5TeUa7jJk9PaF2gsy5DMWqMz`), with one deployment: the protected
+> **Preview** `https://sfr-motors-preview-i1xangr2b-batoolfizza332-cpu.vercel.app`
+> (`dpl_6YRuZrLQC7pcahxbZJT8dSeespys`), target **preview**, Ready, **Vercel Authentication enabled**. Its
+> login response carries Vercel's own `X-Robots-Tag: noindex`, but the **application response headers are
+> still unverified**. No custom domain is attached to Vercel; the live `sfrmotors.co.uk` is still WordPress
+> and DNS, `main` and the live website are unchanged. The next Preview deployment is not yet authorised;
+> when it is, pass `--target=preview` explicitly.
+>
+> **Deleted by the owner (Dashboard, permanent):** the first, accidental **Production** deployment
+> `dpl_J5w1LKoeiLP7CR31kJFfTA1i7AhR` (`https://sfr-motors-preview.vercel.app`; Vercel assigns a project's
+> first deployment to Production automatically; it was public and had no `X-Robots-Tag`), and the older,
+> separate Vercel project `sfr-motors-ltd` (only its Vercel deployments, `*.vercel.app` domains and project
+> settings; the GitHub repository and the live WordPress site were not affected).
+>
+> `node scripts/check-vercel-deployment.js https://<name>.vercel.app` verifies the application headers
+> of a **publicly reachable** `*.vercel.app` copy only (plain GETs, redirects not followed, nothing
+> sent but the request). On a protected deployment it prints "Deployment is protected; application
+> headers remain unverified." (exit 3): neither a pass nor a failure.
+>
+> **Warning: `npx vercel curl` is not read-only.** On a protected deployment it can create a
+> project-level *Protection Bypass for Automation* secret (it did once; the owner removed it in the
+> Dashboard). Such a value may remain in the already-built Preview until a redeploy (none is
+> authorised yet). Never create a bypass secret, shareable link or protection exception without
+> explicit owner approval. Never attach `sfrmotors.co.uk` / `www.sfrmotors.co.uk` to the Preview
+> project and never create a Production deployment from it.
+>
+> **Hostinger staging (Apache/LiteSpeed `.htaccess`).** `node scripts/htaccess-config.js` generates the
+> Hostinger routing from `infra/template.yaml`, the same source as `vercel.json`: the legacy WordPress
+> 301s, `/mobile-tyre-fitting` and `/mobile-tyre-fitting/` to `/mobile-tyre-fitting.html` (its only indexable URL, one hop), `.html` to pretty-URL 301s (the audit-kept location URLs are served at their exact URL), `/index.html` to `/`, pretty-path serving, `www` to apex, HTTP to
+> HTTPS, the 404 page for 403/404, the security headers, the caching policy (all scripts content-hashed and immutable) and `.js` as `text/javascript`. `npm run build:hostinger`
+> builds `dist/` and adds `dist/.htaccess` (staging profile: `X-Robots-Tag: noindex, nofollow` and a
+> short HSTS, `max-age=300`); the plain `npm run build` never contains it. `npm run verify` (check 22)
+> proves the rules route every URL like the CloudFront Function. The `production` profile (the template
+> headers, indexable, with HSTS `max-age=31536000` only: no `includeSubDomains`, no `preload`) is for
+> the launch. Upload `dist/` only to the
+> document root of an isolated, owner-approved staging (sub)domain; never to a folder that holds another
+> site. The behaviour on Hostinger's real server is unverified until that staging test is run.
+
+**Read `infra/CUTOVER-RUNBOOK.md` first** — it holds the backup, cutover and
+rollback plan (the live site is WordPress on Hostinger, and its e-mail is
+hosted there too). Merging to `main` triggers an automatic deploy to S3
+(see "Automatic deployments" below).
+
+Requires an ACM certificate issued in **us-east-1** (CloudFront requirement)
+that covers **both `sfrmotors.co.uk` and `www.sfrmotors.co.uk`** (the
+CloudFront Function 301-redirects `www` to the apex, as WordPress does today;
+pass `IncludeWww=false` only if `www` is deliberately unused) — create and
+DNS-validate that first.
 
 ```bash
 cd infra
@@ -130,9 +251,9 @@ aws cloudformation deploy \
   --parameter-overrides DomainName=sfrmotors.co.uk AcmCertificateArn=<your-cert-arn>
 ```
 
-Then point your domain's DNS at the CloudFront distribution (Route 53 alias,
-or a CNAME to the `DistributionDomainName` output if using another DNS
-provider), and push content with:
+Then point your domain's DNS at the CloudFront distribution (Route 53 alias
+records; an apex/root domain cannot be a plain CNAME, so another DNS provider
+must offer an ALIAS/ANAME record type — see the runbook), and push content with:
 
 ```bash
 BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-site.sh
@@ -201,51 +322,85 @@ Realistic total: **a few dollars a month**, dominated by CloudFront data
 transfer once traffic grows — there's no database, container, or
 always-on compute anywhere in this stack to pay for at idle.
 
-## Known placeholders to fill in before going live
+## Owner-approved site policies (do not undo without the owner)
 
-- `site/assets/js/analytics.js` — `GA_MEASUREMENT_ID` (see below)
-- `footer-section.html` / the footer in `site/index.html` — Facebook and
-  Instagram icons currently link to `#`. Multiple similarly-named accounts
-  turned up in a search and none are linked from the live WordPress site,
-  so rather than guess, these are left for you to fill in with the
-  confirmed official profile URLs.
+- **Social links:** the Facebook / Instagram placeholder icons (`href="#"`) were removed. Add real ones only when the owner
+  supplies the confirmed profile URLs; `verify.js` fails on any `href="#"`.
+- **Service-area business:** the only public location is **Bathgate, West Lothian**. No street address, postcode or Plus Code
+  appears anywhere (check 18 scans `site/`, `backend/` and the info file). The incorrect London registered-office address
+  (Beverley Drive, Edgware) was **removed from every page and the Privacy Policy on the owner's instruction**; check 18 fails
+  if it comes back.
+- **Company line (footer, every page):** "SFR Motors Ltd. Registered in England and Wales, company number 15819240." (no address).
+  Note for the owner: UK company law expects a company website to state its registered office address; this was hidden
+  because the owner said the London address shown is incorrect. Supply the correct registered office and it can be shown.
+- **Contact channels:** phone 0131 202 0289, WhatsApp 07448 427154, email info@sfrmotors.co.uk.
+- **Contact-page map:** click-to-load only (nothing is requested from Google until "Load Google Map" is pressed); it shows the
+  general Bathgate area, never a business pin.
+- **Fonts:** Roboto is self-hosted (`site/assets/fonts/`, SIL OFL 1.1). No request goes to fonts.googleapis.com or fonts.gstatic.com.
+- **robots.txt:** everything allowed for normal crawlers; **OAI-SearchBot explicitly allowed; GPTBot disallowed**.
+- **Home URL:** `/` is the only Home URL; `/index.html` 301-redirects to `/` and nothing links to it.
 
-## Analytics & conversion tracking
+## Analytics, cookie consent & conversion tracking
 
-`assets/js/analytics.js` loads GA4 (`gtag.js`) asynchronously — it never
-blocks rendering — and tracks these conversion events automatically on
-every page:
+`assets/js/analytics.js` is the whole implementation (one file, loaded on
+every page): a small first-party consent banner plus consent-gated Google
+Analytics 4. The Measurement ID (`G-B9TY4GMXYT`, public by design) is set
+once in that file as `GA_MEASUREMENT_ID`.
 
-| Event | Fires when |
+**Consent behaviour**
+
+| State | What happens |
 |---|---|
-| `phone_click` | any `tel:` link is clicked (header, hero, footer, "Call Now" buttons — one listener covers all of them) |
-| `whatsapp_click` | any `https://wa.me/...` link is clicked |
-| `quote_request` | the quote/contact form is submitted **and WhatsApp opens with the enquiry pre-filled** — never on the honeypot/bot-timing silent-success path, so bot traffic can't inflate this number |
-| `contact_form_submit` | the same successful submission, specifically when it happened on `contact.html` |
-| `cta_click` | a "Get A Free Quote" / "Request..." link pointing at `#quote-form` is clicked, before submission — separates click-through from actual completed requests |
-| `nav_click` | a main navigation link is clicked |
+| First visit | A compact banner offers **Accept analytics** and **Reject analytics** (same size, weight and contrast). Nothing Google-related is requested, no `dataLayer`/`gtag` exists, no `_ga` cookie is set. Scrolling, waiting or pressing Escape is *not* consent. |
+| Accepted | `sfr_consent=v1:analytics=granted` is stored; `gtag.js` is injected once (`https://www.googletagmanager.com/gtag/js?id=G-B9TY4GMXYT`), initialised once (one `page_view`), then phone/WhatsApp/quote events are sent. |
+| Rejected | `sfr_consent=v1:analytics=denied` is stored; Google is never loaded; any `_ga*` cookies are cleared. The site works exactly the same. |
+| Change / withdraw | Every page footer has a **Cookie settings** button that reopens the choices (modal, keyboard-trapped, Escape closes without changing anything). Accept -> Reject stops the tag (`ga-disable-<ID>`), deletes `_ga` / `_ga_B9TY4GMXYT`, then reloads the page so no Google code is left running. Reject -> Accept loads GA once, with no reload. |
 
-Every event also carries a `page_type` parameter (`core` / `service` /
-`location`), computed from the URL by `analytics.js` itself — so "key
-service page visits" and "location page visits" can be segmented in GA4
-without editing all 18 pages individually to tag them.
+The preference is one essential first-party cookie, `sfr_consent`
+(`Path=/`, `SameSite=Lax`, `Secure` on HTTPS, **180 days**), holding only
+the choice and a version marker — no personal data, no web storage. It is
+not forwarded by CloudFront (the cache policies use `CookieBehavior: none`).
 
-**Not tracked, by design:** nothing typed into the form (name, phone,
-email, message) is ever sent as an event parameter — only the fact that
-a submission happened.
+**Events (sent only while consent is granted)**
 
-**To activate:** put your real GA4 Measurement ID (Google Analytics ->
-Admin -> Data Streams -> your web stream) into `GA_MEASUREMENT_ID` in
-`site/assets/js/analytics.js`. It's not a secret — Measurement IDs are
-public by design, visible in any browser's network tab on every GA4
-site — this is a single named placeholder purely so there's one place to
-set it instead of 18. Until it's set, the file no-ops entirely: no
-script loads, no listeners attach, nothing is sent.
+| Event | Fires when | Parameters |
+|---|---|---|
+| `phone_click` | any `tel:` link is clicked | `page_path`, `page_type`, `link_location` (`top_bar` / `header` / `footer` / `page_content`) — never the number or link text |
+| `whatsapp_click` | any `https://wa.me/...` link is clicked | same three — never the number or message |
+| `quote_request` | the quote/contact form is submitted **and WhatsApp opens with the enquiry pre-filled** (never on the honeypot/bot-timing path) | `page_path`, `page_type` — no form content |
+| `contact_form_submit` | the same submission, on the Contact page | `page_path`, `page_type` |
+| `cta_click` | a link pointing at `#quote-form` is clicked | `page_path`, `page_type`, `link_location`, `link_text` |
+| `nav_click` | a main-navigation link is clicked | `page_path`, `page_type`, `link_location`, `link_text` |
 
-**Before enabling real tracking:** as a UK business, cookie-based
-analytics like GA4 generally needs visitor consent under UK PECR/GDPR
-rules. This setup doesn't include a consent banner or Google Consent
-Mode — deliberately, since that's a compliance decision for you to make
-(a simple accept/reject banner, Consent Mode with default-denied
-analytics, or accepting the risk at low traffic are all common choices
-for a small business site) rather than something to bake in unasked.
+`page_type` is `core` / `service` / `location`, computed from the URL.
+Google signals and ad personalisation are switched off in the tag config
+and the Consent Mode default denies `ad_storage`, `ad_user_data` and
+`ad_personalization`, so no advertising cookies or Google Ads origins are
+involved. GA4's "Enhanced measurement" (scroll, outbound-click, etc.) is a
+property-side setting in the Analytics admin, not controlled by this code.
+
+**Only the production hostnames reach Google.** Google Analytics loads only on
+`sfrmotors.co.uk` and `www.sfrmotors.co.uk`. On every other host (`localhost`,
+any `*.vercel.app` Preview, a temporary or staging address) the banner and the
+stored choice work, but Google Analytics is deliberately not loaded even after
+"Accept analytics", so reviewing a preview cannot pollute the live GA4
+property. The hostname pattern lives in `assets/js/analytics.js` and
+`assets/js/main.js` (identical in both) and `scripts/host-guard-tests.js` runs
+both scripts on production, `localhost`, `*.vercel.app` and look-alike
+hostnames as part of `npm run verify` (check 20).
+
+**CSP** (`infra/template.yaml`): `script-src` allows `www.googletagmanager.com`;
+`connect-src` and `img-src` allow exactly `www.google-analytics.com` and
+`region1.google-analytics.com` (the regional collection host Google serves
+to UK/EU visitors). No wildcards, no `google.com` / `doubleclick.net`. If
+data from visitors in another region is missing after launch, check the
+browser console for a CSP violation naming another `*.google-analytics.com`
+host. `scripts/verify.js` check 15 enforces all of the above (ID configured
+once, no inline/unconditional gtag in any page, consent controls and footer
+button on every page, policy text in sync with the code, exact CSP origins).
+
+**Policy text:** `site/privacy-policy.html` sections 5 and 6 (analytics and cookies) describe the
+optional analytics, the cookies (`sfr_consent`, `_ga`, `_ga_B9TY4GMXYT`),
+their lifetimes, and how to change the choice. Keep them in sync with
+`analytics.js` — check 15 fails if the cookie names or the 180-day lifetime
+drift apart.

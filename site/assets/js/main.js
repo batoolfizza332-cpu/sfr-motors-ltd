@@ -30,12 +30,48 @@
     });
   }
 
+  // ---- Click-to-load Google Map (Contact page) ----
+  // Nothing is requested from Google until the visitor presses "Load Google Map":
+  // the iframe does not exist in the page before that, so there is no connection,
+  // cookie or IP disclosure to Google on a normal visit.
+  var mapBox = document.querySelector("[data-sfr-map]");
+  var mapButton = mapBox && mapBox.querySelector("[data-sfr-map-load]");
+  if (mapBox && mapButton) {
+    mapButton.addEventListener("click", function () {
+      if (mapBox.querySelector("iframe")) return; // load once only
+      var frame = document.createElement("iframe");
+      frame.src = mapButton.getAttribute("data-src");
+      frame.title = mapBox.getAttribute("data-map-title") || "Google Map";
+      mapBox.innerHTML = "";
+      mapBox.appendChild(frame);
+      frame.focus(); // keyboard focus moves to the map so it is not lost when the button disappears
+    });
+  }
+
+  // ---- Mobile "Call Now" bar ----
+  // Cloned from the header call button so the number is only ever written in one place; CSS shows it on phones only.
+  var headerCall = document.querySelector("a.sfr-header__call");
+  if (headerCall) {
+    var callBar = headerCall.cloneNode(true);
+    callBar.className = "sfr-callbar";
+    callBar.removeAttribute("id");
+    document.body.appendChild(callBar);
+    document.body.classList.add("sfr-has-callbar");
+  }
+
   // ---- Quote / contact form ----
   // Enquiries go straight to SFR Motors' WhatsApp as a pre-filled message —
   // there's no backend to send them to instead. Do not add one back in
   // without also wiring up a real success/failure state; a WhatsApp deep
   // link either opens or it doesn't, and the user can see which happened.
   var WHATSAPP_NUMBER = "447448427154";
+
+  // Only the real website may open a WhatsApp enquiry to the business. Review
+  // copies (*.vercel.app previews, localhost, any temporary or staging host)
+  // show the form but never open WhatsApp, so a test enquiry cannot reach a
+  // real customer channel. Keep this pattern identical to IS_PRODUCTION_HOST in
+  // assets/js/analytics.js (scripts/verify.js checks that they match).
+  var PRODUCTION_HOST = /^(www\.)?sfrmotors\.co\.uk$/.test(window.location.hostname);
 
   var form = document.getElementById("quote-form-el");
   if (!form) return;
@@ -53,6 +89,60 @@
     statusEl.dataset.state = state;
     statusEl.textContent = message;
   }
+
+  // The four required fields, in the order they appear on the form: the wording used in the summary message under the
+  // button (`label`) and in the message shown beside the field itself (`hint`).
+  var REQUIRED_FIELDS = [
+    { name: "name", label: "your name", hint: "Please enter your name." },
+    { name: "phone", label: "your phone number", hint: "Please enter your phone number." },
+    { name: "service", label: "the service you need", hint: "Please choose the service you need." },
+    { name: "location", label: "your current location", hint: "Please enter your current location." }
+  ];
+  var PHONE_HINT = "Please enter a valid phone number, for example 07700 900123 or +44 7700 900123.";
+
+  // Digits with an optional leading +, and spaces, dots, dashes or brackets between them. 10-15 digits covers UK
+  // landline and mobile numbers with or without +44, and other international numbers, but not "1" or "abc".
+  function isValidPhone(value) {
+    var v = value.trim();
+    if (!/^\+?[0-9\s().-]+$/.test(v)) return false;
+    var digits = v.replace(/\D/g, "").length;
+    return digits >= 10 && digits <= 15;
+  }
+
+  function joinWithAnd(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  // Flag a field: aria-invalid, a red message directly beneath it (the summary under the button can be off-screen once
+  // the focus jumps to the field) and aria-describedby so screen readers read that message with the field.
+  function flagField(el, text) {
+    var note = document.createElement("p");
+    note.className = "sfr-quote__error";
+    note.id = "quote-error-" + el.name;
+    note.textContent = text;
+    el.parentNode.appendChild(note);
+    el.setAttribute("aria-invalid", "true");
+    el.setAttribute("aria-describedby", note.id);
+  }
+
+  function unflagField(el) {
+    el.removeAttribute("aria-invalid");
+    el.removeAttribute("aria-describedby");
+    var note = document.getElementById("quote-error-" + el.name);
+    if (note) note.parentNode.removeChild(note);
+  }
+
+  function clearInvalid() {
+    form.querySelectorAll('[aria-invalid="true"]').forEach(unflagField);
+  }
+
+  // A field stops being flagged as soon as the visitor edits it.
+  function onEdit(e) {
+    if (e.target.getAttribute && e.target.getAttribute("aria-invalid") === "true") unflagField(e.target);
+  }
+  form.addEventListener("input", onEdit);
+  form.addEventListener("change", onEdit);
 
   function fieldOrFallback(value) {
     return value && value.trim() ? value.trim() : "Not specified";
@@ -103,8 +193,39 @@
       return;
     }
 
-    if (!data.name || !data.phone || !data.service || !data.location) {
-      setStatus("error", "Please fill in your name, phone number, service and current location.");
+    // Validate: name every empty required field and reject a phone number that is not a real number, then flag
+    // those fields and put the keyboard focus on the first one.
+    clearInvalid();
+    var problems = [];
+    var missing = [];
+    REQUIRED_FIELDS.forEach(function (f) {
+      if (!data[f.name] || !data[f.name].trim()) {
+        problems.push({ name: f.name, hint: f.hint });
+        missing.push(f.label);
+      }
+    });
+    var badPhone = data.phone && data.phone.trim() && !isValidPhone(data.phone);
+    if (badPhone) problems.push({ name: "phone", hint: PHONE_HINT });
+
+    if (problems.length) {
+      var parts = [];
+      if (missing.length) parts.push("Please fill in " + joinWithAnd(missing) + ".");
+      if (badPhone) parts.push(PHONE_HINT);
+      setStatus("error", parts.join(" "));
+      // in form order, so the first problem found is the first field on the page
+      var flagged = REQUIRED_FIELDS.map(function (f) {
+        return problems.filter(function (p) { return p.name === f.name; })[0];
+      }).filter(Boolean);
+      flagged.forEach(function (p) { flagField(form.elements[p.name], p.hint); });
+      form.elements[flagged[0].name].focus();
+      return;
+    }
+
+    if (!PRODUCTION_HOST) {
+      setStatus(
+        "error",
+        "Preview copy: nothing was sent and WhatsApp was not opened. On the live website this form opens WhatsApp with your enquiry filled in."
+      );
       return;
     }
 

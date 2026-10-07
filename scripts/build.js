@@ -4,7 +4,7 @@
 // is fully disposable and gitignored.
 //
 //   - assets/css/main.css and assets/js/*.js are minified and renamed with
-//     a content hash (main.<hash>.css, main.<hash>.js), so they can be
+//     a content hash (main.<hash>.css, main.<hash>.js, tyre-calculator.<hash>.js), so they can be
 //     cached by the browser/CDN for a full year without ever going stale:
 //     a content change produces a new filename, an unchanged file produces
 //     the same hash and the same URL.
@@ -120,6 +120,8 @@ async function buildHtmlFiles(assetMap) {
       // Matches href="assets/css/main.css" / src="assets/js/main.js" exactly —
       // the quoted attribute value, not any incidental substring elsewhere.
       html = html.split(`"${from}"`).join(`"${to}"`);
+      // Pretty-path pages reference assets root-relatively ("/assets/..."); keep the fingerprint swap working for both forms.
+      html = html.split(`"/${from}"`).join(`"/${to}"`);
     }
 
     const minified = await minifyHtml(html, HTML_MINIFY_OPTIONS);
@@ -131,7 +133,7 @@ async function buildHtmlFiles(assetMap) {
 
 function copyStaticFiles() {
   const all = walk(SITE_DIR);
-  const skip = new Set(["assets/css/main.css", "assets/js/main.js", "assets/js/analytics.js"]);
+  const skip = new Set(["assets/css/main.css", "assets/js/main.js", "assets/js/analytics.js", "assets/js/tyre-calculator.js"]);
   let count = 0;
   for (const rel of all) {
     const relNorm = rel.replace(/\\/g, "/");
@@ -156,7 +158,7 @@ async function main() {
   const cssMap = [await buildCss("assets/css/main.css")];
 
   console.log("Minifying JS...");
-  const jsMap = [await buildJs("assets/js/main.js"), await buildJs("assets/js/analytics.js")];
+  const jsMap = [await buildJs("assets/js/main.js"), await buildJs("assets/js/analytics.js"), await buildJs("assets/js/tyre-calculator.js")];
 
   console.log("Copying static files...");
   copyStaticFiles();
