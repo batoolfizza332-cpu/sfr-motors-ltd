@@ -261,11 +261,15 @@ BUCKET=<Outputs.BucketName> DISTRIBUTION_ID=<Outputs.DistributionId> ./deploy-si
 
 ## Automatic deployments (CI/CD)
 
+> **Disabled.** The site is on Hostinger, not AWS, so `.github/workflows/deploy.yml`
+> no longer runs on push to `main`; it only has a manual "Run workflow" button.
+> To revive the AWS plan, restore its `push` trigger after the setup below.
+
 Once the steps above have run at least once, further content edits can
 deploy themselves: push to `main`, GitHub Actions builds `site/` into `dist/`,
 syncs it to S3 and invalidates the CloudFront cache automatically
-(`.github/workflows/deploy.yml`, triggered when `site/`, `scripts/build.js`
-or `package.json` changes).
+(`.github/workflows/deploy.yml`, formerly triggered when `site/`, `scripts/build.js`
+or `package.json` changed).
 
 No AWS access keys are stored in GitHub. The workflow uses OpenID Connect to
 assume a narrowly-scoped IAM role for the few seconds a deploy takes, then

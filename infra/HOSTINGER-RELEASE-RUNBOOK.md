@@ -190,7 +190,7 @@ Notes:
 - [ ] Section 1 items 1 to 7 answered in writing.
 - [ ] Owner has read the eight new pages (`/our-tyre-range/` in particular) and the wording notes from the review.
 - [ ] Owner approves this document, the release window and who will run it.
-- [ ] Separate approval to merge to `main` (merging to `main` also starts `.github/workflows/deploy.yml`, which targets AWS; it needs AWS variables that do not exist and will fail, and it is unrelated to this Hostinger release).
+- [ ] Separate approval to merge to `main` (`.github/workflows/deploy.yml`, which targets AWS, is disabled and no longer starts on merge to `main`).
 
 ## 11. Release record (fill in on the day)
 
