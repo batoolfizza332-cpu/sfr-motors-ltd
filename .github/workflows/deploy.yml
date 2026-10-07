@@ -1,6 +1,12 @@
-name: Deploy site
+name: Deploy site (AWS, disabled)
 
-# Auto-deploys site/ to S3 + invalidates CloudFront whenever it changes on
+# DISABLED: the site is hosted on Hostinger, not AWS. No AWS account, bucket or
+# CloudFront distribution exists and the AWS variables below are not set, so
+# this workflow failed on every push to main. It no longer runs automatically;
+# the old "Run workflow" button is kept only in case the AWS plan (infra/
+# template.yaml, PROJECT-HANDOVER.md section 3) is ever revived.
+#
+# Originally: deployed site/ to S3 + invalidated CloudFront whenever it changed on
 # main. Uses OIDC to assume a narrowly-scoped AWS role for the run only —
 # no long-lived AWS access keys are stored in GitHub at all.
 #
@@ -16,12 +22,7 @@ name: Deploy site
 #      aren't sensitive on their own — so they're repo Variables, not Secrets.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "site/**"
-      - "scripts/build.js"
-      - "package.json"
+  workflow_dispatch: # manual only; there is no automatic trigger any more
 
 permissions:
   id-token: write # required to request the OIDC token

@@ -140,7 +140,7 @@ infra/template.yaml   ← تمام redirects، صاف URLs اور headers کا �
 - [ ] `sfrmotors.co.uk` کا document root کا اصل راستہ، اور اس میں کوئی اور سائٹ یا subdomain تو نہیں
 - [ ] سرور کی موجودہ `.htaccess` میں Hostinger کا اپنا کوئی حصہ تو نہیں (runbook سیکشن 4.2)
 - [ ] Hostinger cache/CDN آن ہے یا نہیں (ہو تو upload کے بعد purge کا قدم جوڑنا ہوگا)
-- [ ] پرانا AWS والا `.github/workflows/deploy.yml` بند کرنا ہے یا نہیں (یہ `main` پر چلتا ہے اور AWS نہ ہونے کی وجہ سے fail ہوتا ہے)
+- [x] پرانا AWS والا `.github/workflows/deploy.yml` بند کر دیا گیا (اب `main` پر خود نہیں چلتا، صرف بٹن سے)
 - [ ] پہلی خودکار release کے وقت کوئی ہاتھ سے نگرانی کرے، اور e-mail کا test پہلے اور بعد میں ہو
 
 ان سب کے بعد ہی `deploy-hostinger.yml` بنائی جائے، الگ PR میں۔

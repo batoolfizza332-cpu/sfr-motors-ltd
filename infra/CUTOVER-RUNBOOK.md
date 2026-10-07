@@ -30,7 +30,7 @@ Related documents: [`../PROJECT-HANDOVER.md`](../PROJECT-HANDOVER.md) (full proj
 | DNS is currently hosted at **Hostinger DNS** (`pixel.dns-parking.com`, `byte.dns-parking.com`) | `NS` lookup |
 | `www` is a CNAME to the apex; `http://` variants 301 to `https://`, and `https://www.` 301s to `https://sfrmotors.co.uk/` | `curl -I` |
 | **E-mail is on Hostinger** (`MX` -> `mx1.hostinger.com`, `mx2.hostinger.com`) | `MX` lookup |
-| Merging to `main` **auto-deploys** `site/**` to S3 and invalidates CloudFront (`.github/workflows/deploy.yml`) | workflow file |
+| `.github/workflows/deploy.yml` (S3 + CloudFront) is **disabled**: manual "Run workflow" only, no automatic run on merge to `main`. Restore its `push` trigger if this AWS plan is revived | workflow file |
 | DNSSEC state of `sfrmotors.co.uk`: **UNKNOWN** — must be checked (section A.3) | — |
 
 Consequences: (1) DNS work must never alter MX / SPF / DKIM / DMARC / other TXT records or `info@sfrmotors.co.uk` stops.
