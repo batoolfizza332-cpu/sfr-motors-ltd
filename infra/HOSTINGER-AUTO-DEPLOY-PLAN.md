@@ -46,12 +46,17 @@
 
 1. hPanel → **Advanced → SSH Access**: SSH آن کریں، اور host، port (Hostinger پر عموماً `65002`) اور username نوٹ کریں۔
 2. ایک نئی SSH key بنائیں (صرف اسی کام کے لیے)۔ اس کا public حصہ hPanel میں ڈالیں، private حصہ GitHub میں۔
-3. GitHub repo → **Settings → Secrets and variables → Actions → Secrets** میں یہ چار چیزیں ڈالیں:
-   `HOSTINGER_SSH_HOST`، `HOSTINGER_SSH_PORT`، `HOSTINGER_SSH_USER`، `HOSTINGER_SSH_KEY`۔
+3. GitHub repo → **Settings → Secrets and variables → Actions → Secrets** میں یہ پانچ چیزیں ڈالیں:
+   `HOSTINGER_SSH_HOST`، `HOSTINGER_SSH_PORT`، `HOSTINGER_SSH_USER`، `HOSTINGER_SSH_KEY`، `HOSTINGER_SSH_KNOWN_HOSTS`۔
+   (`HOSTINGER_SSH_KNOWN_HOSTS` سرور کی پہچان ہے: اپنے کمپیوٹر پر `ssh-keyscan -p <port> <host>` کا نتیجہ۔ اس سے GitHub کسی نقلی سرور سے نہیں جڑے گا۔)
    اور **Variables** میں `HOSTINGER_DOCROOT` (مثلاً `domains/sfrmotors.co.uk/public_html`؛ اصل راستہ hPanel میں دیکھ کر لکھیں)۔
 4. کوئی پاس ورڈ یا key **کبھی بھی** repo کی کسی فائل میں نہ لکھیں۔
 
-### 3.3 workflow کے مراحل (`.github/workflows/deploy-hostinger.yml`، ابھی بنی نہیں)
+### 3.3 workflow کے مراحل (`.github/workflows/deploy-hostinger.yml`)
+
+workflow بن گئی ہے، لیکن **خود کبھی نہیں چلتی**۔ Actions → "Deploy to Hostinger" → "Run workflow" میں دو انتخاب ہیں:
+* `dry-run` (پہلے سے چنا ہوا): جڑتی ہے، backup لیتی ہے اور بتاتی ہے کون سی فائلیں بدلیں گی۔ **کچھ upload نہیں کرتی۔**
+* `deploy`: اصل release، اور اس کے لیے نیچے والے خانے میں `DEPLOY` لکھنا ضروری ہے۔ صرف `main` branch سے چلتی ہے۔
 
 1. **Checkout** `main` اور `npm ci`۔
 2. **Quality gate:** `npm run verify`۔ اگر fail ہو تو یہیں رک جائے۔
