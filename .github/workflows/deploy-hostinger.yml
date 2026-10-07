@@ -1,0 +1,216 @@
+name: Deploy to Hostinger
+
+# Route A of infra/HOSTINGER-AUTO-DEPLOY-PLAN.md: build main, check it, back up the live
+# document root, upload over SSH/rsync in the safe order, check the live site, and roll
+# back automatically if the check fails.
+#
+# It NEVER runs on its own: only the "Run workflow" button in the Actions tab starts it.
+#   mode "dry-run" (default): connects, backs up and lists what WOULD change. Uploads nothing.
+#   mode "deploy" (and type DEPLOY in the confirm box): the real release.
+#
+# One-time setup (step by step in the plan, section 3.2). Nothing secret is stored in this file.
+#   Secrets:   HOSTINGER_SSH_HOST, HOSTINGER_SSH_PORT, HOSTINGER_SSH_USER,
+#              HOSTINGER_SSH_KEY (private key, no passphrase),
+#              HOSTINGER_SSH_KNOWN_HOSTS (output of `ssh-keyscan -p <port> <host>`)
+#   Variables: HOSTINGER_DOCROOT (for example domains/sfrmotors.co.uk/public_html)
+#
+# Never: --delete, touching DNS/e-mail, or uploading anything outside dist/.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "dry-run = back up and list changes only (uploads nothing); deploy = real upload"
+        type: choice
+        options: [dry-run, deploy]
+        default: dry-run
+      confirm:
+        description: 'Only for mode "deploy": type DEPLOY'
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false # never stop an upload half way
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production # add "Required reviewers" here in Settings -> Environments if your plan allows
+    env:
+      MODE: ${{ inputs.mode }}
+      DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
+    steps:
+      - name: Check the request and the settings
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+          SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_SSH_KNOWN_HOSTS }}
+        run: |
+          bad=0
+          [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this from the main branch only (got $GITHUB_REF)."; bad=1; }
+          for v in SSH_HOST SSH_PORT SSH_USER SSH_KEY KNOWN_HOSTS; do
+            [ -n "${!v}" ] || { echo "::error::Secret HOSTINGER_$v is missing (Settings -> Secrets and variables -> Actions -> Secrets)."; bad=1; }
+          done
+          [[ "$SSH_PORT" =~ ^[0-9]+$ ]] || { echo "::error::HOSTINGER_SSH_PORT must be a number, e.g. 65002."; bad=1; }
+          # Strict on purpose: the path is used inside remote commands.
+          if [[ ! "$DOCROOT" =~ ^[A-Za-z0-9._][A-Za-z0-9._/-]*$ || "$DOCROOT" == *..* || "$DOCROOT" == */ ]]; then
+            echo "::error::Variable HOSTINGER_DOCROOT is missing or unsafe (letters, digits, . _ - / only; no '..'; no trailing /)."; bad=1
+          fi
+          if [ "$MODE" = "deploy" ] && [ "$CONFIRM" != "DEPLOY" ]; then
+            echo "::error::Mode is deploy but the confirm box does not say DEPLOY. Nothing was done."; bad=1
+          fi
+          exit $bad
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quality gate (builds dist/)
+        run: npm run verify
+
+      - name: Production .htaccess and safety checks
+        run: |
+          # NOT `npm run build:hostinger`: that writes the staging file with noindex.
+          node scripts/htaccess-config.js --profile production --out dist/.htaccess
+          bad=0
+          no() { echo "::error::Safety check failed: $1"; bad=1; }
+          [ "$(sed -n 3p dist/.htaccess)" = "# Profile: production" ]        || no ".htaccess is not the production profile"
+          ! grep -q "X-Robots-Tag" dist/.htaccess                             || no "X-Robots-Tag found in .htaccess"
+          [ "$(grep -c 'Transport-Security "max-age=31536000"' dist/.htaccess)" = 1 ] || no "HSTS is not exactly one year"
+          ! grep -q "includeSubDomains\|preload" dist/.htaccess               || no "includeSubDomains/preload found"
+          ! grep -qi "noindex" dist/sitemap.xml dist/robots.txt               || no "noindex in sitemap.xml or robots.txt"
+          [ -s dist/index.html ] && [ -s dist/404.html ]                      || no "index.html or 404.html missing"
+          # The upload below handles exactly these top-level entries; anything new must be added to it on purpose.
+          extra=$(find dist -mindepth 1 -maxdepth 1 ! -name '*.html' ! -name assets ! -name .htaccess \
+                    ! -name sitemap.xml ! -name robots.txt ! -name favicon.ico -printf '%f ')
+          [ -z "$extra" ] || no "unexpected files in dist/: $extra"
+          exit $bad
+
+      - name: Set up SSH (host key is verified, never trusted blindly)
+        env:
+          SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/hostinger && chmod 600 ~/.ssh/hostinger
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host hostinger
+            HostName $SSH_HOST
+            Port $SSH_PORT
+            User $SSH_USER
+            IdentityFile ~/.ssh/hostinger
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
+            BatchMode yes
+            ConnectTimeout 20
+            ServerAliveInterval 15
+          EOF
+          # shellcheck disable=SC2029 # $DOCROOT is meant to expand locally; the first step validated it
+          ssh hostinger "test -f '$DOCROOT/index.html'" \
+            || { echo "::error::Could not connect, or $DOCROOT/index.html does not exist on the server. Check the secrets and HOSTINGER_DOCROOT."; exit 1; }
+          ssh hostinger "command -v rsync >/dev/null" \
+            || { echo "::error::rsync is not available on the server; this workflow needs it."; exit 1; }
+          echo "Connected; document root found."
+
+      - name: Back up the live document root
+        run: |
+          rsync -rlt -e ssh "hostinger:$DOCROOT/" backup/
+          [ -s backup/index.html ] || { echo "::error::Backup has no index.html; stopping."; exit 1; }
+          echo "Backup: $(find backup -type f | wc -l) files, $(du -sh backup | cut -f1)"
+          # Runbook 4.2: if the live .htaccess was not generated by this repository, stop and ask a person.
+          if [ -f backup/.htaccess ] && [ "$(sed -n 3p backup/.htaccess)" != "# Profile: production" ]; then
+            echo "::error::The live .htaccess was not generated by scripts/htaccess-config.js (production). Stopping; review it by hand (runbook 4.2)."
+            exit 1
+          fi
+
+      - name: Keep the backup for 30 days
+        uses: actions/upload-artifact@v4
+        with:
+          name: hostinger-backup-run-${{ github.run_number }}
+          path: backup/
+          include-hidden-files: true # .htaccess
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: What would change (dry run, uploads nothing)
+        run: |
+          {
+            echo "## Hostinger: files that differ from the server ($MODE)"
+            echo '```'
+            rsync -rt --checksum --dry-run --itemize-changes -e ssh dist/ "hostinger:$DOCROOT/" || true
+            echo '```'
+            echo '### .htaccess: live vs new'
+            echo '```diff'
+            diff backup/.htaccess dist/.htaccess || true
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload in the safe order (no --delete)
+        id: upload
+        if: env.MODE == 'deploy'
+        run: |
+          up() { rsync -rt --checksum --chmod=D755,F644 --itemize-changes -e ssh "$@"; }
+          up dist/assets/ "hostinger:$DOCROOT/assets/"                  # 1. new CSS/JS/images first
+          up --include='*.html' --exclude='*' dist/ "hostinger:$DOCROOT/"  # 2. pages
+          up dist/.htaccess "hostinger:$DOCROOT/"                       # 3. routing/headers
+          up dist/sitemap.xml "hostinger:$DOCROOT/"                     # 4. crawler files last
+          up dist/robots.txt dist/favicon.ico "hostinger:$DOCROOT/"
+
+      - name: Check the live site
+        if: env.MODE == 'deploy'
+        run: |
+          node scripts/live-compare.js && exit 0
+          echo "First live check failed; waiting 60 s for caches, then checking once more."
+          sleep 60
+          node scripts/live-compare.js
+
+      - name: Roll back to the backup
+        if: failure() && (steps.upload.outcome == 'success' || steps.upload.outcome == 'failure')
+        run: |
+          back() { rsync -rt --chmod=D755,F644 -e ssh "$@"; }
+          if [ -f backup/.htaccess ]; then
+            back backup/.htaccess "hostinger:$DOCROOT/"
+          else
+            # shellcheck disable=SC2029 # there was no .htaccess before this run
+            ssh hostinger "rm -f '$DOCROOT/.htaccess'"
+          fi
+          back --include='*.html' --exclude='*' backup/ "hostinger:$DOCROOT/"
+          for f in sitemap.xml robots.txt favicon.ico; do
+            if [ -f "backup/$f" ]; then back "backup/$f" "hostinger:$DOCROOT/"; fi
+          done
+          sleep 30
+          home=$(curl -s -o /dev/null -w '%{http_code}' https://sfrmotors.co.uk/)
+          map=$(curl -s -o /dev/null -w '%{http_code}' https://sfrmotors.co.uk/sitemap.xml)
+          echo "## ROLLED BACK to the backup of this run (home $home, sitemap $map). Check the site by hand." | tee -a "$GITHUB_STEP_SUMMARY"
+          # New hashed assets and new pages stay on the server; they are harmless and nothing links to them.
+
+      - name: Release record
+        if: always()
+        run: |
+          {
+            echo "## Release record"
+            echo "- Mode: $MODE"
+            echo "- Commit: \`$GITHUB_SHA\`"
+            echo "- Started by: $GITHUB_ACTOR"
+            echo "- Finished: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "- Result: ${{ job.status }}"
+          } >> "$GITHUB_STEP_SUMMARY"
