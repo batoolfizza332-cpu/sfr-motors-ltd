@@ -15,7 +15,7 @@ Companion documents: [`README.md`](README.md) (commands, workflows, repository m
 | Project | Static website for **SFR Motors Ltd**, a mobile tyre-fitting business (service-area business, Bathgate, West Lothian) |
 | Live site | `https://sfrmotors.co.uk`, served by **Hostinger** (LiteSpeed). The live site matches `main` (checked daily by the Daily SEO check). |
 | Hosting | **GitHub + Hostinger only.** No Vercel, AWS or other hosting is used; the old Vercel projects were deleted and no AWS account exists. Do not set up or connect to any other host. |
-| How a change goes live | merge to `main` -> `.github/workflows/deploy-hostinger.yml` builds, checks, backs up, uploads over SSH (no deletes), checks the live site and rolls back on failure. It needs one-time Hostinger secrets (`infra/HOSTINGER-DEPLOY.md` section 2); until they exist it uploads nothing. |
+| How a change goes live | **Only with the owner's permission.** A merge to `main` makes `.github/workflows/deploy-hostinger.yml` run a dry run (backup + list of changes, no upload). After the owner says so, the workflow is run by hand in `deploy` mode: build, checks, backup, upload over SSH (no deletes), live check, rollback on failure. It needs one-time Hostinger secrets (`infra/HOSTINGER-DEPLOY.md` section 2). |
 | DNS and e-mail | DNS at Hostinger (`pixel.dns-parking.com`, `byte.dns-parking.com`), apex IP `82.29.191.9`; `www` 301s to the apex. **E-mail `info@sfrmotors.co.uk` is hosted at Hostinger** (MX `mx1.hostinger.com`, `mx2.hostinger.com`). Never change DNS or e-mail records from this project. |
 | Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (Private) |
 | Local path (Windows) | `C:\Users\batoo\Desktop\SFR Motors Website` |
@@ -147,7 +147,7 @@ Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a ze
 
 ## 11. Working rules
 
-1. Every change goes through a pull request with a green **Quality gate**; merging to `main` publishes it to the live site (once the Hostinger secrets exist).
+1. Every change goes through a pull request with a green **Quality gate**. Nothing is uploaded to the live site without the owner's explicit permission for that release; then run Deploy to Hostinger in `deploy` mode.
 2. Never touch DNS, nameservers, MX/e-mail records, the registrar or Hostinger plan settings from this project.
 3. No destructive git operations (`reset --hard`, force-push, history rewrite) unless the owner explicitly asks.
 4. Never request or store credentials, tokens, keys or personal data in the repository or in chat.

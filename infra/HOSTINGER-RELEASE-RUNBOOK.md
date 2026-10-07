@@ -1,7 +1,7 @@
 # Hostinger release and rollback procedure (for owner review)
 
-Status: **manual fallback.** Normal releases are automatic: `.github/workflows/deploy-hostinger.yml` follows this procedure
-(production `.htaccess`, safety checks, backup, ordered upload, live check, rollback) after every merge to `main` that changes the website.
+Status: **manual fallback.** Normal releases use `.github/workflows/deploy-hostinger.yml` in `deploy` mode, started after the owner's permission;
+it follows this procedure (production `.htaccess`, safety checks, backup, ordered upload, live check, rollback).
 Use this document only when a release has to be done by hand (for example if SSH access is unavailable). It was written in
 September 2026 for an earlier branch; its file counts and "before" numbers are from that time.
 
@@ -189,7 +189,7 @@ Notes:
 - [ ] Section 1 items 1 to 7 answered in writing.
 - [ ] Owner has read the eight new pages (`/our-tyre-range/` in particular) and the wording notes from the review.
 - [ ] Owner approves this document, the release window and who will run it.
-- [ ] Note: once the Hostinger secrets exist, a merge to `main` that changes the website deploys it automatically (`.github/workflows/deploy-hostinger.yml`).
+- [ ] Note: a merge to `main` only runs a dry run; nothing is uploaded until the owner approves the release.
 
 ## 11. Release record (fill in on the day)
 

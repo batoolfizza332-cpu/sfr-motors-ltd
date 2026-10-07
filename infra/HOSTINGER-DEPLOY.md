@@ -3,8 +3,10 @@
 سائٹ صرف **GitHub** اور **Hostinger** پر چلتی ہے۔ کوئی اور hosting (Vercel، AWS وغیرہ) استعمال نہیں ہوتی۔
 
 ```
-site/ میں تبدیلی  →  GitHub پر main میں merge  →  "Deploy to Hostinger" خود چلتا ہے  →  sfrmotors.co.uk پر live
+site/ میں تبدیلی  →  main میں merge  →  dry-run خود چلتا ہے (کچھ upload نہیں)  →  مالک کی اجازت  →  deploy  →  live
 ```
+
+**مالک کی اجازت کے بغیر کچھ live نہیں ہوتا۔**
 
 ---
 
@@ -12,14 +14,11 @@ site/ میں تبدیلی  →  GitHub پر main میں merge  →  "Deploy to H
 
 1. `site/` میں تبدیلی کریں (یا Claude سے کروائیں) اور PR بنائیں۔
 2. "Quality gate" سبز ہو تو PR کو `main` میں merge کریں۔
-3. بس۔ `.github/workflows/deploy-hostinger.yml` خود چلتا ہے اور کچھ منٹ میں سائٹ live ہو جاتی ہے۔
-4. GitHub → **Actions** → **Deploy to Hostinger** میں نتیجہ دیکھا جا سکتا ہے۔ کچھ غلط ہو تو workflow خود پرانی حالت واپس لگاتا ہے اور GitHub آپ کو e-mail کرتا ہے۔
+3. merge کے بعد "Deploy to Hostinger" خود **dry-run** چلاتا ہے: backup لیتا ہے اور بتاتا ہے کون سی فائلیں بدلیں گی۔ **کچھ upload نہیں کرتا۔**
+4. مالک اجازت دے ("deploy کرو") تو Actions → Deploy to Hostinger → **Run workflow** → mode `deploy` اور خانے میں `DEPLOY` لکھ کر چلایا جاتا ہے (مالک خود، یا مالک کے کہنے پر Claude)۔
+5. deploy کے بعد workflow live سائٹ چیک کرتا ہے۔ کچھ غلط ہو تو خود پرانی حالت واپس لگاتا ہے اور GitHub آپ کو e-mail کرتا ہے۔
 
-یہ workflow تب ہی چلتا ہے جب ویب سائٹ کی فائلیں بدلیں (`site/`، `infra/template.yaml`، build scripts یا `package.json`)۔ صرف docs بدلنے سے deploy نہیں ہوتا۔
-
-ہاتھ سے چلانا ہو تو: Actions → Deploy to Hostinger → **Run workflow**
-* `dry-run`: صرف بتاتا ہے کیا بدلے گا، کچھ upload نہیں کرتا۔
-* `deploy` + خانے میں `DEPLOY`: اصل upload۔
+dry-run تب ہی خود چلتا ہے جب ویب سائٹ کی فائلیں بدلیں (`site/`، `infra/template.yaml`، build scripts یا `package.json`)۔ صرف docs بدلنے سے کچھ نہیں چلتا۔
 
 ---
 

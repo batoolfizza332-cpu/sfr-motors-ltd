@@ -3,10 +3,11 @@ name: Deploy to Hostinger
 # Puts main live on Hostinger: build, check, back up the live document root, upload over
 # SSH/rsync in the safe order, check the live site, and roll back automatically if that fails.
 #
-# When it runs:
-#   - automatically after every merge/push to main that changes the website (paths below);
-#     until the Hostinger secrets exist it does nothing and says so in the run summary;
-#   - by hand from the Actions tab ("Run workflow"):
+# NOTHING GOES LIVE WITHOUT THE OWNER'S PERMISSION:
+#   - after every merge/push to main that changes the website (paths below) it runs a DRY RUN only:
+#     it backs up and lists what would change, and uploads nothing. Until the Hostinger secrets
+#     exist it does nothing at all and says so in the run summary;
+#   - the real upload happens only by hand ("Run workflow"), after the owner says so:
 #       mode "dry-run" (default): connects, backs up and lists what WOULD change. Uploads nothing.
 #       mode "deploy" (and type DEPLOY in the confirm box): the real release.
 #
@@ -57,8 +58,8 @@ jobs:
       - name: Check the request and the settings
         id: check
         env:
-          MODE: ${{ github.event_name == 'push' && 'deploy' || inputs.mode }}
-          CONFIRM: ${{ github.event_name == 'push' && 'DEPLOY' || inputs.confirm }}
+          MODE: ${{ github.event_name == 'push' && 'dry-run' || inputs.mode }}
+          CONFIRM: ${{ inputs.confirm }}
           DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
           SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
           SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
@@ -97,7 +98,7 @@ jobs:
     timeout-minutes: 30
     environment: production # add "Required reviewers" here in Settings -> Environments if your plan allows
     env:
-      MODE: ${{ github.event_name == 'push' && 'deploy' || inputs.mode }}
+      MODE: ${{ github.event_name == 'push' && 'dry-run' || inputs.mode }}
       DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
     steps:
       - uses: actions/checkout@v4

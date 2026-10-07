@@ -2,12 +2,12 @@
 
 The static website of SFR Motors Ltd (mobile tyre fitting, Bathgate, West Lothian), live at **https://sfrmotors.co.uk**.
 
-**Hosting: GitHub + Hostinger only.** There is no Vercel, AWS or other hosting. A change merged to `main` goes live on
-Hostinger automatically (`.github/workflows/deploy-hostinger.yml`; setup and details in
-[`infra/HOSTINGER-DEPLOY.md`](infra/HOSTINGER-DEPLOY.md)).
+**Hosting: GitHub + Hostinger only.** There is no Vercel, AWS or other hosting. Nothing goes live without the owner's permission: after a merge to `main`,
+`.github/workflows/deploy-hostinger.yml` runs a dry run (uploads nothing); the real upload is started by hand once the owner approves
+(setup and details in [`infra/HOSTINGER-DEPLOY.md`](infra/HOSTINGER-DEPLOY.md)).
 
 ```
-edit site/  ->  pull request (Quality gate must be green)  ->  merge to main  ->  Deploy to Hostinger  ->  live
+edit site/  ->  pull request (Quality gate green)  ->  merge to main  ->  automatic dry run  ->  owner approves  ->  deploy  ->  live
 ```
 
 The business rules, owner decisions and URL rules are in [`PROJECT-HANDOVER.md`](PROJECT-HANDOVER.md). Read it before
@@ -31,7 +31,7 @@ npm run test:browser                 # real-browser suite (Chrome/Edge), optiona
 | Workflow | When | What |
 |---|---|---|
 | **Quality gate** | every PR and push | `npm run verify` |
-| **Deploy to Hostinger** | after a merge to `main` that changes the website, or by hand | build, checks, backup, upload (no deletes), live check, automatic rollback |
+| **Deploy to Hostinger** | dry run after a merge to `main` that changes the website; real upload only by hand after the owner approves | build, checks, backup, upload (no deletes), live check, automatic rollback |
 | **Daily SEO check** | every day 06:17 UTC | `npm run verify` + compares the live site with `main` (pages, redirects, headers); fails and e-mails if they differ |
 
 ## Repository map
