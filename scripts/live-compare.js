@@ -9,7 +9,7 @@
 //   2. sitemap.xml lists exactly the same URLs.
 //   3. Every sitemap page answers 200 directly (no redirect) and has the same title, meta description, canonical,
 //      meta robots, H1, JSON-LD @types and <main> text as the repo build. No page may be noindex.
-//   4. Every 301 in vercel.json answers 301 with the same destination; every pretty path in vercel.json answers 200.
+//   4. Every 301 in the routing rules (infra/template.yaml) answers 301 with the same destination; every pretty path answers 200.
 //   5. The homepage carries the production security headers of the generated Hostinger .htaccess and no X-Robots-Tag.
 //   6. www -> apex is a single 301; an unknown URL is a real 404.
 //
@@ -20,6 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 const { buildHtaccess } = require("./htaccess-config");
+const { routeTable } = require("./routing");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -155,17 +156,17 @@ async function main() {
     }
   });
 
-  // 4. redirects and pretty paths from vercel.json (generated from infra/template.yaml, same rules as the .htaccess)
-  const vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-  await pool(vercel.redirects, async ({ source, destination, statusCode }) => {
+  // 4. redirects and pretty paths from infra/template.yaml (the same rules the .htaccess is generated from)
+  const routes = routeTable();
+  await pool(routes.redirects, async ({ source, destination }) => {
     const res = await get(BASE + source);
     const want = new URL(destination, CANONICAL_ORIGIN + "/").href;
     const got = res.location ? new URL(res.location, BASE + source).href.replace(BASE, CANONICAL_ORIGIN) : null;
-    if (res.status !== (statusCode || 308) || got !== want) {
-      fail(`redirect ${source}: expected ${statusCode} -> ${want}, got ${shown(res)}`);
+    if (res.status !== 301 || got !== want) {
+      fail(`redirect ${source}: expected 301 -> ${want}, got ${shown(res)}`);
     }
   });
-  await pool(vercel.rewrites.map((r) => r.source), async (source) => {
+  await pool(routes.prettyPaths, async (source) => {
     const res = await get(BASE + source);
     if (res.status !== 200) fail(`pretty URL ${source}: expected 200, got ${shown(res)}`);
   });
@@ -189,7 +190,7 @@ async function main() {
   if (missing.status !== 404) fail(`unknown URL: expected 404, got ${shown(missing)}`);
 
   // ---------- report ----------
-  const checked = `${repoUrls.length} pages, ${vercel.redirects.length} redirects, ${vercel.rewrites.length} pretty URLs`;
+  const checked = `${repoUrls.length} pages, ${routes.redirects.length} redirects, ${routes.prettyPaths.length} pretty URLs`;
   const lines = problems.length
     ? [`LIVE SITE CHECK: FAILED (${problems.length} difference${problems.length === 1 ? "" : "s"}; checked ${checked})`, "", ...problems.map((p) => `- ${p}`)]
     : [`LIVE SITE CHECK: PASSED (live matches the repo; checked ${checked})`];

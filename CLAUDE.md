@@ -15,3 +15,5 @@
 6. Keep the site scalable for high traffic using static output where appropriate, efficient assets, CDN/browser caching and minimal third-party scripts. Avoid performance bottlenecks.
 
 7. Keep colours, typography and spacing controlled through reusable CSS variables/design tokens so the theme can be changed later without editing every page. Never invent business claims, prices, response times, coverage areas, reviews or certifications.
+
+8. Hosting is GitHub + Hostinger only. A merge to `main` goes live through `.github/workflows/deploy-hostinger.yml` (see `infra/HOSTINGER-DEPLOY.md`). Do not use, connect to or deploy to Vercel, AWS or any other host, and never change DNS or e-mail records.

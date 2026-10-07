@@ -1,7 +1,7 @@
 {
   "name": "sfr-motors-site-build",
   "private": true,
-  "description": "Build-only tooling that turns site/ into a minified, cache-fingerprinted dist/ ready for S3 + CloudFront. Nothing here ships to the browser.",
+  "description": "Build-only tooling that turns site/ into a minified, cache-fingerprinted dist/ for Hostinger. Nothing here ships to the browser.",
   "scripts": {
     "build": "node scripts/build.js",
     "build:hostinger": "node scripts/build.js && node scripts/htaccess-config.js --profile staging --out dist/.htaccess",

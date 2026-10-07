@@ -1,14 +1,16 @@
 name: Deploy to Hostinger
 
-# Route A of infra/HOSTINGER-AUTO-DEPLOY-PLAN.md: build main, check it, back up the live
-# document root, upload over SSH/rsync in the safe order, check the live site, and roll
-# back automatically if the check fails.
+# Puts main live on Hostinger: build, check, back up the live document root, upload over
+# SSH/rsync in the safe order, check the live site, and roll back automatically if that fails.
 #
-# It NEVER runs on its own: only the "Run workflow" button in the Actions tab starts it.
-#   mode "dry-run" (default): connects, backs up and lists what WOULD change. Uploads nothing.
-#   mode "deploy" (and type DEPLOY in the confirm box): the real release.
+# When it runs:
+#   - automatically after every merge/push to main that changes the website (paths below);
+#     until the Hostinger secrets exist it does nothing and says so in the run summary;
+#   - by hand from the Actions tab ("Run workflow"):
+#       mode "dry-run" (default): connects, backs up and lists what WOULD change. Uploads nothing.
+#       mode "deploy" (and type DEPLOY in the confirm box): the real release.
 #
-# One-time setup (step by step in the plan, section 3.2). Nothing secret is stored in this file.
+# One-time setup (step by step in infra/HOSTINGER-DEPLOY.md, section 2). Nothing secret is stored in this file.
 #   Secrets:   HOSTINGER_SSH_HOST, HOSTINGER_SSH_PORT, HOSTINGER_SSH_USER,
 #              HOSTINGER_SSH_KEY (private key, no passphrase),
 #              HOSTINGER_SSH_KNOWN_HOSTS (output of `ssh-keyscan -p <port> <host>`)
@@ -17,6 +19,16 @@ name: Deploy to Hostinger
 # Never: --delete, touching DNS/e-mail, or uploading anything outside dist/.
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "infra/template.yaml"
+      - "scripts/build.js"
+      - "scripts/htaccess-config.js"
+      - "scripts/routing.js"
+      - "package.json"
+      - "package-lock.json"
   workflow_dispatch:
     inputs:
       mode:
@@ -37,38 +49,57 @@ concurrency:
   cancel-in-progress: false # never stop an upload half way
 
 jobs:
-  deploy:
+  settings:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment: production # add "Required reviewers" here in Settings -> Environments if your plan allows
-    env:
-      MODE: ${{ inputs.mode }}
-      DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
     steps:
       - name: Check the request and the settings
+        id: check
         env:
-          CONFIRM: ${{ inputs.confirm }}
+          MODE: ${{ github.event_name == 'push' && 'deploy' || inputs.mode }}
+          CONFIRM: ${{ github.event_name == 'push' && 'DEPLOY' || inputs.confirm }}
+          DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
           SSH_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
           SSH_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
           SSH_USER: ${{ secrets.HOSTINGER_SSH_USER }}
           SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.HOSTINGER_SSH_KNOWN_HOSTS }}
         run: |
+          missing=""
+          for v in SSH_HOST SSH_PORT SSH_USER SSH_KEY KNOWN_HOSTS; do [ -n "${!v}" ] || missing="$missing HOSTINGER_$v"; done
+          [ -n "$DOCROOT" ] || missing="$missing HOSTINGER_DOCROOT(variable)"
+          if [ -n "$missing" ] && [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            # Not set up yet: an automatic run must not fail (and e-mail) on every merge.
+            echo "::notice::Not deployed: Hostinger is not set up yet (missing:$missing). See infra/HOSTINGER-DEPLOY.md."
+            echo "Not deployed: Hostinger is not set up yet (missing:$missing)." >> "$GITHUB_STEP_SUMMARY"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           bad=0
+          [ -z "$missing" ] || { echo "::error::Missing settings:$missing (Settings -> Secrets and variables -> Actions)."; bad=1; }
           [ "$GITHUB_REF" = "refs/heads/main" ] || { echo "::error::Run this from the main branch only (got $GITHUB_REF)."; bad=1; }
-          for v in SSH_HOST SSH_PORT SSH_USER SSH_KEY KNOWN_HOSTS; do
-            [ -n "${!v}" ] || { echo "::error::Secret HOSTINGER_$v is missing (Settings -> Secrets and variables -> Actions -> Secrets)."; bad=1; }
-          done
           [[ "$SSH_PORT" =~ ^[0-9]+$ ]] || { echo "::error::HOSTINGER_SSH_PORT must be a number, e.g. 65002."; bad=1; }
           # Strict on purpose: the path is used inside remote commands.
           if [[ ! "$DOCROOT" =~ ^[A-Za-z0-9._][A-Za-z0-9._/-]*$ || "$DOCROOT" == *..* || "$DOCROOT" == */ ]]; then
-            echo "::error::Variable HOSTINGER_DOCROOT is missing or unsafe (letters, digits, . _ - / only; no '..'; no trailing /)."; bad=1
+            echo "::error::Variable HOSTINGER_DOCROOT is unsafe (letters, digits, . _ - / only; no '..'; no trailing /)."; bad=1
           fi
           if [ "$MODE" = "deploy" ] && [ "$CONFIRM" != "DEPLOY" ]; then
             echo "::error::Mode is deploy but the confirm box does not say DEPLOY. Nothing was done."; bad=1
           fi
+          [ $bad = 0 ] && echo "ready=true" >> "$GITHUB_OUTPUT"
           exit $bad
 
+  deploy:
+    needs: settings
+    if: needs.settings.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production # add "Required reviewers" here in Settings -> Environments if your plan allows
+    env:
+      MODE: ${{ github.event_name == 'push' && 'deploy' || inputs.mode }}
+      DOCROOT: ${{ vars.HOSTINGER_DOCROOT }}
+    steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4

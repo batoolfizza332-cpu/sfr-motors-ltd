@@ -1,10 +1,9 @@
 # Hostinger release and rollback procedure (for owner review)
 
-Status: **written plan only. Nothing in this document has been run, and nothing here authorises a deployment.** Every step needs the owner's explicit
-go-ahead on the day. It replaces the "Hostinger deployment documentation is still to be written" item in `../PROJECT-HANDOVER.md` section 14; the AWS
-material in `CUTOVER-RUNBOOK.md` stays as the previous plan and must not be run.
-
-Prepared for `feature/seo-safe-migration` at the commit recorded in section 11 (build, verify and browser checks were run against it before this was written).
+Status: **manual fallback.** Normal releases are automatic: `.github/workflows/deploy-hostinger.yml` follows this procedure
+(production `.htaccess`, safety checks, backup, ordered upload, live check, rollback) after every merge to `main` that changes the website.
+Use this document only when a release has to be done by hand (for example if SSH access is unavailable). It was written in
+September 2026 for an earlier branch; its file counts and "before" numbers are from that time.
 
 ## 1. What is verified and what is not
 
@@ -36,7 +35,7 @@ Prepared for `feature/seo-safe-migration` at the commit recorded in section 11 (
 * **Back up the current live files before changing anything** (section 4). No backup, no release.
 * **Order matters: assets, then pages, then `.htaccess` last, then the sitemap** (section 5). Never delete old files during the release.
 * **Do not touch DNS, e-mail settings, the Hostinger plan, WordPress files or databases.** This release only replaces website files in the document root.
-* Upload the **contents of `dist/`**, never `site/`, `backend/`, `infra/`, `node_modules/`, `.git/` or `vercel.json`.
+* Upload the **contents of `dist/`**, never `site/`, `infra/`, `node_modules/` or `.git/`.
 * Stop and roll back at the first failed check in section 6 (triggers in section 7). Do not "fix forward" on the live server.
 
 ## 3. Preparation (nothing live is touched)
@@ -190,7 +189,7 @@ Notes:
 - [ ] Section 1 items 1 to 7 answered in writing.
 - [ ] Owner has read the eight new pages (`/our-tyre-range/` in particular) and the wording notes from the review.
 - [ ] Owner approves this document, the release window and who will run it.
-- [ ] Separate approval to merge to `main` (`.github/workflows/deploy.yml`, which targets AWS, is disabled and no longer starts on merge to `main`).
+- [ ] Note: once the Hostinger secrets exist, a merge to `main` that changes the website deploys it automatically (`.github/workflows/deploy-hostinger.yml`).
 
 ## 11. Release record (fill in on the day)
 
