@@ -61,7 +61,7 @@ function element(tag) {
   return el;
 }
 
-function makeBrowser(hostname, initialCookie) {
+function makeBrowser(hostname, initialCookie, readyState = "complete") {
   const jar = new Map();
   if (initialCookie) jar.set(initialCookie.slice(0, initialCookie.indexOf("=")), initialCookie.slice(initialCookie.indexOf("=") + 1));
   const appendedToHead = [];
@@ -83,6 +83,7 @@ function makeBrowser(hostname, initialCookie) {
     addEventListener(type, fn) { (documentListeners[type] = documentListeners[type] || []).push(fn); },
     removeEventListener() {},
     dispatchEvent(event) { dispatched.push(event); },
+    readyState,
   };
   Object.defineProperty(document, "cookie", {
     get: () => [...jar].map(([k, v]) => `${k}=${v}`).join("; "),
@@ -99,6 +100,11 @@ function makeBrowser(hostname, initialCookie) {
     location: { hostname, pathname: "/", protocol: "https:" },
     console: { info() {}, log() {} },
     setTimeout: () => 0,
+    // GTM is started after the load event (idle) or on first interaction; the fake browser runs idle callbacks at once.
+    requestIdleCallback: (fn) => { fn(); return 0; },
+    windowListeners: {},
+    addEventListener(type, fn) { (window.windowListeners[type] = window.windowListeners[type] || []).push(fn); },
+    removeEventListener() {},
     open: (...args) => { opened.push(args); },
   };
   const FakeDate = function () { return new Date(); }; // `new Date()` still works in analytics.js
@@ -122,6 +128,16 @@ function gtmLoaded(env) {
 }
 
 function testAnalytics(failures) {
+  // GTM must not be requested while the page is still loading; it starts after the load event or on the
+  // visitor's first interaction (owner decision 2026-10-08: keep the ~350 KB of Google JS off the critical path).
+  for (const trigger of ["load", "pointerdown"]) {
+    const early = makeBrowser("sfrmotors.co.uk", undefined, "loading");
+    run("analytics.js", early);
+    if (gtmLoaded(early)) failures.push("analytics.js requested GTM while the page was still loading (before load / interaction).");
+    (early.window.windowListeners[trigger] || []).forEach((fn) => fn({ type: trigger }));
+    if (!gtmLoaded(early)) failures.push(`analytics.js did not start GTM after the "${trigger}" event.`);
+  }
+
   for (const host of [...PRODUCTION_HOSTS, ...OTHER_HOSTS]) {
     const expected = PRODUCTION_HOSTS.includes(host);
 

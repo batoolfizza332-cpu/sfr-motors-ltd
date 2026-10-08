@@ -223,7 +223,30 @@
       ad_personalization: "denied"
     });
 
-    loadGTM();
+    scheduleGTM();
+  }
+
+  // GTM (~350 KB of Google JS) is downloaded only after the page has painted, so it no longer
+  // competes with the hero photo on phones (owner decision 2026-10-08, "option B"). It starts at
+  // whichever comes first: the visitor's first touch / key / scroll, or the browser being idle
+  // after the load event (at most ~1.5 s later). The consent defaults above are already queued in
+  // dataLayer, and anything pushed before GTM arrives is processed when it does.
+  function scheduleGTM() {
+    var started = false;
+    var events = ["pointerdown", "keydown", "touchstart", "scroll"];
+    function start() {
+      if (started) return;
+      started = true;
+      for (var i = 0; i < events.length; i++) window.removeEventListener(events[i], start, true);
+      loadGTM();
+    }
+    for (var i = 0; i < events.length; i++) window.addEventListener(events[i], start, { capture: true, passive: true, once: true });
+    function afterLoad() {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 1500 });
+      else window.setTimeout(start, 1000);
+    }
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
   }
 
   function loadGTM() {
