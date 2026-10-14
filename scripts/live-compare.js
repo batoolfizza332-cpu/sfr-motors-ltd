@@ -85,6 +85,11 @@ async function get(url, tries = 3) {
   for (let i = 1; ; i++) {
     try {
       const res = await fetch(url, { redirect: "manual", headers: { "User-Agent": UA }, signal: AbortSignal.timeout(30000) });
+      // A brief 5xx from the host is retried like a network error; a lasting one is still reported.
+      if (res.status >= 500 && i < tries) {
+        await new Promise((r) => setTimeout(r, 2000 * i));
+        continue;
+      }
       return { status: res.status, location: res.headers.get("location"), headers: res.headers, body: await res.text() };
     } catch (err) {
       if (i >= tries) return { status: 0, error: String(err && err.cause ? err.cause : err), headers: new Headers(), body: "" };
