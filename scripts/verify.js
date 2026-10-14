@@ -115,6 +115,7 @@ const CANONICAL_URL_OVERRIDES = {
   "mobile-tyre-fitting-armadale.html": "mobile-tyre-fitting-armadale/",
   "mobile-tyre-fitting-kirkliston.html": "mobile-tyre-fitting-kirkliston/",
   "mobile-tyre-fitting-blackburn.html": "mobile-tyre-fitting-blackburn/",
+  "pothole-damage-tyre-wheel-checks.html": "pothole-damage-tyre-wheel-checks/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
