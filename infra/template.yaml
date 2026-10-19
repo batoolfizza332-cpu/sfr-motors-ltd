@@ -423,6 +423,10 @@ Resources:
   #   /pothole-damage-tyre-wheel-checks/ (file named after its slug).
   #   Added 2026-10-06 (owner decision, release 2026-10-08): /mobile-tyre-fitting-fauldhouse/ (never a page;
   #   404 before) -> 301 -> /mobile-tyre-fitting-whitburn/, which now names Fauldhouse in its nearby-areas text.
+  #   Added 2026-10-19 (owner decision): 15 old WordPress URLs that Search Console still showed and that
+  #   returned 404 -> 301 -> the closest live page (e.g. the spare-wheel article -> puncture repair, the
+  #   capital-W Wishaw URL -> /mobile-tyre-fitting-wishaw/, /about -> /about-us/, /cookie-policy -> /privacy-policy/).
+  #   Old URLs with 5 or fewer impressions in 90 days stay 404 (CloudFront Function 10 KB size limit).
   #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
   #   /mobile-tyre-fitting-armadale/, /mobile-tyre-fitting-kirkliston/ and
   #   /mobile-tyre-fitting-blackburn/ are now the indexable URLs (previously .html was the
@@ -514,7 +518,22 @@ Resources:
                 '/mobile-tyre-fitting-bathgate-questions': '/mobile-tyre-fitting-bathgate/',
                 '/tyre-lifespan-mobile-tyre-repair-guide': '/tyre-lifespan/',
                 '/behind-the-scenes-what-tools-do-mobile-tyre-fitters-really-use': '/what-tools-do-mobile-tyre-fitters-use/',
-                '/mobile-tyre-fitting-broxburn.html': '/broxburn/'
+                '/mobile-tyre-fitting-broxburn.html': '/broxburn/',
+                '/24-7-mobile-tire-replacement': '/24-7-mobile-tyre-replacement/',
+                '/mobile-tyre-fitting-Wishaw': '/mobile-tyre-fitting-wishaw/',
+                '/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits': '/mobile-tyre-puncture-repair/',
+                '/tyre-puncture-repair-vs-replacement-when-should-you-fix-or-replace': '/mobile-tyre-puncture-repair/',
+                '/about': '/about-us/',
+                '/cookie-policy': '/privacy-policy/',
+                '/sfr-mobile-tyre-fitting-livingston': '/mobile-tyre-fitting-livingston/',
+                '/how-mobile-tyre-repair-in-livingston-saves-time-and-improves-road-safety': '/mobile-tyre-fitting-livingston/',
+                '/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety': '/mobile-tyre-fitting-livingston/',
+                '/mobile-tyre-fitting-livingston-sfr-motors-ltds-premium-at-home-service': '/mobile-tyre-fitting-livingston/',
+                '/mobile-tyre-fitting-bathgate-convenient-tyre-solutions-at-your-doorstep': '/mobile-tyre-fitting-bathgate/',
+                '/what-is-mobile-tyre-fittings': '/what-is-mobile-tyre-fitting/',
+                '/what-to-expect-from-a-same-day-mobile-car-repair-service': '/mobile-tyre-fitting/',
+                '/motors-tire-pressure-off-road': '/tyre-pressure-monitoring-system/',
+                '/blog/category/uncategorized': '/blog/'
             };
 
             var bare = uri.length > 1 && uri.charAt(uri.length - 1) === '/' ? uri.slice(0, -1) : uri;

@@ -588,6 +588,156 @@
       "source": "/mobile-tyre-fitting-broxburn.html/",
       "destination": "/broxburn/",
       "statusCode": 301
+    },
+    {
+      "source": "/24-7-mobile-tire-replacement",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/24-7-mobile-tire-replacement/",
+      "destination": "/24-7-mobile-tyre-replacement/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-Wishaw",
+      "destination": "/mobile-tyre-fitting-wishaw/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-Wishaw/",
+      "destination": "/mobile-tyre-fitting-wishaw/",
+      "statusCode": 301
+    },
+    {
+      "source": "/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/spare-wheel-delete-why-new-cars-dont-have-them-and-what-the-data-says-about-repair-kits/",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-puncture-repair-vs-replacement-when-should-you-fix-or-replace",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/tyre-puncture-repair-vs-replacement-when-should-you-fix-or-replace/",
+      "destination": "/mobile-tyre-puncture-repair/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/about-us/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about/",
+      "destination": "/about-us/",
+      "statusCode": 301
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/privacy-policy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/cookie-policy/",
+      "destination": "/privacy-policy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sfr-mobile-tyre-fitting-livingston",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sfr-mobile-tyre-fitting-livingston/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-mobile-tyre-repair-in-livingston-saves-time-and-improves-road-safety",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-mobile-tyre-repair-in-livingston-saves-time-and-improves-road-safety/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-mobile-tyre-fitting-in-livingston-saves-time-and-improves-road-safety/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston-sfr-motors-ltds-premium-at-home-service",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-livingston-sfr-motors-ltds-premium-at-home-service/",
+      "destination": "/mobile-tyre-fitting-livingston/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-convenient-tyre-solutions-at-your-doorstep",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mobile-tyre-fitting-bathgate-convenient-tyre-solutions-at-your-doorstep/",
+      "destination": "/mobile-tyre-fitting-bathgate/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-mobile-tyre-fittings",
+      "destination": "/what-is-mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-mobile-tyre-fittings/",
+      "destination": "/what-is-mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-expect-from-a-same-day-mobile-car-repair-service",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-expect-from-a-same-day-mobile-car-repair-service/",
+      "destination": "/mobile-tyre-fitting/",
+      "statusCode": 301
+    },
+    {
+      "source": "/motors-tire-pressure-off-road",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/motors-tire-pressure-off-road/",
+      "destination": "/tyre-pressure-monitoring-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/uncategorized",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/uncategorized/",
+      "destination": "/blog/",
+      "statusCode": 301
     }
   ],
   "rewrites": [
