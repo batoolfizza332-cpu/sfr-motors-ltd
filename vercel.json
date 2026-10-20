@@ -380,6 +380,11 @@
       "statusCode": 301
     },
     {
+      "source": "/puncture-repair-at-home-edinburgh.html",
+      "destination": "/puncture-repair-at-home-edinburgh/",
+      "statusCode": 301
+    },
+    {
       "source": "/locking-wheel-nut-removal-bathgate",
       "destination": "/mobile-locking-wheel-nut-removal/",
       "statusCode": 301
@@ -1332,6 +1337,14 @@
     {
       "source": "/pothole-damage-tyre-wheel-checks/",
       "destination": "/pothole-damage-tyre-wheel-checks.html"
+    },
+    {
+      "source": "/puncture-repair-at-home-edinburgh",
+      "destination": "/puncture-repair-at-home-edinburgh.html"
+    },
+    {
+      "source": "/puncture-repair-at-home-edinburgh/",
+      "destination": "/puncture-repair-at-home-edinburgh.html"
     }
   ],
   "headers": [
