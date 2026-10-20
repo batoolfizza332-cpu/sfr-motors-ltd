@@ -1314,6 +1314,8 @@ const LOCATION_LINK_MAP = {
   "mobile-tyre-fitting-harthill.html": [["Armadale", "mobile-tyre-fitting-armadale.html"], ["Whitburn", "mobile-tyre-fitting-whitburn.html"]],
   "mobile-tyre-fitting-shotts.html": [["Harthill", "mobile-tyre-fitting-harthill.html"], ["Wishaw", "mobile-tyre-fitting-wishaw.html"]],
   "mobile-tyre-fitting-wishaw.html": [["Shotts", "mobile-tyre-fitting-shotts.html"]],
+  "mobile-tyre-fitting-linlithgow.html": [["Bathgate", "mobile-tyre-fitting-bathgate.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"], ["Bo’ness", "mobile-tyre-fitting-boness.html"]],
+  "mobile-tyre-fitting-boness.html": [["Linlithgow", "mobile-tyre-fitting-linlithgow.html"]],
   "mobile-tyre-fitting-west-calder.html": [["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
   "mobile-tyre-fitting-addiewell.html": [["West Calder", "mobile-tyre-fitting-west-calder.html"]],
   "mobile-tyre-fitting-kirkliston.html": [["Broxburn", "broxburn.html"]],
