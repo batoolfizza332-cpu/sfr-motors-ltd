@@ -426,6 +426,8 @@ Resources:
   #   point straight at it (single hop).
   #   Added 2026-10-03 (owner-approved blog post, publish date 2026-10-08):
   #   /pothole-damage-tyre-wheel-checks/ (file named after its slug).
+  #   Added 2026-10-21 (owner-approved blog post, publish date 2026-10-22):
+  #   /puncture-repair-at-home-edinburgh/ (file named after its slug).
   #   Added 2026-10-06 (owner decision, release 2026-10-08): /mobile-tyre-fitting-fauldhouse/ (never a page;
   #   404 before) -> 301 -> /mobile-tyre-fitting-whitburn/, which now names Fauldhouse in its nearby-areas text.
   #   Reversed 2026-09-29 (owner decision, ranking protection): /mobile-tyre-fitting/,
@@ -495,7 +497,7 @@ Resources:
                 'mobile-tyre-repair-edinburgh-west-lothian ' +
                 'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting ' +
                 'mobile-tyre-fitting mobile-tyre-fitting-armadale mobile-tyre-fitting-kirkliston mobile-tyre-fitting-blackburn ' +
-                'pothole-damage-tyre-wheel-checks'
+                'pothole-damage-tyre-wheel-checks puncture-repair-at-home-edinburgh'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {
