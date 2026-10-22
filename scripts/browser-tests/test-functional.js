@@ -6,8 +6,8 @@ const { start } = require("../preview-edge.js");
 const { launch, newPage, sleep, setHostMap } = require("./cdp.js");
 // The WhatsApp enquiry works only on the production hostnames (assets/js/main.js), so the form tests run on https://sfrmotors.co.uk/,
 // which the browser answers from the local server (cdp.js setHostMap). Nothing reaches the real domain, and window.open is stubbed.
-const PORT = 4240, H = `http://sfr-test.localhost:${PORT}`, PROD = "https://sfrmotors.co.uk", PREVIEW = "https://sfr-motors-preview.vercel.app";
-setHostMap({ "sfrmotors.co.uk": PORT, "sfr-motors-preview.vercel.app": PORT });
+const PORT = 4240, H = `http://sfr-test.localhost:${PORT}`, PROD = "https://sfrmotors.co.uk", PREVIEW = "https://sfr-motors-preview.example.com";
+setHostMap({ "sfrmotors.co.uk": PORT, "sfr-motors-preview.example.com": PORT });
 let fails = 0, total = 0; const t = (ok, m, d) => { total++; if (!ok) fails++; console.log((ok ? "PASS " : "FAIL ") + m + (!ok && d !== undefined ? "  -> " + JSON.stringify(d).slice(0, 300) : "")); };
 const req = (p, host) => new Promise((res) => http.get({ host: "127.0.0.1", port: PORT, path: p, headers: host ? { host } : {} }, (r) => { let b = ""; r.on("data", (c) => (b += c)); r.on("end", () => res({ status: r.statusCode, loc: r.headers.location, headers: r.headers, body: b })); }));
 
@@ -95,8 +95,8 @@ const req = (p, host) => new Promise((res) => http.get({ host: "127.0.0.1", port
     await p.close();
   }
 
-  // ---- quote form on review copies (Vercel Preview URL, *.localhost): must never open WhatsApp or announce a submission ----
-  for (const [origin, label] of [[PREVIEW, "a *.vercel.app Preview URL"], [H, "a *.localhost host"]]) {
+  // ---- quote form on review copies (preview copy host, *.localhost): must never open WhatsApp or announce a submission ----
+  for (const [origin, label] of [[PREVIEW, "a preview copy host"], [H, "a *.localhost host"]]) {
     for (const u of ["/", "/contact-us/"]) {
       const p = await mk(375, 812, true, origin); await p.goto(origin + u); await sleep(1700);
       await p.eval(`window.__opens=[];window.open=function(){window.__opens.push([].slice.call(arguments));return null};window.__ev=0;document.addEventListener("sfr:quote-submitted",()=>window.__ev++);0`);

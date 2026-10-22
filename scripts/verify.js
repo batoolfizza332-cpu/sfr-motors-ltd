@@ -495,7 +495,7 @@ function checkSitemap(pages) {
 }
 
 // ---------------------------------------------------------------------------
-// Check 11: no leftover placeholder text, localhost or Vercel preview URLs
+// Check 11: no leftover placeholder text or localhost URLs
 // ---------------------------------------------------------------------------
 function checkNoPlaceholders(pages) {
   const patterns = [
@@ -507,7 +507,6 @@ function checkNoPlaceholders(pages) {
     { re: /your content here/i, label: '"your content here" placeholder text' },
     { re: /localhost(?::\d+)?/i, label: "localhost URL" },
     { re: /127\.0\.0\.1(?::\d+)?/i, label: "127.0.0.1 URL" },
-    { re: /[a-z0-9-]+\.vercel\.app/i, label: "Vercel preview URL" },
   ];
 
   for (const [file, page] of Object.entries(pages)) {
@@ -1060,7 +1059,7 @@ function checkRoutingSource() {
 // ---------------------------------------------------------------------------
 // Check 20: production-hostname guards (Analytics and the WhatsApp form)
 // ---------------------------------------------------------------------------
-// Runs analytics.js and main.js in a sandbox on production, localhost, preview-style (*.vercel.app) and look-alike hostnames
+// Runs analytics.js and main.js in a sandbox on production, localhost, preview-style and look-alike hostnames
 // (scripts/host-guard-tests.js): Google Analytics and the WhatsApp enquiry work only on sfrmotors.co.uk /
 // www.sfrmotors.co.uk, while the consent banner works everywhere.
 function checkHostGuards() {

@@ -4,7 +4,7 @@
 // Both scripts are executed unchanged inside a Node `vm` sandbox with a minimal fake browser, once per
 // hostname, and the tests assert what they would do there:
 //   - Google Analytics (gtag.js) may load only on sfrmotors.co.uk and www.sfrmotors.co.uk, and only once the
-//     visitor accepts the "Analytics" category; on localhost, *.vercel.app previews and look-alike hosts
+//     visitor accepts the "Analytics" category; on localhost, preview/staging copies and look-alike hosts
 //     nothing is requested.
 //   - Google Tag Manager (gtm.js, which carries the Google Ads tags) loads on every visit to those same two
 //     hostnames under Consent Mode v2 — even before any choice is made, consent is declared "denied" first —
@@ -27,9 +27,8 @@ const OTHER_HOSTS = [
   "localhost",
   "127.0.0.1",
   "[::1]",
-  "sfr-motors-preview.vercel.app",
-  "sfr-motors-preview-git-feature-seo-safe-migration-batoolfizza332-cpu.vercel.app",
-  "sfr-motors-preview-abc123.vercel.app",
+  "sfr-motors-preview.example.com",
+  "staging.sfr-motors-preview.example.com",
   "sfrmotors.co.uk.evil.example",
   "evilsfrmotors.co.uk",
   "sfrmotors.com",

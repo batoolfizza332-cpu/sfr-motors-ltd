@@ -14,7 +14,7 @@ Companion documents: [`README.md`](README.md) (commands, workflows, repository m
 |---|---|
 | Project | Static website for **SFR Motors Ltd**, a mobile tyre-fitting business (service-area business, Bathgate, West Lothian) |
 | Live site | `https://sfrmotors.co.uk`, served by **Hostinger** (LiteSpeed). The live site matches `main` (checked daily by the Daily SEO check). |
-| Hosting | **GitHub + Hostinger only.** No Vercel, AWS or other hosting is used; the old Vercel projects were deleted and no AWS account exists. Do not set up or connect to any other host. |
+| Hosting | **GitHub + Hostinger only.** No other hosting is used. Do not set up or connect to any other host. |
 | How a change goes live | **Only with the owner's permission.** A merge to `main` makes `.github/workflows/deploy-hostinger.yml` run a dry run (backup + list of changes, no upload). After the owner says so, the workflow is run by hand in `deploy` mode: build, checks, backup, upload over SSH (no deletes), live check, rollback on failure. It needs one-time Hostinger secrets (`infra/HOSTINGER-DEPLOY.md` section 2). |
 | DNS and e-mail | DNS at Hostinger (`pixel.dns-parking.com`, `byte.dns-parking.com`), apex IP `82.29.191.9`; `www` 301s to the apex. **E-mail `info@sfrmotors.co.uk` is hosted at Hostinger** (MX `mx1.hostinger.com`, `mx2.hostinger.com`). Never change DNS or e-mail records from this project. |
 | Repository | `batoolfizza332-cpu/sfr-motors-ltd` on GitHub (Private) |
@@ -152,7 +152,7 @@ Browser-level testing (`npm run test:browser`, `scripts/browser-tests/`) is a ze
 3. No destructive git operations (`reset --hard`, force-push, history rewrite) unless the owner explicitly asks.
 4. Never request or store credentials, tokens, keys or personal data in the repository or in chat.
 5. Preserve approved URLs, content, business details, SEO structure and structured data; do not redesign.
-6. Hosting is GitHub + Hostinger only. Do not create, link or deploy to Vercel, AWS or any other host.
+6. Hosting is GitHub + Hostinger only. Do not create, link or deploy to any other host.
 
 ## 12. Known limitations and open items
 
