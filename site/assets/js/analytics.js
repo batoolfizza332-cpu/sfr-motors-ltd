@@ -44,7 +44,7 @@
   var PRIVACY_URL = "/privacy-policy.html";
 
   // Google may run ONLY on the two production hostnames. Every other host (localhost,
-  // *.vercel.app previews, any staging or temporary hostname) must never feed the live
+  // preview copies, any staging or temporary hostname) must never feed the live
   // GA4/Google Ads accounts, even after accepting. The banner and the stored choice still
   // work there; only the Google requests are skipped. Keep this pattern identical to
   // PRODUCTION_HOST in assets/js/main.js (scripts/verify.js checks that they match).

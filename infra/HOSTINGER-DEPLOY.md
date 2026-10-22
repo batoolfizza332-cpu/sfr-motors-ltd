@@ -1,6 +1,6 @@
 # Hostinger پر سائٹ کیسے live ہوتی ہے
 
-سائٹ صرف **GitHub** اور **Hostinger** پر چلتی ہے۔ کوئی اور hosting (Vercel، AWS وغیرہ) استعمال نہیں ہوتی۔
+سائٹ صرف **GitHub** اور **Hostinger** پر چلتی ہے۔ کوئی اور hosting استعمال نہیں ہوتی۔
 
 ```
 site/ میں تبدیلی  →  main میں merge  →  dry-run خود چلتا ہے (کچھ upload نہیں)  →  مالک کی اجازت  →  deploy  →  live

@@ -2,7 +2,7 @@
 
 The static website of SFR Motors Ltd (mobile tyre fitting, Bathgate, West Lothian), live at **https://sfrmotors.co.uk**.
 
-**Hosting: GitHub + Hostinger only.** There is no Vercel, AWS or other hosting. Nothing goes live without the owner's permission: after a merge to `main`,
+**Hosting: GitHub + Hostinger only.** There is no other hosting. Nothing goes live without the owner's permission: after a merge to `main`,
 `.github/workflows/deploy-hostinger.yml` runs a dry run (uploads nothing); the real upload is started by hand once the owner approves
 (setup and details in [`infra/HOSTINGER-DEPLOY.md`](infra/HOSTINGER-DEPLOY.md)).
 
