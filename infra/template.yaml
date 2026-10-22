@@ -1,3 +1,8 @@
+# NOT DEPLOYED ANYWHERE. The site is hosted on Hostinger (see infra/HOSTINGER-DEPLOY.md).
+# This file is kept only because it is the single source of the site's URL rules (the
+# LegacyRedirectFunction tables) and security headers: scripts/routing.js reads them, and
+# scripts/htaccess-config.js turns them into the Hostinger .htaccess. It is written in
+# CloudFormation format for historical reasons; do not deploy it to AWS.
 AWSTemplateFormatVersion: '2010-09-09'
 Description: >
   SFR Motors Ltd — static site hosting on S3 + CloudFront.

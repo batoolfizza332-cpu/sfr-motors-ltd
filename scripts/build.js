@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Turns site/ into dist/: a minified, cache-fingerprinted production build
-// ready to sync straight to S3. Nothing here changes site/ itself — dist/
+// ready to upload to Hostinger. Nothing here changes site/ itself — dist/
 // is fully disposable and gitignored.
 //
 //   - assets/css/main.css and assets/js/*.js are minified and renamed with
@@ -175,9 +175,7 @@ main()
     // handle left open by a dependency (terser/clean-css/html-minifier-terser
     // workers, timers, etc.) can keep the Node process alive after all our
     // own work is finished — invisible locally (the shell just returns), but
-    // on Vercel the build step never reports done, and the deployment hangs
-    // in "Building" forever with no error. See:
-    // https://vercel.com/kb/guide/fixing-deployments-that-hang-after-the-build-step-succeeds
+    // a CI job (GitHub Actions) would then hang until it times out.
     process.exit(0);
   })
   .catch((err) => {

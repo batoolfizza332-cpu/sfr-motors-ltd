@@ -1,0 +1,47 @@
+name: Daily SEO check
+
+# Every morning: run the full `npm run verify` quality gate on main, then compare
+# the LIVE https://sfrmotors.co.uk with what this repository builds
+# (scripts/live-compare.js: robots.txt, sitemap, every page's title/description/
+# canonical/H1/schema/text, every redirect, security headers, www and 404).
+# Any difference fails the job, and GitHub e-mails the repository owner.
+# Read-only: plain GET requests, no secrets, no deployment, nothing is changed.
+#
+# It also fails, on purpose, after a change is merged to main but not yet
+# uploaded to Hostinger: live and repo then really are different.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # 06:17 UTC every day (07:17 UK summer time)
+  workflow_dispatch: # "Run workflow" button in the Actions tab
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-seo
+  cancel-in-progress: true
+
+jobs:
+  daily-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quality gate (build + checks)
+        run: npm run verify
+
+      - name: Compare the live site with the repo
+        if: ${{ !cancelled() }}
+        run: node scripts/live-compare.js

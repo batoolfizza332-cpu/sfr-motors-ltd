@@ -15,4 +15,4 @@ To publish (on or after 2026-10-22), do exactly what was done for `/pothole-dama
 3. `site/sitemap.xml`: add `<url>` for `https://sfrmotors.co.uk/puncture-repair-at-home-edinburgh/` (lastmod 2026-10-22, monthly, 0.6) and set the `/blog/` lastmod to the same date.
 4. `infra/template.yaml`: append `puncture-repair-at-home-edinburgh` to the `same` routing list (and the dated comment above it).
 5. `scripts/verify.js`: add `"puncture-repair-at-home-edinburgh.html": "puncture-repair-at-home-edinburgh/",` to `CANONICAL_URL_OVERRIDES`.
-6. `node scripts/vercel-config.js`, `npm run build`, `npm run verify`, browser check, then the normal (owner-approved) release.
+6. `npm run build`, `npm run verify`, browser check, then the normal (owner-approved) release.

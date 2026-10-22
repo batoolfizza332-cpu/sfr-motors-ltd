@@ -16,7 +16,7 @@ const ROOT = path.join(__dirname, "..", "..");
 const SHOTS = path.join(process.env.SFR_SHOTS || require("os").tmpdir(), "sfr-browser-shots"); fs.mkdirSync(SHOTS, { recursive: true });
 // Google may run ONLY on the production hostnames (assets/js/analytics.js). So the consent tests run on the page
 // https://sfrmotors.co.uk/, which the browser answers from the local server (see cdp.js setHostMap): nothing reaches the real domain.
-const PORT = 4181, PROD_HOST = "sfrmotors.co.uk", PREVIEW_HOST = "sfr-motors-preview.vercel.app", HOST = `https://${PROD_HOST}`;
+const PORT = 4181, PROD_HOST = "sfrmotors.co.uk", PREVIEW_HOST = "sfr-motors-preview.example.com", HOST = `https://${PROD_HOST}`;
 setHostMap({ [PROD_HOST]: PORT, [PREVIEW_HOST]: PORT });
 const ID = "G-B9TY4GMXYT", GTM_ID = "GTM-WZ6S5SHX", AW = "AW-16776239836/l76yCKqPuYkdENy1xL8-";
 
@@ -283,7 +283,7 @@ async function suite(label, viewport) {
   // ---------------------------------------------------------------- hostname guard
   // Neither GTM nor Google Analytics may load on any host except the production hostnames, even after "Accept all".
   section = `${label} hostname guard`;
-  for (const [name, url] of [["127.0.0.1", `http://127.0.0.1:${PORT}/`], ["a *.localhost host", `http://sfr-test.localhost:${PORT}/`], ["a *.vercel.app Preview URL", `https://${PREVIEW_HOST}/`]]) {
+  for (const [name, url] of [["127.0.0.1", `http://127.0.0.1:${PORT}/`], ["a *.localhost host", `http://sfr-test.localhost:${PORT}/`], ["a preview copy host", `https://${PREVIEW_HOST}/`]]) {
     p = await newPage(browser, { ...viewport, onIntercept: async (rec) => { const u = new URL(rec.url); if (isGtag(rec)) return { fulfill: STUB }; if (isGtm(rec)) return { fulfill: GTM_STUB }; if (u.hostname === "127.0.0.1" || u.hostname.endsWith("localhost") || u.hostname.endsWith("googleapis.com") || u.hostname.endsWith("gstatic.com")) return {}; return { fail: true }; } });
     await p.goto(url); await sleep(800);
     check(`on ${name} the consent banner is shown, and neither GTM nor gtag is loaded or defined`, await visible(p, ".sfr-consent__card") && gtmLoads(p) === 0 && gtagLoads(p) === 0 && await p.eval(`typeof window.gtag==="undefined"&&typeof window.dataLayer==="undefined"`));

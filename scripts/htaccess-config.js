@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Generates the Apache/LiteSpeed .htaccess for Hostinger from infra/template.yaml, so the routing, redirects and
-// security headers can never drift from the approved CloudFront definition (same idea as scripts/vercel-config.js).
+// security headers can never drift from the rules in infra/template.yaml (read through scripts/routing.js).
 //
 //   node scripts/htaccess-config.js --profile staging --out dist/.htaccess    write the file (npm run build:hostinger)
-//   node scripts/htaccess-config.js --profile production                      print it (not deployed anywhere yet)
+//   node scripts/htaccess-config.js --profile production --out dist/.htaccess the live file (the Deploy to Hostinger workflow)
 //
 // Two profiles, because the same rules serve two different jobs:
 //   staging     a review copy on a temporary Hostinger host. Adds "X-Robots-Tag: noindex, nofollow" and uses a SHORT
@@ -13,19 +13,18 @@
 //               max-age=31536000 only (no includeSubDomains/preload), so it cannot force HTTPS onto other subdomains
 //               of the domain (e.g. inventory.) or become hard to undo. infra/template.yaml itself is unchanged.
 //
-// The file is written into dist/ ONLY by `npm run build:hostinger`. The normal `npm run build` (used by Vercel and the
-// S3 sync) never contains it, so a public S3 bucket or Vercel deployment can never end up serving an .htaccess.
+// The plain `npm run build` never writes it; only the commands above put an .htaccess into dist/.
 //
 // Also exports simulateApache(), a small model of mod_rewrite (per-directory context, including the internal
 // re-injection after a rewrite) that scripts/verify.js uses to prove these rules route every URL like the
-// CloudFront Function. The real Apache behaviour is checked separately against a running server.
+// routing function in infra/template.yaml. The real Apache behaviour is checked separately against a running server.
 // Zero dependencies; read-only apart from writing the --out file.
 
 "use strict";
 
 const fs = require("fs");
 const path = require("path");
-const { loadRouting, loadSecurityHeaders } = require("./vercel-config");
+const { loadRouting, loadSecurityHeaders } = require("./routing");
 
 const PROFILES = ["staging", "production"];
 const STAGING_HSTS = "max-age=300";
@@ -77,7 +76,7 @@ function buildHtaccess(profile = "staging") {
     "",
     "RewriteEngine On",
     "",
-    "# The host without a leading www., kept for the redirects below so www + a legacy/.html URL is ONE hop (like CloudFront).",
+    "# The host without a leading www., kept for the redirects below so www + a legacy/.html URL is ONE hop.",
     "RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]",
     "RewriteRule ^ - [E=SFR_HOST:%1]",
     "RewriteCond %{HTTP_HOST} !^www\\. [NC]",
@@ -119,7 +118,7 @@ function buildHtaccess(profile = "staging") {
   for (const h of headers) add(`  Header always set ${h.key} "${h.value}"`);
   add(
     "",
-    "  # Caching, same policy as infra/deploy-site.sh: hashed/static assets for a year, pages for 5 minutes, crawler files for an hour.",
+    "  # Caching: hashed/static assets for a year, pages for 5 minutes, crawler files for an hour.",
     '  <FilesMatch "\\.html$">',
     '    Header set Cache-Control "public, max-age=300, must-revalidate"',
     "  </FilesMatch>",

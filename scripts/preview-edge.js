@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// Local production preview that MODELS CloudFront + private S3, for checking dist/ before any deployment.
+// Local production preview of dist/, for checking a build before it goes to Hostinger.
 //
 //   npm run build && node scripts/preview-edge.js [port]      (default port 4174, http://127.0.0.1:<port>/)
 //
 // It serves dist/ and applies, read live from infra/template.yaml so it can never drift from the real config:
 //   - the LegacyRedirectFunction (301 redirects, pretty-path rewrites, /index.html -> /, www -> apex when the Host header says so)
 //   - the ResponseHeadersPolicy security headers, including the exact Content-Security-Policy
-//   - brotli/gzip compression of text files (CloudFront "Compress: true")
-//   - CloudFront's custom error response: any missing URL returns /404.html with status 404
-// Zero dependencies, read-only, binds to 127.0.0.1 only. It never talks to AWS. Also exports start({ port, quiet }) for the
+//   - brotli/gzip compression of text files
+//   - any missing URL returns /404.html with status 404
+// Zero dependencies, read-only, binds to 127.0.0.1 only. It never talks to any server. Also exports start({ port, quiet }) for the
 // browser tests in scripts/browser-tests/.
 //
 // Notes: Google Analytics and the WhatsApp quote form only work on sfrmotors.co.uk / www.sfrmotors.co.uk (see assets/js/analytics.js
@@ -91,7 +91,7 @@ function start({ port = DEFAULT_PORT, quiet = false } = {}) {
     return send(404, TYPES[".html"], fs.readFileSync(fs.existsSync(notFound) ? notFound : path.join(DIST, "index.html")));
   });
   return new Promise((resolve) => server.listen(port, "127.0.0.1", () => {
-    if (!quiet) console.log(`CloudFront/CSP preview of dist/ on http://127.0.0.1:${port}/`);
+    if (!quiet) console.log(`Local preview of dist/ on http://127.0.0.1:${port}/`);
     resolve(server);
   }));
 }
