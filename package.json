@@ -8,7 +8,9 @@
     "verify": "node scripts/verify.js",
     "test:browser": "node scripts/browser-tests/run-all.js",
     "check:live": "node scripts/build.js && node scripts/live-compare.js",
-    "test:htaccess": "node --test scripts/htaccess-block.test.js"
+    "test:htaccess": "node --test scripts/htaccess-block.test.js",
+    "test": "npm run build && node --test scripts/tests/*.test.js scripts/htaccess-block.test.js && npm run verify && npm run test:browser",
+    "test:load": "npm run build && node scripts/load-test.js"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",
