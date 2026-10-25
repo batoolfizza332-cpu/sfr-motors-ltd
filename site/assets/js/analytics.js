@@ -475,8 +475,8 @@
         '<div class="sfr-consent__card sfr-consent__card--compact" role="dialog" aria-modal="false"' +
         ' aria-labelledby="sfr-consent-title" aria-describedby="sfr-consent-desc" tabindex="-1">' +
           '<p class="sfr-consent__title" id="sfr-consent-title">Cookie settings</p>' +
-          '<p class="sfr-consent__text" id="sfr-consent-desc">Optional cookies help us see how the site is used and which Google adverts work. ' +
-          'They stay off unless you turn them on. <a href="' + PRIVACY_URL + '">Privacy Policy</a></p>' +
+          '<p class="sfr-consent__text" id="sfr-consent-desc">Optional analytics and Google Ads cookies stay off until you allow them. ' +
+          '<a href="' + PRIVACY_URL + '">Privacy Policy</a></p>' +
           '<div class="sfr-consent__actions">' +
             '<button type="button" class="sfr-consent__btn sfr-consent__btn--accept" data-sfr-consent-all="granted">Accept all</button>' +
             '<button type="button" class="sfr-consent__btn sfr-consent__btn--reject" data-sfr-consent-all="denied">Reject all</button>' +
