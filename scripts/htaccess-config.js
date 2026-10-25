@@ -76,6 +76,14 @@ function buildHtaccess(profile = "staging") {
     "",
     "RewriteEngine On",
     "",
+    "# 0. Never serve repository, tooling or backup files, even if they reach the document root by accident (e.g. a Git",
+    "#    deploy). 403 shows the 404 page. .well-known stays reachable for SSL validation.",
+    "RewriteCond %{REQUEST_URI} !^/\\.well-known/",
+    "RewriteRule (^|/)\\. - [F]",
+    "RewriteRule ^(scripts|node_modules|infra|site|pending-blog-posts|image-originals)(/|$) - [F,NC]",
+    "RewriteRule (^|/)(package(-lock)?\\.json|composer\\.(json|lock))$ - [F,NC]",
+    "RewriteRule \\.(md|sql|gz|tgz|tar|zip|wpress|log|bak|old|orig|swp|env|ini|sh|ya?ml|lock)$ - [F,NC]",
+    "",
     "# The host without a leading www., kept for the redirects below so www + a legacy/.html URL is ONE hop.",
     "RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]",
     "RewriteRule ^ - [E=SFR_HOST:%1]",
@@ -185,7 +193,7 @@ function simulateApache(htaccess, req, fsInfo) {
   for (let pass = 0; pass < 10; pass++) {
     let restart = false;
     for (const rule of rules) {
-      const ruleMatch = new RegExp(rule.pattern).exec(uri);
+      const ruleMatch = new RegExp(rule.pattern, rule.flags.includes("NC") ? "i" : "").exec(uri);
       if (!ruleMatch) continue;
       let condCaps = null;
       let ok = true;
@@ -204,6 +212,7 @@ function simulateApache(htaccess, req, fsInfo) {
       }
       if (!ok) continue;
 
+      if (rule.flags.includes("F")) return { forbidden: true };
       const target = expand(rule.subst, ruleMatch, condCaps);
       for (const flag of rule.flags.filter((f) => f.startsWith("E="))) {
         const [name, ...value] = flag.slice(2).split(":");
