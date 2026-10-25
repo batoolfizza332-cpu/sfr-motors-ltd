@@ -215,7 +215,7 @@ function runAll() {
   return failures;
 }
 
-module.exports = { runAll };
+module.exports = { runAll, makeBrowser, element, run };
 
 if (require.main === module) {
   const failures = runAll();
