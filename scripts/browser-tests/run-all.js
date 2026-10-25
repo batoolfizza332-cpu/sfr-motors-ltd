@@ -17,6 +17,7 @@ const TESTS = [
   ["test-sweep.js", "all sitemap pages, Desktop 1280x720 and Mobile 375x812; internal links; Google Map click-to-load"],
   ["test-consent.js", "cookie consent and Analytics, including the production-hostname guard"],
   ["test-functional.js", "404 page, redirects, calculator, quote form (production host and review copies), tel/WhatsApp links"],
+  ["test-banner.js", "first-visit cookie banner on 360/390/412px phones: slim, hero buttons visible, equal Accept/Reject, Reject works"],
   ["test-approved.js", "self-hosted font, click-to-load Map, robots.txt, footer disclosure, no street address"],
 ];
 
