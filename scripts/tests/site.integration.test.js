@@ -23,9 +23,9 @@ test.after(() => server && server.close());
 const sitemapPaths = () => [...fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8").matchAll(/<loc>https:\/\/sfrmotors\.co\.uk([^<]*)<\/loc>/g)].map((m) => m[1]);
 const get = (p) => fetch(base + p, { redirect: "manual", headers: { host: "sfrmotors.co.uk" } });
 
-test("all 78 sitemap pages return 200", async () => {
+test("all 82 sitemap pages return 200", async () => {
   const paths = sitemapPaths();
-  assert.equal(paths.length, 78);
+  assert.equal(paths.length, 82);
   for (const p of paths) assert.equal((await get(p)).status, 200, p);
 });
 

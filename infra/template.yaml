@@ -501,7 +501,7 @@ Resources:
                 'mobile-tyre-repair-edinburgh-west-lothian ' +
                 'mobile-tyre-repair emergency-mobile-tyre-fitting roadside-tyre-fitting ' +
                 'mobile-tyre-fitting mobile-tyre-fitting-armadale mobile-tyre-fitting-kirkliston mobile-tyre-fitting-blackburn ' +
-                'pothole-damage-tyre-wheel-checks puncture-repair-at-home-edinburgh'
+                'pothole-damage-tyre-wheel-checks puncture-repair-at-home-edinburgh mobile-tyre-fitting-uphall mobile-tyre-fitting-east-calder mobile-tyre-fitting-mid-calder mobile-tyre-fitting-winchburgh'
             ).split(' ');
             // Legacy WordPress URLs (matched with or without a trailing slash) -> 301 destination
             var legacy = {
