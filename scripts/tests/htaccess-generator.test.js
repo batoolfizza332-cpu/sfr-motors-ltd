@@ -33,7 +33,7 @@ test("every sitemap page is served by the production rules", () => {
   const ht = buildHtaccess("production");
   const xml = fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8");
   const urls = [...xml.matchAll(/<loc>https:\/\/sfrmotors\.co\.uk([^<]*)<\/loc>/g)].map((m) => m[1]);
-  assert.equal(urls.length, 78);
+  assert.equal(urls.length, 82);
   for (const u of urls) {
     const r = simulateApache(ht, { host: HOST, https: true, uri: u, query: "" }, { hasFile: isFile, isDir: () => false });
     assert.ok(r.file, `${u} -> ${JSON.stringify(r)}`);

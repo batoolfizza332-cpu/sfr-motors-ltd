@@ -1,0 +1,97 @@
+{
+  "_note": "Pilot town pages (owner decision 1 Nov 2026): Uphall, East Calder, Mid Calder, Winchburgh. The owner confirmed all four are served. Arrival wording stays 'usually within 40-60 minutes' (owner rule). The job photos are real SFR Motors jobs, but where each was taken is NOT known, so alt text describes the scene only and never names a town. Generate the pages with: node scripts/generate-location-pages.js",
+  "towns": [
+    {
+      "slug": "uphall",
+      "town": "Uphall",
+      "description": "24/7 mobile tyre fitting and puncture repair in Uphall, West Lothian, near Broxburn and the M8. We come to your home, work or roadside, usually within 40-60 minutes.",
+      "intro": "Uphall sits a short drive east of our Bathgate base, right next to Broxburn and just north of Livingston, with the A89 running through and the M8 close by. We're usually with you within 40&ndash;60 minutes, day or night. Whether your car is on the driveway at home, in a car park at work, or you've pulled in after coming off the motorway with a damaged tyre, we bring the tyres, tools and wheel balancing equipment to you, so there's no need to get to a garage first.",
+      "scenarios": [
+        ["A Flat Spotted On The Driveway", "A tyre that's gone soft overnight is a common start to the day in Uphall's residential streets. We fit or repair it where the car is parked, so you're not driving on a damaged tyre to find a garage."],
+        ["A Damaged Tyre Near The M8", "If you've picked up a puncture on the motorway, don't keep driving on it. Pull off at the next safe place near Uphall and call us with your location; we'll come out to replace the tyre or fit your spare."]
+      ],
+      "areasText": "We attend callouts across Uphall and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, Uphall Station, Dechmont, Ecclesmachan, Pumpherston and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "faqs": [
+        ["Do you cover Uphall Station and Dechmont as well?", "Yes, as well as Uphall itself we attend Uphall Station, Dechmont and Ecclesmachan &mdash; send us your location and we'll confirm before we set off."],
+        ["How quickly can you get to me in Uphall?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
+        ["I've got a puncture after coming off the M8. Can you help?", "Yes. Stop somewhere safe away from the traffic, then call or WhatsApp us with your location. We can replace the tyre on the spot, repair it if the damage is safe to repair, or fit your spare."],
+        ["Can you balance the wheel at my house?", "Yes, our vans carry wheel balancing equipment, so new tyres are fitted and balanced at your home or workplace in Uphall."],
+        ["Can you remove a locking wheel nut if I've lost the key?", "Yes, we remove lost or seized locking wheel nuts on site in Uphall and the surrounding area &mdash; see our <a href=\"/mobile-locking-wheel-nut-removal/\">locking wheel nut removal</a> page."],
+        ["Do you work outside normal hours in Uphall?", "Yes, we're open 24/7, so a late finish or an early start is no problem."]
+      ],
+      "photos": [
+        { "file": "job-silver-hatchback-driveway", "alt": "Silver hatchback raised on a trolley jack on a block-paved driveway, with a yellow SFR Motors van parked behind" },
+        { "file": "job-van-equipment-verge", "alt": "Yellow SFR Motors van with its side door open showing the tyre fitting equipment, parked beside a grey car on a muddy verge" }
+      ]
+    },
+    {
+      "slug": "east-calder",
+      "town": "East Calder",
+      "description": "24/7 mobile tyre fitting and puncture repair in East Calder, West Lothian, near Livingston and the A71. Home, work or roadside, usually within 40-60 minutes.",
+      "intro": "East Calder is on the south-east side of Livingston, close to the A71 towards Edinburgh and a short drive from our Bathgate base. We're usually with you within 40&ndash;60 minutes, day or night. A puncture at home, a warning light on the way to work, or a tyre that won't make it back from a run out to Almondell &amp; Calderwood Country Park &mdash; we bring the tyres, tools and wheel balancing equipment to wherever you are.",
+      "scenarios": [
+        ["A Puncture Before The Edinburgh Commute", "A flat first thing can wreck a drive in towards Edinburgh. We come to your home in East Calder and repair or replace the tyre there, so you can still get on your way."],
+        ["Stuck In A Car Park", "Whether it's a supermarket car park or a parking bay at a park entrance, if a tyre has gone flat while you were away from the car, we'll come to it and sort it where it stands."]
+      ],
+      "areasText": "We attend callouts across East Calder and the places around it, including Mid Calder, Kirknewton, Wilkieston, Oakbank and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "faqs": [
+        ["Do you cover Kirknewton and Wilkieston too?", "Yes, along with East Calder we attend Kirknewton, Wilkieston and Oakbank &mdash; let us know your location and we'll confirm before we set off."],
+        ["How quickly can you get to me in East Calder?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
+        ["Can you come to me if I'm parked at Almondell &amp; Calderwood Country Park?", "Yes, as long as the car is somewhere we can safely work on it, such as a car park. Send us the location and we'll confirm."],
+        ["Do you repair punctures or only replace tyres?", "Both. If the puncture is in a safe-to-repair area of the tread we repair it on site; if not, we replace the tyre. Read more on our <a href=\"/mobile-tyre-puncture-repair/\">mobile puncture repair</a> page."],
+        ["Are new tyres balanced on site?", "Yes, our vans carry wheel balancing equipment, so the wheel is balanced at your location in East Calder."],
+        ["Do you work outside normal hours in East Calder?", "Yes, we're open 24/7, including evenings, weekends and overnight."]
+      ],
+      "photos": [
+        { "file": "job-bmw-rural-verge", "alt": "White BMW on a trolley jack at the edge of a grassy roadside verge, rear wheel removed, with a yellow SFR Motors van parked in front" },
+        { "file": "job-ford-suv-car-park", "alt": "Grey Ford SUV raised on a trolley jack in a car park, its wheel removed and lying beside it, with a yellow SFR Motors van behind" }
+      ]
+    },
+    {
+      "slug": "mid-calder",
+      "town": "Mid Calder",
+      "description": "24/7 mobile tyre fitting and puncture repair in Mid Calder, West Lothian, beside Livingston. We come to your home, work or roadside, usually within 40-60 minutes.",
+      "intro": "Mid Calder sits on the eastern edge of Livingston, between Pumpherston and East Calder, a short drive from our Bathgate base. We're usually with you within 40&ndash;60 minutes, day or night. Some streets in the older part of the village are narrow, so we'll check with you where the car is parked and set up somewhere safe nearby. We bring the tyres, tools and wheel balancing equipment with us.",
+      "scenarios": [
+        ["A Flat On A Narrow Village Street", "If the car is parked on one of Mid Calder's narrower streets, tell us when you call. We'll plan where to set up so the job can be done safely and without blocking the road."],
+        ["Tyre Trouble On The Way Home", "A tyre warning light or a sudden puncture on the way back from Livingston? Stop somewhere safe, send us your location and we'll come out to you."]
+      ],
+      "areasText": "We attend callouts across Mid Calder and the places around it, including East Calder, Pumpherston, Kirknewton, <a href=\"/mobile-tyre-fitting-west-calder/\">West Calder</a> and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "faqs": [
+        ["Do you cover Pumpherston and East Calder as well?", "Yes, as well as Mid Calder we regularly attend Pumpherston, East Calder and Kirknewton &mdash; send us your location and we'll confirm."],
+        ["How quickly can you get to me in Mid Calder?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
+        ["My car is parked on a narrow street. Can you still work on it?", "Usually, yes. Tell us where the car is when you call and we'll make sure there is a safe space to work, or agree a better spot nearby."],
+        ["Can you fit tyres on a van in Mid Calder?", "Yes, we fit and repair <a href=\"/van-tyre-replacement-services/\">van tyres</a> as well as cars &mdash; tell us your tyre size and we'll confirm availability before we come out."],
+        ["Can you remove a locking wheel nut without the key?", "Yes, lost or damaged locking wheel nut keys are a common call-out. We remove the nut on site so the tyre can be changed."],
+        ["Do you work outside normal hours in Mid Calder?", "Yes, we're open 24/7, so it doesn't matter if it's early morning or late at night."]
+      ],
+      "photos": [
+        { "file": "job-bmw-street-rear-wheel", "alt": "Grey BMW hatchback with its rear wheel removed on a block-paved street, trolley jack underneath and a yellow SFR Motors van behind" },
+        { "file": "job-volvo-suv-front-garden", "alt": "Blue Volvo SUV on a jack outside a house, wheel removed and lying on the path, with a yellow SFR Motors van and its open side door behind" }
+      ]
+    },
+    {
+      "slug": "winchburgh",
+      "town": "Winchburgh",
+      "description": "24/7 mobile tyre fitting and puncture repair in Winchburgh, West Lothian, between Broxburn and Linlithgow. Home, work or roadside, usually within 40-60 minutes.",
+      "intro": "Winchburgh lies north of Broxburn, between Linlithgow and Kirkliston, with the Union Canal running through the village. It's an easy drive from our Bathgate base and we're usually with you within 40&ndash;60 minutes, day or night. Whether you're in one of the newer housing developments or the older part of the village, we bring the tyres, tools and wheel balancing equipment to your driveway, workplace or roadside.",
+      "scenarios": [
+        ["A Puncture On A New-Build Driveway", "Nails and screws are easy to pick up on roads near building sites. If you've got a slow puncture at home in Winchburgh, we'll check it and repair the tyre if it's safe to, or replace it if not."],
+        ["A Flat On The Road To Linlithgow Or Broxburn", "If a tyre goes on the road out of the village, pull in somewhere safe and send us your location. We'll come to you rather than you trying to reach a garage on a damaged tyre."]
+      ],
+      "areasText": "We attend callouts across Winchburgh and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, <a href=\"/mobile-tyre-fitting-linlithgow/\">Linlithgow</a>, <a href=\"/mobile-tyre-fitting-kirkliston/\">Kirkliston</a>, Niddry and Newton.",
+      "faqs": [
+        ["Do you cover the new housing developments in Winchburgh?", "Yes, we attend homes across Winchburgh, including the newer developments &mdash; send us your address and we'll confirm before we set off."],
+        ["How quickly can you get to me in Winchburgh?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
+        ["Can a nail or screw puncture be repaired?", "Often, yes. If it's in the central part of the tread and the tyre hasn't been driven on flat, we can usually repair it on site. If it's near the sidewall, the tyre needs replacing. See our <a href=\"/mobile-tyre-puncture-repair/\">puncture repair</a> page."],
+        ["Do you cover Kirkliston and Linlithgow too?", "Yes, as well as Winchburgh we regularly attend Kirkliston, Linlithgow and Broxburn."],
+        ["Are new tyres balanced at my house?", "Yes, our vans carry wheel balancing equipment, so the wheel is balanced on site in Winchburgh."],
+        ["Do you work outside normal hours in Winchburgh?", "Yes, we're open 24/7, including weekends and overnight."]
+      ],
+      "photos": [
+        { "file": "job-dual-carriageway-roadside", "alt": "Silver car with a front wheel off at the side of a busy dual carriageway, trolley jack in place and a highway worker in hi-vis nearby" },
+        { "file": "job-bmw-residential-street", "alt": "Black BMW raised on a trolley jack beside the pavement on a residential street, front wheel removed, with a yellow SFR Motors van further up the road" }
+      ]
+    }
+  ]
+}

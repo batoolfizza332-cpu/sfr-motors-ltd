@@ -117,6 +117,10 @@ const CANONICAL_URL_OVERRIDES = {
   "mobile-tyre-fitting-blackburn.html": "mobile-tyre-fitting-blackburn/",
   "pothole-damage-tyre-wheel-checks.html": "pothole-damage-tyre-wheel-checks/",
   "puncture-repair-at-home-edinburgh.html": "puncture-repair-at-home-edinburgh/",
+  "mobile-tyre-fitting-uphall.html": "mobile-tyre-fitting-uphall/",
+  "mobile-tyre-fitting-east-calder.html": "mobile-tyre-fitting-east-calder/",
+  "mobile-tyre-fitting-mid-calder.html": "mobile-tyre-fitting-mid-calder/",
+  "mobile-tyre-fitting-winchburgh.html": "mobile-tyre-fitting-winchburgh/",
 };
 
 // Reverse lookup, for resolving internal links/sitemap entries that
@@ -1267,10 +1271,15 @@ const LOCATION_LINK_MAP = {
   "mobile-tyre-fitting-west-calder.html": [["Addiewell", "mobile-tyre-fitting-addiewell.html"]],
   "mobile-tyre-fitting-addiewell.html": [["West Calder", "mobile-tyre-fitting-west-calder.html"]],
   "mobile-tyre-fitting-kirkliston.html": [["Broxburn", "broxburn.html"]],
+  // Pilot town pages (1 Nov 2026), generated from data/locations-pilot.json.
+  "mobile-tyre-fitting-uphall.html": [["Broxburn", "broxburn.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"]],
+  "mobile-tyre-fitting-east-calder.html": [["Livingston", "mobile-tyre-fitting-livingston.html"]],
+  "mobile-tyre-fitting-mid-calder.html": [["West Calder", "mobile-tyre-fitting-west-calder.html"], ["Livingston", "mobile-tyre-fitting-livingston.html"]],
+  "mobile-tyre-fitting-winchburgh.html": [["Broxburn", "broxburn.html"], ["Linlithgow", "mobile-tyre-fitting-linlithgow.html"], ["Kirkliston", "mobile-tyre-fitting-kirkliston.html"]],
 };
 // Every location page; an anchor in the paragraph above may only be one of these plain town names.
-const LOCATION_PAGE_FILES = ["broxburn.html", "mobile-tyre-fitting-addiewell.html", "mobile-tyre-fitting-airdrie.html", "mobile-tyre-fitting-armadale.html", "mobile-tyre-fitting-bathgate.html", "mobile-tyre-fitting-blackburn.html", "mobile-tyre-fitting-boness.html", "mobile-tyre-fitting-edinburgh.html", "mobile-tyre-fitting-falkirk.html", "mobile-tyre-fitting-harthill.html", "mobile-tyre-fitting-kirkliston.html", "mobile-tyre-fitting-linlithgow.html", "mobile-tyre-fitting-livingston.html", "mobile-tyre-fitting-shotts.html", "mobile-tyre-fitting-west-calder.html", "mobile-tyre-fitting-west-lothian.html", "mobile-tyre-fitting-whitburn.html", "mobile-tyre-fitting-wishaw.html"];
-const LOCATION_TOWN_NAMES = new Set(["Addiewell", "Airdrie", "Armadale", "Bathgate", "Blackburn", "Bo’ness", "Broxburn", "Edinburgh", "Falkirk", "Harthill", "Kirkliston", "Linlithgow", "Livingston", "Shotts", "West Calder", "West Lothian", "Whitburn", "Wishaw"]);
+const LOCATION_PAGE_FILES = ["mobile-tyre-fitting-uphall.html", "mobile-tyre-fitting-east-calder.html", "mobile-tyre-fitting-mid-calder.html", "mobile-tyre-fitting-winchburgh.html", "broxburn.html", "mobile-tyre-fitting-addiewell.html", "mobile-tyre-fitting-airdrie.html", "mobile-tyre-fitting-armadale.html", "mobile-tyre-fitting-bathgate.html", "mobile-tyre-fitting-blackburn.html", "mobile-tyre-fitting-boness.html", "mobile-tyre-fitting-edinburgh.html", "mobile-tyre-fitting-falkirk.html", "mobile-tyre-fitting-harthill.html", "mobile-tyre-fitting-kirkliston.html", "mobile-tyre-fitting-linlithgow.html", "mobile-tyre-fitting-livingston.html", "mobile-tyre-fitting-shotts.html", "mobile-tyre-fitting-west-calder.html", "mobile-tyre-fitting-west-lothian.html", "mobile-tyre-fitting-whitburn.html", "mobile-tyre-fitting-wishaw.html"];
+const LOCATION_TOWN_NAMES = new Set(["Uphall", "East Calder", "Mid Calder", "Winchburgh", "Addiewell", "Airdrie", "Armadale", "Bathgate", "Blackburn", "Bo’ness", "Broxburn", "Edinburgh", "Falkirk", "Harthill", "Kirkliston", "Linlithgow", "Livingston", "Shotts", "West Calder", "West Lothian", "Whitburn", "Wishaw"]);
 
 function checkLocationLinks() {
   const check = "25. Location links";

@@ -66,7 +66,7 @@ test("bypass attempts are blocked too (encoding, case, double slashes)", () => {
 test("every sitemap page still returns 200", () => {
   const xml = fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8");
   const urls = [...xml.matchAll(/<loc>https:\/\/sfrmotors\.co\.uk([^<]*)<\/loc>/g)].map((m) => m[1]);
-  assert.equal(urls.length, 78);
+  assert.equal(urls.length, 82);
   for (const url of urls) assert.equal(status(request(url)), 200, url);
 });
 
