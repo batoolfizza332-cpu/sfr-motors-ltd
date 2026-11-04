@@ -136,14 +136,18 @@
   }
 
   // ---------------------------------------------------------------------
-  // Page classification (unchanged behaviour; used to segment GA4 reports)
+  // Page classification (used to segment GA4 reports)
   // ---------------------------------------------------------------------
   var LOCATION_PAGES = [
     "mobile-tyre-fitting-bathgate.html",
     "mobile-tyre-fitting-edinburgh.html",
     "mobile-tyre-fitting-livingston.html",
     "mobile-tyre-fitting-west-lothian.html",
-    "mobile-tyre-fitting-falkirk.html"
+    "mobile-tyre-fitting-falkirk.html",
+    "mobile-tyre-fitting-uphall.html",
+    "mobile-tyre-fitting-east-calder.html",
+    "mobile-tyre-fitting-mid-calder.html",
+    "mobile-tyre-fitting-winchburgh.html"
   ];
   var SERVICE_PAGES = [
     "mobile-tyre-replacement.html",
@@ -182,7 +186,9 @@
   function pageType() {
     if (SERVICE_PRETTY_PATHS.indexOf(window.location.pathname) !== -1) return "service";
     var page = currentPageFile();
-    if (LOCATION_PAGES.indexOf(page) !== -1) return "location";
+    // Live location pages use pretty paths (/mobile-tyre-fitting-uphall/), so also match "<last segment>.html".
+    var slug = window.location.pathname.replace(/\/+$/, "").split("/").pop();
+    if (LOCATION_PAGES.indexOf(page) !== -1 || LOCATION_PAGES.indexOf(slug + ".html") !== -1) return "location";
     if (SERVICE_PAGES.indexOf(page) !== -1) return "service";
     return "core";
   }
@@ -297,7 +303,9 @@
 
   function track(name, params) {
     if (!analyticsActive()) return;
-    var data = { page_path: window.location.pathname, page_type: pageType() };
+    // send_to is required: GTM's Google tag (GT-...) also runs gtag on this page, and an event without it never
+    // reached GA4 (checked live, 28 Oct 2026).
+    var data = { send_to: GA_MEASUREMENT_ID, page_path: window.location.pathname, page_type: pageType() };
     for (var key in params) if (Object.prototype.hasOwnProperty.call(params, key)) data[key] = params[key];
     window.gtag("event", name, data);
   }
@@ -345,8 +353,13 @@
     window.gtag("consent", "update", { analytics_storage: "granted" });
 
     if (analyticsLoaded) return;
-    if (document.querySelector('script[src^="' + GTAG_URL.split("?")[0] + '"]')) return;
     analyticsLoaded = true;
+    document.addEventListener("click", onClick);
+    document.addEventListener("sfr:quote-submitted", onQuoteSubmitted);
+
+    // GTM's Google tag may already be on the page (it carries GA4 and sends the page_view itself once Analytics is
+    // granted); then do not load a second copy, but keep the click/quote events above.
+    if (document.querySelector('script[src^="' + GTAG_URL.split("?")[0] + '"]')) return;
 
     window.gtag("js", new Date());
     // "config" sends the single automatic page_view for this page.
@@ -360,9 +373,6 @@
     loader.async = true;
     loader.src = GTAG_URL + encodeURIComponent(GA_MEASUREMENT_ID);
     document.head.appendChild(loader);
-
-    document.addEventListener("click", onClick);
-    document.addEventListener("sfr:quote-submitted", onQuoteSubmitted);
   }
 
   // Another tab may have changed consent while this one stays open.
