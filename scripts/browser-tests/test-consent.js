@@ -28,7 +28,7 @@ const STUB = `(function(){
     if(window["ga-disable-"+id]) return;
     cookie("_ga","GA1.1.111.222"); cookie("_ga_"+id.slice(2),"GS2.1.s1$o1");
     var q="v=2&tid="+id+"&en="+en+"&dl="+encodeURIComponent(location.href);
-    for(var k in params) q+="&ep."+k+"="+encodeURIComponent(params[k]);
+    for(var k in params) if(k!=="send_to") q+="&ep."+k+"="+encodeURIComponent(params[k]); // like gtag: send_to routes, it is not sent
     fetch("https://region1.google-analytics.com/g/collect?"+q,{method:"POST",mode:"no-cors"}).catch(function(){});
   }
   function run(args){
