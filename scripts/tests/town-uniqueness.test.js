@@ -54,6 +54,13 @@ test(`no two town pages are more than ${MAX_SIMILARITY * 100}% similar (main tex
   assert.deepEqual(over, [], `town pages too similar:\n${over.join("\n")}`);
 });
 
+// Owner/testing chat, 6 Nov 2026: no unverifiable frequency claims about the business ("we regularly attend ...").
+test("no frequency claims such as 'regularly attend' or 'regular areas' on town pages", () => {
+  for (const f of TOWN_PAGES) {
+    assert.doesNotMatch(fs.readFileSync(path.join(SITE, f), "utf8"), /\bregular(ly)?\b/i, `${f} makes a frequency claim`);
+  }
+});
+
 test("generated pilot pages carry no Armadale copy in their shared sections", () => {
   for (const f of ["uphall", "east-calder", "mid-calder", "winchburgh"]) {
     const html = fs.readFileSync(path.join(SITE, `mobile-tyre-fitting-${f}.html`), "utf8");

@@ -10,7 +10,7 @@ Sources for the local facts used on the town (location) pages, written 6 Nov 202
 - HMP Addiewell, 9 Station Road, Addiewell (opened December 2008) — https://en.wikipedia.org/wiki/HM_Prison_Addiewell ; https://prisonsinspectoratescotland.gov.uk/publications/report-hmp-addiewell-6-17-august-2018 (checked 2026-11-06)
 - B792 (West Calder – Blackburn) passes just east of the village; Addiewell Bing nature reserve beside it (stile about 200 m east of the village); parking for about two vehicles — https://visitwestlothian.co.uk/things-to-do/nature-wildlife/addiewell-bing (checked 2026-11-06)
 - A71 runs through West Calder — https://en.wikipedia.org/wiki/West_Calder (checked 2026-11-06)
-Merge recommendation: consider merging into the West Calder page. Addiewell is a village of about 1,280 people, roughly a mile from West Calder, sharing its post town, parish and rail line, and has no main road of its own; the only genuinely local detail is the station, HMP Addiewell, the B792 and Addiewell Bing. The rewritten page is unique and true, but thin on driver-relevant facts; a 301 from /mobile-tyre-fitting-in-addiewell/ to /mobile-tyre-fitting-west-calder/ (with Addiewell covered in a West Calder section) would be the stronger long-term option. Owner decision required.
+Merge recommendation: none – keep as a separate page (owner decision 6 Nov 2026); no merge.
 
 ## Airdrie
 - Airdrie is about 12 miles east of Glasgow, on raised ground (plateau ~400 ft) — https://en.wikipedia.org/wiki/Airdrie,_North_Lanarkshire (checked 2026-11-06)
