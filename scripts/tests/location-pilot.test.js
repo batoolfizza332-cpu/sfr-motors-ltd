@@ -21,7 +21,9 @@ test("exactly the four approved pilot towns, and the 17 existing town pages are 
 });
 
 test("committed pages are in sync with the data (run node scripts/generate-location-pages.js)", () => {
-  for (const { file, html } of pages) assert.equal(read(file), html, `site/${file} is out of date`);
+  // Line endings do not count (a Windows checkout turns LF into CRLF).
+  const lf = (s) => s.replace(/\r\n/g, "\n");
+  for (const { file, html } of pages) assert.equal(lf(read(file)), lf(html), `site/${file} is out of date`);
 });
 
 test("one H1, unique title, description and canonical on each page", () => {
