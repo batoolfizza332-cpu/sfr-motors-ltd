@@ -1,8 +1,8 @@
 // Generates the pilot town pages (site/mobile-tyre-fitting-<slug>.html) from data/locations-pilot.json.
 //
-// The page shell (top bar, header, footer) and the shared sections (services grid, "why choose us", nearby-areas
-// pins, call-to-action) are taken from site/mobile-tyre-fitting-armadale.html, so the pilot pages always match the
-// existing location pages. Only the town-specific parts come from the data file.
+// The page shell (top bar, header, footer) and the markup of the shared sections (services grid, "why choose us",
+// nearby-areas pins, call-to-action) are taken from site/mobile-tyre-fitting-armadale.html, so the pilot pages always
+// match the existing location pages. All visible copy in those sections comes from the town's own data fields.
 //
 //   node scripts/generate-location-pages.js          write the pages
 //   node scripts/generate-location-pages.js --check  exit 1 if any page is out of date (used by the tests)
@@ -47,6 +47,39 @@ function loadBase() {
 
 const forTown = (block, town) => block.split(BASE_TOWN).join(town);
 
+// Replace the text of the n-th match of `re` (group 2 = the text between group 1 and group 3) with values[n].
+function fillEach(block, re, values, what) {
+  let i = 0;
+  const out = block.replace(re, (m, open, _text, close) => (i < values.length ? open + values[i++] + close : m));
+  if (i !== values.length) throw new Error(`${what}: expected ${values.length} slots, filled ${i}`);
+  return out;
+}
+
+// The shared sections keep the Armadale markup (cards, icons, links), but every sentence is the town's own copy from
+// the data file, so the pilot pages are not a town-name swap of each other or of Armadale (doorway-page rule).
+function townSections(base, t) {
+  const need = (k, n) => {
+    const v = t[k];
+    if (n ? !(Array.isArray(v) && v.length === n) : typeof v !== "string" || !v) throw new Error(`${t.slug}: data field "${k}" missing or wrong length`);
+    return v;
+  };
+  let services = forTown(base.services, t.town)
+    .replace(/(<div class="sfr-services__eyebrow">)[\s\S]*?(<\/div>)/, `$1Our ${t.town} Services$2`);
+  services = fillEach(services, /(<p class="sfr-services__intro">)([\s\S]*?)(<\/p>)/g, [need("servicesIntro")], `${t.slug} services intro`);
+  services = fillEach(services, /(<article class="sfr-services__card">[\s\S]*?<\/h3>\s*<p>)([\s\S]*?)(<\/p>)/g, need("serviceCards", 9), `${t.slug} service cards`);
+  let why = forTown(base.why, t.town)
+    .replace(/(<h2 class="sfr-why__title" id="sfr-loc-why-heading">)[\s\S]*?(<\/h2>)/, `$1Why ${t.town} Drivers Call SFR Motors$2`);
+  why = fillEach(why, /(<div class="sfr-why__card">[\s\S]*?<\/h3>\s*<p>)([\s\S]*?)(<\/p>)/g, need("why", 5), `${t.slug} why cards`);
+  const operate = fillEach(forTown(base.operate, t.town), /(<p class="sfr-operate__text">)([\s\S]*?)(<\/p>)/g, [need("operateText")], `${t.slug} operate text`);
+  let cta = forTown(base.cta, t.town)
+    .replace(/(<h2 class="sfr-emergency__title" id="sfr-loc-cta-heading">)[\s\S]*?(<\/h2>)/, `$1Tyre Trouble <span>In ${t.town}?</span>$2`);
+  cta = fillEach(cta, /(<p class="sfr-emergency__text">)([\s\S]*?)(<\/p>)/g, [need("ctaText")], `${t.slug} CTA text`);
+  for (const [name, block] of Object.entries({ services, why, operate, cta })) {
+    if (block.includes(BASE_TOWN)) throw new Error(`${t.slug}: "${BASE_TOWN}" text leaked into the ${name} section`);
+  }
+  return { services, why, operate, cta };
+}
+
 function photo(p) {
   const set = (ext) => PHOTO_W.map((w) => `/assets/img/${p.file}-${w}.${ext} ${w}w`).join(", ");
   const sizes = "(min-width: 800px) 760px, calc(100vw - 40px)";
@@ -81,6 +114,8 @@ function faqItem([q, a]) {
 }
 
 function render(t, base) {
+  const sec = townSections(base, t);
+  if (typeof t.heroText !== "string" || !t.heroText) throw new Error(`${t.slug}: data field "heroText" missing`);
   const url = `${DOMAIN}/mobile-tyre-fitting-${t.slug}/`;
   const title = `24/7 Mobile Tyre Fitting ${t.town}, West Lothian | SFR Motors Ltd`;
   const json = (o) => JSON.stringify(o, null, 2);
@@ -163,7 +198,7 @@ ${base.shellTop}<main id="main">
   <div class="sfr-page-hero__inner">
     <span class="sfr-page-hero__eyebrow"><span class="dot"></span>Areas We Cover</span>
     <h1 class="sfr-page-hero__title" id="sfr-loc-h1">Mobile Tyre Fitting in ${t.town}, West Lothian</h1>
-    <p class="sfr-page-hero__text">Mobile tyre fitting, puncture repair and roadside tyre replacement in ${t.town}, 24/7 &mdash; usually with you within 40&ndash;60 minutes.</p>
+    <p class="sfr-page-hero__text">${t.heroText}</p>
 ${heroActions()}
   </div>
 </section>
@@ -180,9 +215,9 @@ ${heroActions()}
 
 ${photo(t.photos[0])}
 
-${forTown(base.services, t.town)}
+${sec.services}
 
-${forTown(base.why, t.town)}
+${sec.why}
 
 <section class="sfr-guide" aria-labelledby="sfr-loc-scenarios-heading">
   <div class="sfr-guide__inner">
@@ -206,14 +241,12 @@ ${photo(t.photos[1])}
     <div class="sfr-band__eyebrow">${t.town} &amp; Nearby Areas</div>
     <h2 class="sfr-band__title" id="sfr-loc-areas-heading">Across ${t.town} And The Surrounding Area</h2>
     <p class="sfr-band__text">
-      ${t.areasText} Coverage can vary depending on the day and how busy we are, so if
-      you're not sure whether your address is included, just get in touch with your location and
-      we'll confirm before you book anything in.
+      ${t.areasText}
     </p>
   </div>
 </section>
 
-${forTown(base.operate, t.town)}
+${sec.operate}
 
 <section class="sfr-faq" aria-labelledby="sfr-loc-faq-heading">
   <div class="sfr-faq__inner">
@@ -230,7 +263,7 @@ ${t.faqs.map(faqItem).join("\n\n")}
   </div>
 </section>
 
-${forTown(base.cta, t.town)}
+${sec.cta}
 
 ${base.shellBottom}`;
 }
@@ -263,7 +296,8 @@ if (require.main === module) {
   for (const { file, html } of build()) {
     const target = path.join(SITE, file);
     const current = fs.existsSync(target) ? fs.readFileSync(target, "utf8") : null;
-    if (current === html) continue;
+    // Line endings do not count: a Windows checkout (core.autocrlf) turns LF into CRLF.
+    if (current !== null && current.replace(/\r\n/g, "\n") === html.replace(/\r\n/g, "\n")) continue;
     if (check) { console.error(`out of date: site/${file}`); stale++; }
     else { fs.writeFileSync(target, html); console.log(`wrote site/${file}`); }
   }
