@@ -5,12 +5,35 @@
       "slug": "uphall",
       "town": "Uphall",
       "description": "24/7 mobile tyre fitting and puncture repair in Uphall, West Lothian, near Broxburn and the M8. We come to your home, work or roadside, usually within 40-60 minutes.",
-      "intro": "Uphall sits a short drive east of our Bathgate base, right next to Broxburn and just north of Livingston, with the A89 running through and the M8 close by. We're usually with you within 40&ndash;60 minutes, day or night. Whether your car is on the driveway at home, in a car park at work, or you've pulled in after coming off the motorway with a damaged tyre, we bring the tyres, tools and wheel balancing equipment to you, so there's no need to get to a garage first.",
+      "heroText": "Flat or damaged tyre in Uphall? We come out to your street, your workplace or a safe spot by the road, at any hour.",
+      "intro": "Uphall sits a short drive east of our Bathgate base, joined on to Broxburn and just north of Livingston. The A899 runs through the village and links it to both towns and to junction 3 of the M8, while the A89 and the motorway pass just to the south. We're usually with you within 40&ndash;60 minutes, day or night. Whether your car is on the driveway at home, in a car park at work, or you've pulled in after coming off the motorway with a damaged tyre, we bring the tyres, tools and wheel balancing equipment to you, so there's no need to get to a garage first.",
+      "servicesIntro": "Every job below is done where your car or van is parked in and around Uphall, from the streets off the main road to a lay-by near the M8.",
+      "serviceCards": [
+        "We fit new tyres at your home or workplace in Uphall, so there's no need to lose half a day sitting in a garage waiting room.",
+        "Tyre worn down to the limit or damaged beyond repair? Tell us the size on the phone and we'll bring a suitable replacement out to the village.",
+        "If a nail or screw has gone into the main tread, we can often repair it on the spot. If the damage is near the sidewall, we'll tell you straight that it needs replacing.",
+        "A blowout on the A89 or the M8 near Uphall means getting safely off the carriageway first. Once you've stopped, call us with your location and we'll come out.",
+        "Lost the key for your locking wheel nuts? We remove them on site in Uphall so the tyre can still be changed.",
+        "Vans that leave Uphall early for work can have a replacement tyre fitted at the house before the working day gets going.",
+        "Trade vehicles working between Uphall, Broxburn and Livingston can have tyres fitted where they're parked, keeping time off the road short.",
+        "A caravan or trailer sitting on a drive or hard standing in Uphall can have its flat tyre dealt with where it is, with no need to tow it anywhere.",
+        "If the tyre pressure warning is still showing after a tyre change or a cold snap, we can check the TPMS sensors as part of the visit."
+      ],
+      "why": [
+        "We're open 24/7, so an Uphall callout at midnight gets the same attention as one at midday.",
+        "We come to your driveway, your workplace or a safe roadside spot near Uphall, so you stay where you are.",
+        "Each van carries tyres, tools and wheel balancing equipment, so the job can be finished in one visit.",
+        "You get honest advice on whether a tyre can be repaired or needs replacing, and we confirm a time before we set off.",
+        "We explain what we're doing as we go, so you know exactly what has been done to your car."
+      ],
       "scenarios": [
         ["A Flat Spotted On The Driveway", "A tyre that's gone soft overnight is a common start to the day in Uphall's residential streets. We fit or repair it where the car is parked, so you're not driving on a damaged tyre to find a garage."],
-        ["A Damaged Tyre Near The M8", "If you've picked up a puncture on the motorway, don't keep driving on it. Pull off at the next safe place near Uphall and call us with your location; we'll come out to replace the tyre or fit your spare."]
+        ["A Damaged Tyre Near The M8", "If you've picked up a puncture on the motorway, don't keep driving on it. Pull off at the next safe place near Uphall and call us with your location; we'll come out to replace the tyre or fit your spare."],
+        ["Back From The Train To A Flat", "If you parked near Uphall railway station, just south of the village, and came back from Edinburgh to a flat tyre, there's no need to leave the car there overnight. Tell us exactly where it's parked and we'll come to it."]
       ],
-      "areasText": "We attend callouts across Uphall and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, Uphall Station, Dechmont, Ecclesmachan, Pumpherston and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "areasText": "We attend callouts across Uphall and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, Uphall Station, Dechmont, Ecclesmachan, Pumpherston and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>. Cover can vary on busy days, so drop us your location first and we'll confirm before setting off.",
+      "operateText": "Beyond Uphall itself, we also head out to Uphall Station, Dechmont, Ecclesmachan and Pumpherston, as well as neighbouring Broxburn and Livingston.",
+      "ctaText": "Tyre trouble in Uphall? Call or WhatsApp us with your location and tyre size and we'll tell you when we can be there.",
       "faqs": [
         ["Do you cover Uphall Station and Dechmont as well?", "Yes, as well as Uphall itself we attend Uphall Station, Dechmont and Ecclesmachan &mdash; send us your location and we'll confirm before we set off."],
         ["How quickly can you get to me in Uphall?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
@@ -28,16 +51,39 @@
       "slug": "east-calder",
       "town": "East Calder",
       "description": "24/7 mobile tyre fitting and puncture repair in East Calder, West Lothian, near Livingston and the A71. Home, work or roadside, usually within 40-60 minutes.",
-      "intro": "East Calder is on the south-east side of Livingston, close to the A71 towards Edinburgh and a short drive from our Bathgate base. We're usually with you within 40&ndash;60 minutes, day or night. A puncture at home, a warning light on the way to work, or a tyre that won't make it back from a run out to Almondell &amp; Calderwood Country Park &mdash; we bring the tyres, tools and wheel balancing equipment to wherever you are.",
+      "heroText": "Mobile tyre help across East Calder, from the newer homes at Calderwood to the Main Street, 24 hours a day.",
+      "intro": "East Calder lies south-east of Livingston, about a mile east of Mid Calder, with the A71 bypassing the village to the south on its way towards Edinburgh. The B7015 forms the Main Street, and the village has grown with new housing at Calderwood and Raw Holdings. We're usually with you within 40&ndash;60 minutes, day or night. A puncture at home, a warning light on the way to work, or a tyre that won't make it back from a walk at Almondell &amp; Calderwood Country Park &mdash; we bring the tyres, tools and wheel balancing equipment to wherever you are.",
+      "servicesIntro": "Whether you live in one of the new streets at Calderwood or you're parked just off the Main Street, these services come to you in East Calder.",
+      "serviceCards": [
+        "With mobile tyre fitting, the new tyre goes on outside your East Calder home rather than at a workshop you'd have to drive to.",
+        "We replace tyres that are worn, cracked or damaged, bringing the right size out once you've confirmed it with us on the phone.",
+        "A slow leak that has you topping up the air every few days? We find the cause and repair it on site if the hole is in a repairable part of the tread.",
+        "If a tyre fails on the A71 near East Calder, get well clear of the traffic first, then call us and we'll come to where you've stopped.",
+        "No key for the locking wheel nuts? We take them off where the car is parked in East Calder so the wheel can come off.",
+        "Commercial vans kept in the village can have their tyres replaced on the driveway or at the yard, saving a trip out.",
+        "Trade vehicles at the Camps industrial estate on the edge of the village can have tyres fitted on site without leaving the yard.",
+        "Caravans and trailers stored in East Calder can have a flat tyre replaced where they're parked, ready for the next trip.",
+        "A TPMS light that won't clear can be checked during the visit, so you know whether it's low pressure or a sensor fault."
+      ],
+      "why": [
+        "Day, night or weekend, we take calls from East Calder around the clock.",
+        "We come to your home, your workplace or a safe roadside spot, so there's no tow truck or garage queue involved.",
+        "Our vans turn up with tyres, the right tools and wheel balancing equipment already on board.",
+        "You'll get a straight answer on repair versus replacement, and a time before we leave.",
+        "We talk you through each step, from the first look at the tyre to the final check."
+      ],
       "scenarios": [
         ["A Puncture Before The Edinburgh Commute", "A flat first thing can wreck a drive in towards Edinburgh. We come to your home in East Calder and repair or replace the tyre there, so you can still get on your way."],
-        ["Stuck In A Car Park", "Whether it's a supermarket car park or a parking bay at a park entrance, if a tyre has gone flat while you were away from the car, we'll come to it and sort it where it stands."]
+        ["Stuck In A Car Park", "Whether it's a supermarket car park or a parking bay at a park entrance, if a tyre has gone flat while you were away from the car, we'll come to it and sort it where it stands."],
+        ["Back From A Walk At Almondell", "The country park's South Car Park is reached from the B7015 at the east end of the village. If you come back from the riverside paths to a flat, send us the location straight away &ndash; the council doesn't allow overnight parking there, so it's best not to leave the car until morning."]
       ],
-      "areasText": "We attend callouts across East Calder and the places around it, including Mid Calder, Kirknewton, Wilkieston, Oakbank and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "areasText": "We attend callouts across East Calder and the places around it, including Mid Calder, Kirknewton, Wilkieston, Oakbank and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>. Availability changes through the day, so share where you are and we'll check we can reach you before you book.",
+      "operateText": "From East Calder we also attend Mid Calder, Kirknewton, Wilkieston and Oakbank, as well as Livingston just to the north-west.",
+      "ctaText": "Got a flat in East Calder? Send us a WhatsApp or give us a call and we'll confirm the tyre and a time before we head over.",
       "faqs": [
         ["Do you cover Kirknewton and Wilkieston too?", "Yes, along with East Calder we attend Kirknewton, Wilkieston and Oakbank &mdash; let us know your location and we'll confirm before we set off."],
         ["How quickly can you get to me in East Calder?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
-        ["Can you come to me if I'm parked at Almondell &amp; Calderwood Country Park?", "Yes, as long as the car is somewhere we can safely work on it, such as a car park. Send us the location and we'll confirm."],
+        ["Can you come to me if I'm parked at Almondell &amp; Calderwood Country Park?", "Usually, yes, as long as the car is somewhere we can safely work on it, such as a car park, and the park's rules allow it. Send us the location and we'll confirm."],
         ["Do you repair punctures or only replace tyres?", "Both. If the puncture is in a safe-to-repair area of the tread we repair it on site; if not, we replace the tyre. Read more on our <a href=\"/mobile-tyre-puncture-repair/\">mobile puncture repair</a> page."],
         ["Are new tyres balanced on site?", "Yes, our vans carry wheel balancing equipment, so the wheel is balanced at your location in East Calder."],
         ["Do you work outside normal hours in East Calder?", "Yes, we're open 24/7, including evenings, weekends and overnight."]
@@ -51,12 +97,35 @@
       "slug": "mid-calder",
       "town": "Mid Calder",
       "description": "24/7 mobile tyre fitting and puncture repair in Mid Calder, West Lothian, beside Livingston. We come to your home, work or roadside, usually within 40-60 minutes.",
-      "intro": "Mid Calder sits on the eastern edge of Livingston, between Pumpherston and East Calder, a short drive from our Bathgate base. We're usually with you within 40&ndash;60 minutes, day or night. Some streets in the older part of the village are narrow, so we'll check with you where the car is parked and set up somewhere safe nearby. We bring the tyres, tools and wheel balancing equipment with us.",
+      "heroText": "Tyre fitting and puncture repair brought to your door in Mid Calder, whether you're in the old village or out towards Livingston.",
+      "intro": "Mid Calder stands on a steep hill above the River Almond, about a mile east of Livingston town centre and a short drive from our Bathgate base, with the A71 passing on the village bypass. Its historic core along Main Street, Market Street and Bank Street is a conservation area, and some of those older streets are narrow, so we'll check with you where the car is parked and set up somewhere safe nearby. We're usually with you within 40&ndash;60 minutes, day or night, and we bring the tyres, tools and wheel balancing equipment with us.",
+      "servicesIntro": "Here's what we can do outside your door or at the roadside in Mid Calder, always with a safe place to work agreed first.",
+      "serviceCards": [
+        "Tyres are fitted where you're parked in Mid Calder; if the street is tight, we'll agree a safer spot close by before we start.",
+        "When a tyre is past its best, we'll bring a replacement in your size and fit it there and then.",
+        "Punctures in the central tread can often be repaired. We inspect the tyre first and only replace it when a repair wouldn't be safe.",
+        "If a tyre gives out on the A71 bypass or one of the roads into the village, pull in somewhere safe and send us your location.",
+        "Locking wheel nut stuck, or the key gone missing? We take the nut off on site in Mid Calder so the tyre work can carry on.",
+        "We replace van tyres for drivers in Mid Calder, with the size and load rating checked with you before we come out.",
+        "Trade vans and work vehicles can be seen to outside the house, so you're back on the road without a garage visit.",
+        "A caravan or trailer with a damaged tyre can be sorted where it's kept &ndash; just tell us the tyre size and where it's stored.",
+        "We check tyre pressure monitoring sensors when the warning light stays on, and explain what the reading means for you."
+      ],
+      "why": [
+        "We answer around the clock, so Mid Calder drivers aren't left waiting for a garage to open.",
+        "Home, workplace or roadside &ndash; we come to the car rather than the car coming to us.",
+        "Tyres, tools and wheel balancing equipment travel in the van, ready for the job.",
+        "We tell you honestly what the tyre needs and give you a time before setting off.",
+        "You'll know what we're doing and why, from start to finish."
+      ],
       "scenarios": [
         ["A Flat On A Narrow Village Street", "If the car is parked on one of Mid Calder's narrower streets, tell us when you call. We'll plan where to set up so the job can be done safely and without blocking the road."],
-        ["Tyre Trouble On The Way Home", "A tyre warning light or a sudden puncture on the way back from Livingston? Stop somewhere safe, send us your location and we'll come out to you."]
+        ["Tyre Trouble On The Way Home", "A tyre warning light or a sudden puncture on the way back from Livingston? Stop somewhere safe, send us your location and we'll come out to you."],
+        ["A Soft Tyre Outside The Kirk Of Calder", "The Kirk of Calder sits on Main Street in the old village. If a tyre goes down while you're at a service or an event at the Kirk, let us know where the car is and we'll find a safe way to work on it."]
       ],
-      "areasText": "We attend callouts across Mid Calder and the places around it, including East Calder, Pumpherston, Kirknewton, <a href=\"/mobile-tyre-fitting-west-calder/\">West Calder</a> and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>.",
+      "areasText": "We attend callouts across Mid Calder and the places around it, including East Calder, Pumpherston, Kirknewton, <a href=\"/mobile-tyre-fitting-west-calder/\">West Calder</a> and <a href=\"/mobile-tyre-fitting-livingston/\">Livingston</a>. How far we can reach changes with the day's workload, so send your location and we'll confirm first.",
+      "operateText": "Close to Mid Calder we also look after East Calder, Pumpherston, Kirknewton and West Calder, plus Livingston next door.",
+      "ctaText": "Tyre problem in Mid Calder? Tell us where the car is parked and we'll plan a safe spot and a time to reach you.",
       "faqs": [
         ["Do you cover Pumpherston and East Calder as well?", "Yes, as well as Mid Calder we regularly attend Pumpherston, East Calder and Kirknewton &mdash; send us your location and we'll confirm."],
         ["How quickly can you get to me in Mid Calder?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
@@ -74,12 +143,35 @@
       "slug": "winchburgh",
       "town": "Winchburgh",
       "description": "24/7 mobile tyre fitting and puncture repair in Winchburgh, West Lothian, between Broxburn and Linlithgow. Home, work or roadside, usually within 40-60 minutes.",
-      "intro": "Winchburgh lies north of Broxburn, between Linlithgow and Kirkliston, with the Union Canal running through the village. It's an easy drive from our Bathgate base and we're usually with you within 40&ndash;60 minutes, day or night. Whether you're in one of the newer housing developments or the older part of the village, we bring the tyres, tools and wheel balancing equipment to your driveway, workplace or roadside.",
+      "heroText": "From the new streets of Winchburgh to the roads out towards the M9, we bring tyres and puncture repairs to you round the clock.",
+      "intro": "Winchburgh lies about 3 miles north-east of Broxburn, between Linlithgow and Kirkliston, with the Union Canal running through the village and the M9 passing to the north. The B9080 is the main road through, and since 2023 the B8020 Beatlie Road has linked the village to the motorway at the new junction 1B. It's an easy drive from our Bathgate base and we're usually with you within 40&ndash;60 minutes, day or night. Whether you're in one of the newer housing developments or the older part of the village, we bring the tyres, tools and wheel balancing equipment to your driveway, workplace or roadside.",
+      "servicesIntro": "These are the jobs we carry out at homes, workplaces and roadsides in Winchburgh, with your tyre size confirmed before we head out.",
+      "serviceCards": [
+        "New tyres fitted on your Winchburgh driveway, so there's no need to drive into Broxburn or Linlithgow to get it done.",
+        "We swap out worn or damaged tyres at your door once we've checked your size and have the right tyre on the van.",
+        "A puncture from a nail or screw can often be repaired if it's well away from the sidewall &ndash; we'll check the tyre before deciding.",
+        "If a tyre fails on the M9 or the B9080, get yourself somewhere safe first and then call &ndash; we'll come out to you.",
+        "Locking wheel nut key gone missing after moving into a new home? We remove the nuts on site in Winchburgh.",
+        "Van drivers in Winchburgh can have a replacement tyre fitted outside the house before setting off for the day.",
+        "Trade vehicles working on jobs around the village can have tyres fitted where they're parked, without a detour to a garage.",
+        "Caravans and trailers kept on driveways in Winchburgh can have a flat tyre replaced without being towed anywhere.",
+        "If your dashboard shows a tyre pressure warning, we'll check the TPMS sensors while we're with you."
+      ],
+      "why": [
+        "Calls are answered 24/7, so late-night and early-morning problems in Winchburgh are covered.",
+        "We work at your home, your workplace or a safe roadside spot, saving you a drive on a bad tyre.",
+        "The van carries the tyres, tools and wheel balancing equipment needed to finish the job there and then.",
+        "If a repair isn't safe we'll say so, and we always give you an arrival time before leaving.",
+        "We explain each step as we work, so nothing about the job is left unclear."
+      ],
       "scenarios": [
         ["A Puncture On A New-Build Driveway", "Nails and screws are easy to pick up on roads near building sites. If you've got a slow puncture at home in Winchburgh, we'll check it and repair the tyre if it's safe to, or replace it if not."],
-        ["A Flat On The Road To Linlithgow Or Broxburn", "If a tyre goes on the road out of the village, pull in somewhere safe and send us your location. We'll come to you rather than you trying to reach a garage on a damaged tyre."]
+        ["A Flat On The Road To Linlithgow Or Broxburn", "If a tyre goes on the road out of the village, pull in somewhere safe and send us your location. We'll come to you rather than you trying to reach a garage on a damaged tyre."],
+        ["Coming Off The M9 At Junction 1B", "If a tyre starts to go on the M9 and it's safe to carry on to the exit, leave at junction 1B and stop away from traffic on Beatlie Road or back in the village. Then call or WhatsApp us with where you are."]
       ],
-      "areasText": "We attend callouts across Winchburgh and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, <a href=\"/mobile-tyre-fitting-linlithgow/\">Linlithgow</a>, <a href=\"/mobile-tyre-fitting-kirkliston/\">Kirkliston</a>, Niddry and Newton.",
+      "areasText": "We attend callouts across Winchburgh and the places around it, including <a href=\"/broxburn/\">Broxburn</a>, <a href=\"/mobile-tyre-fitting-linlithgow/\">Linlithgow</a>, <a href=\"/mobile-tyre-fitting-kirkliston/\">Kirkliston</a>, Niddry and Newton. Coverage can depend on how busy we are, so please send your location and we'll confirm before heading out.",
+      "operateText": "Around Winchburgh we also attend Niddry and Newton, plus Broxburn, Kirkliston and Linlithgow.",
+      "ctaText": "Need a tyre sorted in Winchburgh? WhatsApp or call with your address and tyre size and we'll confirm a time to be with you.",
       "faqs": [
         ["Do you cover the new housing developments in Winchburgh?", "Yes, we attend homes across Winchburgh, including the newer developments &mdash; send us your address and we'll confirm before we set off."],
         ["How quickly can you get to me in Winchburgh?", "We're usually with you within 40&ndash;60 minutes, 24 hours a day. It depends on where you are and how busy we are at the time, so call or WhatsApp us and we'll give you a time before we set off."],
