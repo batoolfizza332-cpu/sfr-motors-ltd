@@ -12,15 +12,14 @@ const { launch, newPage, sleep, setHostMap } = require("./cdp.js");
 
 const PORT = 4191, HOST = "https://sfrmotors.co.uk";
 setHostMap({ "sfrmotors.co.uk": PORT });
-const SIZES = [[360, 740], [390, 844], [412, 915]];
-const PAGES = ["/", "/mobile-tyre-fitting/", "/mobile-tyre-repair/", "/mobile-tyre-fitting-edinburgh/"];
+// PPC landing-page request (17 Nov 2026, released 26 Nov): short phones (360x640, iPhone SE 375x667, 360x740) and all
+// five main ad landing pages. On short screens the banner sits at the top so it cannot cover the hero buttons.
+const SIZES = [[360, 640], [375, 667], [360, 740], [390, 844], [412, 915]];
+const PAGES = ["/", "/mobile-tyre-fitting/", "/mobile-tyre-repair/", "/mobile-tyre-fitting-edinburgh/", "/mobile-tyre-fitting-bathgate/", "/mobile-tyre-fitting-livingston/"];
 const MAX_BANNER = 120;
 
-// Known limitation, reported to the owner on 25 Oct 2026 and awaiting a decision: on a 360px phone the home page's
-// hero "WhatsApp Us" button starts about 5px above the slim banner (it would need a banner of about 70px, which cannot
-// hold readable text plus 44px buttons while the fixed "Call Now" bar stays visible). It is printed as KNOWN, not
-// counted as a failure; if it starts passing, or anything else fails, the test says so.
-const KNOWN = new Set(["360x740 /: WhatsApp button visible without scrolling"]);
+// The 25 Oct known limitation (home page WhatsApp at 360x740) is fixed by the short-screen rule; nothing is known-failing.
+const KNOWN = new Set();
 let failed = 0;
 const check = (name, ok, detail) => {
   const known = KNOWN.has(name);
